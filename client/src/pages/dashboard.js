@@ -13,8 +13,8 @@ function Home() {
       </div>
 
       <div className="Charts">
-        <div className="chart1">chart1</div>
-        <div className="chart2">chart2</div>
+        {/* <div className="chart1">chart1</div>
+        <div className="chart2">chart2</div> */}
       </div>
 
     <div className="OnGoing">
