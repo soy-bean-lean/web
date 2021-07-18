@@ -25,9 +25,37 @@ export const SidebarDataPro = [
     cName: 'nav-text'
   },
   {
+    title: 'Workshops',
+    path: '/workshop',
+    icon: <GIIcons.GiTeacher />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Blogs',
+    path: '/blog',
+    icon: <FaIcons.FaBloggerB />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Forum',
+    path: '/forum',
+    icon: <MdIcons.MdForum />,
+    cName: 'nav-text'
+  },
+  {
     title: 'Reports',
     path: '/reports',
     icon: <AiIcons.AiFillFileText />,
+    cName: 'nav-text'
+  },{
+    title: 'Jobs',
+    path: '/job',
+    icon: <FaIcons.FaUserAlt />,
+    cName: 'nav-text'
+  },{
+    title: 'Payments',
+    path: '/payments',
+    icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
   },
 ];

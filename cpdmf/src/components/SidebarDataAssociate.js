@@ -12,11 +12,6 @@ export const SidebarData = [
     path: '/',
     icon: <AiIcons.AiFillDashboard />,
     cName: 'nav-text'
-  },{
-    title: 'CPD Records',
-    path: '/cpd',
-    icon: <HiIcons.HiDocumentReport />,
-    cName: 'nav-text'
   },
   {
     title: 'Course',
@@ -57,10 +52,5 @@ export const SidebarData = [
     path: '/payments',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
-  },{
-    title: 'Payments',
-    path: '/payments',
-    icon: <AiIcons.AiFillDollarCircle />,
-    cName: 'nav-text'
-  }
+  },
 ];
