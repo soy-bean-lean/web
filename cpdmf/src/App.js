@@ -20,7 +20,7 @@ function App() {
     return (
       <>
         <Router>
-          <Navbar name="a2323" type="associate"/>
+          <Navbar name="jee" type="Cha"/>
           <Switch>
             <Route path='/' exact component={dashboard} />
             <Route path='/cpd' component={cpd} />
