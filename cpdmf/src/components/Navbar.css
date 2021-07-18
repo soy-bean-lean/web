@@ -1,0 +1,166 @@
+
+.navbar {
+  width: 0px;
+  background-color: #050846;
+  position: absolute;
+  padding-top: 10px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  float: left;
+}
+.page {
+  height: 100%;
+  width: 100%;
+  background-color: #029909;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.4fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "nav nav"
+    "progress progress"
+    "char1 chart2"
+    "ongoing ongoing";
+}
+.profileDetails {
+  width: 100%;
+  margin-bottom: 45px;
+  margin-left: 15px;
+}
+.buttons a {
+  text-decoration: none;
+  padding: 10px 25px 10px 25px;
+  float: right;
+  margin: 10px 20px 20px 25px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+}
+.panal a {
+  margin: 0;
+  padding: 20px 5px 0px 15px;
+  font-size: 20px;
+}
+.profile {
+  display: flex;
+  height: 90px;
+  margin: 10px;
+  align-items: center;
+  color: #ffffff;
+}
+.pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50px;
+}
+.profileInfo {
+  background-color: #ffffff;
+}
+.profileImg h2 {
+  float: right;
+}
+.profileInfo .profileImg {
+  border-radius: 10px;
+  border-color: blueviolet;
+  border-width: 1px;
+}
+.buttons {
+  height: 10%;
+  position: fixed;
+  width: 100%;
+  background-color: rgb(6, 10, 95);
+  position: absolute;
+}
+
+.notification a {
+  height: 10px;
+  width: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+.Logout {
+  
+  background: #029909;
+  border: none;
+  font-weight: 600;
+}
+
+.menu-bars {
+  background-color: rgb(95, 6, 6);
+  margin-left: 2rem;
+  font-size: 2rem;
+  background: none;
+}
+.menu-bars-collaps {
+  margin-left: 6rem;
+  font-size: 2rem;
+}
+.menu-bars-collaps svg {
+  height: 20px;
+  width: 20px;
+}
+.nav-menu {
+  background-color: rgb(6, 10, 95);
+  width: 280px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: 850ms;
+}
+
+.nav-menu.active {
+  left: 0;
+  width: 20%;
+  transition: 350ms;
+}
+
+.nav-text {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding-left: 15px;
+  list-style: none;
+  height: 50px;
+}
+
+.nav-text a {
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 18px;
+  width: 95%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.nav-text:hover {
+  background-image: linear-gradient(to right, #000000, #060a5f, #060a5f);
+  padding-left: 30px;
+  transition: 600ms;
+  border-radius: 14px;
+}
+.nav-text a:hover {
+}
+
+.nav-menu-items {
+  width: 100%;
+}
+/*
+.navbar-toggle {
+background-color: rgb(6, 10, 95);
+width: 100%;
+height: 80px;
+
+justify-content: start;
+align-items: center;
+}
+*/
+span {
+  margin-left: 16px;
+}
