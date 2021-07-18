@@ -6,16 +6,11 @@ import * as SiIcons from  "react-icons/si";
 import * as GIIcons from  "react-icons/gi";
 import * as HiIcons from  "react-icons/hi";
 import * as MdIcons from  "react-icons/md";
-export const SidebarDataPro = [
+export const SidebarDataStudent = [
   {
     title: 'Dashboard',
     path: '/',
     icon: <AiIcons.AiFillDashboard />,
-    cName: 'nav-text'
-  },{
-    title: 'CPD Records',
-    path: '/cpd',
-    icon: <HiIcons.HiDocumentReport />,
     cName: 'nav-text'
   },
   {
@@ -46,11 +41,6 @@ export const SidebarDataPro = [
     title: 'Reports',
     path: '/reports',
     icon: <AiIcons.AiFillFileText />,
-    cName: 'nav-text'
-  },{
-    title: 'Jobs',
-    path: '/job',
-    icon: <FaIcons.FaUserAlt />,
     cName: 'nav-text'
   },{
     title: 'Payments',
