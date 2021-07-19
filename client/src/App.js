@@ -2,8 +2,6 @@ import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-
 import dashboard from './pages/professional/dashboard';
 import cpd from './pages/professional/course';
 import course from './pages/professional/course';
