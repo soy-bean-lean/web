@@ -14,6 +14,18 @@ export const SidebarDataStudent = [
     cName: 'nav-text'
   },
   {
+    title: 'Course',
+    path: '/courseS',
+    icon: <FaIcons.FaGraduationCap />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Workshops',
+    path: '/workshopS',
+    icon: <GIIcons.GiTeacher />,
+    cName: 'nav-text'
+  },
+  {
     title: 'Blogs',
     path: '/blogS',
     icon: <FaIcons.FaBloggerB />,

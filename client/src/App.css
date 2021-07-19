@@ -14,16 +14,17 @@
 }
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgb(6, 10, 95);
+  box-shadow: inset 0 0 5px rgb(64, 59, 82);
+
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  border:1px rgb(6, 10, 95) solid;
-  background: rgb(6, 10, 95);
+  border:1px rgb(64, 59, 82) solid;
+  background: rgb(64, 59, 82);
 }
 ::-webkit-scrollbar-thumb:hover {
   border:1px white solid;
-  background: rgb(6, 10, 95);
+  background: rgb(64, 59, 82);
   transition: 800ms;
 }

@@ -31,6 +31,7 @@ import courseStu from './pages/student/course';
 import forumStu from './pages/student/forum';
 import paymentsStu from './pages/student/payments';
 import reportsStu from './pages/student/reports';
+import workshopStu from './pages/student/workshop';
 
 
 function App() {
@@ -54,7 +55,8 @@ function App() {
             <Route path='/courseS' component={courseStu} />
 
             <Route path='/workshopP'  component={workshopPro} />
-            <Route path='/workshopC'  component={workshopCha} />
+            <Route path='/workshopS'  component={workshopCha} />
+            <Route path='/workshopS'  component={workshopStu} />
 
             <Route path='/blogP' component={blogsPro} />
             <Route path='/blogC' component={blogCha} />
