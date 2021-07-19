@@ -1,0 +1,8 @@
+.main {
+    overflow-y: auto ;
+  display: block;
+  width: auto;
+  padding-top: 60px;
+  background-color: rgb(255, 0, 0);
+  overflow-y:hidden;
+}
