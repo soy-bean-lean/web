@@ -59,35 +59,13 @@ if(mtype=="pro"){
             <Route path='/' exact component={dashboardPro} />
             <Route path='/cpdP' component={cpdPro} />
             <Route path='/courseP' component={coursePro} />
-
-
             <Route path='/workshopP'  component={workshopPro} />
-            <Route path='/workshopS'  component={workshopCha} />
-            <Route path='/workshopS'  component={workshopStu} />
-
-            <Route path='/blogP' component={blogsPro} />
-            <Route path='/blogC' component={blogCha} />
-            <Route path='/blogS'  component={blogStu}/>
-            <Route path='/blogA'  component={blogAss}/>
-            
+            <Route path='/blogP' component={blogsPro} />          
             <Route path='/forumP' component={forumPro} />
-            <Route path='/forumC' component={forumCha} />
-            <Route path='/forumS' component={forumStu} />
-            <Route path='/forumA' component={forumAss} />
-            
-            <Route path='/reportsP'  component={reportsPro} />
-            <Route path='/reportsC'  component={reportsCha} />
-            <Route path='/reportsS'  component={reportsStu} />
-            <Route path='/reportsA'  component={reportsAss} />
-            
-            <Route path='/jobP' component={jobPro} />
-            <Route path='/jobC' component={jobCha} />
-            <Route path='/jobA' component={jobAss} />
-            
+            <Route path='/reportsP'  component={reportsPro} />            
+            <Route path='/jobP' component={jobPro} />            
             <Route path='/paymentsP' component={paymentsPro} />
-            <Route path='/paymentsC' component={paymentsCha} />
-            <Route path='/paymentsS' component={paymentsStu} />
-            <Route path='/paymentsA' component={paymentsAss} />
+
           
           </Switch>
         </Router>
@@ -100,7 +78,7 @@ if(mtype=="pro"){
           <Navbar name={ mname } type={ mtype }/>
             <Switch>
               
-              <Route path='/'  component={dashboardCha} />
+              <Route path='/' exact component={dashboardCha} />
   
               <Route path='/cpdP' component={cpdPro} />
               <Route path='/cpdC' component={cpdCha} />
