@@ -99,7 +99,7 @@ function Home() {
         </div>
 
         <div className="chart2">
-           
+           lasnd
       
         </div>
       </div>

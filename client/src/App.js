@@ -47,17 +47,16 @@ import jobAss from './pages/associate/job';
 
 function App() {
   
-
+const mname="anushka";
+const mtype="cha";
+if(mtype=="pro"){
     return (
       <>
         <Router>
-          <Navbar name="jee" type="pro"/>
+          <Navbar name={ mname } type={ mtype }/>
           <Switch>
             
-            <Route path='/P'  component={dashboardPro} />
-            <Route path='/C'  component={dashboardCha} />
-            <Route path='/S'  component={dashboardStu} />
-            <Route path='/A'  component={dashboardAss} />
+            <Route path='/'  component={dashboardPro} />
 
             <Route path='/cpdP' component={cpdPro} />
             <Route path='/cpdC' component={cpdCha} />
@@ -98,7 +97,57 @@ function App() {
           </Switch>
         </Router>
       </>
-    );
+    );}
+    else if(mtype=="cha"){
+      return (
+        <>
+          <Router>
+          <Navbar name={ mname } type={ mtype }/>
+            <Switch>
+              
+              <Route path='/'  component={dashboardCha} />
+  
+              <Route path='/cpdP' component={cpdPro} />
+              <Route path='/cpdC' component={cpdCha} />
+              
+              <Route path='/courseP' exact component={coursePro} />
+              <Route path='/courseC' component={courseCha} />
+              <Route path='/courseS' component={courseStu} />
+              <Route path='/courseA' component={courseAss} />
+  
+              <Route path='/workshopP'  component={workshopPro} />
+              <Route path='/workshopS'  component={workshopCha} />
+              <Route path='/workshopS'  component={workshopStu} />
+  
+              <Route path='/blogP' component={blogsPro} />
+              <Route path='/blogC' component={blogCha} />
+              <Route path='/blogS'  component={blogStu}/>
+              <Route path='/blogA'  component={blogAss}/>
+              
+              <Route path='/forumP' component={forumPro} />
+              <Route path='/forumC' component={forumCha} />
+              <Route path='/forumS' component={forumStu} />
+              <Route path='/forumA' component={forumAss} />
+              
+              <Route path='/reportsP'  component={reportsPro} />
+              <Route path='/reportsC'  component={reportsCha} />
+              <Route path='/reportsS'  component={reportsStu} />
+              <Route path='/reportsA'  component={reportsAss} />
+              
+              <Route path='/jobP' component={jobPro} />
+              <Route path='/jobC' component={jobCha} />
+              <Route path='/jobA' component={jobAss} />
+              
+              <Route path='/paymentsP' component={paymentsPro} />
+              <Route path='/paymentsC' component={paymentsCha} />
+              <Route path='/paymentsS' component={paymentsStu} />
+              <Route path='/paymentsA' component={paymentsAss} />
+            
+            </Switch>
+          </Router>
+        </>
+      );
+    }
   }
   
 
