@@ -3,7 +3,7 @@ import "./style/forum.css";
 function forum(){
     return(
         <div className='title'>
-        <h1>Forum Cha</h1>
+        <h1>Student member forum here</h1>
       </div>
     );
 }

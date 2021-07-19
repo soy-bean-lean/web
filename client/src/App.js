@@ -24,6 +24,14 @@ import reportsCha from './pages/chartered/reports';
 import jobCha from './pages/chartered/job';
 import paymentsCha from './pages/chartered/payments';
 
+//Student
+import dashboardStu from './pages/student/dashboard';
+import blogStu from './pages/student/blog';
+import courseStu from './pages/student/course';
+import forumStu from './pages/student/forum';
+import paymentsStu from './pages/student/payments';
+import reportsStu from './pages/student/reports';
+
 
 function App() {
   
@@ -31,36 +39,41 @@ function App() {
     return (
       <>
         <Router>
-          <Navbar name="jee" type="pro"/>
+          <Navbar name="jee" type="student"/>
           <Switch>
             
             <Route path='/P'  component={dashboardPro} />
             <Route path='/C'  component={dashboardCha} />
-            <Route path='/A'  component={dashboardCha} />
+            <Route path='/S'  component={dashboardStu} />
 
             <Route path='/cpdP' component={cpdPro} />
             <Route path='/cpdC' component={cpdCha} />
             
             <Route path='/courseP' exact component={coursePro} />
             <Route path='/courseC' component={courseCha} />
+            <Route path='/courseS' component={courseStu} />
 
             <Route path='/workshopP'  component={workshopPro} />
             <Route path='/workshopC'  component={workshopCha} />
 
             <Route path='/blogP' component={blogsPro} />
             <Route path='/blogC' component={blogCha} />
+            <Route path='/blogS'  component={blogStu}/>
             
             <Route path='/forumP' component={forumPro} />
             <Route path='/forumC' component={forumCha} />
+            <Route path='/forumS' component={forumStu} />
             
             <Route path='/reportsP'  component={reportsPro} />
             <Route path='/reportsC'  component={reportsCha} />
+            <Route path='/reportsS'  component={reportsStu} />
             
             <Route path='/jobP' component={jobPro} />
             <Route path='/jobC' component={jobCha} />
             
             <Route path='/paymentsP' component={paymentsPro} />
             <Route path='/paymentsC' component={paymentsCha} />
+            <Route path='/paymentsS' component={paymentsStu} />
           
           </Switch>
         </Router>

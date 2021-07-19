@@ -3,9 +3,13 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { SidebarDataAssociate } from "./SidebarDataAssociate";
-import { SidebarDataPro } from "./SidebarDataPro";
-import { SidebarDataStudent } from "./SidebarDataStudent";
 import { SidebarDataCha } from "./SidebarDataCha";
+import {SidebarDataCouncil} from "./SidebarDataCouncil";
+import { SidebarDataPro } from "./SidebarDataPro";
+import {SidebarDataSec} from "./SidebarDataSec";
+import { SidebarDataStudent } from "./SidebarDataStudent";
+
+
 
 import "./Navbar.css";
 import { IconContext } from "react-icons";
@@ -299,7 +303,7 @@ function Navbar(props) {
                 </div>
               </li>
 
-              {SidebarDataCha.map((item, index) => {
+              {SidebarDataCouncil.map((item, index) => {
                 return (
                   <li key={index} className={item.cName}>
                     <Link to={item.path}>
@@ -359,7 +363,7 @@ function Navbar(props) {
                 </div>
               </li>
 
-              {SidebarDataCha.map((item, index) => {
+              {SidebarDataSec.map((item, index) => {
                 return (
                   <li key={index} className={item.cName}>
                     <Link to={item.path}>

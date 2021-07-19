@@ -4,7 +4,7 @@ function cpd(){
     return(
    
         <div className='title'>
-        <h1>CPD</h1>
+        <h1>CPD cha</h1>
       </div>
     );
 }

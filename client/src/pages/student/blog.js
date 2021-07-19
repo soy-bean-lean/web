@@ -3,8 +3,8 @@ import "./style/blog.css";
 
 function blogs(){
     return(
-        <div className='title'>
-        <h1>Blogs Cha</h1>
+      <div className='title'>
+        <h1>Student Member bolgs Her..........e</h1>
       </div>
     );
 }
