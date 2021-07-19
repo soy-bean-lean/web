@@ -9,7 +9,7 @@ import * as MdIcons from  "react-icons/md";
 export const SidebarDataCha = [
     {
         title: 'Dashboard',
-        path: '/C',
+        path: '/',
         icon: <AiIcons.AiFillDashboard />,
         cName: 'nav-text'
       },{

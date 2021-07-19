@@ -13,39 +13,31 @@ export const SidebarDataSec = [
     icon: <AiIcons.AiFillDashboard />,
     cName: 'nav-text'
   },
+
   {
-    title: 'Course',
-    path: '/course',
-    icon: <FaIcons.FaGraduationCap />,
+    title: 'Registration Approval',
+    path: '/regApprove',
+    icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
   },
+  
   {
-    title: 'Workshops',
-    path: '/workshop',
+    title: 'Manage Workshops',
+    path: '/manWorkshop',
     icon: <GIIcons.GiTeacher />,
     cName: 'nav-text'
   },
   {
-    title: 'Blogs',
-    path: '/blog',
-    icon: <FaIcons.FaBloggerB />,
+    title: 'Add Job Vacancies',
+    path: '/addJob',
+    icon: <FaIcons.FaUserAlt />,
     cName: 'nav-text'
   },
   {
-    title: 'Forum',
-    path: '/forum',
-    icon: <MdIcons.MdForum />,
-    cName: 'nav-text'
-  },
-  {
-    title: 'Reports',
-    path: '/reports',
-    icon: <AiIcons.AiFillFileText />,
-    cName: 'nav-text'
-  },{
     title: 'Payments',
-    path: '/payments',
+    path: '/paymentsSec',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
   },
 ];
+
