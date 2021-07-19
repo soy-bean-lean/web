@@ -3,8 +3,11 @@ import "./style/course.css";
 function cpd(){
     return(
    
-        <div className='title'>
-        <h1>Courses</h1>
+        <div className='main'>
+        <div className="course">
+
+        </div>
+        
       </div>
     );
 }

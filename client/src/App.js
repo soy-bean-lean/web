@@ -57,14 +57,9 @@ if(mtype=="pro"){
           <Switch>
             
             <Route path='/' exact component={dashboardPro} />
-
             <Route path='/cpdP' component={cpdPro} />
-            <Route path='/cpdC' component={cpdCha} />
-            
             <Route path='/courseP' component={coursePro} />
-            <Route path='/courseC' component={courseCha} />
-            <Route path='/courseS' component={courseStu} />
-            <Route path='/courseA' component={courseAss} />
+
 
             <Route path='/workshopP'  component={workshopPro} />
             <Route path='/workshopS'  component={workshopCha} />
