@@ -1,12 +1,12 @@
 import React from 'react';
-import "./style/forum.css";
-function forum(){
+import "./style/blog.css";
+
+function blogs(){
     return(
         <div className='title'>
-        <h1>Forum</h1>
+        <h1>Blogs Cha</h1>
       </div>
     );
 }
 
-export default forum;
-
+export default blogs;

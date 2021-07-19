@@ -18,7 +18,7 @@ function Home() {
       </div>
 
     <div className="OnGoing">
-    <div className="ONG" >Professional</div>
+    <div className="ONG" >chartered member</div>
 
     </div>
     </div>
