@@ -6,7 +6,7 @@ import * as SiIcons from  "react-icons/si";
 import * as GIIcons from  "react-icons/gi";
 import * as HiIcons from  "react-icons/hi";
 import * as MdIcons from  "react-icons/md";
-export const SidebarDataAssociate = [
+export const SidebarDataCouncil = [
   {
     title: 'Dashboard',
     path: '/',
@@ -42,14 +42,7 @@ export const SidebarDataAssociate = [
     path: '/reports',
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
-  },
-  {
-    title: 'Jobs',
-    path: '/job',
-    icon: <FaIcons.FaUserAlt />,
-    cName: 'nav-text'
-  }
-  ,{
+  },{
     title: 'Payments',
     path: '/payments',
     icon: <AiIcons.AiFillDollarCircle />,

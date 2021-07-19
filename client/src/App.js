@@ -31,7 +31,7 @@ function App() {
     return (
       <>
         <Router>
-          <Navbar name="jee" type="Cha"/>
+          <Navbar name="jee" type="pro"/>
           <Switch>
             
             <Route path='/P'  component={dashboardPro} />
