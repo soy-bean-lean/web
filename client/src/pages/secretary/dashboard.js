@@ -15,25 +15,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const state = {
-  labels: [
-    "JAN",
-    "FEB",
-    "MAR",
-    "APR",
-    "MAY",
-    "JUN",
-    "JUL",
-    "AUG",
-    "SEP",
-    "OCT",
-    "NOV",
-    "DEC",
-  ],
+  labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
   datasets: [
     {
       label: "Credit Progress Last Year",
       fill: false,
-      lineTension: 0.5,
+      lineTension:0.5,
       backgroundColor: "#FFF",
       borderColor: "#00A645",
       borderWidth: 3,
@@ -112,19 +99,8 @@ function Home() {
         </div>
 
         <div className="chart2">
-          {" "}
-          <Bar
-            className="BarChart"
-            data={state1}
-            width={100}
-            height={30}
-            options={{
-              title: {
-                text: "Average Rainfall per month",
-                fontSize: 20,
-              },
-            }}
-          />
+           lasnd
+      
         </div>
       </div>
 
