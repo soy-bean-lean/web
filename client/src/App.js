@@ -36,6 +36,7 @@ function App() {
             
             <Route path='/P'  component={dashboardPro} />
             <Route path='/C'  component={dashboardCha} />
+            <Route path='/A'  component={dashboardCha} />
 
             <Route path='/cpdP' component={cpdPro} />
             <Route path='/cpdC' component={cpdCha} />
