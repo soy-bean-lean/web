@@ -9,13 +9,13 @@ import * as MdIcons from  "react-icons/md";
 export const SidebarDataAssociate = [
   {
     title: 'Dashboard',
-    path: '/',
+    path: '/A',
     icon: <AiIcons.AiFillDashboard />,
     cName: 'nav-text'
   },
   {
     title: 'Course',
-    path: '/course',
+    path: '/courseA',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
   },
