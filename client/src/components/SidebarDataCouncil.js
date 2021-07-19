@@ -6,52 +6,45 @@ import * as SiIcons from  "react-icons/si";
 import * as GIIcons from  "react-icons/gi";
 import * as HiIcons from  "react-icons/hi";
 import * as MdIcons from  "react-icons/md";
-export const SidebarDataStudent = [
+export const SidebarDataCouncil = [
   {
     title: 'Dashboard',
-    path: '/S',
+    path: '/',
     icon: <AiIcons.AiFillDashboard />,
     cName: 'nav-text'
   },
   {
     title: 'Course',
-    path: '/courseS',
+    path: '/course',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
   },
   {
     title: 'Workshops',
-    path: '/workshopS',
+    path: '/workshop',
     icon: <GIIcons.GiTeacher />,
     cName: 'nav-text'
   },
   {
     title: 'Blogs',
-    path: '/blogS',
+    path: '/blog',
     icon: <FaIcons.FaBloggerB />,
     cName: 'nav-text'
   },
   {
-    title: 'Course',
-    path: '/courseS',
-    icon: <FaIcons.FaGraduationCap />,
-    cName: 'nav-text'
-  },
-  
-  {
     title: 'Forum',
-    path: '/forumS',
+    path: '/forum',
     icon: <MdIcons.MdForum />,
     cName: 'nav-text'
   },
   {
     title: 'Reports',
-    path: '/reportsS',
+    path: '/reports',
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
   },{
     title: 'Payments',
-    path: '/paymentsS',
+    path: '/payments',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
   },

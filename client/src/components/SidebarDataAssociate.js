@@ -9,47 +9,43 @@ import * as MdIcons from  "react-icons/md";
 export const SidebarDataAssociate = [
   {
     title: 'Dashboard',
-    path: '/',
+    path: '/A',
     icon: <AiIcons.AiFillDashboard />,
     cName: 'nav-text'
   },
   {
-    title: 'Course',
-    path: '/course',
-    icon: <FaIcons.FaGraduationCap />,
-    cName: 'nav-text'
-  },
-  {
-    title: 'Workshops',
-    path: '/workshop',
-    icon: <GIIcons.GiTeacher />,
-    cName: 'nav-text'
-  },
-  {
     title: 'Blogs',
-    path: '/blog',
+    path: '/blogA',
     icon: <FaIcons.FaBloggerB />,
     cName: 'nav-text'
   },
   {
     title: 'Forum',
-    path: '/forum',
+    path: '/forumA',
     icon: <MdIcons.MdForum />,
     cName: 'nav-text'
   },
   {
+    title: 'Course',
+    path: '/courseA',
+    icon: <FaIcons.FaGraduationCap />,
+    cName: 'nav-text'
+  },
+  {
     title: 'Reports',
-    path: '/reports',
+    path: '/reportsA',
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
-  },{
+  },
+  {
     title: 'Jobs',
-    path: '/job',
+    path: '/jobA',
     icon: <FaIcons.FaUserAlt />,
     cName: 'nav-text'
-  },{
+  }
+  ,{
     title: 'Payments',
-    path: '/payments',
+    path: '/paymentsA',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
   },

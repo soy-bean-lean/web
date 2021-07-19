@@ -9,52 +9,52 @@ import * as MdIcons from  "react-icons/md";
 export const SidebarDataPro = [
   {
     title: 'Dashboard',
-    path: '/',
+    path: '/P',
     icon: <AiIcons.AiFillDashboard />,
     cName: 'nav-text'
   },{
     title: 'CPD Records',
-    path: '/cpd',
+    path: '/cpdP',
     icon: <HiIcons.HiDocumentReport />,
     cName: 'nav-text'
   },
   {
     title: 'Course',
-    path: '/course',
+    path: '/courseP',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
   },
   {
     title: 'Workshops',
-    path: '/workshop',
+    path: '/workshopP',
     icon: <GIIcons.GiTeacher />,
     cName: 'nav-text'
   },
   {
     title: 'Blogs',
-    path: '/blog',
+    path: '/blogP',
     icon: <FaIcons.FaBloggerB />,
     cName: 'nav-text'
   },
   {
     title: 'Forum',
-    path: '/forum',
+    path: '/forumP',
     icon: <MdIcons.MdForum />,
     cName: 'nav-text'
   },
   {
     title: 'Reports',
-    path: '/reports',
+    path: '/reportsP',
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
   },{
     title: 'Jobs',
-    path: '/job',
+    path: '/jobP',
     icon: <FaIcons.FaUserAlt />,
     cName: 'nav-text'
   },{
     title: 'Payments',
-    path: '/payments',
+    path: '/paymentsP',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
   },
