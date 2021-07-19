@@ -100,7 +100,7 @@ function Home() {
 
         <div className="chart2">
           {" "}
-          <Bar
+          <Pie
             className="BarChart"
             data={state1}
             width={100}
