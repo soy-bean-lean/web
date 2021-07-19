@@ -40,6 +40,7 @@ import courseAss from './pages/associate/course';
 import forumAss from './pages/associate/forum';
 import paymentsAss from './pages/associate/payments';
 import reportsAss from './pages/associate/reports';
+import jobAss from './pages/associate/job';
 
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
     return (
       <>
         <Router>
-          <Navbar name="jee" type="student"/>
+          <Navbar name="jee" type="pro"/>
           <Switch>
             
             <Route path='/P'  component={dashboardPro} />
@@ -62,6 +63,7 @@ function App() {
             <Route path='/courseP' exact component={coursePro} />
             <Route path='/courseC' component={courseCha} />
             <Route path='/courseS' component={courseStu} />
+            <Route path='/courseA' component={courseAss} />
 
             <Route path='/workshopP'  component={workshopPro} />
             <Route path='/workshopS'  component={workshopCha} />
@@ -70,21 +72,26 @@ function App() {
             <Route path='/blogP' component={blogsPro} />
             <Route path='/blogC' component={blogCha} />
             <Route path='/blogS'  component={blogStu}/>
+            <Route path='/blogA'  component={blogAss}/>
             
             <Route path='/forumP' component={forumPro} />
             <Route path='/forumC' component={forumCha} />
             <Route path='/forumS' component={forumStu} />
+            <Route path='/forumA' component={forumAss} />
             
             <Route path='/reportsP'  component={reportsPro} />
             <Route path='/reportsC'  component={reportsCha} />
             <Route path='/reportsS'  component={reportsStu} />
+            <Route path='/reportsA'  component={reportsAss} />
             
             <Route path='/jobP' component={jobPro} />
             <Route path='/jobC' component={jobCha} />
+            <Route path='/jobA' component={jobAss} />
             
             <Route path='/paymentsP' component={paymentsPro} />
             <Route path='/paymentsC' component={paymentsCha} />
             <Route path='/paymentsS' component={paymentsStu} />
+            <Route path='/paymentsA' component={paymentsAss} />
           
           </Switch>
         </Router>
