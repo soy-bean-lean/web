@@ -32,6 +32,14 @@ import forumStu from './pages/student/forum';
 import paymentsStu from './pages/student/payments';
 import reportsStu from './pages/student/reports';
 
+//Associate
+import dashboardAss from './pages/associate/dashboard';
+import blogAss from './pages/associate/blog';
+import courseAss from './pages/associate/course';
+import forumAss from './pages/associate/forum';
+import paymentsAss from './pages/associate/payments';
+import reportsAss from './pages/associate/reports';
+
 
 function App() {
   
@@ -45,6 +53,7 @@ function App() {
             <Route path='/P'  component={dashboardPro} />
             <Route path='/C'  component={dashboardCha} />
             <Route path='/S'  component={dashboardStu} />
+            <Route path='/A'  component={dashboardAss} />
 
             <Route path='/cpdP' component={cpdPro} />
             <Route path='/cpdC' component={cpdCha} />
