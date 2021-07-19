@@ -46,7 +46,7 @@ import jobAss from './pages/associate/job';
 function App() {
   
 const mname="anushka";
-const mtype="cha";
+const mtype="pro";
 if(mtype=="pro"){
     return (
       <>
@@ -54,12 +54,12 @@ if(mtype=="pro"){
           <Navbar name={ mname } type={ mtype }/>
           <Switch>
             
-            <Route path='/'  component={dashboardPro} />
+            <Route path='/' exact component={dashboardPro} />
 
             <Route path='/cpdP' component={cpdPro} />
             <Route path='/cpdC' component={cpdCha} />
             
-            <Route path='/courseP' exact component={coursePro} />
+            <Route path='/courseP' component={coursePro} />
             <Route path='/courseC' component={courseCha} />
             <Route path='/courseS' component={courseStu} />
             <Route path='/courseA' component={courseAss} />
