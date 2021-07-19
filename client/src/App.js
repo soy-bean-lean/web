@@ -5,7 +5,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //professional
 import dashboardPro from './pages/professional/dashboard';
 import cpdPro from './pages/professional/cpd';
+
 import coursePro from './pages/professional/course';
+import coursView from './pages/professional/coursView';
+
 import workshopPro from './pages/professional/workshop';
 import blogsPro from './pages/professional/blog';
 import forumPro from './pages/professional/forum';
@@ -65,6 +68,7 @@ if(mtype=="pro"){
             <Route path='/reportsP'  component={reportsPro} />            
             <Route path='/jobP' component={jobPro} />            
             <Route path='/paymentsP' component={paymentsPro} />
+            <Route path='/coursViewP/:id' component={coursView} />
 
           
           </Switch>

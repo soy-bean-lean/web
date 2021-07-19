@@ -67,7 +67,7 @@ const options = {
 function Home() {
   const classes = useStyles();
   return (
-    <div className="main">
+    <div className="mainDash">
       <div className="progress">
         <div className="progressBar">
           <div className="progressColour"></div>
