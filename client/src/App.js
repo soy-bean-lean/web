@@ -42,6 +42,8 @@ import paymentsAss from './pages/associate/payments';
 import reportsAss from './pages/associate/reports';
 import jobAss from './pages/associate/job';
 
+//Secretary
+
 
 function App() {
   
