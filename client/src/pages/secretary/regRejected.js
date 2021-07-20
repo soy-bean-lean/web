@@ -28,7 +28,7 @@ const columns = [
     selector: "regdate",
     sortable: true,
   },
-  
+ 
 ];
 
 const conditionalRowStyles = [
@@ -67,7 +67,7 @@ const conditionalRowStyles = [
 function regApprove() {
   return (
     <>
-       <div className="regEmp">
+      <div className="regEmp">
         <div className="leftPanel">
           <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
             <div className="approved">
@@ -91,7 +91,7 @@ function regApprove() {
         <div className="rightPanel">
           <Card>
             <DataTable
-              title="Approved Members"
+              title="Rejected Members"
               columns={columns}
               data={data}
               pagination

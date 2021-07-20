@@ -76,6 +76,8 @@ const state2 = {
 
 
 
+
+
 const options = {
   maintainAspectRatio: false,
 };
@@ -84,10 +86,6 @@ function Home() {
   const classes = useStyles();
   return (
     <div className="main">
-     
-
-      
-
       <div className="OnGoing">
         <center><h2>Members in CSSL</h2></center>
         <div className="ONG">
@@ -96,6 +94,7 @@ function Home() {
             data={state2}
             width={220}
             height={40}
+            
             options={
               ({ options },
               {

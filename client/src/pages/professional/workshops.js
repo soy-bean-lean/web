@@ -10,7 +10,7 @@ function workshop() {
   const id = "1";
   return (
     <>
-      <div className="search">
+      <div className="searchWork">
         <input placeholder="Categories"></input>
       </div>
 
