@@ -1,10 +1,11 @@
-.main {
-  overflow-y: auto;
+
+.mainDash {
   display: block;
   width: auto;
+  height: 720px;
   padding-top: 60px;
   background-color: rgb(255, 255, 255);
-  overflow-y: hidden;
+  overflow-y:scroll;
 }
 .bar {
   display: flex;
