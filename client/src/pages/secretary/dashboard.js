@@ -25,7 +25,7 @@ const state = {
       backgroundColor: "#136CDC",
       borderColor: "#136CDC",
       borderWidth: 3,
-      data: [1, 2, 4, 6, 6, 6, 7, 8, 10, 10, 11, 11],
+      data: [10, 20, 40, 60, 60, 60, 72, 81, 50, 30, 25, 41],
     },
   ],
 };
@@ -84,11 +84,7 @@ function Home() {
   const classes = useStyles();
   return (
     <div className="main">
-      <div className="progress">
-        <div className="progressBar">
-          <div className="progressColour"></div>
-        </div>
-      </div>
+     
 
       
 
@@ -122,7 +118,7 @@ function Home() {
           <Line
             data={state}
             width={220}
-            height={60}
+            height={80}
             options={
               ({ options },
               {
@@ -144,7 +140,7 @@ function Home() {
         <Bar
             data={state1}
             width={220}
-            height={60}
+            height={80}
             options={
               ({ options },
               {

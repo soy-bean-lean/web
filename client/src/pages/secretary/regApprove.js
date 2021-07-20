@@ -23,19 +23,19 @@ function regApprove() {
   return (
     <>
       <div className="main">
-        
+        <div className="search"> </div>
         <div className="mainCourses">
           <div className="course">
-           
+            <div className=""></div>
             <div className="courseDes">
         
-            <DataTable
-              title="Arnold Movies"
-              columns={columns}
-              data={data}
-              pagination
+          <DataTable
+            title="Arnold Movies"
+            columns={columns}
+            data={data}
+            pagination
 
-          />
+        />
       
             </div>
           </div>
