@@ -1,4 +1,13 @@
 
+.main {
+  overflow-y: auto;
+  display: block;
+  width: auto;
+ 
+  background-color: rgb(255, 255, 255);
+  overflow-y: hidden;
+}
+
 .title {
   display: flex;
   align-content: center;

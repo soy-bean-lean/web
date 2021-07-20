@@ -50,7 +50,7 @@ import paymentsSec from "./pages/secretary/payment";
 import regApprove from "./pages/secretary/regApprove";
 
 function App() {
-  const mname = "anushka";
+  const mname = "Jihani";
   const mtype = "sec";
   if (mtype == "pro") {
     return (
