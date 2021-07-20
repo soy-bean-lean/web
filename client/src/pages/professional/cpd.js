@@ -3,8 +3,8 @@ import "./style/cpd.css";
 function cpd(){
     return(
    
-        <div className='title'>
-        <h1>CPD</h1>
+        <div className='cpd'>
+        <h1>CPssD</h1>
       </div>
     );
 }

@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import dashboardPro from './pages/professional/dashboard';
 import cpdPro from './pages/professional/cpd';
 import coursePro from './pages/professional/course';
+import courseEnrollP from './pages/professional/coursEnrollment';
+import courseReviewP from './pages/professional/coursReviews';
 import workshopPro from './pages/professional/workshop';
 import blogsPro from './pages/professional/blog';
 import forumPro from './pages/professional/forum';
@@ -53,7 +55,7 @@ import regApprove from "./pages/secretary/regApprove";
 
 function App() {
   const mname = "anushka";
-  const mtype = "sec";
+  const mtype = "pro";
   if (mtype == "pro") {
     return (
       <>
@@ -71,6 +73,8 @@ function App() {
             <Route path='/jobP' component={jobPro} />            
             <Route path='/paymentsP' component={paymentsPro} />
             <Route path='/coursViewP/:id' component={coursView} />
+            <Route path='/coursEnrollsP/:id' component={courseEnrollP} />
+            <Route path='/courseReviewP/:id' component={courseReviewP} />
 
             <Route path="/courseP" component={coursePro} />
             <Route path="/workshopP" component={workshopPro} />
