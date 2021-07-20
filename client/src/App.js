@@ -58,7 +58,7 @@ import regApprove from "./pages/secretary/regApprove";
 
 function App() {
   const mname = "Jihani";
-  const mtype = "sec";
+  const mtype = "pro";
   if (mtype == "pro") {
     return (
       <>
