@@ -55,10 +55,12 @@ import addJob from "./pages/secretary/addJob";
 import manageWorkshop from "./pages/secretary/manageWorkshop";
 import paymentsSec from "./pages/secretary/payment";
 import regApprove from "./pages/secretary/regApprove";
+import regPending from "./pages/secretary/regPending";
+import regRejected from "./pages/secretary/regRejected";
 
 function App() {
   const mname = "Chamika";
-  const mtype = "pro";
+  const mtype = "sec";
   if (mtype == "pro") {
     return (
       <>
@@ -123,6 +125,8 @@ function App() {
             <Route path="/addJob" component={addJob} />
             <Route path="/manWorkshop" component={manageWorkshop} />
             <Route path="/regApprove" component={regApprove} />
+            <Route path="/regPending" component={regPending} />
+            <Route path="/regRejected" component={regRejected} />
             <Route path="/paymentsSec" component={paymentsSec} />
           </Switch>
         </Router>

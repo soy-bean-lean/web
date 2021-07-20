@@ -16,7 +16,7 @@ export const SidebarDataSec = [
 
   {
     title: 'Registration Approval',
-    path: '/regApprove',
+    path: '/regPending',
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
   },
