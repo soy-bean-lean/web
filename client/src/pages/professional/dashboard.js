@@ -3,6 +3,8 @@ import "./style/dashboard.css";
 import { makeStyles, Paper, Grid } from "@material-ui/core";
 import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";
 import { Redirect } from "react-router-dom";
+import Tabs from "./tabs";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -13,49 +15,30 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
   },
 }));
-
 const state = {
-  labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
-  datasets: [
-    {
-      label: "Credit Progress Last Year",
-      fill: false,
-      lineTension:0.5,
-      backgroundColor: "#FFF",
-      borderColor: "#00A645",
-      borderWidth: 3,
-      data: [1, 2, 4, 6, 6, 6, 7, 8, 10, 10, 11, 11],
-    },
+  labels: [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
   ],
-};
-
-const state1 = {
-  labels: ["2015", "2016", "2017", "2018", "2019", "2020"],
   datasets: [
     {
-      label: "Member Payments",
-      backgroundColor: [
-        "#00A645",
-        "#00A645",
-        "#00A645",
-        "#00A645",
-        "#00A645",
-        "#00A645",
-        "#00A645",
-        "#00A645",
-        "#00A645",
-        "#00A645",
-      ],
-      hoverBackgroundColor: [
-        "#060b60",
-        "#060b60",
-        "#060b60",
-        "#060b60",
-        "#060b60",
-        "#060b60",
-        "#060b60",
-      ],
-      data: [20000, 34000, 45000, 56000, 78000, 123000],
+      label: "Credit Progress",
+      fill: false,
+      lineTension: 0.5,
+      backgroundColor: "#136CDC",
+      borderColor: "#136CDC",
+      borderWidth: 3,
+      data: [10, 20, 40, 60, 60, 60, 72, 81, 90, 88, 90, 99],
     },
   ],
 };
@@ -72,6 +55,9 @@ function Home() {
         <div className="progressBar">
           <div className="progressColour"></div>
         </div>
+        <div>
+          <h3>75 %</h3>
+        </div>
       </div>
 
       <div className="Charts">
@@ -80,7 +66,7 @@ function Home() {
           <Line
             data={state}
             width={220}
-            height={60}
+            height={80}
             options={
               ({ options },
               {
@@ -98,16 +84,25 @@ function Home() {
           />
         </div>
 
-        <div className="chart2">
-           lasnd
-      
+        <div className="recentAct">
+          <h3>Recent Activities</h3>
+          <div className="recent"></div>
+          <div className="recent"></div>
+          <div className="recent"></div>
+          <div className="recent"></div>
         </div>
       </div>
+   
 
       <div className="OnGoing">
-        <div className="ONG"></div>
+        <div className="ONG">
+             <Tabs></Tabs>
+        </div>
       </div>
     </div>
+
+
+
   );
 }
 

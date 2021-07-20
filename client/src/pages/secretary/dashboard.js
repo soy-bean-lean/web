@@ -86,10 +86,6 @@ function Home() {
   const classes = useStyles();
   return (
     <div className="main">
-     
-
-      
-
       <div className="OnGoing">
         <center><h2>Members in CSSL</h2></center>
         <div className="ONG">

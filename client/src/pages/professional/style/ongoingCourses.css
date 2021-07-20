@@ -45,28 +45,10 @@
   font-weight: 500;
   font-size: medium;
 }
-.rating {
+.rating{
   margin-top: 10px;
   width: 120px;
 }
-.Link {
+.Link{
   color: black;
-}
-.done {
-  margin-top: 10px;
-  display: flex;
-}
-.done .circle {
-  margin-right: -50px;
-  size: 300;
-}
-.done h4 {
-  margin-left: 11px;
-  margin-top: 15px;
-}
-.done .sucess{
-  color: green;
-  margin-left: 0px;
-  margin-top: 5px;
-  font-weight: 900;
 }

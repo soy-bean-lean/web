@@ -1,11 +1,10 @@
-
 .mainDash {
   display: block;
   width: auto;
   height: 720px;
   padding-top: 60px;
   background-color: rgb(255, 255, 255);
-  overflow-y:scroll;
+  overflow-y: scroll;
 }
 .bar {
   display: flex;
@@ -31,49 +30,6 @@
   float: right;
 }
 
-.progress {
-  margin: 10px;
-  padding: 5px;
-  border: 2px solid rgb(6, 10, 95);
-  border-radius: 15px;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  grid-area: progress;
-  padding: 5px;
-  background-color: rgb(255, 255, 255);
-}
-.progressBar {
-  display: block;
-  width: 60%;
-  justify-content: center;
-  border-radius: 15px;
-  overflow: visible;
-  
-  border: 1px solid rgb(6, 10, 95);
-  float: top;
-}
-.progressColour {
-  height: 10px;
-  width: 75%;
-  background-color: rgb(6, 10, 95);
-  border-radius: 15px;
-  animation: animate-positive 2s;
-}
-.progressValue {
-  width: 65px;
-  height: 25px;
-  font-size: 20px;
-  font-weight: 1000;
-  color: rgb(6, 10, 95);
-  align-content: center;
-  border-radius: 15px;
-  border-top: 0px;
-  position: absolute;
-  bottom: -5px;
-  right: -70px;
-}
 @-webkit-keyframes animate-positive {
   0% {
     width: 0;
@@ -97,20 +53,30 @@
   width: 49.5%;
   height: 100%;
   float: left;
-  border: 2px solid rgb(6, 10, 95);
+  border: 2px solid #136cdc;
   border-radius: 15px;
   background-color: rgb(255, 255, 255);
   grid-area: chart1;
 }
-
-.chart2 {
+.chart1 canvas{
+  height: 100%;
+}
+.recentAct .recent{
+  margin-top: 15px;
+  border: 1px solid #060a5f;
+  height: 32px;
+  border-radius: 0 20px 20px 0;
+  width: 95%;
+}
+.recentAct {
   border-radius: 15px;
   padding: 5px;
-
-  display: flex;
+  align-content: center;
+  display: block;
   height: 100%;
   width: 49.5%;
   float: right;
+  padding-left: 20px;
   border: 2px solid rgb(6, 10, 95);
   background-color: rgb(255, 255, 255);
   grid-area: chart1;
