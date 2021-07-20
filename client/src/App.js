@@ -5,16 +5,19 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //professional
 import dashboardPro from './pages/professional/dashboard';
 import cpdPro from './pages/professional/cpd';
+
 import coursePro from './pages/professional/course';
+import coursView from './pages/professional/coursView';
 import courseEnrollP from './pages/professional/coursEnrollment';
 import courseReviewP from './pages/professional/coursReviews';
-import workshopPro from './pages/professional/workshop';
+
+import workshopPro from './pages/professional/workshops';
+import workshopViewPro from './pages/professional/workshopsView';
 import blogsPro from './pages/professional/blog';
 import forumPro from './pages/professional/forum';
 import reportsPro from './pages/professional/reports';
 import jobPro from './pages/professional/job';
 import paymentsPro from './pages/professional/payments';
-import coursView from './pages/professional/coursView';
 
 
 //chartered
@@ -66,15 +69,19 @@ function App() {
             <Route path='/' exact component={dashboardPro} />
             <Route path='/cpdP' component={cpdPro} />
             <Route path='/courseP' component={coursePro} />
+            <Route path='/coursViewP/:id' component={coursView} />
+            <Route path='/coursEnrollsP/:id' component={courseEnrollP} />
+            <Route path='/courseReviewP/:id' component={courseReviewP} />
+
             <Route path='/workshopP'  component={workshopPro} />
+            <Route path='/workshopViewP'  component={workshopViewPro} />
+
             <Route path='/blogP' component={blogsPro} />          
             <Route path='/forumP' component={forumPro} />
             <Route path='/reportsP'  component={reportsPro} />            
             <Route path='/jobP' component={jobPro} />            
             <Route path='/paymentsP' component={paymentsPro} />
-            <Route path='/coursViewP/:id' component={coursView} />
-            <Route path='/coursEnrollsP/:id' component={courseEnrollP} />
-            <Route path='/courseReviewP/:id' component={courseReviewP} />
+
 
             <Route path="/courseP" component={coursePro} />
             <Route path="/workshopP" component={workshopPro} />
