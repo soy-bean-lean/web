@@ -1,18 +1,20 @@
 .main {
-  overflow-y: auto;
+  /* overflow-y: auto; */
   display: block;
   width: auto;
  
   background-color: rgb(255, 255, 255);
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 .mainCourses {
   padding-top: 20px;
   align-content: center;
   justify-content: center;
-  height: 500px;
+  height: 550px;
+  width:auto;
   display: block;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
+  margin-left: 110px;
 }
 .table{
   height: 120px;
@@ -35,4 +37,13 @@
   grid-area: progress;
   padding: 5px;
   background-color: rgb(255, 255, 255);
+}
+.title {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.title h1 {
+  margin-top: 150px;
+  justify-content: center;
 }

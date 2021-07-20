@@ -76,6 +76,8 @@ const state2 = {
 
 
 
+
+
 const options = {
   maintainAspectRatio: false,
 };
@@ -96,6 +98,7 @@ function Home() {
             data={state2}
             width={220}
             height={40}
+            
             options={
               ({ options },
               {
