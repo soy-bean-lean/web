@@ -84,7 +84,7 @@ function App() {
   }
   else {
     const mname = "Jihani";
-    const mtype = "pro";
+    const mtype = "council";
     if (mtype == "pro") {
       return (
         <>

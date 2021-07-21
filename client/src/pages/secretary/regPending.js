@@ -5,7 +5,7 @@ import Card from "@material-ui/core/Card";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 
-const Button = () => <button type="button">Approve</button>;
+const Button = () => <button type="button">Verified</button>;
 
 const columns = [
   {
@@ -36,7 +36,7 @@ const columns = [
 
       <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
         <Button className ="approveBtn">
-        Approve
+        Verified
        </Button>
       </Link>
       
@@ -82,19 +82,19 @@ function regPending() {
     <> <div className="regEmp">
     <div className="leftPanel">
       <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
-        <div className="approved">
+        <div className="approved" style={{backgroundColor:"blue"}  }>
           <h3>Verified Users</h3>
           <h1>161</h1>
         </div>
       </Link>
       <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
-        <div className="pending">
+        <div className="pending" style={{backgroundColor:"white"} }>
           <h3>Pending Users</h3>
           <h1>10</h1>
         </div>
       </Link>
       <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-        <div className="rejected">
+        <div className="rejected" style={{backgroundColor:"blue"} }>
           <h3>Rejected Users</h3>
           <h1>02</h1>
         </div>
