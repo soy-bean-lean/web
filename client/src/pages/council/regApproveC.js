@@ -68,21 +68,21 @@ function regApproveC() {
   return (
     <>
        <div className="regEmp">
-        <div className="leftPanel">
-          <Link to={"/regApproveC"} style={{ textDecoration: 'none' }}>
-            <div className="approved">
-              <h3>Verified Users</h3>
-              <h1>161</h1>
+       <div className="leftPanelS">
+          <Link to={"/regApproveC"} style={{ textDecoration: "none" }}>
+            <div className="approved" style={{ backgroundColor: "#0a0363" }}>
+              <h3 style={{ color: "white" }}>Verified Users</h3>
+              <h1 style={{ color: "white" }}>161</h1>
             </div>
           </Link>
-          <Link to={"/regPendingC/"} style={{ textDecoration: 'none' }}>
-            <div className="pending">
+          <Link to={"/regPendingC/"} style={{ textDecoration: "none" }}>
+            <div className="pending" style={{ backgroundColor: "white" }}>
               <h3>Pending Users</h3>
               <h1>10</h1>
             </div>
           </Link>
-          <Link to={"/regRejectedC/"} style={{ textDecoration: 'none' }}>
-            <div className="rejected">
+          <Link to={"/regRejectedC/"} style={{ textDecoration: "none" }}>
+            <div className="rejected" style={{ backgroundColor: "white" }}>
               <h3>Rejected Users</h3>
               <h1>02</h1>
             </div>
