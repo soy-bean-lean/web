@@ -126,7 +126,7 @@ function App() {
   }else{
     
     const mname = "Jihani";
-    const mtype = "Council";
+    const mtype = "Professional";
     
     //const mname = "Supun";
     //const mtype = "Council";
