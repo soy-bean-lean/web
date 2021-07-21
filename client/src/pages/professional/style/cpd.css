@@ -1,19 +1,28 @@
-  .recentCPD{
+  .recentCPDRec{
     margin: 10px;
-    padding: 15px;
+    /*padding: 15px;*/
     border: 2px solid rgb(6, 10, 95);
     border-radius: 15px 0px 0px 15px;
     height: 300px;
     justify-content: center;
     align-items: flex-start;
-    display: flex;
+    display: block;
     background-color: rgb(255, 255, 255);
     overflow-y: auto;
   }
 
-  .recentRec{
-    padding: 10px;
-    width: 1000px;
+  .titleRecent{
+    padding-left: 15px;
+  }
+
+
+.recentRec {
+  padding: 5px;
+  width: 1000px;
+}
+
+  .recList{
+    margin: 10px;
   }
 
   .recType{
@@ -29,27 +38,30 @@
     background-color: rgb(255, 255, 255);
   }
 
-  .recAllign{
-    background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
-    font-weight: 500;
-    border-radius: 0px 8px 8px 8px;
-    height: 40px;
-    width: inherit;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-  }
+.recAllign {
+  background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
+  font-weight: 500;
+  border-radius: 0px 8px 8px 8px;
+  height: 40px;
+  width: inherit;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
 
-  .recDes{
-    padding: 5px;
-    justify-content: left;
-    align-items: center;
-    /*margin-right: 400px;
+.recDes {
+  padding: 5px;
+  justify-content: left;
+  align-items: center;
+  /*margin-right: 400px;
     display: flex;*/
-    
-  }
+}
+.recPending{
+  color: white;
+}
 
-  .recPending{
+
+.recPending[data-status="Pending"]{
     margin-left: auto;
     padding: 5px;
     border-radius: 8px 8px 8px 8px;
@@ -58,6 +70,32 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    background-color: rgb(202, 247, 3);
+    background-color: rgb(255, 231, 11);
   }
   
+.recPending[data-status="Approved"]{
+    margin-left: auto;
+    padding: 5px;
+    border-radius: 8px 8px 8px 8px;
+    height: inherit;
+    width:100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: rgb(3, 247, 15);
+  }
+
+.recPending[data-status="Rejected"]{
+    margin-left: auto;
+    padding: 5px;
+    border-radius: 8px 8px 8px 8px;
+    height: inherit;
+    width:100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: rgb(255, 4, 4);
+  }
+
+
+

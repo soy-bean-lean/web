@@ -124,7 +124,7 @@
     left: 0;
     width: 20%;
     transition: 350ms;
-    z-index: 1;
+    z-index: 10;
 }
 
 .nav-text {

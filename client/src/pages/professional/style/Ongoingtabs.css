@@ -2,8 +2,23 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.react-tabs__tab-list {
+/*.react-tabs__tab-list {
   padding: 0;
+  margin: 5px;
+}*/
+
+.react-tabs__tab-list{
+  position: -webkit-sticky;
+  position: sticky;
+  padding:5px;
+  background: white;
+  top: 0;
+  border: 1px solid white;
+  float: top;
+  width: 1100px;
+  padding-bottom: 20px;
+  z-index: 1;
+  margin-left: 10px;
 }
 
 .react-tabs__tab {
@@ -14,7 +29,7 @@
   list-style: none;
   padding: 10px 15px;
   border-radius: 5px;
-
+  /*margin: 2px;*/
   border: 1px solid rgb(0, 0, 0);
 
   cursor: pointer;

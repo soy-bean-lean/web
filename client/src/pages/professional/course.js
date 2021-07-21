@@ -17,8 +17,8 @@ function course() {
     <>
       <Tabs style={{ paddingTop: "65px", paddingLeft: "3px" }}>
         <TabList>
-          <Tab>My Courses</Tab>
           <Tab>Courses</Tab>
+          <Tab>My Courses</Tab>
         </TabList>
         <TabPanel>
           <div className="search">

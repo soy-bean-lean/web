@@ -17,40 +17,91 @@
   float: left;
   padding-left: 30px;
 }
-.Courses .courseDescription .topic1,
-.topic2,
-.topic3 {
-  width: 80%;
-  height: 50px;
-  margin: 20px;
-  border-radius: 15px;
-  list-style: none;
-  align-content: center;
-  justify-content: start;
+.recentCPD {
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid rgb(6, 10, 95);
+  border-radius: 15px 0px 0px 15px;
+  height: 300px;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  overflow-y: auto;
 }
-.topic1 :hover ,.topic2 :hover,.topic3 :hover{
 
-  background-color:#060a5f ;
+.CourseDes {
+  padding: 10px;
+  width: 600px;
+  margin-top: 5px;
+}
+
+.topic {
+  padding: 5px;
+  border: 2px solid #7883e2;
+  font-weight: 600;
+  border-radius: 10px 10px 0px 0px;
+  height: auto;
+  width: 80px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+}
+
+.detailTopicCourse {
+  font-weight: 500;
+  border-radius: 0px 8px 8px 8px;
+  height: 40px;
+  width: 650px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+.detailTopicCourse1{
+  background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
+  font-weight: 500;
+  border-radius: 0px 8px 8px 8px;
+  height: 40px;
+  width: 650px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+.detailTopicCourse1 h3{
+  width: 650px;
+  font-weight: 500;
+}
+.detailTopicCourse1 :hover {
+  font-weight: 600;
+  border-radius: 0px 8px 8px 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+  transition: 0.5s;
+}
+
+.textCourse {
+  padding: 5px;
+  justify-content: left;
+  align-items: center;
+  
+  /*margin-right: 400px;
+    display: flex;*/
+}
+.start{
+  margin-left: auto;
+  padding: 5px;
+  border-radius: 8px 8px 8px 8px;
+  height: inherit;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgb(14, 124, 29);
   color: white;
-  font-weight: bold;
-}
-.Courses .courseDescription .topic {
-  width: 50px;
-  float: left;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  background-color: rgb(16, 155, 11);
-  border-radius: 15px;
-}
-.Courses .courseDescription .text {
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  border: 1px solid #060a5f;
-  border-radius: 15px;
+
 }
 .courseDetails {
   height: 120px;
