@@ -86,32 +86,6 @@ function Home() {
   const classes = useStyles();
   return (
     <div className="main">
-      <div className="OnGoing">
-        <center><h2>Members in CSSL</h2></center>
-        <div className="ONG">
-        
-        <Bar
-            data={state2}
-            width={220}
-            height={40}
-            
-            options={
-              ({ options },
-              {
-                title: {
-                  display: true,
-                  text: "Credit Progress Last Year",
-                  fontSize: 20,
-                },
-                legend: {
-                  display: true,
-                  position: "left",
-                },
-              })
-            }
-          />
-        </div>
-      </div>
       <div className="Charts">
         <div className="chart1">
           <Line
@@ -136,15 +110,46 @@ function Home() {
         </div>
 
         <div className="chart2">
-        <Bar
-            data={state1}
-            width={220}
-            height={80}
+          <Paper>
+            <p>hhhhhhhhhhhhhhhhhhhhaaaaaaaaaaaaaaa</p>
+          </Paper>
+          <Line
+            data={state}
+            width={60}
+            height={30}
             options={
               ({ options },
               {
                 title: {
-                  display: false,
+                  display: true,
+                  text: "Credit Progress Last Year",
+                  fontSize: 20,
+                },
+                legend: {
+                  display: true,
+                  position: "left",
+                },
+              })
+            }
+          />
+        
+        </div>
+      </div>
+
+      <div className="OnGoing">
+        <center><h2>Members in CSSL</h2></center>
+        <div className="ONG">
+        
+        <Bar
+            data={state2}
+            width={220}
+            height={40}
+            
+            options={
+              ({ options },
+              {
+                title: {
+                  display: true,
                   text: "Credit Progress Last Year",
                   fontSize: 20,
                 },
