@@ -14,7 +14,7 @@ import { SidebarDataStudent } from "./SidebarDataStudent";
 import "./Navbar.css";
 import { IconContext } from "react-icons";
 import * as MdIcons from "react-icons/md";
-import progileImg from "../imgs/p3.jpg";
+import progileImg from "../imgs/p4.jpeg";
 
 function Navbar(props) {
   const [sidebar, setSidebar] = useState(true);
