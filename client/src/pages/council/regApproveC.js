@@ -5,19 +5,13 @@ import Card from "@material-ui/core/Card";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 
-const Button = () => <button type="button">Approve</button>;
 
 const columns = [
   {
-    name: "Member ID",
-    selector: "mid",
-    sortable: true,
-    width: "200px",
-  },
-  {
-    name: "Member Name",
+    name: "Name",
     selector: "mname",
     sortable: true,
+    width: "200px",
   },
   {
     name: "Status",
@@ -25,23 +19,16 @@ const columns = [
     sortable: true,
   },
   {
+    name: "email",
+    selector: "email",
+    sortable: true,
+  },
+  {
     name: "Resgistred Date",
     selector: "regdate",
     sortable: true,
   },
-  {
-    name: "Action",
-    button: true,
-    cell: () => (
-
-      <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-        <Button className ="approveBtn">
-        Approve
-       </Button>
-      </Link>
-      
-    ),
-  },
+  
 ];
 
 const conditionalRowStyles = [
@@ -77,33 +64,34 @@ const conditionalRowStyles = [
   },
 ];
 
-function regPending() {
+function regApproveC() {
   return (
-    <> <div className="regEmp">
-    <div className="leftPanel">
-      <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
-        <div className="approved">
-          <h3>Verified Users</h3>
-          <h1>161</h1>
+    <>
+       <div className="regEmp">
+        <div className="leftPanel">
+          <Link to={"/regApproveC"} style={{ textDecoration: 'none' }}>
+            <div className="approved">
+              <h3>Verified Users</h3>
+              <h1>161</h1>
+            </div>
+          </Link>
+          <Link to={"/regPendingC/"} style={{ textDecoration: 'none' }}>
+            <div className="pending">
+              <h3>Pending Users</h3>
+              <h1>10</h1>
+            </div>
+          </Link>
+          <Link to={"/regRejectedC/"} style={{ textDecoration: 'none' }}>
+            <div className="rejected">
+              <h3>Rejected Users</h3>
+              <h1>02</h1>
+            </div>
+          </Link>
         </div>
-      </Link>
-      <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
-        <div className="pending">
-          <h3>Pending Users</h3>
-          <h1>10</h1>
-        </div>
-      </Link>
-      <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-        <div className="rejected">
-          <h3>Rejected Users</h3>
-          <h1>02</h1>
-        </div>
-      </Link>
-    </div>
         <div className="rightPanel">
           <Card>
             <DataTable
-              title="Pending Members"
+              title="Verified Members"
               columns={columns}
               data={data}
               pagination
@@ -116,4 +104,4 @@ function regPending() {
   );
 }
 
-export default regPending;
+export default regApproveC;

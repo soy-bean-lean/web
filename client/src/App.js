@@ -65,8 +65,11 @@ import blogsCou from "./pages/council/blogs";
 import verifyWorkshop from "./pages/council/verifyWorkshop";
 import paymentCou from "./pages/council/payment";
 import reportCou from "./pages/council/report";
-import regApproveCou from "./pages/council/regApprove";
+import regPendingCou from "./pages/council/regPendingC";
+import regApproveCou from "./pages/council/regApproveC";
+import regRejectedCou from "./pages/council/regRejectedC";
 import cpdCou from "./pages/council/cpd"
+
 
 function App() {
   const mname = "Jihani";
@@ -173,7 +176,9 @@ function App() {
             <Route path="/blogCou" component={blogsCou} />
             <Route path="/workshopCou" component={verifyWorkshop} />
             <Route path="/reportsCou" component={reportCou} />
-            <Route path="/regApproveCou" component={regApproveCou} />
+            <Route path="/regPendingC" component={regPendingCou} />
+            <Route path="/regRejectedC" component={regRejectedCou} />
+            <Route path="/regApproveC" component={regApproveCou} />
             <Route path="/paymentCou" component={paymentCou} />
             <Route path="/cpdCou" component={cpdCou} />
           </Switch>

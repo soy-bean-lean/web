@@ -64,24 +64,24 @@ const conditionalRowStyles = [
   },
 ];
 
-function regApprove() {
+function regRejectedC() {
   return (
     <>
       <div className="regEmp">
         <div className="leftPanel">
-          <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
+          <Link to={"/regApproveC"} style={{ textDecoration: 'none' }}>
             <div className="approved">
               <h3>Verified Users</h3>
               <h1>161</h1>
             </div>
           </Link>
-          <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
+          <Link to={"/regPendingC/"} style={{ textDecoration: 'none' }}>
             <div className="pending">
               <h3>Pending Users</h3>
               <h1>10</h1>
             </div>
           </Link>
-          <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
+          <Link to={"/regRejectedC/"} style={{ textDecoration: 'none' }}>
             <div className="rejected">
               <h3>Rejected Users</h3>
               <h1>02</h1>
@@ -104,4 +104,4 @@ function regApprove() {
   );
 }
 
-export default regApprove;
+export default regRejectedC;

@@ -15,7 +15,7 @@ export const SidebarDataCouncil = [
   },
   {
     title: 'Approve Registration ',
-    path: '/regApproveCou',
+    path: '/regPendingC',
     icon: <AiIcons.AiFillDashboard />,
     cName: 'nav-text'
   },
