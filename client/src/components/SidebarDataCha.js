@@ -14,47 +14,47 @@ export const SidebarDataCha = [
         cName: 'nav-text'
       },{
         title: 'CPD Records',
-        path: '/cpd',
+        path: '/cpdC',
         icon: <HiIcons.HiDocumentReport />,
         cName: 'nav-text'
       },
       {
         title: 'Course',
-        path: '/course',
+        path: '/courseC',
         icon: <FaIcons.FaGraduationCap />,
         cName: 'nav-text'
       },
       {
         title: 'Workshops',
-        path: '/workshop',
+        path: '/workshopC',
         icon: <GIIcons.GiTeacher />,
         cName: 'nav-text'
       },
       {
         title: 'Blogs',
-        path: '/blog',
+        path: '/blogC',
         icon: <FaIcons.FaBloggerB />,
         cName: 'nav-text'
       },
       {
         title: 'Forum',
-        path: '/forum',
+        path: '/forumC',
         icon: <MdIcons.MdForum />,
         cName: 'nav-text'
       },
       {
         title: 'Reports',
-        path: '/reports',
+        path: '/reportsC',
         icon: <AiIcons.AiFillFileText />,
         cName: 'nav-text'
       },{
         title: 'Jobs',
-        path: '/job',
+        path: '/jobC',
         icon: <FaIcons.FaUserAlt />,
         cName: 'nav-text'
       },{
         title: 'Payments',
-        path: '/payments',
+        path: '/paymentsC',
         icon: <AiIcons.AiFillDollarCircle />,
         cName: 'nav-text'
       }

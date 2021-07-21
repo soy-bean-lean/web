@@ -15,36 +15,43 @@ export const SidebarDataStudent = [
   },
   {
     title: 'Course',
-    path: '/course',
+    path: '/courseS',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
   },
   {
     title: 'Workshops',
-    path: '/workshop',
+    path: '/workshopS',
     icon: <GIIcons.GiTeacher />,
     cName: 'nav-text'
   },
   {
     title: 'Blogs',
-    path: '/blog',
+    path: '/blogS',
     icon: <FaIcons.FaBloggerB />,
     cName: 'nav-text'
   },
   {
+    title: 'Course',
+    path: '/courseS',
+    icon: <FaIcons.FaGraduationCap />,
+    cName: 'nav-text'
+  },
+  
+  {
     title: 'Forum',
-    path: '/forum',
+    path: '/forumS',
     icon: <MdIcons.MdForum />,
     cName: 'nav-text'
   },
   {
     title: 'Reports',
-    path: '/reports',
+    path: '/reportsS',
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
   },{
     title: 'Payments',
-    path: '/payments',
+    path: '/paymentsS',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
   },

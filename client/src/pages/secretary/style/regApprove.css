@@ -1,0 +1,96 @@
+.regEmp {
+  align-content: center;
+  justify-content: center;
+  height: 620px;
+  width: 100%;
+  display: block;
+  padding-top: 65px;
+}
+a {
+  border-bottom: none;
+}
+.kZQolz button {
+  margin: 5px;
+  height: 30px;
+  width: 80px;
+  border-radius: 10px;
+  background: rgb(10, 3, 99);
+  color: white;
+  font-size: 15px;
+
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.iXWbiv{
+  background: transparent;
+  margin: 5px;
+  height: 30px;
+  width: 80px;
+  border-radius: 10px;
+  background: rgb(10, 3, 99);
+  color: white;
+  font-size: 15px;
+
+  border: 1px solid rgb(0, 0, 0);
+}
+.rightPanel {
+  height: 98%;
+  padding: 5px;
+  width: 80%;
+  margin-top: 5px;
+  border-radius: 10px;
+  float: right;
+  overflow-y: scroll;
+}
+.leftPanel {
+  height: 98%;
+  width: 18%;
+  border-radius: 10px;
+  margin-left: 15px;
+  float: left;
+}
+.leftPanel h3 {
+  width: 100%;
+  margin-top: 15px;
+  margin-left: 25px;
+  color: white;
+}
+
+.leftPanel h1 {
+  font-size: 90px;
+  padding-left: 60px;
+  padding-top: 5px;
+  color: white;
+}
+.leftPanel .approved {
+  width: 98%;
+  height: 30%;
+  align-content: center;
+  justify-content: center;
+  border: 1px solid rgb(0, 0, 0);
+  margin-top: 15px;
+  border-radius: 20px;
+  background-color: rgb(2, 90, 2);
+  color: white;
+}
+
+.leftPanel .pending {
+  border-radius: 20px;
+  margin-top: 20px;
+  width: 98%;
+  border: 1px solid rgb(0, 0, 0);
+  height: 30%;
+  background-color: rgb(12, 12, 107);
+}
+
+.leftPanel .rejected {
+  border-radius: 20px;
+
+  align-content: center;
+  justify-content: center;
+  margin-top: 20px;
+  border: 1px solid rgb(0, 0, 0);
+  width: 98%;
+  height: 30%;
+  background-color: rgb(133, 7, 7);
+}
