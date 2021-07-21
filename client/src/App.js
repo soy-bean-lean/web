@@ -70,7 +70,7 @@ import cpdCou from "./pages/council/cpd"
 
 function App() {
   const mname = "Jihani";
-  const mtype = "council";
+  const mtype = "pro";
   if (mtype == "pro") {
     return (
       <>

@@ -50,15 +50,29 @@ function cpd() {
   ));
 
   return (
-    <div className='main'>
-      <div className="addCPD">
-        
-      </div>
+    <div className="main">
       <div className="recentCPD">
-        <h3>Recent CPD Submissions</h3>
-        <div className="recList">
-          {recordList}
-        </div>
+        <Tabs style={{ paddingTop: "5px", paddingLeft: "3px" }}>
+          {" "}
+          <TabList>
+            <Tab>All</Tab>
+            <Tab>Approved</Tab>
+            <Tab>Pending</Tab>
+            <Tab>Rejected</Tab>
+          </TabList>
+          <TabPanel className="all">
+            <div className="recList">{recordList}</div>
+          </TabPanel>
+          <TabPanel className="approved">
+            <div className="recList">{recordList}</div>
+          </TabPanel>
+          <TabPanel className="pending">
+            <div className="recList">{recordList}</div>
+          </TabPanel>
+          <TabPanel className="rejected">
+            <div className="recList">{recordList}</div>
+          </TabPanel>
+        </Tabs>
       </div>
     </div>
   );

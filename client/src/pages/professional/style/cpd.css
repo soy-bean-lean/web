@@ -54,7 +54,7 @@
 .recPending{
   color: white;
 }
-.rejected  .recPending {
+/*.rejected  .recPending {
   margin-left: auto;
   padding: 5px;
   border-radius: 8px 8px 8px 8px;
@@ -75,9 +75,9 @@
   align-items: center;
   display: flex;
   background-color: rgb(153, 144, 21);
-}
+}*/
 
-  .recPending[data-status="Pending"]{
+.recPending[data-status="Pending"]{
     margin-left: auto;
     padding: 5px;
     border-radius: 8px 8px 8px 8px;
@@ -89,7 +89,7 @@
     background-color: rgb(255, 231, 11);
   }
   
-  .recPending[data-status="Approved"]{
+.recPending[data-status="Approved"]{
     margin-left: auto;
     padding: 5px;
     border-radius: 8px 8px 8px 8px;
@@ -101,7 +101,7 @@
     background-color: rgb(3, 247, 15);
   }
 
-  .recPending[data-status="Rejected"]{
+.recPending[data-status="Rejected"]{
     margin-left: auto;
     padding: 5px;
     border-radius: 8px 8px 8px 8px;
@@ -112,3 +112,6 @@
     display: flex;
     background-color: rgb(255, 4, 4);
   }
+
+
+
