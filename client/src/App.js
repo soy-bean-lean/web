@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //professional
 import dashboardPro from './pages/professional/dashboard';
 import cpdPro from './pages/professional/cpd';
+import cpdAddPro from './pages/professional/cpdAdd';
 
 import coursePro from './pages/professional/course';
 import coursView from './pages/professional/coursView';
@@ -94,6 +95,7 @@ function App() {
 
               <Route path='/' exact component={dashboardPro} />
               <Route path='/cpdP' component={cpdPro} />
+              <Route path='/addCPD' component={cpdAddPro} />
               <Route path='/courseP' component={coursePro} />
               <Route path='/coursViewP/:id' component={coursView} />
               <Route path='/coursEnrollsP/:id' component={courseEnrollP} />
