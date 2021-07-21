@@ -71,31 +71,31 @@ export default[
     regdate: "10/02/2010",
   
   },
-  {
-    id: 9,
-    mid:380,
-    mname: "Nathalia Nanayakkara",
-    email:"nataayakkara@gmail.com",
-    status: "Student Member",
-    regdate: "10/02/2021",
+  // {
+  //   id: 9,
+  //   mid:380,
+  //   mname: "Nathalia Nanayakkara",
+  //   email:"nataayakkara@gmail.com",
+  //   status: "Student Member",
+  //   regdate: "10/02/2021",
   
-  },
-  {
-    id: 10,
-    mid:280,
-    mname: "Anushka Darshana",
-    email:"jihaninanssssssssara@gmail.com",
-    status: "Associate Member",
-    regdate: "10/02/2021",
+  // },
+  // {
+  //   id: 10,
+  //   mid:280,
+  //   mname: "Anushka Darshana",
+  //   email:"jihaninanssssssssara@gmail.com",
+  //   status: "Associate Member",
+  //   regdate: "10/02/2021",
   
-  },
-  {
-    id: 11,
-    mid:280,
-    mname: "Jenisha Nanayakkara",
-    email:"jihanissfsyakkara@gmail.com",
-    status: "Associate Member",
-    regdate: "10/02/2019",
+  // },
+  // {
+  //   id: 11,
+  //   mid:280,
+  //   mname: "Jenisha Nanayakkara",
+  //   email:"jihanissfsyakkara@gmail.com",
+  //   status: "Associate Member",
+  //   regdate: "10/02/2019",
   
-  }
+  // }
 ]
