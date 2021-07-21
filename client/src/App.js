@@ -3,23 +3,23 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //professional
-import dashboardPro from './pages/professional/dashboard';
-import cpdPro from './pages/professional/cpd';
-import cpdAddPro from './pages/professional/cpdAdd';
+import dashboardPro from "./pages/professional/dashboard";
+import cpdPro from "./pages/professional/cpd";
+import cpdAddPro from "./pages/professional/cpdAdd";
 
-import coursePro from './pages/professional/course';
-import coursView from './pages/professional/coursView';
-import courseEnrollP from './pages/professional/coursEnrollment';
-import courseReviewP from './pages/professional/coursReviews';
+import coursePro from "./pages/professional/course";
+import coursView from "./pages/professional/coursView";
+import coursMyView from "./pages/professional/coursMyView";
+import courseEnrollP from "./pages/professional/coursEnrollment";
+import courseReviewP from "./pages/professional/coursReviews";
 
-import workshopPro from './pages/professional/workshops';
-import workshopViewPro from './pages/professional/workshopsView';
-import blogsPro from './pages/professional/blog';
-import forumPro from './pages/professional/forum';
-import reportsPro from './pages/professional/reports';
-import jobPro from './pages/professional/job';
-import paymentsPro from './pages/professional/payments';
-
+import workshopPro from "./pages/professional/workshops";
+import workshopViewPro from "./pages/professional/workshopsView";
+import blogsPro from "./pages/professional/blog";
+import forumPro from "./pages/professional/forum";
+import reportsPro from "./pages/professional/reports";
+import jobPro from "./pages/professional/job";
+import paymentsPro from "./pages/professional/payments";
 
 //chartered
 import dashboardCha from "./pages/chartered/dashboard";
@@ -69,47 +69,43 @@ import reportCou from "./pages/council/report";
 import regPendingCou from "./pages/council/regPendingC";
 import regApproveCou from "./pages/council/regApproveC";
 import regRejectedCou from "./pages/council/regRejectedC";
-import cpdCou from "./pages/council/cpd"
+import cpdCou from "./pages/council/cpd";
 
-import Login from "./components/login/login"
+import Login from "./components/login/login";
 
 function App() {
-
   const st = true;
 
-  if (st == true) {
-    return(
-      <Login />
-    )
-  }
-  else {
-    const mname = "Jihani";
-    const mtype = "pro";
-    if (mtype == "pro") {
+  if (st == false) {
+    return <Login />;
+  } else {
+    //const mname = "Jihani";
+    //const mtype = "Secretariat";
+    const mname = "Chamika";
+    const mtype = "Professional";
+    if (mtype == "Professional") {
       return (
         <>
           <Router>
-
             <Navbar name={mname} type={mtype} />
             <Switch>
+              <Route path="/" exact component={dashboardPro} />
+              <Route path="/cpdP" component={cpdPro} />
+              <Route path="/addCPD" component={cpdAddPro} />
+              <Route path="/courseP" component={coursePro} />
+              <Route path="/coursViewP/:id" component={coursView} />
+              <Route path="/coursMyViewP/:id" component={coursMyView} />
+              <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
+              <Route path="/courseReviewP/:id" component={courseReviewP} />
 
-              <Route path='/' exact component={dashboardPro} />
-              <Route path='/cpdP' component={cpdPro} />
-              <Route path='/addCPD' component={cpdAddPro} />
-              <Route path='/courseP' component={coursePro} />
-              <Route path='/coursViewP/:id' component={coursView} />
-              <Route path='/coursEnrollsP/:id' component={courseEnrollP} />
-              <Route path='/courseReviewP/:id' component={courseReviewP} />
+              <Route path="/workshopP" component={workshopPro} />
+              <Route path="/workshopViewP" component={workshopViewPro} />
 
-              <Route path='/workshopP' component={workshopPro} />
-              <Route path='/workshopViewP' component={workshopViewPro} />
-
-              <Route path='/blogP' component={blogsPro} />
-              <Route path='/forumP' component={forumPro} />
-              <Route path='/reportsP' component={reportsPro} />
-              <Route path='/jobP' component={jobPro} />
-              <Route path='/paymentsP' component={paymentsPro} />
-
+              <Route path="/blogP" component={blogsPro} />
+              <Route path="/forumP" component={forumPro} />
+              <Route path="/reportsP" component={reportsPro} />
+              <Route path="/jobP" component={jobPro} />
+              <Route path="/paymentsP" component={paymentsPro} />
 
               <Route path="/courseP" component={coursePro} />
               <Route path="/workshopP" component={workshopPro} />
@@ -122,7 +118,7 @@ function App() {
           </Router>
         </>
       );
-    } else if (mtype == "cha") {
+    } else if (mtype == "Chartered") {
       return (
         <>
           <Router>
@@ -141,7 +137,7 @@ function App() {
           </Router>
         </>
       );
-    } else if (mtype == "sec") {
+    } else if (mtype == "Secretariat") {
       return (
         <>
           <Router>
@@ -158,8 +154,7 @@ function App() {
           </Router>
         </>
       );
-
-    } else if (mtype == "associate") {
+    } else if (mtype == "Associate") {
       return (
         <>
           <Router>
@@ -176,29 +171,27 @@ function App() {
           </Router>
         </>
       );
-    }
-    else if (mtype == "council") {
+    } else if (mtype == "Council") {
       return (
         <>
           <Router>
             <Navbar name={mname} type={mtype} />
             <Switch>
-            <Route path="/" exact component={dashboardCou} />
-            <Route path="/jobCou" component={addJobCou} />
-            <Route path="/blogCou" component={blogsCou} />
-            <Route path="/workshopCou" component={verifyWorkshop} />
-            <Route path="/reportsCou" component={reportCou} />
-            <Route path="/regPendingC" component={regPendingCou} />
-            <Route path="/regRejectedC" component={regRejectedCou} />
-            <Route path="/regApproveC" component={regApproveCou} />
-            <Route path="/paymentCou" component={paymentCou} />
-            <Route path="/cpdCou" component={cpdCou} />
+              <Route path="/" exact component={dashboardCou} />
+              <Route path="/jobCou" component={addJobCou} />
+              <Route path="/blogCou" component={blogsCou} />
+              <Route path="/workshopCou" component={verifyWorkshop} />
+              <Route path="/reportsCou" component={reportCou} />
+              <Route path="/regPendingC" component={regPendingCou} />
+              <Route path="/regRejectedC" component={regRejectedCou} />
+              <Route path="/regApproveC" component={regApproveCou} />
+              <Route path="/paymentCou" component={paymentCou} />
+              <Route path="/cpdCou" component={cpdCou} />
             </Switch>
           </Router>
         </>
       );
-    }
-    else if (mtype == "student") {
+    } else if (mtype == "Student") {
       return (
         <>
           <Router>
@@ -211,7 +204,6 @@ function App() {
               <Route path="/forumS" component={forumStu} />
               <Route path="/reportsS" component={reportsStu} />
               <Route path="/paymentsS" component={paymentsStu} />
-
             </Switch>
           </Router>
         </>

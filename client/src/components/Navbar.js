@@ -14,12 +14,14 @@ import { SidebarDataStudent } from "./SidebarDataStudent";
 import "./Navbar.css";
 import { IconContext } from "react-icons";
 import * as MdIcons from "react-icons/md";
-import progileImg from "../imgs/p4.jpeg";
+
+import progileImg from "../imgs/p3.jpg";
+import progileImgSec from "../imgs/p4.jpeg";
 
 function Navbar(props) {
   const [sidebar, setSidebar] = useState(true);
   const showSidebar = () => setSidebar(!sidebar);
-  if (props.type == "associate") {
+  if (props.type == "Associate") {
     return (
       <>
         <div className="buttons">
@@ -79,7 +81,7 @@ function Navbar(props) {
       </>
     );
   } 
-  else if (props.type == "pro") {
+  else if (props.type == "Professional") {
     return (
       <>
         <div className="buttons">
@@ -139,7 +141,7 @@ function Navbar(props) {
       </>
     );
   } 
-  else if (props.type == "student") {
+  else if (props.type == "Student") {
     return (
       <>
         <div className="buttons">
@@ -199,7 +201,7 @@ function Navbar(props) {
       </>
     );
   } 
-  else if (props.type == "cha") {
+  else if (props.type == "Chartered") {
     return (
       <>
         <div className="buttons">
@@ -259,7 +261,7 @@ function Navbar(props) {
       </>
     );
   } 
-  else if (props.type == "council") {
+  else if (props.type == "Council") {
     return (
       <>
         <div className="buttons">
@@ -319,7 +321,7 @@ function Navbar(props) {
       </>
     );
   } 
-  else if (props.type == "sec") {
+  else if (props.type == "Secretariat") {
     return (
       <>
         <div className="buttons">
@@ -353,7 +355,7 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    <img src={progileImgSec} className="pic"></img>
                   </div>
                   <div className="profileDetails">
                     <h2>{props.name}</h2>
