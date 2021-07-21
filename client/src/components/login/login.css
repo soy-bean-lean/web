@@ -6,6 +6,12 @@
     align-items: center;
     display: flex;
   }
+
+  .input-un, 
+  .input-pw{
+    margin: 5px;
+    display: block;
+  }
   .loginBtn {
     justify-items: center;
     justify-content: center;
@@ -18,7 +24,7 @@
     margin-right: 45px;
     color: rgb(0, 0, 0);
     border-radius: 25px;
-    background-color: #ffffff;
+    background-color: #15ff00;
   }
   
   button :hover{
