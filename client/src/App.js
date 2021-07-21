@@ -58,13 +58,24 @@ import regApprove from "./pages/secretary/regApprove";
 import regPending from "./pages/secretary/regPending";
 import regRejected from "./pages/secretary/regRejected";
 
+//council
+import dashboardCou from "./pages/council/dashboard";
+import addJobCou from "./pages/council/addJob";
+import blogsCou from "./pages/council/blogs";
+import verifyWorkshop from "./pages/council/verifyWorkshop";
+import paymentCou from "./pages/council/payment";
+import reportCou from "./pages/council/report";
+import regApproveCou from "./pages/council/regApprove";
+import cpdCou from "./pages/council/cpd"
+
 function App() {
   const mname = "Jihani";
-  const mtype = "pro";
+  const mtype = "council";
   if (mtype == "pro") {
     return (
       <>
         <Router>
+        
           <Navbar name={mname} type={mtype} />
           <Switch>
             
@@ -150,7 +161,27 @@ function App() {
         </Router>
       </>
     );
-  } else if (mtype == "student") {
+  } 
+  else if (mtype == "council") {
+    return (
+      <>
+        <Router>
+          <Navbar name={mname} type={mtype} />
+          <Switch>
+            <Route path="/" exact component={dashboardCou} />
+            <Route path="/jobCou" component={addJobCou} />
+            <Route path="/blogCou" component={blogsCou} />
+            <Route path="/workshopCou" component={verifyWorkshop} />
+            <Route path="/reportsCou" component={reportCou} />
+            <Route path="/regApproveCou" component={regApproveCou} />
+            <Route path="/paymentCou" component={paymentCou} />
+            <Route path="/cpdCou" component={cpdCou} />
+          </Switch>
+        </Router>
+      </>
+    );
+  } 
+  else if (mtype == "student") {
     return (
       <>
         <Router>

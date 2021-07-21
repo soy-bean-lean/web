@@ -11,10 +11,10 @@
     overflow-y: auto;
   }
 
-  .recentRec{
-    padding: 10px;
-    width: 1000px;
-  }
+.recentRec {
+  padding: 10px;
+  width: 1000px;
+}
 
   .recList{
     margin: 10px;
@@ -33,25 +33,49 @@
     background-color: rgb(255, 255, 255);
   }
 
-  .recAllign{
-    background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
-    font-weight: 500;
-    border-radius: 0px 8px 8px 8px;
-    height: 40px;
-    width: inherit;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-  }
+.recAllign {
+  background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
+  font-weight: 500;
+  border-radius: 0px 8px 8px 8px;
+  height: 40px;
+  width: inherit;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
 
-  .recDes{
-    padding: 5px;
-    justify-content: left;
-    align-items: center;
-    /*margin-right: 400px;
+.recDes {
+  padding: 5px;
+  justify-content: left;
+  align-items: center;
+  /*margin-right: 400px;
     display: flex;*/
-    
-  }
+}
+.recPending{
+  color: white;
+}
+.rejected  .recPending {
+  margin-left: auto;
+  padding: 5px;
+  border-radius: 8px 8px 8px 8px;
+  height: inherit;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgb(153, 21, 21);
+}
+.all  .recPending {
+  margin-left: auto;
+  padding: 5px;
+  border-radius: 8px 8px 8px 8px;
+  height: inherit;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgb(153, 144, 21);
+}
 
   .recPending[data-status="Pending"]{
     margin-left: auto;

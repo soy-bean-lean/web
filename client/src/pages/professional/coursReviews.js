@@ -16,37 +16,48 @@ function CoursView() {
       <div className="Courses">
         <div className="courseDescription">
           <h3>The Complete Java and Android Studio Course for Beginners</h3>
-          <div className="topic1">
-            <div className="name">
-              <h2>Chamika</h2>
+          <div className="CourseDes">
+            <div className="topic">
+              <h3>Jihani</h3>
             </div>
-            <div className="text">
-              <li>
-                <h3>Nice Work</h3>
-              </li>
-            </div>
-          </div>
-          <div className="topic2">
-            <div className="name">
-              <h2>Anushka</h2>
-            </div>
-            <div className="text">
-              <li>
-                <h3>Greate!!!!!!!</h3>
-              </li>
+            <div className="detailTopic">
+              <div className="detailTopicCourse1">
+                <h3>Well Explained</h3>
+              </div>
             </div>
           </div>
-          <div className="topic3">
-            <div className="name">
-              <h2>Sudeshi</h2>
+          <div className="CourseDes" >
+            <div className="topic">
+              <h3>Sudeshi</h3>
             </div>
-            <div className="text">
-              <li>
-                <h3>Well explained</h3>
-              </li>
+            <div className="detailTopic">
+              <div className="detailTopicCourse1" >
+              <h3>Highly Recomondad</h3>
+              </div>
             </div>
           </div>
-        </div>
+          <div className="CourseDes">
+            <div className="topic">
+              <h3>Anushka</h3>
+            </div>
+            <div className="detailTopic">
+              <div className="detailTopicCourse1" >
+                <h3>Greate!!!</h3>
+              </div>
+            </div>
+          </div>
+          <div className="CourseDes">
+            <div className="topic">
+              <h3>Supun</h3>
+            </div>
+            <div className="detailTopic">
+              <div className="detailTopicCourse1" >
+                <h3>Good Job!</h3>
+              </div>
+            </div>
+          </div>
+
+                  </div>
         <div className="courseDetails">
           <div className="Img">
             <img src={courseImg} className="Img"></img>
