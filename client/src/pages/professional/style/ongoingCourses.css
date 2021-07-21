@@ -1,0 +1,54 @@
+.mainCourses {
+  align-content: center;
+  justify-content: center;
+  height: 500px;
+  display: block;
+  overflow-y: scroll;
+}
+
+.course {
+  align-content: center;
+  justify-content: center;
+  width: 95%;
+  height: 120px;
+  border-radius: 10px;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+.courseImg {
+  height: 120px;
+  width: 10%;
+  border-radius: 10px;
+  border: 1px solid rgb(0, 0, 0);
+  margin: 5px;
+  float: left;
+}
+.courseDes {
+  height: 120px;
+  padding: 5px;
+  width: 88%;
+  margin: 5px;
+  border-radius: 10px;
+  float: right;
+}
+.search {
+  width: 100%;
+}
+.search input {
+  width: 300px;
+  height: 35px;
+  margin-top: 20px;
+  border-radius: 10px;
+  margin-left: 30px;
+  padding-left: 5px;
+  border: 2px solid rgb(0, 0, 0);
+  font-weight: 500;
+  font-size: medium;
+}
+.rating{
+  margin-top: 10px;
+  width: 120px;
+}
+.Link{
+  color: black;
+}

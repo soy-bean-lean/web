@@ -1,0 +1,105 @@
+.Courses {
+  padding-top: 60px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 100%;
+  height: 560px;
+}
+.courseDescription {
+  display: block;
+  height: 90%;
+  width: 60%;
+  align-content: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin: 5px;
+  float: left;
+  padding-left: 30px;
+}
+.Courses .courseDescription p {
+  margin-top: 30px;
+  line-height: 25px;
+}
+.courseDetails {
+  height: 120px;
+  padding: 5px;
+  width: 30%;
+  height: 90%;
+  margin: 5px;
+  border-radius: 10px;
+  float: right;
+}
+.courseDetails .Img {
+  width: 100%;
+  height: 150px;
+  border-radius: 20px;
+}
+.courseDetails .info {
+  display: block;
+  justify-content: start;
+  align-items: center;
+  padding-left: 15px;
+  list-style: none;
+  height: 200px;
+}
+.infomation {
+  margin-left: 50px;
+  width: 100%;
+  margin-top: 20px;
+}
+.courseDetails .info span {
+  font-size: 20px;
+}
+
+.courseDetails .owner {
+  width: 100%;
+  height: 100px;
+  padding: 15px;
+  justify-content: center;
+}
+
+.ownerImg {
+  float: left;
+  width: 75px;
+  border-radius: 30px;
+  margin-right: 25px;
+}
+.ownerDetails {
+  margin-top: 15px;
+  justify-content: start;
+}
+
+.bottomBar {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+padding-left: 75px;
+}
+
+.bottomBar .left {
+  display: block;
+  align-content: center;
+  justify-content: center;
+  border-radius: 10px;
+  float: left;
+  height: 50px;
+}
+/*.review {
+
+}*/
+.left a {
+  background: #060a5f;
+  border: none;
+  font-weight: 600;
+  text-decoration: none;
+  padding:5px;
+  float: right;
+  margin: 5px;
+  
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+}
