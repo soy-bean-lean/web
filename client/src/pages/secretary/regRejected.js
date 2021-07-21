@@ -68,27 +68,34 @@ function regApprove() {
   return (
     <>
       <div className="regEmp">
-        <div className="leftPanel">
+        <div className="leftPanelS">
           <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
-            <div className="approved">
+            <div className="approved" style={{backgroundColor:"white"} }>
               <h3>Verified Users</h3>
               <h1>161</h1>
             </div>
           </Link>
           <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
-            <div className="pending">
+            <div className="pending" style={{backgroundColor:"white"} }>
               <h3>Pending Users</h3>
               <h1>10</h1>
             </div>
           </Link>
           <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-            <div className="rejected">
+<<<<<<< HEAD
+            <div className="rejected" style={{backgroundColor:"blue"} }>
               <h3>Rejected Users</h3>
               <h1>02</h1>
+=======
+            <div className="rejected" style={{backgroundColor:"#0a0363"} }>
+              <h3 style={{color:"white"} }>
+              Rejected Users</h3>
+              <h1 style={{color:"white"} }>02</h1>
+>>>>>>> 8f6dea7d6d0c04ef7d18feb0685f8b9e9f9755c0
             </div>
           </Link>
         </div>
-        <div className="rightPanel">
+        <div className="rightPanelS">
           <Card>
             <DataTable
               title="Rejected Members"

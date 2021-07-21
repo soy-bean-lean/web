@@ -61,7 +61,7 @@ function course() {
           </div>
 
           <div className="mainCourses">
-            <Link to={"/coursViewP/" + id} className="Link">
+            <Link to={"/coursMyViewP/" + id} className="Link">
               <div className="course">
                 <div className="">
                   <img src={courseImg3} className="courseImg"></img>
@@ -94,8 +94,7 @@ function course() {
                 <h2>Spring Boot Fundamentals with Unit Testing</h2>
                 <p>Learn how to code in Java and master Android Studio</p>
                 <div className="done">
-                 
-                  <h4 className ="sucess">Completed</h4>
+                  <h4 className="sucess">Completed</h4>
                 </div>
               </div>
             </div>

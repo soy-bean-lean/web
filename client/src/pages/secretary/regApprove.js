@@ -5,7 +5,6 @@ import Card from "@material-ui/core/Card";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 
-
 const columns = [
   {
     name: "Name",
@@ -28,7 +27,6 @@ const columns = [
     selector: "regdate",
     sortable: true,
   },
-  
 ];
 
 const conditionalRowStyles = [
@@ -67,28 +65,28 @@ const conditionalRowStyles = [
 function regApprove() {
   return (
     <>
-       <div className="regEmp">
-        <div className="leftPanel">
-          <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
-            <div className="approved">
-              <h3>Verified Users</h3>
-              <h1>161</h1>
+      <div className="regEmp">
+        <div className="leftPanelS">
+          <Link to={"/regApprove"} style={{ textDecoration: "none" }}>
+            <div className="approved" style={{ backgroundColor: "#0a0363" }}>
+              <h3 style={{ color: "white" }}>Verified Users</h3>
+              <h1 style={{ color: "white" }}>161</h1>
             </div>
           </Link>
-          <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
-            <div className="pending">
+          <Link to={"/regPending/"} style={{ textDecoration: "none" }}>
+            <div className="pending" style={{ backgroundColor: "white" }}>
               <h3>Pending Users</h3>
               <h1>10</h1>
             </div>
           </Link>
-          <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-            <div className="rejected">
+          <Link to={"/regRejected/"} style={{ textDecoration: "none" }}>
+            <div className="rejected" style={{ backgroundColor: "white" }}>
               <h3>Rejected Users</h3>
               <h1>02</h1>
             </div>
           </Link>
         </div>
-        <div className="rightPanel">
+        <div className="rightPanelS">
           <Card>
             <DataTable
               title="Verified Members"

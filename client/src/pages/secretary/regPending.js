@@ -5,7 +5,7 @@ import Card from "@material-ui/core/Card";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 
-const Button = () => <button type="button">Approve</button>;
+const Button = () => <button type="button">Verified</button>;
 
 const columns = [
   {
@@ -33,13 +33,9 @@ const columns = [
     name: "Action",
     button: true,
     cell: () => (
-
-      <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-        <Button className ="approveBtn">
-        Approve
-       </Button>
+      <Link to={"/regRejected/"} style={{ textDecoration: "none" }}>
+        <Button className="approveBtn">Verified</Button>
       </Link>
-      
     ),
   },
 ];
@@ -79,28 +75,45 @@ const conditionalRowStyles = [
 
 function regPending() {
   return (
+<<<<<<< HEAD
     <> <div className="regEmp">
     <div className="leftPanel">
       <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
-        <div className="approved">
+        <div className="approved" style={{backgroundColor:"white"}  }>
           <h3>Verified Users</h3>
           <h1>161</h1>
         </div>
       </Link>
       <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
-        <div className="pending">
+        <div className="pending" style={{backgroundColor:"blue"} }>
           <h3>Pending Users</h3>
           <h1>10</h1>
+=======
+    <>
+      {" "}
+      <div className="regEmp">
+        <div className="leftPanelS">
+          <Link to={"/regApprove"} style={{ textDecoration: "none" }}>
+            <div className="approved" style={{ backgroundColor: "white" }}>
+              <h3>Verified Users</h3>
+              <h1>161</h1>
+            </div>
+          </Link>
+          <Link to={"/regPending/"} style={{ textDecoration: "none" }}>
+            <div className="pending" style={{ backgroundColor: "#0a0363" }}>
+              <h3 style={{ color: "white" }}>Pending Users</h3>
+              <h1 style={{ color: "white" }}>10</h1>
+            </div>
+          </Link>
+          <Link to={"/regRejected/"} style={{ textDecoration: "none" }}>
+            <div className="rejected" style={{ backgroundColor: "WHITE" }}>
+              <h3>Rejected Users</h3>
+              <h1>02</h1>
+            </div>
+          </Link>
+>>>>>>> 8f6dea7d6d0c04ef7d18feb0685f8b9e9f9755c0
         </div>
-      </Link>
-      <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-        <div className="rejected">
-          <h3>Rejected Users</h3>
-          <h1>02</h1>
-        </div>
-      </Link>
-    </div>
-        <div className="rightPanel">
+        <div className="rightPanelS">
           <Card>
             <DataTable
               title="Pending Members"

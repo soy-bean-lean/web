@@ -8,10 +8,15 @@ import { Link } from "react-router-dom";
 
 const columns = [
   {
-    name: "Name",
-    selector: "mname",
+    name: "Member ID",
+    selector: "mid",
     sortable: true,
     width: "200px",
+  },
+  {
+    name: "Member Name",
+    selector: "mname",
+    sortable: true,
   },
   {
     name: "Status",
@@ -19,16 +24,11 @@ const columns = [
     sortable: true,
   },
   {
-    name: "email",
-    selector: "email",
-    sortable: true,
-  },
-  {
     name: "Resgistred Date",
     selector: "regdate",
     sortable: true,
   },
-  
+ 
 ];
 
 const conditionalRowStyles = [
@@ -64,34 +64,35 @@ const conditionalRowStyles = [
   },
 ];
 
-function regApprove() {
+function regRejectedC() {
   return (
     <>
-       <div className="regEmp">
-        <div className="leftPanel">
-          <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
-            <div className="approved">
+      <div className="regEmp">
+         <div className="leftPanelS">
+          <Link to={"/regApproveC"} style={{ textDecoration: 'none' }}>
+            <div className="approved" style={{backgroundColor:"white"} }>
               <h3>Verified Users</h3>
               <h1>161</h1>
             </div>
           </Link>
-          <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
-            <div className="pending">
+          <Link to={"/regPendingC/"} style={{ textDecoration: 'none' }}>
+            <div className="pending" style={{backgroundColor:"white"} }>
               <h3>Pending Users</h3>
               <h1>10</h1>
             </div>
           </Link>
-          <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-            <div className="rejected">
-              <h3>Rejected Users</h3>
-              <h1>02</h1>
+          <Link to={"/regRejectedC/"} style={{ textDecoration: 'none' }}>
+            <div className="rejected" style={{backgroundColor:"#0a0363"} }>
+              <h3 style={{color:"white"} }>
+              Rejected Users</h3>
+              <h1 style={{color:"white"} }>02</h1>
             </div>
           </Link>
         </div>
         <div className="rightPanel">
           <Card>
             <DataTable
-              title="Verified Members"
+              title="Rejected Members"
               columns={columns}
               data={data}
               pagination
@@ -104,4 +105,4 @@ function regApprove() {
   );
 }
 
-export default regApprove;
+export default regRejectedC;
