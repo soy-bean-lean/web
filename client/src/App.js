@@ -65,140 +65,156 @@ import blogsCou from "./pages/council/blogs";
 import verifyWorkshop from "./pages/council/verifyWorkshop";
 import paymentCou from "./pages/council/payment";
 import reportCou from "./pages/council/report";
-import regApproveCou from "./pages/council/regApprove";
+import regPendingCou from "./pages/council/regPendingC";
+import regApproveCou from "./pages/council/regApproveC";
+import regRejectedCou from "./pages/council/regRejectedC";
 import cpdCou from "./pages/council/cpd"
 
+import Login from "./components/login/login"
+
 function App() {
-  const mname = "Jihani";
-  const mtype = "pro";
-  if (mtype == "pro") {
-    return (
-      <>
-        <Router>
-        
-          <Navbar name={mname} type={mtype} />
-          <Switch>
-            
-            <Route path='/' exact component={dashboardPro} />
-            <Route path='/cpdP' component={cpdPro} />
-            <Route path='/courseP' component={coursePro} />
-            <Route path='/coursViewP/:id' component={coursView} />
-            <Route path='/coursEnrollsP/:id' component={courseEnrollP} />
-            <Route path='/courseReviewP/:id' component={courseReviewP} />
 
-            <Route path='/workshopP'  component={workshopPro} />
-            <Route path='/workshopViewP'  component={workshopViewPro} />
+  const st = true;
 
-            <Route path='/blogP' component={blogsPro} />          
-            <Route path='/forumP' component={forumPro} />
-            <Route path='/reportsP'  component={reportsPro} />            
-            <Route path='/jobP' component={jobPro} />            
-            <Route path='/paymentsP' component={paymentsPro} />
+  if (st == false) {
+    return(
+      <Login />
+    )
+  }
+  else {
+    const mname = "Jihani";
+    const mtype = "pro";
+    if (mtype == "pro") {
+      return (
+        <>
+          <Router>
+
+            <Navbar name={mname} type={mtype} />
+            <Switch>
+
+              <Route path='/' exact component={dashboardPro} />
+              <Route path='/cpdP' component={cpdPro} />
+              <Route path='/courseP' component={coursePro} />
+              <Route path='/coursViewP/:id' component={coursView} />
+              <Route path='/coursEnrollsP/:id' component={courseEnrollP} />
+              <Route path='/courseReviewP/:id' component={courseReviewP} />
+
+              <Route path='/workshopP' component={workshopPro} />
+              <Route path='/workshopViewP' component={workshopViewPro} />
+
+              <Route path='/blogP' component={blogsPro} />
+              <Route path='/forumP' component={forumPro} />
+              <Route path='/reportsP' component={reportsPro} />
+              <Route path='/jobP' component={jobPro} />
+              <Route path='/paymentsP' component={paymentsPro} />
 
 
-            <Route path="/courseP" component={coursePro} />
-            <Route path="/workshopP" component={workshopPro} />
-            <Route path="/blogP" component={blogsPro} />
-            <Route path="/forumP" component={forumPro} />
-            <Route path="/reportsP" component={reportsPro} />
-            <Route path="/jobP" component={jobPro} />
-            <Route path="/paymentsP" component={paymentsPro} />
-          </Switch>
-        </Router>
-      </>
-    );
-  } else if (mtype == "cha") {
-    return (
-      <>
-        <Router>
-          <Navbar name={mname} type={mtype} />
-          <Switch>
-            <Route path="/" exact component={dashboardCha} />
-            <Route path="/cpdC" component={cpdCha} />
-            <Route path="/courseC" component={courseCha} />
-            <Route path="/workshopS" component={workshopCha} />
-            <Route path="/blogC" component={blogCha} />
-            <Route path="/forumC" component={forumCha} />
-            <Route path="/reportsC" component={reportsCha} />
-            <Route path="/jobC" component={jobCha} />
-            <Route path="/paymentsC" component={paymentsCha} />
-          </Switch>
-        </Router>
-      </>
-    );
-  } else if (mtype == "sec") {
-    return (
-      <>
-        <Router>
-          <Navbar name={mname} type={mtype} />
-          <Switch>
-            <Route path="/" exact component={dashboardSec} />
-            <Route path="/addJob" component={addJob} />
-            <Route path="/manWorkshop" component={manageWorkshop} />
-            <Route path="/regApprove" component={regApprove} />
-            <Route path="/regPending" component={regPending} />
-            <Route path="/regRejected" component={regRejected} />
-            <Route path="/paymentsSec" component={paymentsSec} />
-          </Switch>
-        </Router>
-      </>
-    );
-  
-  } else if (mtype == "associate") {
-    return (
-      <>
-        <Router>
-          <Navbar name={mname} type={mtype} />
-          <Switch>
-            <Route path="/" exact component={dashboardAss} />
-            <Route path="/courseA" component={courseAss} />
-            <Route path="/blogA" component={blogAss} />
-            <Route path="/forumA" component={forumAss} />
-            <Route path="/reportsA" component={reportsAss} />
-            <Route path="/jobA" component={jobAss} />
-            <Route path="/paymentsA" component={paymentsAss} />
-          </Switch>
-        </Router>
-      </>
-    );
-  } 
-  else if (mtype == "council") {
-    return (
-      <>
-        <Router>
-          <Navbar name={mname} type={mtype} />
-          <Switch>
+              <Route path="/courseP" component={coursePro} />
+              <Route path="/workshopP" component={workshopPro} />
+              <Route path="/blogP" component={blogsPro} />
+              <Route path="/forumP" component={forumPro} />
+              <Route path="/reportsP" component={reportsPro} />
+              <Route path="/jobP" component={jobPro} />
+              <Route path="/paymentsP" component={paymentsPro} />
+            </Switch>
+          </Router>
+        </>
+      );
+    } else if (mtype == "cha") {
+      return (
+        <>
+          <Router>
+            <Navbar name={mname} type={mtype} />
+            <Switch>
+              <Route path="/" exact component={dashboardCha} />
+              <Route path="/cpdC" component={cpdCha} />
+              <Route path="/courseC" component={courseCha} />
+              <Route path="/workshopS" component={workshopCha} />
+              <Route path="/blogC" component={blogCha} />
+              <Route path="/forumC" component={forumCha} />
+              <Route path="/reportsC" component={reportsCha} />
+              <Route path="/jobC" component={jobCha} />
+              <Route path="/paymentsC" component={paymentsCha} />
+            </Switch>
+          </Router>
+        </>
+      );
+    } else if (mtype == "sec") {
+      return (
+        <>
+          <Router>
+            <Navbar name={mname} type={mtype} />
+            <Switch>
+              <Route path="/" exact component={dashboardSec} />
+              <Route path="/addJob" component={addJob} />
+              <Route path="/manWorkshop" component={manageWorkshop} />
+              <Route path="/regApprove" component={regApprove} />
+              <Route path="/regPending" component={regPending} />
+              <Route path="/regRejected" component={regRejected} />
+              <Route path="/paymentsSec" component={paymentsSec} />
+            </Switch>
+          </Router>
+        </>
+      );
+
+    } else if (mtype == "associate") {
+      return (
+        <>
+          <Router>
+            <Navbar name={mname} type={mtype} />
+            <Switch>
+              <Route path="/" exact component={dashboardAss} />
+              <Route path="/courseA" component={courseAss} />
+              <Route path="/blogA" component={blogAss} />
+              <Route path="/forumA" component={forumAss} />
+              <Route path="/reportsA" component={reportsAss} />
+              <Route path="/jobA" component={jobAss} />
+              <Route path="/paymentsA" component={paymentsAss} />
+            </Switch>
+          </Router>
+        </>
+      );
+    }
+    else if (mtype == "council") {
+      return (
+        <>
+          <Router>
+            <Navbar name={mname} type={mtype} />
+            <Switch>
             <Route path="/" exact component={dashboardCou} />
             <Route path="/jobCou" component={addJobCou} />
             <Route path="/blogCou" component={blogsCou} />
             <Route path="/workshopCou" component={verifyWorkshop} />
             <Route path="/reportsCou" component={reportCou} />
-            <Route path="/regApproveCou" component={regApproveCou} />
+            <Route path="/regPendingC" component={regPendingCou} />
+            <Route path="/regRejectedC" component={regRejectedCou} />
+            <Route path="/regApproveC" component={regApproveCou} />
             <Route path="/paymentCou" component={paymentCou} />
             <Route path="/cpdCou" component={cpdCou} />
-          </Switch>
-        </Router>
-      </>
-    );
-  } 
-  else if (mtype == "student") {
-    return (
-      <>
-        <Router>
-          <Navbar name={mname} type={mtype} />
-          <Switch>
-            <Route path="/" exact component={dashboardCha} />
-            <Route path="/courseS" component={courseStu} />
-            <Route path="/workshopS" component={workshopStu} />
-            <Route path="/blogS" component={blogStu} />
-            <Route path="/forumS" component={forumStu} />
-            <Route path="/reportsS" component={reportsStu} />
-            <Route path="/paymentsS" component={paymentsStu} />
-            
-          </Switch>
-        </Router>
-      </>
-    );
+            </Switch>
+          </Router>
+        </>
+      );
+    }
+    else if (mtype == "student") {
+      return (
+        <>
+          <Router>
+            <Navbar name={mname} type={mtype} />
+            <Switch>
+              <Route path="/" exact component={dashboardCha} />
+              <Route path="/courseS" component={courseStu} />
+              <Route path="/workshopS" component={workshopStu} />
+              <Route path="/blogS" component={blogStu} />
+              <Route path="/forumS" component={forumStu} />
+              <Route path="/reportsS" component={reportsStu} />
+              <Route path="/paymentsS" component={paymentsStu} />
+
+            </Switch>
+          </Router>
+        </>
+      );
+    }
   }
 }
 

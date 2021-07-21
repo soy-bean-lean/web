@@ -1,74 +1,81 @@
 .back {
-  width: 80%;
-  height: 600px;
-  margin-left: 100px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-.loginBtn {
-  justify-items: center;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 30px;
-  width: 40%;
-  height: 40px;
-  float: right;
-  font-size: 15px;
-  margin-right: 45px;
-  color: rgb(0, 0, 0);
-  border-radius: 25px;
-  background-color: #ffffff;
-}
+    width: 80%;
+    height: 600px;
+    margin-left: 100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
 
-button :hover {
-  color: rgb(255, 255, 255);
-  border-radius: 25px;
-  background-color: #1e1192;
-}
-.right {
-  height: 400px;
-  float: right;
-  margin-left: 100px;
-  width: 35%;
-  border-radius: 0 100px 0 100px;
-  border: 10px solid #1e1192;
-  align-items: center;
-  display: block;
-  padding-left: 20px;
-}
-
-.user,
-.pass {
-  margin-bottom: 30px;
-  width: 80%;
-  height: 30px;
-  padding-left: 20px;
-  font-size: 15px;
-  border-bottom-style: 1px solid #dadada;
-  border-top-style: none;
-  border-left-style: none;
-  border-right-style: none;
-}
-.user :focus {
-  border-bottom-style: 1px solid #1e1192;
-  border-top-style: none;
-  border-left-style: none;
-  border-right-style: none;
-  transition: 0.5s;
-}
-.pass:focus {
-  border-bottom: 2px solid #1e1192;
-  transition: 0.5s;
-}
-.left {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  height: 600px;
-  float: left;
-  width: 58%;
-}
-img {
-  width: 70%;
-}
+  .input-un, 
+  .input-pw{
+    margin: 5px;
+    display: block;
+  }
+  .loginBtn {
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    width: 40%;
+    height: 40px;
+    float: right;
+    font-size: 15px;
+    margin-right: 45px;
+    color: rgb(0, 0, 0);
+    border-radius: 25px;
+    background-color: #15ff00;
+  }
+  
+  button :hover{
+    color: rgb(255, 255, 255);
+    border-radius: 25px;
+    background-color: #1e1192;
+  }
+  .right {
+    height: 400px;
+    float: right;
+    margin-left: 100px;
+    width: 35%;
+    border-radius: 0 100px 0 100px;
+    border: 10px solid #1e1192;
+    align-items: center;
+    display: block;
+    padding-left: 20px;
+  }
+  
+  .user,
+  .pass {
+    margin-bottom: 30px;
+    width: 80%;
+    height: 30px;
+    padding-left: 20px;
+    font-size: 15px;
+    border-bottom-style: 1px solid #dadada;
+    border-top-style: none;
+    border-left-style:  none;
+    border-right-style: none;
+  }
+  .user :focus {
+    border-bottom-style: 1px solid #1e1192;
+    border-top-style: none;
+    border-left-style:  none;
+    border-right-style: none;
+    transition: 0.5s;
+  }
+  .pass:focus {
+    border-bottom: 2px solid #1e1192;
+    transition: 0.5s;
+  }
+  .left {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 600px;
+    float: left;
+    width: 58%;
+  }
+  img {
+    width: 70%;
+  }
+  

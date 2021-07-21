@@ -11,10 +11,10 @@ function login() {
       </div>
 
       <div className="right">
-        <h1>Member Login...</h1>
-        <input className="user" placeholder="UserName" type="text"></input>
-        <input className="pass" placeholder="Password" type="password"></input>
-        <button className="loginBtn">SignIn</button>
+        <h1>Member Login</h1>
+        <div className="input-un"><input className="user" placeholder="UserName" type="text" /></div>
+        <div className="input-pw"><input className="pass" placeholder="Password" type="password" /></div>
+        <div className="btn-login"><input className="loginBtn" type="submit" value="SignIn" /></div>
       </div>
     </div>
   );
