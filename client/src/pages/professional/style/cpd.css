@@ -60,6 +60,7 @@
   color: white;
 }
 
+
 .recPending[data-status="Pending"]{
     margin-left: auto;
     padding: 5px;
