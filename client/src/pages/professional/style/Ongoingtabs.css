@@ -4,6 +4,7 @@
 
 .react-tabs__tab-list {
   padding: 0;
+  margin: 5px;
 }
 
 .react-tabs__tab {
@@ -14,7 +15,7 @@
   list-style: none;
   padding: 10px 15px;
   border-radius: 5px;
-
+margin: 2px;
   border: 1px solid rgb(0, 0, 0);
 
   cursor: pointer;

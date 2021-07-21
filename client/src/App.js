@@ -65,6 +65,7 @@ function App() {
     return (
       <>
         <Router>
+        
           <Navbar name={mname} type={mtype} />
           <Switch>
             

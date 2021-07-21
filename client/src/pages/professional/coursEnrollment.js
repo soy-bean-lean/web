@@ -16,37 +16,37 @@ function CoursView() {
       <div className="Courses">
         <div className="courseDescription">
           <h3>The Complete Java and Android Studio Course for Beginners</h3>
-          <div className="topic1">
+          <div className="CourseDes">
             <div className="topic">
-              <h2>1</h2>
+              <h3>Part 1</h3>
             </div>
-            <div className="text">
-              <li>
+            <div className="detailTopic">
+              <div className="detailTopicCourse1">
                 <h3>Introduction</h3>
-              </li>
+              </div>
             </div>
           </div>
-          <div className="topic2">
+          <div className="CourseDes" >
             <div className="topic">
-              <h2>2</h2>
+              <h3>Part 2</h3>
             </div>
-            <div className="text">
-              <li>
-                <h3>About Android</h3>
-              </li>
+            <div className="detailTopic">
+              <div className="detailTopicCourse" style={{ backgroundColor: "grey", color: "white" }}>
+              <h3>About Android</h3>
+              </div>
             </div>
           </div>
-          <div className="topic3">
+          <div className="CourseDes">
             <div className="topic">
-              <h2>3</h2>
+              <h3>Part 3</h3>
             </div>
-            <div className="text">
-              <li>
-                <h3>Introduction to Variables</h3>
-              </li>
+            <div className="detailTopic">
+              <div className="detailTopicCourse" style={{ backgroundColor: "grey", color: "white" }}>
+                <h3>Introduction to the Basics</h3>
+              </div>
             </div>
           </div>
-        </div>
+                  </div>
         <div className="courseDetails">
           <div className="Img">
             <img src={courseImg} className="Img"></img>
@@ -89,8 +89,6 @@ function CoursView() {
       </div>
       <div className="bottomBar">
         <div className="left">
-          
-        
           <Link to={"/coursViewP/" + id} className="review">
             <a href="#" className="review">
               Back
