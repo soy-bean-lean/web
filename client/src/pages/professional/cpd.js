@@ -2,6 +2,7 @@ import React from "react";
 import "./style/cpd.css";
 import "./style/Ongoingtabs.css";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { Link } from "react-router-dom";
 
 function cpd() {
   const record = [
@@ -52,7 +53,13 @@ function cpd() {
   return (
     <div className="main">
       <div className="btn-cpdAdd">
-      
+        <div className="add-cpd-btn">
+          <Link to={"/addCPD/"} className="add-cpd-btn">
+            <a href="#" className="add-cpd-btn">
+              ADD
+            </a>
+          </Link>
+        </div>
       </div>
       <div className="recentCPDRec">
         <Tabs /*style={{ paddingTop: "5px", paddingLeft: "3px" }}*/>
