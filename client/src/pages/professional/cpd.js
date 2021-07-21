@@ -35,6 +35,39 @@ function cpd() {
     }
   ];
 
+  /*const conditionalStatusStyles = [
+    {
+      when: (record) => record.status === "Pending",
+      style: {
+        backgroundColor: "#",
+        color: "black",
+        "&:hover": {
+          cursor: "pointer",
+        },
+      },
+    },
+    {
+      when: (record) => record.status === "Approved",
+      style: {
+        backgroundColor: "#94C0E1",
+        color: "black",
+        "&:hover": {
+          cursor: "pointer",
+        },
+      },
+    },
+    {
+      when: (record) => record.status === "Rejected",
+      style: {
+        backgroundColor: "#4C90C3",
+        color: "black",
+        "&:hover": {
+          cursor: "pointer",
+        },
+      },
+    },
+  ];*/
+
   const recordList = record.map(record => (
     <>
       <div className="recentRec">
@@ -45,7 +78,7 @@ function cpd() {
           <div className="recDes">
             {record.description}
           </div>
-          <div className="recPending">
+          <div data-status={record.status} className="recPending">
             {record.status}
           </div>
         </div>
@@ -55,7 +88,11 @@ function cpd() {
 
   return (
     <div className='main'>
+      <div className="addCPD">
+        
+      </div>
       <div className="recentCPD">
+        <h3>Recent CPD Submissions</h3>
         <div className="recList">
           {recordList}
         </div>
