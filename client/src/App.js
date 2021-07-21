@@ -74,7 +74,7 @@ import Login from "./components/login/login"
 
 function App() {
 
-  const st = false;
+  const st = true;
 
   if (st == false) {
     return(
@@ -83,7 +83,7 @@ function App() {
   }
   else {
     const mname = "Jihani";
-    const mtype = "pro";
+    const mtype = "council";
     if (mtype == "pro") {
       return (
         <>
