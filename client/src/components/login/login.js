@@ -1,5 +1,6 @@
 import React from "react";
 import "./login.css";
+import { Link } from "react-router-dom";
 
 import image from "./logo.jpeg";
 
@@ -12,9 +13,14 @@ function login() {
 
       <div className="right">
         <h1>Member Login</h1>
-        <div className="input-un"><input className="user" placeholder="UserName" type="text" /></div>
-        <div className="input-pw"><input className="pass" placeholder="Password" type="password" /></div>
-        <div className="btn-login"><input className="loginBtn" type="submit" value="SignIn" /></div>
+        <input className="user" placeholder="User Name"></input>
+        <input className="pass" placeholder="Password"></input>
+        <div className="btn-login">
+          <button className="loginBtn" type="submit" value="SignIn">
+            Sign In
+          </button>
+          <a href="url" className="register">Register here!</a>
+        </div>
       </div>
     </div>
   );

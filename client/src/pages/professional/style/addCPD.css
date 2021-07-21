@@ -1,0 +1,74 @@
+.addCPDMain {
+  height: 500px;
+  overflow-y: scroll;
+}
+.para{
+    margin: 20px;
+    margin-left: 40px;
+}
+.h2 {
+  height: 500px;
+  padding-top: 65px;
+}
+.addCPDMain .title {
+  padding-bottom: 20px;
+}
+.addCPDMain .addForm {
+  margin: 20px;
+  margin-left: 25%;
+  width: 60%;
+}
+.textName {
+  margin-bottom: 15px;
+  font-size: 20px;
+  width: 250px;
+  font-weight: 200;
+}
+
+.select ,.input{
+  margin-bottom: 15px;
+  margin-left: 40px;
+  width: 70%;
+  height: 30px;
+  font-size: 20px;
+  padding-left: 20px;
+  color: black;
+  
+}
+textarea {
+    margin-bottom: 15px;
+    margin-left: 40px;
+    width: 70%;
+    height: 150px;
+    font-size: 20px;
+    padding-left: 20px;
+    color: black;
+    overflow-y: scroll;
+}
+.line{
+    width: 75%;
+margin-top: 20px;
+margin-bottom: 20px;}
+
+
+.submitBtn {
+    margin: 20px;
+    margin-left: 10%;
+    width: 60%;
+  }
+  .review {
+  }
+  .left a {
+    background: #060a5f;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 5px;
+    float: right;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+  }
+  

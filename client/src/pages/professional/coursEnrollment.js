@@ -46,7 +46,7 @@ function CoursView() {
               </div>
             </div>
           </div>
-                  </div>
+        </div>
         <div className="courseDetails">
           <div className="Img">
             <img src={courseImg} className="Img"></img>
