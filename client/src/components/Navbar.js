@@ -17,6 +17,8 @@ import * as MdIcons from "react-icons/md";
 
 import progileImg from "../imgs/p3.jpg";
 import progileImgSec from "../imgs/p4.jpeg";
+import progileImgCha from "../imgs/char.jpeg";
+import progileImgCouncil from "../imgs/council.jpeg";
 
 function Navbar(props) {
   const [sidebar, setSidebar] = useState(true);
@@ -235,7 +237,7 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    <img src={progileImgCha} className="pic"></img>
                   </div>
                   <div className="profileDetails">
                     <h2>{props.name}</h2>
@@ -295,7 +297,7 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    <img src={progileImgCouncil} className="pic"></img>
                   </div>
                   <div className="profileDetails">
                     <h2>{props.name}</h2>

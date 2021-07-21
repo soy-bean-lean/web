@@ -79,10 +79,24 @@ function App() {
   if (st == false) {
     return <Login />;
   } else {
-    //const mname = "Jihani";
-    //const mtype = "Secretariat";
-    const mname = "Chamika";
-    const mtype = "Professional";
+    const mname = "Jihani";
+    const mtype = "Secretariat";
+    
+    //const mname = "Supun";
+    //const mtype = "Council";
+    
+   // const mname = "Chamika";
+   // const mtype = "Professional";
+
+    //const mname = "Anushka";
+   // const mtype = "Chartered";
+   
+   // const mname = "Chamika";
+   // const mtype = "Professional";
+
+    //const mname = "Anushka";
+   // const mtype = "Chartered";
+
     if (mtype == "Professional") {
       return (
         <>
@@ -125,7 +139,31 @@ function App() {
             <Navbar name={mname} type={mtype} />
             <Switch>
               <Route path="/" exact component={dashboardCha} />
-              <Route path="/cpdC" component={cpdCha} />
+              <Route path="/cpdP" component={cpdPro} />
+              <Route path="/addCPD" component={cpdAddPro} />
+              <Route path="/courseP" component={coursePro} />
+              <Route path="/coursViewP/:id" component={coursView} />
+              <Route path="/coursMyViewP/:id" component={coursMyView} />
+              <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
+              <Route path="/courseReviewP/:id" component={courseReviewP} />
+
+              <Route path="/workshopP" component={workshopPro} />
+              <Route path="/workshopViewP" component={workshopViewPro} />
+
+              <Route path="/blogP" component={blogsPro} />
+              <Route path="/forumP" component={forumPro} />
+              <Route path="/reportsP" component={reportsPro} />
+              <Route path="/jobP" component={jobPro} />
+              <Route path="/paymentsP" component={paymentsPro} />
+
+              <Route path="/courseP" component={coursePro} />
+              <Route path="/workshopP" component={workshopPro} />
+              <Route path="/blogP" component={blogsPro} />
+              <Route path="/forumP" component={forumPro} />
+              <Route path="/reportsP" component={reportsPro} />
+              <Route path="/jobP" component={jobPro} />
+              <Route path="/paymentsP" component={paymentsPro} />
+              {/*<Route path="/cpdC" component={cpdCha} />
               <Route path="/courseC" component={courseCha} />
               <Route path="/workshopS" component={workshopCha} />
               <Route path="/blogC" component={blogCha} />
@@ -133,6 +171,7 @@ function App() {
               <Route path="/reportsC" component={reportsCha} />
               <Route path="/jobC" component={jobCha} />
               <Route path="/paymentsC" component={paymentsCha} />
+              */}
             </Switch>
           </Router>
         </>
