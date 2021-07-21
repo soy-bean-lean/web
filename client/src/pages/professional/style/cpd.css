@@ -1,33 +1,42 @@
-.recentCPD {
-  margin: 10px;
-  padding: 15px;
-  border: 1px solid rgb(6, 10, 95);
-  border-radius: 15px 0px 0px 15px;
-  height: 300px;
-  justify-content: center;
-  align-items: flex-start;
-  display: flex;
-  background-color: rgb(255, 255, 255);
-  overflow-y: auto;
-}
+  .recentCPDRec{
+    margin: 10px;
+    /*padding: 15px;*/
+    border: 2px solid rgb(6, 10, 95);
+    border-radius: 15px 0px 0px 15px;
+    height: 300px;
+    justify-content: center;
+    align-items: flex-start;
+    display: block;
+    background-color: rgb(255, 255, 255);
+    overflow-y: auto;
+  }
+
+  .titleRecent{
+    padding-left: 15px;
+  }
+
 
 .recentRec {
-  padding: 10px;
+  padding: 5px;
   width: 1000px;
 }
 
-.recType {
-  padding: 5px;
-  border: 2px solid #7883e2;
-  font-weight: 600;
-  border-radius: 10px 10px 0px 0px;
-  height: auto;
-  width: 130px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: rgb(255, 255, 255);
-}
+  .recList{
+    margin: 10px;
+  }
+
+  .recType{
+    padding: 5px;
+    border: 2px solid #7883e2;
+    font-weight: 600;
+    border-radius: 10px 10px 0px 0px;
+    height: auto;
+    width: 130px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+  }
 
 .recAllign {
   background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
@@ -50,49 +59,43 @@
 .recPending{
   color: white;
 }
-.rejected  .recPending {
-  margin-left: auto;
-  padding: 5px;
-  border-radius: 8px 8px 8px 8px;
-  height: inherit;
-  width: 100px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: rgb(153, 21, 21);
-}
-.all  .recPending {
-  margin-left: auto;
-  padding: 5px;
-  border-radius: 8px 8px 8px 8px;
-  height: inherit;
-  width: 100px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: rgb(153, 144, 21);
-}
 
- .approved .recPending {
-  margin-left: auto;
-  padding: 5px;
-  border-radius: 8px 8px 8px 8px;
-  height: inherit;
-  width: 100px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: rgb(29, 145, 14);
-}
 
- .pending .recPending {
-  margin-left: auto;
-  padding: 5px;
-  border-radius: 8px 8px 8px 8px;
-  height: inherit;
-  width: 100px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: rgb(18, 16, 129);
-}
+.recPending[data-status="Pending"]{
+    margin-left: auto;
+    padding: 5px;
+    border-radius: 8px 8px 8px 8px;
+    height: inherit;
+    width:100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: rgb(255, 231, 11);
+  }
+  
+.recPending[data-status="Approved"]{
+    margin-left: auto;
+    padding: 5px;
+    border-radius: 8px 8px 8px 8px;
+    height: inherit;
+    width:100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: rgb(3, 247, 15);
+  }
+
+.recPending[data-status="Rejected"]{
+    margin-left: auto;
+    padding: 5px;
+    border-radius: 8px 8px 8px 8px;
+    height: inherit;
+    width:100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: rgb(255, 4, 4);
+  }
+
+
+

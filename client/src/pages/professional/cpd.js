@@ -37,24 +37,13 @@ function cpd() {
     },
   ];
 
-  const recordList = record.map((record) => (
+  const recordList = record.map(record => (
     <>
       <div className="recentRec">
         <div className="recType">{record.type}</div>
         <div className="recAllign">
           <div className="recDes">{record.description}</div>
-          <div className="recPending">{record.status}</div>
-        </div>
-      </div>
-    </>
-  ));
-  const recordListPending = record.map((record) => (
-    <>
-      <div className="recentRec">
-        <div className="recType">{record.type}</div>
-        <div className="recAllign">
-          <div className="recDes">{record.description}</div>
-          <div className="recPending">{record.status}</div>
+          <div data-status={record.status} className="recPending">{record.status}</div>
         </div>
       </div>
     </>
@@ -62,35 +51,33 @@ function cpd() {
 
   return (
     <div className="main">
-      <Tabs style={{ paddingTop: "5px", paddingLeft: "3px" }}>
-        {" "}
-        <TabList>
-          <Tab>All</Tab>
-          <Tab>Approved</Tab>
-          <Tab>Pending</Tab>
-          <Tab>Rejected</Tab>
-        </TabList>
-        <TabPanel className="all">
-          <div className="recentCPD">
+      <div className="btn-cpdAdd">
+      
+      </div>
+      <div className="recentCPDRec">
+        <Tabs /*style={{ paddingTop: "5px", paddingLeft: "3px" }}*/>
+          {" "}
+          <TabList>
+            <Tab>All</Tab>
+            <Tab>Approved</Tab>
+            <Tab>Pending</Tab>
+            <Tab>Rejected</Tab>
+          </TabList>
+          <h3 className="titleRecent">Recent CPD Submissions</h3>
+          <TabPanel className="all">
             <div className="recList">{recordList}</div>
-          </div>
-        </TabPanel>
-        <TabPanel className="approved">
-          <div className="recentCPD">
+          </TabPanel>
+          <TabPanel className="approved">
             <div className="recList">{recordList}</div>
-          </div>
-        </TabPanel>
-        <TabPanel className="pending">
-          <div className="recentCPD">
+          </TabPanel>
+          <TabPanel className="pending">
             <div className="recList">{recordList}</div>
-          </div>
-        </TabPanel>
-        <TabPanel className="rejected">
-          <div className="recentCPD">
+          </TabPanel>
+          <TabPanel className="rejected">
             <div className="recList">{recordList}</div>
-          </div>
-        </TabPanel>
-      </Tabs>
+          </TabPanel>
+        </Tabs>
+      </div>
     </div>
   );
 }
