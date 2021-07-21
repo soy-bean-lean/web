@@ -65,8 +65,10 @@ const options = {
 };
 
 function Home() {
+
   const classes = useStyles();
   return (
+    
     <div className="main">
       <div className="progress">
         <div className="progressBar">
