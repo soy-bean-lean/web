@@ -14,37 +14,49 @@ export const SidebarDataCouncil = [
     cName: 'nav-text'
   },
   {
-    title: 'Course',
-    path: '/course',
+    title: 'Approve Registration ',
+    path: '/regApproveCou',
+    icon: <AiIcons.AiFillDashboard />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Approve Course',
+    path: '/courseCou',
+    icon: <FaIcons.FaGraduationCap />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Approve CPD Activity',
+    path: '/cpdCou',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
   },
   {
     title: 'Workshops',
-    path: '/workshop',
+    path: '/workshopCou',
     icon: <GIIcons.GiTeacher />,
     cName: 'nav-text'
   },
   {
-    title: 'Blogs',
-    path: '/blog',
+    title: 'Review Blogs',
+    path: '/blogCou',
     icon: <FaIcons.FaBloggerB />,
     cName: 'nav-text'
   },
   {
-    title: 'Forum',
-    path: '/forum',
+    title: 'Job Vacancy',
+    path: '/jobCou',
     icon: <MdIcons.MdForum />,
     cName: 'nav-text'
   },
   {
     title: 'Reports',
-    path: '/reports',
+    path: '/reportsCou',
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
   },{
     title: 'Payments',
-    path: '/payments',
+    path: '/paymentsCou',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
   },
