@@ -82,13 +82,13 @@ function regPending() {
     <> <div className="regEmp">
     <div className="leftPanel">
       <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
-        <div className="approved" style={{backgroundColor:"blue"}  }>
+        <div className="approved" style={{backgroundColor:"white"}  }>
           <h3>Verified Users</h3>
           <h1>161</h1>
         </div>
       </Link>
       <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
-        <div className="pending" style={{backgroundColor:"white"} }>
+        <div className="pending" style={{backgroundColor:"blue"} }>
           <h3>Pending Users</h3>
           <h1>10</h1>
         </div>

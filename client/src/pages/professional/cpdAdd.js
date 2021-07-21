@@ -7,8 +7,16 @@ function addCPD() {
     <div className="h2">
       <h1 className="title">NEW CPD RECORD</h1>
       <hr></hr>
+
       <div className="addCPDMain">
         <div className="addForm">
+        
+        <div className="courseD">
+            <h4 className="textName">Subject</h4>
+
+            <input className="input"  placeholder="--Subject--"></input>
+          </div>
+          <hr className="line"></hr>
           <div className="cpdType">
             <h4 className="textName">Record Type </h4>
             <select name="select" id="types">

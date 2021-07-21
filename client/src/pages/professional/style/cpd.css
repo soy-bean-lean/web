@@ -72,7 +72,7 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    background-color: rgb(255, 231, 11);
+    background-color: rgb(141, 128, 10);
   }
   
 .recPending[data-status="Approved"]{
@@ -84,7 +84,7 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    background-color: rgb(3, 247, 15);
+    background-color: rgb(10, 128, 16);
   }
 
 .recPending[data-status="Rejected"]{
