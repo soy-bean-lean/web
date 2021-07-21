@@ -51,8 +51,8 @@ function cpd() {
 
   return (
     <div className="main">
-      <div className="recentCPD">
-        <Tabs style={{ paddingTop: "5px", paddingLeft: "3px" }}>
+      <div className="recentCPDRec">
+        <Tabs /*style={{ paddingTop: "5px", paddingLeft: "3px" }}*/>
           {" "}
           <TabList>
             <Tab>All</Tab>
@@ -60,6 +60,7 @@ function cpd() {
             <Tab>Pending</Tab>
             <Tab>Rejected</Tab>
           </TabList>
+          <h3 className="titleRecent">Recent CPD Submissions</h3>
           <TabPanel className="all">
             <div className="recList">{recordList}</div>
           </TabPanel>
