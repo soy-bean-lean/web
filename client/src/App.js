@@ -80,7 +80,7 @@ function App() {
     return <Login />;
   } else {
     const mname = "Jihani";
-    const mtype = "Secretariat";
+    const mtype = "Council";
     
     //const mname = "Supun";
     //const mtype = "Council";

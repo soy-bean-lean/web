@@ -33,13 +33,9 @@ const columns = [
     name: "Action",
     button: true,
     cell: () => (
-
-      <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-        <Button className ="approveBtn">
-        Approve
-       </Button>
+      <Link to={"/regRejected/"} style={{ textDecoration: "none" }}>
+        <Button className="approveBtn">Approve</Button>
       </Link>
-      
     ),
   },
 ];
@@ -79,27 +75,29 @@ const conditionalRowStyles = [
 
 function regPendingC() {
   return (
-    <> <div className="regEmp">
-    <div className="leftPanel">
-      <Link to={"/regApproveC"} style={{ textDecoration: 'none' }}>
-        <div className="approved">
-          <h3>Verified Users</h3>
-          <h1>161</h1>
+    <>
+      {" "}
+      <div className="regEmp">
+      <div className="leftPanelS">
+          <Link to={"/regApproveC"} style={{ textDecoration: "none" }}>
+            <div className="approved" style={{ backgroundColor: "white" }}>
+              <h3>Verified Users</h3>
+              <h1>161</h1>
+            </div>
+          </Link>
+          <Link to={"/regPendingC/"} style={{ textDecoration: "none" }}>
+            <div className="pending" style={{ backgroundColor: "#0a0363" }}>
+              <h3 style={{ color: "white" }}>Pending Users</h3>
+              <h1 style={{ color: "white" }}>10</h1>
+            </div>
+          </Link>
+          <Link to={"/regRejectedC/"} style={{ textDecoration: "none" }}>
+            <div className="rejected" style={{ backgroundColor: "WHITE" }}>
+              <h3>Rejected Users</h3>
+              <h1>02</h1>
+            </div>
+          </Link>
         </div>
-      </Link>
-      <Link to={"/regPendingC/"} style={{ textDecoration: 'none' }}>
-        <div className="pending">
-          <h3>Pending Users</h3>
-          <h1>10</h1>
-        </div>
-      </Link>
-      <Link to={"/regRejectedC/"} style={{ textDecoration: 'none' }}>
-        <div className="rejected">
-          <h3>Rejected Users</h3>
-          <h1>02</h1>
-        </div>
-      </Link>
-    </div>
         <div className="rightPanel">
           <Card>
             <DataTable
