@@ -96,7 +96,7 @@ function addCPD() {
           </div>
         </div>
         <div className="submitBtn">
-        <div className="left">
+        <div className="bottom">
         <Link to={"/cpdP/"} className="review">
         <a href="#" className="review">
             Submit

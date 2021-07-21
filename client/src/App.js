@@ -77,14 +77,14 @@ function App() {
 
   const st = true;
 
-  if (st == true) {
+  if (st == false) {
     return(
       <Login />
     )
   }
   else {
     const mname = "Jihani";
-    const mtype = "council";
+    const mtype = "pro";
     if (mtype == "pro") {
       return (
         <>
