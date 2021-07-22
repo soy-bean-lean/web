@@ -75,20 +75,6 @@ const conditionalRowStyles = [
 
 function regPending() {
   return (
-<<<<<<< HEAD
-    <> <div className="regEmp">
-    <div className="leftPanel">
-      <Link to={"/regApprove"} style={{ textDecoration: 'none' }}>
-        <div className="approved" style={{backgroundColor:"white"}  }>
-          <h3>Verified Users</h3>
-          <h1>161</h1>
-        </div>
-      </Link>
-      <Link to={"/regPending/"} style={{ textDecoration: 'none' }}>
-        <div className="pending" style={{backgroundColor:"blue"} }>
-          <h3>Pending Users</h3>
-          <h1>10</h1>
-=======
     <>
       {" "}
       <div className="regEmp">
@@ -111,7 +97,6 @@ function regPending() {
               <h1>02</h1>
             </div>
           </Link>
->>>>>>> 8f6dea7d6d0c04ef7d18feb0685f8b9e9f9755c0
         </div>
         <div className="rightPanelS">
           <Card>

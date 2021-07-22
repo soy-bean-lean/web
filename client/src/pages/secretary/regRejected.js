@@ -82,16 +82,10 @@ function regApprove() {
             </div>
           </Link>
           <Link to={"/regRejected/"} style={{ textDecoration: 'none' }}>
-<<<<<<< HEAD
-            <div className="rejected" style={{backgroundColor:"blue"} }>
-              <h3>Rejected Users</h3>
-              <h1>02</h1>
-=======
             <div className="rejected" style={{backgroundColor:"#0a0363"} }>
               <h3 style={{color:"white"} }>
               Rejected Users</h3>
               <h1 style={{color:"white"} }>02</h1>
->>>>>>> 8f6dea7d6d0c04ef7d18feb0685f8b9e9f9755c0
             </div>
           </Link>
         </div>
