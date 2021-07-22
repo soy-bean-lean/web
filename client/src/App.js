@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useLocation } from "react-router";
+import { useHistory } from "react-router-dom";
+
+import Registration from "./pages/registration/Registration";
+import Login from "./pages/login/Login";
+
 //professional
 import dashboardPro from "./pages/professional/dashboard";
 import cpdPro from "./pages/professional/cpd";
@@ -71,16 +79,54 @@ import regApproveCou from "./pages/council/regApproveC";
 import regRejectedCou from "./pages/council/regRejectedC";
 import cpdCou from "./pages/council/cpd";
 
-import Login from "./components/login/login";
+
 
 function App() {
-  const st = true;
+//   const [loginStatus, setLoginStatus] = useState(false);
+//   const [role, setRole] = useState("");
+  
+//   axios.defaults.withCredentials = true;
+//   //console.log("role");
+//   useEffect(() => {
+//     axios.get("http://localhost:3001/auth/login").then(response) => {
+      
+       
+//        //console.log(response);
+       
+//       if (response.data.loggedIn == true) { 
+        
+//         setLoginStatus(true);
+//         setRole(response.data.user[0].username);
+//       // } else {
+// //         //alert(response.data.error);
+//         }
+//     });
+//   }, []);
 
-  if (st == false) {
-    return <Login />;
-  } else {
+//  // console.log(loginStatus);
+//   console.log(role);
+//const loginStatus=true;
+ // const [loginStatus, setLoginStatus] = useState(false);
+
+  const loginStatus=false;
+  const role=false;
+
+  if (loginStatus==false) {
+    return (
+      <>
+        <Router>
+          <Switch>
+            <Route path="/" exact component={Login} />
+            <Route path="/registration" exact component={Registration} />
+          </Switch>
+        </Router>
+      </>
+    );
+
+  }else{
+    
     const mname = "Jihani";
-    const mtype = "Council";
+    const mtype = "Professional";
     
     //const mname = "Supun";
     //const mtype = "Council";
@@ -195,10 +241,11 @@ function App() {
       );
     } else if (mtype == "Associate") {
       return (
-        <>
+        <>        
           <Router>
             <Navbar name={mname} type={mtype} />
             <Switch>
+              {/* // <Route path="/home" exact render={(props) => <Home />}/> */}
               <Route path="/" exact component={dashboardAss} />
               <Route path="/courseA" component={courseAss} />
               <Route path="/blogA" component={blogAss} />
@@ -210,6 +257,7 @@ function App() {
           </Router>
         </>
       );
+
     } else if (mtype == "Council") {
       return (
         <>
@@ -243,12 +291,14 @@ function App() {
               <Route path="/forumS" component={forumStu} />
               <Route path="/reportsS" component={reportsStu} />
               <Route path="/paymentsS" component={paymentsStu} />
+
             </Switch>
           </Router>
         </>
       );
     }
   }
+
 }
 
 export default App;
