@@ -70,8 +70,10 @@ const options = {
 };
 
 function Home() {
+
   const classes = useStyles();
   return (
+
     <div className="mainDash">
       <div className="progress">
         <div className="progressBar">
