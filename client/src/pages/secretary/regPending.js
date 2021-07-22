@@ -44,7 +44,7 @@ const conditionalRowStyles = [
   {
     when: (row) => row.status === "Student Member",
     style: {
-      backgroundColor: "#D5E6F3",
+      backgroundColor: "#A3E4D7",
       color: "black",
       "&:hover": {
         cursor: "pointer",
