@@ -4,25 +4,24 @@
     "private": true,
     "dependencies": {
         "@material-ui/core": "^4.12.2",
-
         "@material-ui/icons": "^4.11.2",
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^11.2.7",
-        "@testing-library/user-event": "^12.8.3",        
+        "@testing-library/user-event": "^12.8.3",
         "chart.js": "^3.4.1",
         "react": "^17.0.2",
-        "react-chartjs-2": "^3.0.3",        
+        "react-chartjs-2": "^3.0.3",
         "react-data-table-component": "^7.0.0-rc2",
         "react-dom": "^17.0.2",
         "react-icons": "^4.2.0",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
-        "react-scripts": "4.0.3",        
+        "react-scripts": "4.0.3",
         "react-tabs": "^3.2.2",
         "react-select": "^4.3.1",
         "recharts": "^2.0.10",
         "styled-components": "^5.3.0",
-        "web-vitals": "^1.1.2",        
+        "web-vitals": "^1.1.2",
         "history": "^4.10.1",
         "formik": "^2.2.9",
         "axios": "^0.21.1",
@@ -54,7 +53,7 @@
         ]
     },
     "devDependencies": {
-      "datatables.net": "^1.10.25",
-      "jquery": "^3.6.0"
+        "datatables.net": "^1.10.25",
+        "jquery": "^3.6.0"
     }
 }
