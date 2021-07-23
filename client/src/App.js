@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 
@@ -108,7 +107,7 @@ function App() {
 //const loginStatus=true;
  // const [loginStatus, setLoginStatus] = useState(false);
 
-  const loginStatus=false;
+  const loginStatus=true;
   const role=false;
 
   if (loginStatus==false) {

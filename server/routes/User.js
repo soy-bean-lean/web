@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 const userRouter = Router();
 
-userRouter.post("/", async (req, res) => { 
+userRouter.post("/", async (req, res) => {
     
     connection.query(
         'SELECT * FROM users WHERE username=?', 
@@ -29,12 +29,14 @@ userRouter.post("/", async (req, res) => {
 });
 
 userRouter.post("/login", async (req, res) => { 
-        
+    console.log("anushka1");
+
     const username = req.body.username;
     const password = req.body.password;
 
     connection.query(
-        'SELECT * FROM users WHERE username=?', 
+        'SELECT * FROM users WHERE username=?',
+        console.log("anushka2") 
         [username], 
         (err, result) => {
             
@@ -53,7 +55,13 @@ userRouter.post("/login", async (req, res) => {
                             [username], 
                             (err, id_res) => {
 
-                                req.session.user = result;
+                                // const id = result[0].id;
+                                // const token = jwt.sign({id}, "jwtSecret", {
+                                //     expiresIn:1000,
+                                    
+                                // })
+
+                              //  req.session.user = result;
                                 res.json({
                                     id: id_res[0].id,
                                     username: username
