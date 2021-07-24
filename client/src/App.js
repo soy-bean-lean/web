@@ -124,14 +124,14 @@ function App() {
 
   }else{
     
-    const mname = "Jihani";
-    const mtype = "Secretariat";
+    //const mname = "Jihani";
+    //const mtype = "Secretariat";
     
     //const mname = "Supun";
     //const mtype = "Council";
     
-   // const mname = "Chamika";
-   // const mtype = "Professional";
+    const mname = "Chamika";
+    const mtype = "Professional";
 
     //const mname = "Anushka";
    // const mtype = "Chartered";
