@@ -5,11 +5,7 @@ import bcrypt from "bcrypt";
 const userRouter = Router();
 //------Anushka's Code------
 
-<<<<<<< HEAD
 /*userRouter.post("/", async (req, res) => { 
-=======
-userRouter.post("/", async (req, res) => {
->>>>>>> 69b81bde4e37a999c02dd987d305b994e55c75aa
     
     connection.query(
         'SELECT * FROM users WHERE username=?', 
@@ -65,14 +61,8 @@ userRouter.post("/", async (req, res) => {
     
 });
 
-<<<<<<< HEAD
 /*userRouter.post("/login", async (req, res) => { 
         
-=======
-userRouter.post("/login", async (req, res) => { 
-    console.log("anushka1");
-
->>>>>>> 69b81bde4e37a999c02dd987d305b994e55c75aa
     const username = req.body.username;
     const password = req.body.password;
 
