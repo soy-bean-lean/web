@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 
@@ -125,14 +124,14 @@ function App() {
 
   }else{
     
-    const mname = "Jihani";
-    const mtype = "Secretariat";
+    //const mname = "Jihani";
+    //const mtype = "Secretariat";
     
     //const mname = "Supun";
     //const mtype = "Council";
     
-   // const mname = "Chamika";
-   // const mtype = "Professional";
+    const mname = "Chamika";
+    const mtype = "Professional";
 
     //const mname = "Anushka";
    // const mtype = "Chartered";

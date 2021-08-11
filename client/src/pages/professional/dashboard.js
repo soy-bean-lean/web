@@ -70,11 +70,9 @@ const options = {
 };
 
 function Home() {
-
   const classes = useStyles();
   return (
-
-    <div className="mainDash">
+    <div className="mainDashPro">
       <div className="progress">
         <div className="progressBar">
           <div className="progressColour"></div>
@@ -84,13 +82,15 @@ function Home() {
         </div>
       </div>
 
-      <div className="Charts">
-        <div className="chart1">
+        <div className="chartPro">
+        <center>
+          <h3>Last Year Credit Progress</h3>
+        </center>
           {" "}
-          <Line
-            data={state}
-            width={220}
-            height={80}
+          <Bar
+            data={state2}
+            width={100}
+            height={14}
             options={
               ({ options },
               {
@@ -106,6 +106,7 @@ function Home() {
               })
             }
           />
+         
         </div>
 
         <div className="recentAct">
@@ -126,20 +127,22 @@ function Home() {
           </div>
           <div className="recent">
             {" "}
-            <p> Uploaded CPD -Attendt to a Workshop in Microsoft - 2021 / June /25</p>
+            <p>
+              {" "}
+              Uploaded CPD -Attendt to a Workshop in Microsoft - 2021 / June /25
+            </p>
           </div>
-        </div>
       </div>
 
       <div className="chart3">
         <center>
-          <h3>Uploaded CPD Record Types</h3>
+          <h3>Last Year Credit Progress</h3>
         </center>
         <div className="ONG2">
-          <Bar
-            data={state2}
+        <Line
+            data={state}
             width={220}
-            height={32}
+            height={80}
             options={
               ({ options },
               {
