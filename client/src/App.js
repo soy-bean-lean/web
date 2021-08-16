@@ -29,6 +29,7 @@ import jobPro from "./pages/professional/job";
 import paymentsPro from "./pages/professional/payments";
 
 import courseInfo from "./pages/csslCourse/basicDetails";
+import courseContentInfo from "./pages/csslCourse/courseContentInfo";
 
 //chartered
 import dashboardCha from "./pages/chartered/dashboard";
@@ -177,6 +178,7 @@ function App() {
               <Route path="/paymentsP" component={paymentsPro} />
 
               <Route path="/addCourse" component={courseInfo} />
+              <Route path="/addcourseContent" component={courseContentInfo} />
             </Switch>
           </Router>
         </>

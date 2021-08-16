@@ -1,7 +1,8 @@
 import React from 'react';
 import "./basicDetails.css";
+import { Link } from "react-router-dom";
 
-function BasicCourseInfo() { 
+function BasicCourseInfo() {
     return (
         <>
             <div className="course-basic-info">
@@ -59,11 +60,16 @@ function BasicCourseInfo() {
                         </div>
                     </div>
                     <div className="course-btn-block">
-                        <input
+                        {/*<input
                             type="submit"
                             className="course-btn-submit"
                             value="Submit"
-                        />
+                        />*/}
+                        <Link to={"/addcourseContent/"} className="course-btn-submit">
+                            <a href="#" className="course-btn-submit">
+                                Submit
+                            </a>
+                        </Link>
                     </div>
                 </div>
             </div>
