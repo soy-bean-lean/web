@@ -57,5 +57,10 @@ export const SidebarDataPro = [
     path: '/paymentsP',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
-  },
+  },{
+    title: 'New Course',
+    path: '/addCourse',
+    icon: <FaIcons.FaGraduationCap />,
+    cName: 'nav-text'
+  }
 ];

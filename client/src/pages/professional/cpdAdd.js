@@ -17,7 +17,7 @@ function AddCPD() {
       <div className="addCPDMain">
         <div className="addForm">
 
-          {/* Type Subject to CPD Record */}
+          {/* Subject for CPD Record */}
           <div className="courseD">
             <h4 className="textName">Subject</h4>
             <input className="input" placeholder="--Subject--"></input>
