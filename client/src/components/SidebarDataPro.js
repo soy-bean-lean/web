@@ -54,7 +54,7 @@ export const SidebarDataPro = [
     cName: 'nav-text'
   },{
     title: 'Jobs',
-    path: '/jobP',
+    path: '/job',
     icon: <FaIcons.FaUserAlt />,
     cName: 'nav-text'
   },{

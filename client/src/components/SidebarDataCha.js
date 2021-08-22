@@ -49,7 +49,7 @@ export const SidebarDataCha = [
         cName: 'nav-text'
       },{
         title: 'Jobs',
-        path: '/jobC',
+        path: '/job',
         icon: <FaIcons.FaUserAlt />,
         cName: 'nav-text'
       },{

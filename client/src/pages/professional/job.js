@@ -36,7 +36,7 @@ function job() {
         <div className="jobAllign">
           <div className="recDes">{jobs.description}</div>
 
-          <Link to={"/jobViewP/" + id} className="ViewJob">
+          <Link to={"/jobAddvertisment"} className="ViewJob">
             <a href="#" className="review">
              View More...
             </a>
@@ -52,7 +52,7 @@ function job() {
     </div>
       <div className="jobview">{jobview}</div>
       <div className="CV">
-        <Link to={"/createCV"} className="cvCreate">
+        <Link to={"/"} className="cvCreate">
           <a href="#" className="review">
             Genarate My CV
           </a>
