@@ -25,7 +25,14 @@ import workshopViewPro from "./pages/professional/workshopsView";
 import blogsPro from "./pages/professional/blog";
 import forumPro from "./pages/professional/forum";
 import reportsPro from "./pages/professional/reports";
+
 import jobPro from "./pages/professional/job";
+import jobViewPro from "./pages/professional/jobView";
+
+import createCV from "./pages/professional/genarateCV";
+
+
+
 import paymentsPro from "./pages/professional/payments";
 
 import courseInfo from "./pages/csslCourse/basicDetails";
@@ -174,7 +181,14 @@ function App() {
               <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
+              
               <Route path="/jobP" component={jobPro} />
+              <Route path="/jobViewP" component={jobViewPro} />
+              <Route path="/createCV" component={createCV} />
+
+              
+
+
               <Route path="/paymentsP" component={paymentsPro} />
 
               <Route path="/addCourse" component={courseInfo} />
