@@ -138,10 +138,10 @@ function App() {
     //const mtype = "Secretariat";
     
     //const mname = "Supun";
-    //const mtype = "Council";
+    const mtype = "Council";
     
     const mname = "Chamika";
-    const mtype = "Professional";
+    //const mtype = "Professional";
 
     //const mname = "Anushka";
    // const mtype = "Chartered";
@@ -284,7 +284,7 @@ function App() {
             <Navbar name={mname} type={mtype} />
             <Switch>
               <Route path="/" exact component={dashboardCou} />
-              <Route path="/jobCou" component={addJobCou} />
+              <Route path="/jobCou" component={addJob} />
               <Route path="/blogCou" component={blogsCou} />
               <Route path="/workshopCou" component={verifyWorkshop} />
               <Route path="/reportsCou" component={reportCou} />
