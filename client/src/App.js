@@ -68,6 +68,8 @@ import jobAss from "./pages/associate/job";
 //Secretary
 import dashboardSec from "./pages/secretary/dashboard";
 import addJob from "./pages/secretary/addJob";
+import addWorkshops from "./pages/secretary/addWorkshops";
+
 import manageWorkshop from "./pages/secretary/manageWorkshop";
 import paymentsSec from "./pages/secretary/payment";
 import regApprove from "./pages/secretary/regApprove";
@@ -128,10 +130,10 @@ function App() {
     );
   } else {
     //const mname = "Jihani";
-    //const mtype = "Secretariat";
+   // const mtype = "Secretariat";
 
     //const mname = "Supun";
-    // const mtype = "Council";
+     //const mtype = "Council";
 
     const mname = "Chamika";
     //const mtype = "Professional";
@@ -220,6 +222,9 @@ function App() {
               <Route path="/" exact component={dashboardSec} />
               <Route path="/addJob" component={addJob} />
               <Route path="/manWorkshop" component={manageWorkshop} />
+              
+              <Route path="/addWorkshops" component={addWorkshops} />
+
               <Route path="/regApprove" component={regApprove} />
               <Route path="/regPending" component={regPending} />
               <Route path="/regRejected" component={regRejected} />

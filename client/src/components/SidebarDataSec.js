@@ -20,7 +20,12 @@ export const SidebarDataSec = [
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
   },
-  
+  {
+    title: 'Add Workshops',
+    path: '/addWorkshops',
+    icon: <GIIcons.GiTeacher />,
+    cName: 'nav-text'
+  },  
   {
     title: 'Manage Workshops',
     path: '/manWorkshop',
