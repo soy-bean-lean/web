@@ -1,7 +1,7 @@
 import React from "react";
 import "./style/basicDetails.css";
 import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
 function addWorkshop() {
 
   return (
