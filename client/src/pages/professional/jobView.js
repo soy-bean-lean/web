@@ -26,7 +26,7 @@ function Job() {
             Apply
           </a>
         </Link>
-        <Link to={"/jobP"} className="btn">
+        <Link to={"/job"} className="btn">
           <a href="#" className="review">
             Back
           </a>

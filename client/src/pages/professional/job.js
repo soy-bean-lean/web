@@ -52,7 +52,7 @@ function job() {
     </div>
       <div className="jobview">{jobview}</div>
       <div className="CV">
-        <Link to={"/"} className="cvCreate">
+        <Link to={"/createCV"} className="cvCreate">
           <a href="#" className="review">
             Genarate My CV
           </a>
