@@ -341,7 +341,7 @@ function Registration() {
                   </div>
                 </div>
 
-                <button className="btn btn-success mt-3" type="submit">
+                <button className="btn btn-success mt-3" type="submit" >
                   Register
                 </button>
                 <button className="btn btn-danger mt-3 " type="reset">

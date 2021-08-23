@@ -33,7 +33,7 @@ function Login() {
         alert(response.data.error);
         setLoginStatus(response.data.error);
       } else {
-          history.push("/home");        
+          history.push("/cpdP");        
       }
     });
   };

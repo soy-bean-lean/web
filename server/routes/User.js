@@ -3,8 +3,9 @@ import connection from "../db.js";
 import bcrypt from "bcrypt";
 
 const userRouter = Router();
+//------Anushka's Code------
 
-userRouter.post("/", async (req, res) => { 
+/*userRouter.post("/", async (req, res) => { 
     
     connection.query(
         'SELECT * FROM users WHERE username=?', 
@@ -26,9 +27,43 @@ userRouter.post("/", async (req, res) => {
         }
     })   
     
+});*/
+
+//--------------------------------
+
+userRouter.post("/", async (req, res) => { 
+    const type = req.body.category;
+    const title = req.body.title;
+    const fname = req.body.firstName;
+    const sName = req.body.secondName
+    const lname = req.body.lastName;
+    const desig = req.body.designation;
+    const mail = req.body.email;
+    const pw = req.body.password;
+    console.log(fname);
+    connection.query(
+        'SELECT * FROM logininfo WHERE un = ?', 
+        [mail], 
+        (err, result) => {
+        console.log(result); 
+        if (result.length <= 0){
+            bcrypt.hash(pw,10).then((hash) => {
+                connection.query(`INSERT INTO user (title,firstName,lastName,email,userType) VALUES (?,?,?,?,?)`, 
+                [title, fname, lname, mail, type],(err, resultNew)=> {
+                    console.log(resultNew);
+                    connection.query(`INSERT INTO logininfo (un, pw) VALUES (?, ?)`, 
+                    [mail,pw]),
+                    res.json("success");
+                });
+            })
+        }else{
+            res.json({ error: "Username already exists" });   
+        }
+    })   
+    
 });
 
-userRouter.post("/login", async (req, res) => { 
+/*userRouter.post("/login", async (req, res) => { 
         
     const username = req.body.username;
     const password = req.body.password;
@@ -58,6 +93,54 @@ userRouter.post("/login", async (req, res) => {
                                     id: id_res[0].id,
                                     username: username
                                 });  
+                            })                                            
+                    });                
+                })            
+        }
+        else
+            res.json({ error: "Username doesn't exists" });            
+    })
+});
+
+*/
+
+userRouter.post("/login", async (req, res) => { 
+        
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log(username);
+    connection.query(
+        'SELECT * FROM logininfo WHERE un = ?', 
+        [username], 
+        (err, result) => {
+            
+        if (result.length > 0){
+            console.log(result);
+            connection.query(
+                'SELECT pw FROM logininfo WHERE un = ?', 
+                [username], 
+                (err, row) => {
+                    bcrypt.compare(password, row[0].pw).then((match) => {  
+                        if (!match) res.json({ error: "Incorrect password" });
+
+                        //GET THE TYPE
+                        connection.query(
+                            'SELECT * FROM user WHERE email = ?', 
+                            [username], 
+                            (err, resType) => {
+                                console.log("type:",resType);
+                                if (resType.length > 0){
+                                    req.session.user = result;
+                                    res.json({
+                                    username: username,
+                                    type : resType[0].userType
+                                });  
+
+                                }
+                                else{
+                                    res.json({ error: "Usertype not initialize" });  
+                                }
+                                
                             })                                            
                     });                
                 })            

@@ -12,7 +12,7 @@ function login() {
       </div>
 
       <div className="right">
-        <h1>Member Login</h1>
+        <h1> Login</h1>
         <input className="user" placeholder="User Name"></input>
         <input className="pass" placeholder="Password"></input>
         <div className="btn-login">
