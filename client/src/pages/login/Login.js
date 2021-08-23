@@ -45,7 +45,7 @@ function Login() {
         <img src={image}></img>
       </div>
       <div className="right">
-        <h1>Member Login</h1>
+        <h1 style={{fontSize: "30px", paddingRight: "20px"}}>Login</h1>
         <label>Username:</label>
         <input
           type="text"

@@ -9,8 +9,6 @@ import { SidebarDataPro } from "./SidebarDataPro";
 import {SidebarDataSec} from "./SidebarDataSec";
 import { SidebarDataStudent } from "./SidebarDataStudent";
 
-
-
 import "./Navbar.css";
 import { IconContext } from "react-icons";
 import * as MdIcons from "react-icons/md";

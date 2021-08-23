@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 
@@ -26,8 +25,16 @@ import workshopViewPro from "./pages/professional/workshopsView";
 import blogsPro from "./pages/professional/blog";
 import forumPro from "./pages/professional/forum";
 import reportsPro from "./pages/professional/reports";
-import jobPro from "./pages/professional/job";
+
+import jobView from "./pages/professional/job";
+import jobAddvertisment from "./pages/professional/jobView";
+
+import createCV from "./pages/professional/genarateCV";
+
 import paymentsPro from "./pages/professional/payments";
+
+import courseInfo from "./pages/csslCourse/basicDetails";
+import courseContentInfo from "./pages/csslCourse/courseContentInfo";
 
 //chartered
 import dashboardCha from "./pages/chartered/dashboard";
@@ -61,6 +68,8 @@ import jobAss from "./pages/associate/job";
 //Secretary
 import dashboardSec from "./pages/secretary/dashboard";
 import addJob from "./pages/secretary/addJob";
+import addWorkshops from "./pages/secretary/addWorkshops";
+
 import manageWorkshop from "./pages/secretary/manageWorkshop";
 import paymentsSec from "./pages/secretary/payment";
 import regApprove from "./pages/secretary/regApprove";
@@ -79,39 +88,36 @@ import regApproveCou from "./pages/council/regApproveC";
 import regRejectedCou from "./pages/council/regRejectedC";
 import cpdCou from "./pages/council/cpd";
 
-
-
 function App() {
-//   const [loginStatus, setLoginStatus] = useState(false);
-//   const [role, setRole] = useState("");
-  
-//   axios.defaults.withCredentials = true;
-//   //console.log("role");
-//   useEffect(() => {
-//     axios.get("http://localhost:3001/auth/login").then(response) => {
-      
-       
-//        //console.log(response);
-       
-//       if (response.data.loggedIn == true) { 
-        
-//         setLoginStatus(true);
-//         setRole(response.data.user[0].username);
-//       // } else {
-// //         //alert(response.data.error);
-//         }
-//     });
-//   }, []);
+  //   const [loginStatus, setLoginStatus] = useState(false);
+  //   const [role, setRole] = useState("");
 
-//  // console.log(loginStatus);
-//   console.log(role);
-//const loginStatus=true;
- // const [loginStatus, setLoginStatus] = useState(false);
+  //   axios.defaults.withCredentials = true;
+  //   //console.log("role");
+  //   useEffect(() => {
+  //     axios.get("http://localhost:3001/auth/login").then(response) => {
 
-  const loginStatus=false;
-  const role=false;
+  //        //console.log(response);
 
-  if (loginStatus==true) {
+  //       if (response.data.loggedIn == true) {
+
+  //         setLoginStatus(true);
+  //         setRole(response.data.user[0].username);
+  //       // } else {
+  // //         //alert(response.data.error);
+  //         }
+  //     });
+  //   }, []);
+
+  //  // console.log(loginStatus);
+  //   console.log(role);
+  //const loginStatus=true;
+  // const [loginStatus, setLoginStatus] = useState(false);
+
+  const loginStatus = true;
+  const role = false;
+
+  if (loginStatus == false) {
     return (
       <>
         <Router>
@@ -122,26 +128,18 @@ function App() {
         </Router>
       </>
     );
+  } else {
+    //const mname = "Jihani";
+   // const mtype = "Secretariat";
 
-  }else{
-    
-    // const mname = "Jihani";
-    // const mtype = "Secretariat";
-    
-    // const mname = "Supun";
-    // const mtype = "Council";
-    
-   const mname = "Chamika";
-   const mtype = "Professional";
+    //const mname = "Supun";
+     //const mtype = "Council";
+
+    const mname = "Chamika";
+    //const mtype = "Professional";
 
     //const mname = "Anushka";
-   // const mtype = "Chartered";
-   
-   // const mname = "Chamika";
-   // const mtype = "Professional";
-
-    //const mname = "Anushka";
-   // const mtype = "Chartered";
+    const mtype = "Chartered";
 
     if (mtype == "Professional") {
       return (
@@ -164,7 +162,7 @@ function App() {
               <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
-              <Route path="/jobP" component={jobPro} />
+              <Route path="/job" component={jobView} />
               <Route path="/paymentsP" component={paymentsPro} />
 
               <Route path="/courseP" component={coursePro} />
@@ -172,8 +170,15 @@ function App() {
               <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
-              <Route path="/jobP" component={jobPro} />
+
+              <Route path="/job" component={jobView} />
+              <Route path="/jobAddvertisment" component={jobAddvertisment} />
+              <Route path="/createCV" component={createCV} />
+
               <Route path="/paymentsP" component={paymentsPro} />
+
+              <Route path="/addCourse" component={courseInfo} />
+              <Route path="/addcourseContent" component={courseContentInfo} />
             </Switch>
           </Router>
         </>
@@ -199,25 +204,11 @@ function App() {
               <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
-              <Route path="/jobP" component={jobPro} />
-              <Route path="/paymentsP" component={paymentsPro} />
+              <Route path="/job" component={jobView} />
+              <Route path="/jobAddvertisment" component={jobAddvertisment} />
+              <Route path="/createCV" component={createCV} />
 
-              <Route path="/courseP" component={coursePro} />
-              <Route path="/workshopP" component={workshopPro} />
-              <Route path="/blogP" component={blogsPro} />
-              <Route path="/forumP" component={forumPro} />
-              <Route path="/reportsP" component={reportsPro} />
-              <Route path="/jobP" component={jobPro} />
               <Route path="/paymentsP" component={paymentsPro} />
-              {/*<Route path="/cpdC" component={cpdCha} />
-              <Route path="/courseC" component={courseCha} />
-              <Route path="/workshopS" component={workshopCha} />
-              <Route path="/blogC" component={blogCha} />
-              <Route path="/forumC" component={forumCha} />
-              <Route path="/reportsC" component={reportsCha} />
-              <Route path="/jobC" component={jobCha} />
-              <Route path="/paymentsC" component={paymentsCha} />
-              */}
             </Switch>
           </Router>
         </>
@@ -231,6 +222,9 @@ function App() {
               <Route path="/" exact component={dashboardSec} />
               <Route path="/addJob" component={addJob} />
               <Route path="/manWorkshop" component={manageWorkshop} />
+              
+              <Route path="/addWorkshops" component={addWorkshops} />
+
               <Route path="/regApprove" component={regApprove} />
               <Route path="/regPending" component={regPending} />
               <Route path="/regRejected" component={regRejected} />
@@ -241,7 +235,7 @@ function App() {
       );
     } else if (mtype == "Associate") {
       return (
-        <>        
+        <>
           <Router>
             <Navbar name={mname} type={mtype} />
             <Switch>
@@ -257,7 +251,6 @@ function App() {
           </Router>
         </>
       );
-
     } else if (mtype == "Council") {
       return (
         <>
@@ -265,7 +258,7 @@ function App() {
             <Navbar name={mname} type={mtype} />
             <Switch>
               <Route path="/" exact component={dashboardCou} />
-              <Route path="/jobCou" component={addJobCou} />
+              <Route path="/jobCou" component={addJob} />
               <Route path="/blogCou" component={blogsCou} />
               <Route path="/workshopCou" component={verifyWorkshop} />
               <Route path="/reportsCou" component={reportCou} />
@@ -291,14 +284,12 @@ function App() {
               <Route path="/forumS" component={forumStu} />
               <Route path="/reportsS" component={reportsStu} />
               <Route path="/paymentsS" component={paymentsStu} />
-
             </Switch>
           </Router>
         </>
       );
     }
   }
-
 }
 
 export default App;

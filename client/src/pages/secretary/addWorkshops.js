@@ -1,43 +1,54 @@
 import React from "react";
 import "./style/basicDetails.css";
 import { Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
+function addWorkshop() {
 
-function addJob() {
   return (
     <>
       <div className="job-basic-info">
-        <h1 className="job-basic-info-title">Add Job Vacancies</h1>
+        <h1 className="job-basic-info-title">Add Workshops</h1>
         <hr></hr>
         <div className="job-basic-info-form">
           <div className="job-basic-info-block">
             <div className="job-field-block">
-              <h4 className="job-info-title">Company Name</h4>
+              <h4 className="job-info-title">Workshop Title</h4>
               <input className="input" placeholder="--Company Name--"></input>
             </div>
+           
             <div className="job-field-block">
-              <h4 className="job-info-title">Job Role</h4>
-              <input className="input" placeholder="--Job Role--"></input>
+              <h4 className="job-info-title">Subject</h4>
+              <input className="input" placeholder="--Subject--"></input>
             </div>
+            
+            <div className="job-field-block">
+              <h4 className="job-info-title">From Date</h4>             
+              <input type="date" className="input"></input>
+            </div>
+            <div className="job-field-block">
+              <h4 className="job-info-title">To Date</h4>             
+              <input type="date" className="input"></input>
+            </div>
+
             <div className="job-field-block">
               <h4 className="job-info-title">Location</h4>
               <input className="input" placeholder="--Location--"></input>
             </div>
-            <div className="job-field-block">
-              <h4 className="job-info-title">Contact Number</h4>
-              <input className="input" placeholder="--Contact Number--"></input>
-            </div>
-            <div className="job-field-block">
-              <h4 className="job-info-title">Email</h4>
-              <input className="input" placeholder="--Email--"></input>
-            </div>
+
+
+
             <div className="job-field-block">
               <h4 className="job-info-title">Description</h4>
-              <textarea className="note" placeholder="--Description--">
-
-              </textarea>
+              <textarea
+                className="note"
+                placeholder="--Description--"
+              ></textarea>
             </div>
+
+
+
             <div className="job-field-block">
-              <h4 className="job-info-title">Advertisement Image</h4>
+              <h4 className="job-info-title">Workshop Image</h4>
               <input
                 type="file"
                 className="input"
@@ -65,4 +76,4 @@ function addJob() {
   );
 }
 
-export default addJob;
+export default addWorkshop;

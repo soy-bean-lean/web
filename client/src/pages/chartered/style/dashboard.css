@@ -1,21 +1,24 @@
-.main {
-    overflow-y: auto ;
-  display: block;
+.mainDashChar {
+  display: grid;
   width: auto;
+  height: 720px;
   padding-top: 60px;
   background-color: rgb(255, 255, 255);
-  overflow-y:hidden;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.2fr 0.4fr 1fr;
+  grid-template-areas:
+    "progressBar progressBar"
+    "recent chart3"
+    "chartPro chartPro";
 }
-.bar {
-  display: flex;
-  justify-content: center;
-  background-color: rgb(77, 99, 139);
+.mainDashChar .progress {
+  grid-area: progressBar;
 }
-.bar {
-  display: flex;
-  justify-content: center;
-  background-color: rgb(228, 0, 49);
+.recent p {
+  padding-left: 10px;
+  padding-top: 3px;
 }
+
 
 .row1 {
   display: block;
@@ -40,64 +43,76 @@
     width: 0;
   }
 }
-.Charts {
-  margin: 10px;
-  display: block;
-  height: 200px;
-  justify-content: center;
-  align-items: center;
-}
-.chart1 {
-    padding: 5px;
-    display: flex;
-  width: 49.5%;
-  height: 100%; 
-  float: left;
-  border:2px solid rgb(6, 10, 95);
+
+.mainDashChar .chartPro {
   border-radius: 15px;
+  align-content: center;
+  margin: 1%;
+
+  height: 67%;
+  float: right;
+  border: 2px solid rgb(6, 10, 95);
   background-color: rgb(255, 255, 255);
-  grid-area: chart1;
+  grid-area: chartPro;
 }
-.chart2 {
+.chartPro canvas {
+  height: 100%;
+}
+.recentAct .recent {
+  margin-top: 3%;
+  border: 1px solid #060a5f;
+  height: 32px;
+  border-radius: 0 20px 20px 0;
+  width: 95%;
+}
+.recentAct {
   border-radius: 15px;
   padding: 5px;
-
-  display: flex;
-height: 100%; 
- width: 49.5%;
-  float: right;
-  border: 2px solid rgb(6, 10, 95);;
-  background-color: rgb(255, 255, 255);
-  grid-area: chart1;
-}
-.OnGoing {
-  margin:10px;
-  display: block;
+  align-content: center;
+  margin-left: 2%;
+  margin-right: 1%;
+  width: 95%;
   height: 100%;
+  float: right;
+  padding-left: 20px;
+  border: 2px solid rgb(6, 10, 95);
+  background-color: rgb(255, 255, 255);
+  grid-area: recent;
+}
+.mainDashChar .chart3 {
+  margin-left: 1%;
+  margin-right: 2%;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
+  width: 95%;
+
   align-content: center;
   border-radius: 15px;
   border: 2px solid rgb(6, 10, 95);
   background-color: rgb(255, 255, 255);
+  grid-area: chart3;
 }
-.ONG {
-   
 
-    padding: 5px;
-  display: flex;
-height: 350px;
-  
-}
-@media only screen and (max-width: 700px) {
-  .container {
+@media only screen and (max-width: 900px) {
+  .mainDashChar {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.25fr 0.4fr 1fr 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr 1fr ;
     grid-template-areas:
-      "nav"
-      "progress"
-      "chart1"
-      "chart2"
-      "ongoing";
+      "progressBar"
+      "recent"
+      "chart3"
+      "chartPro";
+  }
+
+  .mainDashChar .recentAct{
+    width: 90%;
+    margin-right: 2%;
+    margin-left: 1%;
+  }
+
+  .mainDashChar .progress{
+    width: 100%;
+    margin-right: 2%;
+    margin-left: 1%;
   }
 }

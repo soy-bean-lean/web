@@ -3,10 +3,66 @@ import "./style/cpd.css";
 import "./style/Ongoingtabs.css";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Link } from "react-router-dom";
-
+import { makeStyles, Paper, Grid } from "@material-ui/core";
+import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";
 function cpd() {
   const record = [
     {
+      id: 1,
+      type: "CSSL Course",
+      description: "Java Programming Beginner Level",
+      status: "Approved",
+    },
+    {
+      id: 2,
+      type: "CSSL Workshop",
+      description: "Machine Learning Workshop",
+      status: "Pending",
+    }, {
+      id: 1,
+      type: "CSSL Course",
+      description: "Java Programming Beginner Level",
+      status: "Approved",
+    },
+    {
+      id: 2,
+      type: "CSSL Workshop",
+      description: "Machine Learning Workshop",
+      status: "Pending",
+    }, {
+      id: 1,
+      type: "CSSL Course",
+      description: "Java Programming Beginner Level",
+      status: "Approved",
+    },
+    {
+      id: 2,
+      type: "CSSL Workshop",
+      description: "Machine Learning Workshop",
+      status: "Pending",
+    }, {
+      id: 1,
+      type: "CSSL Course",
+      description: "Java Programming Beginner Level",
+      status: "Approved",
+    },
+    {
+      id: 2,
+      type: "CSSL Workshop",
+      description: "Machine Learning Workshop",
+      status: "Pending",
+    }, {
+      id: 1,
+      type: "CSSL Course",
+      description: "Java Programming Beginner Level",
+      status: "Approved",
+    },
+    {
+      id: 2,
+      type: "CSSL Workshop",
+      description: "Machine Learning Workshop",
+      status: "Pending",
+    }, {
       id: 1,
       type: "CSSL Course",
       description: "Java Programming Beginner Level",
@@ -186,19 +242,51 @@ function cpd() {
     </>
   ));
 
-
-
+  const state = {
+    labels: ["Approved", "Pending", "Rejected"],
+    datasets: [
+      {
+        label: "CPD Uploads",
+        fill: false,
+        lineTension:5,
+        borderRadius:5,
+        backgroundColor: ["#0a8010","#8d800a","#ff0404"],
+        borderColor: "#fff",
+        borderWidth: 8,
+        data: [20, 8, 10],
+      },
+    ],
+  };
+  const cpd = {
+    labels: ["CPD Records"],
+    datasets: [
+      {
+        label: "Approved",
+        backgroundColor: "#0a8010",
+        hoverBackgroundColor: "#0a8010",
+        data: [2],
+      },
+      {
+        label: "Rejected",
+        backgroundColor: "#ff0404",
+        hoverBackgroundColor: "#ff0404",
+        data: [4],
+      },
+      {
+        label: "Pending",
+        backgroundColor: "#8d800a",
+        hoverBackgroundColor: "#8d800a",
+        data: [8],
+      },
+    ],
+  };
+  const options = {
+    maintainAspectRatio: false,
+  };
+  
   return (
-    <div className="main">
-      <div className="btn-cpdAdd">
-        <div className="add-cpd-btn">
-          <Link to={"/addCPD/"} className="add-cpd-btn">
-            <a href="#" className="add-cpd-btn">
-              ADD
-            </a>
-          </Link>
-        </div>
-      </div>
+    <div className="mainCPD">
+
       <div className="recentCPDRec">
         <Tabs /*style={{ paddingTop: "5px", paddingLeft: "3px" }}*/>
           {" "}
@@ -210,6 +298,9 @@ function cpd() {
           </TabList>
           <h3 className="titleRecent">Recent CPD Submissions</h3>
           <TabPanel className="all">
+          <div className="btn-cpdAdd">
+   
+      </div>
             <div className="recList">{recordList}</div>
           </TabPanel>
           <TabPanel className="approved">
@@ -222,8 +313,44 @@ function cpd() {
             <div className="recList">{recordListRej}</div>
           </TabPanel>
         </Tabs>
-      </div>
+     
+     </div>
+     <div className="cpdAdd">
+
+     <div className="add-cpd-btn">
+          <Link to={"/addCPD/"} className="add-cpd-btn">
+            <a href="#" className="add-cpd-btn">
+              ADD
+            </a>
+          </Link>
+        </div>
     </div>
+    <div className="chartPro">
+      
+          {" "}
+          <Doughnut
+            data={state}
+            width={100}
+            height={100}
+            options={
+              (
+              {
+                title: {
+                  display: true,
+                  text: "Credit Progress Last Year",
+                  fontSize: 20,
+                },
+                legend: {
+                  display: true,
+                  position: "left",
+                },
+              })
+            }
+          />
+         
+        </div>
+    </div>
+    
   );
 }
 

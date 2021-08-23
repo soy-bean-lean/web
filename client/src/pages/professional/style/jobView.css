@@ -1,0 +1,50 @@
+.headder {
+  display: grid;
+  width: auto;
+  height: 720px;
+  background-color: rgb(255, 255, 255);
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.8fr 0.2fr;
+  grid-template-areas:
+    "mainL mainR"
+    "footer mainR";
+}
+.mainR {
+  margin-top: 8%;
+  grid-area: mainR;
+  overflow-y: scroll;
+  padding: 2%;
+border-left:1px black;
+background-color: antiquewhite;
+}
+.mainL {
+  grid-area: mainL;
+  margin-top: 12%;
+  margin-left: 12%;
+  padding: 2%;
+}
+.footer {
+  height: auto;
+  width: 95%;
+  float: left;
+  grid-area: footer;
+}
+.title h1 {
+  margin-top: 150px;
+  justify-content: center;
+  margin-right: 10%;
+  margin-left: 1%;
+}
+.btn a {
+  background: #060a5f;
+  border: none;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 10px;
+  float: right;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+}

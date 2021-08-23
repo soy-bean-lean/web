@@ -55,8 +55,7 @@ margin-bottom: 20px;}
     margin-left: 10%;
     width: 60%;
   }
-  .review {
-  }
+  
   .bottom a {
     background: #060a5f;
     border: none;
@@ -67,7 +66,6 @@ margin-bottom: 20px;}
     margin: 5px;
     border-radius: 5px;
     font-size: 14px;
-    font-weight: 600;
     color: rgb(255, 255, 255);
   }
   

@@ -23,6 +23,11 @@ export const SidebarDataPro = [
     path: '/courseP',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
+  },{
+    title: 'New Course',
+    path: '/addCourse',
+    icon: <FaIcons.FaGraduationCap />,
+    cName: 'nav-text'
   },
   {
     title: 'Workshops',
@@ -49,7 +54,7 @@ export const SidebarDataPro = [
     cName: 'nav-text'
   },{
     title: 'Jobs',
-    path: '/jobP',
+    path: '/job',
     icon: <FaIcons.FaUserAlt />,
     cName: 'nav-text'
   },{
