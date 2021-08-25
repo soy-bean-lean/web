@@ -1,55 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./style/job.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-function job() {
-  const id = "1";
-  const jobs = [
-    {
-      id: 1,
-      description: "Java Programming Beginner Level",
-      path:"/jobViewP/",
-    },
-    {
-      id: 2,
-      description: "Machine Learning Workshop",
-      path:"",
+function Job() {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/job/getJobs")
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setData(response.data);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
 
-    },
-    {
-      id: 1,
-      description: "Java Programming Beginner Level",
-      path:"",
+  console.log(data == null);
+  const jobview =
+    data &&
+    data.map((data) => (
+      <>
+        <div className="JOB">
+          <div className="jobAllign">
+            <div className="job">
+              {"                    " +
+                data.jvId +
+                " - " +
+                data.companyName +
+                "                         ,    " +
+                data.location +
+                " ," +
+                data.designation}{" "}
+            </div>
 
-      
-    },
-    {
-      id: 2,
-      description: "Machine Learning Workshop",
-      path:"",
-
-    },
-  ];
-  const jobview = jobs.map((jobs) => (
-    <>
-      <div className="JOB">
-        <div className="jobAllign">
-          <div className="recDes">{jobs.description}</div>
-
-          <Link to={"/jobAddvertisment"} className="ViewJob">
-            <a href="#" className="review">
-             View More...
-            </a>
-          </Link>
+            <Link to={"/jobAddvertisment"} className="ViewJob">
+              <a href="#" className="review">
+                View More...
+              </a>
+            </Link>
+          </div>
         </div>
-      </div>
-    </>
-  ));
+      </>
+    ));
   return (
     <div className="titleJob">
-    <div className="header">
-      <h1>s</h1>
-    </div>
+      <div className="header">
+        <h1>s</h1>
+      </div>
       <div className="jobview">{jobview}</div>
       <div className="CV">
         <Link to={"/createCV"} className="cvCreate">
@@ -62,4 +65,4 @@ function job() {
   );
 }
 
-export default job;
+export default Job;

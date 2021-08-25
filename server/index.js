@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
 import userRouter from "./routes/User.js";
+import addJob from "./routes/jobs.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import session from "express-session";
+import connection from "./db.js";
 
 const app = express();
 
@@ -32,6 +34,16 @@ app.use(
 );
 //routers
 app.use("/auth",userRouter);
+app.use("/job",addJob);
+
+app.get("/job/getJobs", (req, res) => {
+  const sqlSelect =
+    "SELECT jvId , companyName , location ,designation from jobvacancy";
+    connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
 
 app.listen(3001, () => {
     console.log("Yey, your server is running on port 3001");

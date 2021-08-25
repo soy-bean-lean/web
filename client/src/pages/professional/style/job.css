@@ -79,10 +79,11 @@
   align-items: center;
   margin-left: 5%;
   margin-right: 5%;
-
   margin-top: 1%;
 }
-
+.jobAllign .job{
+  padding-left: 2%;
+}
 .cvCreate a {
   background: #060a5f;
   border: none;

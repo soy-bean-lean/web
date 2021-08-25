@@ -130,7 +130,7 @@ function App() {
     );
   } else {
     //const mname = "Jihani";
-    //const mtype = "Secretariat";
+   // const mtype = "Secretariat";
 
     //const mname = "Supun";
      //const mtype = "Council";
