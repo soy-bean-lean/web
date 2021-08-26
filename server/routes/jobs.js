@@ -4,10 +4,11 @@ import bcrypt from "bcrypt";
 import e from "express";
 
 const addJob = Router();
+
+console.log("sql section...........")
 const getJobs = Router();
 
   
-console.log("*********************server 7");
 
 addJob.post("/", async (req, res) => { 
     const companyName = req.body.companyName;
@@ -26,6 +27,7 @@ addJob.post("/", async (req, res) => {
                     if(err)
                     {
                         console.log(err);
+                        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
                     } else
                     {    console.log("server 28");
 

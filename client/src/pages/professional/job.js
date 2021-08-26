@@ -39,7 +39,8 @@ function Job() {
                 data.designation}{" "}
             </div>
 
-            <Link to={"/jobAddvertisment"} className="ViewJob">
+            <Link to={"/jobAddvertisment/" + data.jvId} className="ViewJob">
+              {" "}
               <a href="#" className="review">
                 View More...
               </a>

@@ -44,8 +44,37 @@ app.get("/job/getJobs", (req, res) => {
   });
 });
 
+app.get("/job/getJobView", (req, res) => {
+  const jid = req.query.id;
+  console.log(jid);
+  connection.query(
+    "SELECT jvId , companyName , location ,designation,description ,contact ,email from jobvacancy where jvId = ?;",
+    [jid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+       // console.log(result);
+        res.send(result);
+      }
+    }
+  );
+});
 
 app.listen(3001, () => {
     console.log("Yey, your server is running on port 3001");
 });
 
+
+/* const sqlSelect =
+    "SELECT jvId , companyName , location ,designation from jobvacancy where jvId = ?;",
+    [id];
+    connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+
+app.listen(3001, () => {
+    console.log("Yey, your server is running on port 3001");
+});
+*/

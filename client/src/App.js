@@ -130,7 +130,7 @@ function App() {
     );
   } else {
     //const mname = "Jihani";
-   // const mtype = "Secretariat";
+  //  const mtype = "Secretariat";
 
     //const mname = "Supun";
      //const mtype = "Council";
@@ -172,7 +172,7 @@ function App() {
               <Route path="/reportsP" component={reportsPro} />
 
               <Route path="/job" component={jobView} />
-              <Route path="/jobAddvertisment" component={jobAddvertisment} />
+              <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
               <Route path="/createCV" component={createCV} />
 
               <Route path="/paymentsP" component={paymentsPro} />
