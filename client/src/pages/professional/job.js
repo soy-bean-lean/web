@@ -109,6 +109,7 @@ function Job() {
             setLocation(event.target.value);
           }}
           onKeyUp={getData}
+          
         ></input>
         <button className="sort"  onClick={getData}> Apply </button>
       </div>
