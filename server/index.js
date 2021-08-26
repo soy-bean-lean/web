@@ -10,15 +10,18 @@ import connection from "./db.js";
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
-app.use(cors({
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(
+  cors({
     origin: ["http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
-  }
-));
+  })
+);
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -33,13 +36,26 @@ app.use(
   })
 );
 //routers
-app.use("/auth",userRouter);
-app.use("/job",addJob);
+app.use("/auth", userRouter);
+app.use("/job", addJob);
 
-app.get("/job/getJobs", (req, res) => {
+app.post("/job/getJobs", (req, res) => {
+  const name = req.body.companyName;
+  const location = req.body.location;
+  const role = req.body.jobRole;
+  console.log(name);
+  console.log(location);
+  console.log(role);
   const sqlSelect =
-    "SELECT jvId , companyName , location ,designation from jobvacancy";
-    connection.query(sqlSelect, (err, result) => {
+    "SELECT jvId , companyName , location ,designation from jobvacancy where companyName like '" +
+    name +
+    "%' and location like '" +
+    location +
+    "%' and designation like '" +
+    role +
+    "%'";
+  console.log(sqlSelect);
+  connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
 });
@@ -53,7 +69,7 @@ app.get("/job/getJobView", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-       // console.log(result);
+        // console.log(result);
         res.send(result);
       }
     }
@@ -61,20 +77,5 @@ app.get("/job/getJobView", (req, res) => {
 });
 
 app.listen(3001, () => {
-    console.log("Yey, your server is running on port 3001");
+  console.log("Yey, your server is running on port 3001");
 });
-
-
-/* const sqlSelect =
-    "SELECT jvId , companyName , location ,designation from jobvacancy where jvId = ?;",
-    [id];
-    connection.query(sqlSelect, (err, result) => {
-    res.send(result);
-  });
-});
-
-
-app.listen(3001, () => {
-    console.log("Yey, your server is running on port 3001");
-});
-*/

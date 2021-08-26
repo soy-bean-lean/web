@@ -36,9 +36,9 @@ function Job() {
             <h1>{compayData.companyName}</h1>
             <h2>{compayData.designation}</h2>
             <h4>{compayData.location}</h4>
-            <h4>{compayData.contact}</h4> 
-            <h4>{compayData.email}</h4> 
-            
+            <h4>{compayData.contact}</h4>
+            <h4>{compayData.email}</h4>
+
             <p>{compayData.description}</p>
           </div>
           <div className="mainR">Image Here</div>
@@ -57,10 +57,7 @@ function Job() {
         </div>
       </>
     ));
-  return (
-    
-     <div className="jobviewS">{jobview}</div>
-  );
+  return <div className="jobviewS">{jobview}</div>;
 }
 
 export default Job;

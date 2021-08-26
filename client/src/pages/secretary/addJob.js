@@ -17,7 +17,6 @@ function AddJob() {
   let history = useHistory();
 
   const addJob = () => {
-    console.log("line 13");
     const data = {
       companyName: companyName,
       jobRole: jobRole,
