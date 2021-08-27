@@ -8,5 +8,4 @@ function blogs(){
       </div>
     );
 }
-
 export default blogs;
