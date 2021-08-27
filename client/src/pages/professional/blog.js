@@ -4,7 +4,7 @@ import "./style/blog.css";
 function blogs(){
     return(
         <div className='title'>
-        <h1>Blogs here</h1>
+        <h1>Blogs are here</h1>
       </div>
     );
 }
