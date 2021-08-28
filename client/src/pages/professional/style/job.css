@@ -124,7 +124,7 @@
 .jobAllign .job {
   padding-left: 2%;
 }
-.cvCreate a {
+.cvCreate .sendData {
   background: #060a5f;
   border: none;
   font-weight: 600;

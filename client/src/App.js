@@ -28,6 +28,7 @@ import reportsPro from "./pages/professional/reports";
 
 import jobView from "./pages/professional/job";
 import jobAddvertisment from "./pages/professional/jobView";
+import questionare from "./pages/professional/questionare";
 
 import createCV from "./pages/professional/genarateCV";
 
@@ -173,6 +174,8 @@ function App() {
 
               <Route path="/job" component={jobView} />
               <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
+              <Route path="/questionare/:id" component={questionare} />
+
               <Route path="/createCV" component={createCV} />
 
               <Route path="/paymentsP" component={paymentsPro} />

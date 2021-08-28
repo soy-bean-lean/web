@@ -11,6 +11,8 @@ function Job() {
   const [companyName, setCompanyName] = useState("");
   const [jobRole, setJobRole] = useState("");
   const [location, setLocation] = useState("");
+
+  
   const getData = () => {
     const data = {
       companyName: companyName,
@@ -30,7 +32,6 @@ function Job() {
     .catch((error) => {
       alert(error);
     });
-
   }
   useEffect(() => {
     const data = {

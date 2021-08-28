@@ -43,7 +43,7 @@ function Job() {
           </div>
           <div className="mainR">Image Here</div>
           <div className="footer">
-            <Link to={""} className="btn">
+            <Link to={"/questionare/" + id} className="btn">
               <a href="#" className="review">
                 Apply
               </a>
