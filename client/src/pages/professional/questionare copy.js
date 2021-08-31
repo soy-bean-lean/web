@@ -10,9 +10,8 @@ function Questionare() {
 
   const [answer, setAnswer] = useState([id, 0, 0, 0, 0, 0]);
   const [data, setData] = useState(null);
-  //const [correctAnswers, setCorrectAnswers] = useState(null);
   const [correction, serCorrection] = useState(null);
-  var correctAnswers = 0;
+
   let history = useHistory();
 
   useEffect(() => {
@@ -33,17 +32,6 @@ function Questionare() {
 
   const submit = () => {
     console.log(answer);
-    console.log(data);
-    var finalMarks=0;
-
-    for (let Qnumber = 1; Qnumber <= 5; Qnumber++) {
-      if (answer[Qnumber] === data[Qnumber - 1].Correct) {
-        console.log(answer[Qnumber] + "---" + data[Qnumber - 1].Correct);
-        console.log(Qnumber + "is Correct");
-        finalMarks = finalMarks + 1;
-      }
-    }
-    console.log(finalMarks);
     axios
       .post("http://localhost:3001/job/sendAnswers", answer)
       .then((response) => {
@@ -98,14 +86,17 @@ function Questionare() {
           onChange={(event) => {
             setAnswer(
               answer.map((element, index) => {
-                if (index === data.Qnumber) {
+                if (index === data.Qnumber ) {
                   return event.target.value * 1;
                 } else {
                   return element;
                 }
               })
             );
-          }}
+          }} /*
+          onChange={(event) => {
+            setAnswer([event.target.value]);
+          }}*/
         ></input>
          {" "}
         <label className="answer" for="html">

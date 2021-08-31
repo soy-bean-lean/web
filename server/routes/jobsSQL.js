@@ -9,7 +9,6 @@ const getJobs = Router();
 
 Job.post("/", async (req, res) => {
   const companyName = req.body.companyName;
-
   const jobRole = req.body.jobRole;
   const location = req.body.location;
   const contact = req.body.contact;
@@ -29,7 +28,26 @@ Job.post("/", async (req, res) => {
     }
   );
 });
+Job.post("/addQuestion", async (req, res) => {
+  const question = req.body.question;
+  const ans1 = req.body.ans1;
+  const ans2 = req.body.ans2;
+  const ans3 = req.body.ans3;
+  const ans4 = req.body.ans4;
+  const correct = req.body.correct;
 
+  connection.query(
+    `INSERT INTO jobquestions ( Question , Answer1 ,Answer2,Answer3,Answer4,Correct) VALUES (?,?,?,?,?,?)`,
+    [question, ans1, ans2, ans3, ans4, correct],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json("success");
+      }
+    }
+  );
+});
 Job.post("/getJobs", (req, res) => {
   const name = req.body.companyName;
   const location = req.body.location;
@@ -96,7 +114,7 @@ Job.get("/getJobView", (req, res) => {
 
 Job.post("/getQuestion", (req, res) => {
   const sqlSelect =
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions ";
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions Limit 5";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);

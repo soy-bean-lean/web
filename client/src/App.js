@@ -69,6 +69,7 @@ import jobAss from "./pages/associate/job";
 //Secretary
 import dashboardSec from "./pages/secretary/dashboard";
 import addJob from "./pages/secretary/addJob";
+import addQuestion from "./pages/secretary/addQuestion";
 import addWorkshops from "./pages/secretary/addWorkshops";
 
 import manageWorkshop from "./pages/secretary/manageWorkshop";
@@ -131,7 +132,7 @@ function App() {
     );
   } else {
     //const mname = "Jihani";
-  //  const mtype = "Secretariat";
+   //const mtype = "Secretariat";
 
     //const mname = "Supun";
      //const mtype = "Council";
@@ -224,6 +225,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={dashboardSec} />
               <Route path="/addJob" component={addJob} />
+              <Route path="/addQuestions" component={addQuestion} />
               <Route path="/manWorkshop" component={manageWorkshop} />
               
               <Route path="/addWorkshops" component={addWorkshops} />
