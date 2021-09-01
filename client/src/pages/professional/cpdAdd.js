@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./style/addCPD.css";
 import { Link } from "react-router-dom";
 
@@ -8,6 +9,29 @@ function AddCPD() {
   const [courseType, setCourseType] = useState("");
   const [workshopType, setWorkshopType] = useState("");
   const [workshopDate, setWorkshopDate] = useState("");
+  
+  const getCourses = (event) => {
+    setCourseType(event.target.value);
+    const submitData = {
+      type: event.target.value,
+    };
+    axios
+    .post("http://localhost:3001/cpd/getCourse",submitData)
+  
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          alert(response);
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+
+  }
+
 
   return (
     <div className="h2">
@@ -100,7 +124,7 @@ function AddCPD() {
         <div>
           <div className="courseD" id="cpdCourseType">
             <h4 className="textName">Course Type </h4>
-            <select name="select" id="types" onChange={e => setCourseType(e.target.value)}>
+            <select name="select" id="types" onChange={getCourses}>
               <option value="">--Select Course Type--</option>
               <option value="CSSLcourse">CSSL Courses</option>
               <option value="others">Others</option>
