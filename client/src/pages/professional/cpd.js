@@ -7,30 +7,48 @@ import { Link } from "react-router-dom";
 import { makeStyles, Paper, Grid } from "@material-ui/core";
 import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";
 function Records() {
-  const [data, setData] = useState(null);
-
-  const [appRecCount, setAppRecCount] = useState(0);
-
-  const [type, setType] = useState("");
-  const[description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
-
+  const [record, setRecord] = useState(null);
+  const [approveCount, setApproveCount] = useState(0);
+  const[pendingCount, setPendingCount] = useState(0);
+  const [rejectCount, setRejectCount] = useState(0);
+  var a=0,b=0,c=0;
   useEffect(() => {
-    const data = {
+    const formData = {
       id: "",
       type: "",
       status: "",
       description:""
-
     };
     axios
-    .post("http://localhost:3001/cpdP/",data)
+    .post("http://localhost:3001/cpd/",formData)
   
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setData(response.data);
+          setRecord(response.data);
+          for(var i=0; i<Object.keys(response.data).length;i++)
+          {
+            if(response.data[i].status=="Approved")
+            {
+              a++;
+              setApproveCount(a);
+            }
+            else if(response.data[i].status=="Pending")
+            {
+              b++;
+              setPendingCount(b);
+            }
+            else if(response.data[i].status=="Rejected")
+            {
+              c++;
+              setRejectCount(c);
+            }
+            else
+            {
+              console.log("Error:",i);
+            }
+          }
         }
       })
       .catch((error) => {
@@ -38,59 +56,58 @@ function Records() {
       });
   }, []);
 
-
-  const allRecords = data &&
-  data.map((data) => (
+  const allRecords = record &&
+  record.map((record,i) => (
     <>
-      <div className="recentRec" key={data.id}>
-        <div className="recType">{data.type}</div>
+      <div className="recentRec" key={i}>
+        <div className="recType">{record.type}</div>
         <div className="recAllign">
-          <div className="recDes">{data.description}</div>
-          <div data-status={data.status} className="recPending">{data.status}</div>
+          <div className="recDes">{record.description}</div>
+          <div data-status={record.status} className="recPending">{record.status}</div>
         </div>
       </div>
     </>
   ));
 
-  const approvedRecords = data &&
-  data.map((data) =>(
-    data.status==="Approved" ?
+  const approvedRecords = record &&
+  record.map((record,i) =>(
+    record.status==="Approved" ?
     <>
-      <div className="recentRec">
-        <div className="recType">{data.type}</div>
+      <div className="recentRec" key={i}>
+        <div className="recType">{record.type}</div>
         <div className="recAllign">
-          <div className="recDes">{data.description}</div>
-          <div data-status={data.status} className="recPending">{data.status}</div>
+          <div className="recDes">{record.description}</div>
+          <div data-status={record.status} className="recPending">{record.status}</div>
         </div>
       </div>
     </>:
     <></>
   ));
 
-  const pendingRecords = data &&
-  data.map((data) =>(
-    data.status==="Pending" ?
+  const pendingRecords = record &&
+  record.map((record,i) =>(
+    record.status==="Pending" ?
     <>
-      <div className="recentRec">
-        <div className="recType">{data.type}</div>
+      <div className="recentRec" key={i}>
+        <div className="recType">{record.type}</div>
         <div className="recAllign">
-          <div className="recDes">{data.description}</div>
-          <div data-status={data.status} className="recPending">{data.status}</div>
+          <div className="recDes">{record.description}</div>
+          <div data-status={record.status} className="recPending">{record.status}</div>
         </div>
       </div>
     </>:
     <></>
   ));
 
-  const rejectedRecords = data &&
-  data.map((data) =>(
-    data.status==="Rejected" ?
+  const rejectedRecords = record &&
+  record.map((record,i) =>(
+    record.status==="Rejected" ?
     <>
-      <div className="recentRec">
-        <div className="recType">{data.type}</div>
+      <div className="recentRec" key={i}>
+        <div className="recType">{record.type}</div>
         <div className="recAllign">
-          <div className="recDes">{data.description}</div>
-          <div data-status={data.status} className="recPending">{data.status}</div>
+          <div className="recDes">{record.description}</div>
+          <div data-status={record.status} className="recPending">{record.status}</div>
         </div>
       </div>
     </>:
@@ -108,10 +125,12 @@ function Records() {
         backgroundColor: ["#0a8010","#8d800a","#ff0404"],
         borderColor: "#fff",
         borderWidth: 8,
-        data: [5, 2, 2],
+        data: [approveCount, pendingCount, rejectCount],
       },
     ],
   };
+
+  
   const cpd = {
     labels: ["CPD Records"],
     datasets: [
@@ -138,7 +157,7 @@ function Records() {
   const options = {
     maintainAspectRatio: false,
   };
-  
+
   return (
     <div className="mainCPD">
 
@@ -153,8 +172,7 @@ function Records() {
           </TabList>
           <h3 className="titleRecent">Recent CPD Submissions</h3>
           <TabPanel className="all">
-          <div className="btn-cpdAdd">
-          </div>
+          <div className="btn-cpdAdd"></div>
           <div className="recList">{allRecords}</div>
           </TabPanel>
           <TabPanel className="approved">
@@ -180,12 +198,11 @@ function Records() {
         </div>
     </div>
     <div className="chartPro">
-      
           {" "}
           <Doughnut
             data={state}
-            width={100}
-            height={100}
+            width={50}
+            height={50}
             options={
               (
               {

@@ -39,7 +39,7 @@ app.use(
 //routers
 app.use("/auth", userRouter);
 app.use("/job", Job);
-app.use("/cpdP", Record);
+app.use("/cpd", Record);
 
 
 app.listen(3001, () => {
