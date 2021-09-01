@@ -20,4 +20,27 @@ Record.post("/", (req, res) => {
     );
   });
 
+//insert new cpd record
+Record.post("/addRecord", (req, res) => {
+    const mid = "cssl001";
+    const recType = req.body.type;
+    const proof = req.body.proof;
+    const note = req.body.note;
+    const credit = req.body.credit;
+    const recDate = req.body.recDate;
+    const status = req.body.status;
+    const refId = req.body.refId;
+    connection.query(
+      "INSERT INTO cpdrecords (memberId,type,proof,note,credit,recordDate,status,refId) VALUES (?,?,?,?,?,?,?,?);",
+      [mid,recType,proof,note,credit,recDate,status,refId],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json("success");
+        }
+      }
+    );
+  });
+
   export default Record;
