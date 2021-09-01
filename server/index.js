@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import session from "express-session";
 import connection from "./db.js";
+import Record from "./routes/cpdRecord.js";
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use(
 //routers
 app.use("/auth", userRouter);
 app.use("/job", Job);
+app.use("/cpdP", Record);
 
 
 app.listen(3001, () => {
