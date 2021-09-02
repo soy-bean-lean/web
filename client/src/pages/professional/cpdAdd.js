@@ -3,35 +3,70 @@ import axios from "axios";
 import "./style/addCPD.css";
 import { Link } from "react-router-dom";
 
-
 function AddCPD() {
   const [recType, setRecType] = useState("type");
   const [courseType, setCourseType] = useState("");
   const [workshopType, setWorkshopType] = useState("");
   const [workshopDate, setWorkshopDate] = useState("");
-  
+
   const getCourses = (event) => {
     setCourseType(event.target.value);
+    console.log(courseType);
     const submitData = {
       type: event.target.value,
     };
     axios
-    .post("http://localhost:3001/cpd/getCourse",submitData)
-  
+      .post("http://localhost:3001/cpd/getCourse", submitData)
+
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          alert(response);
+          //alert(response);
           console.log(response);
         }
       })
       .catch((error) => {
         alert(error);
       });
-
+  };
+  const setWType = (event) => {
+    setWorkshopType({workshopType:event.target.value});
+    getWorkshops();
   }
 
+  const setWDate = (event) => {
+    setWorkshopDate({workshopDate:event.target.value});
+    getWorkshops();
+  }
+  const getWorkshops = () => {
+    //setWorkshopType(event.target.value);
+    //setWorkshopDate(event.target.value);
+    console.log(workshopDate,workshopType);
+
+    const submitData = {
+      type: workshopType,
+      //wdate: event.target.value 
+      wdate: workshopDate
+    };
+    //console.log("Date:",workshopDate);
+    if (workshopType != "" && workshopDate != "") {
+      axios
+        .post("http://localhost:3001/cpd/getWorkshop", submitData)
+
+        .then((response) => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            //alert(response);
+            console.log(response);
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  };
 
   return (
     <div className="h2">
@@ -40,7 +75,6 @@ function AddCPD() {
 
       <div className="addCPDMain">
         <div className="addForm">
-
           {/* Subject for CPD Record */}
           <div className="courseD">
             <h4 className="textName">Subject</h4>
@@ -51,7 +85,11 @@ function AddCPD() {
           {/* Select Type of the CPD Record */}
           <div className="cpdType">
             <h4 className="textName">Record Type </h4>
-            <select name="select" id="types" onChange={e => setRecType(e.target.value)}>
+            <select
+              name="select"
+              id="types"
+              onChange={(e) => setRecType(e.target.value)}
+            >
               <option value="type">--Select Type--</option>
               <option value="course">Courses</option>
               <option value="workshops">Workshops</option>
@@ -92,7 +130,6 @@ function AddCPD() {
           </div>
         </div>
 
-
         <div className="submitBtn">
           <div className="bottom">
             <Link to={"/cpdP/"} className="review">
@@ -113,13 +150,8 @@ function AddCPD() {
 
   function renderDetails(r_type) {
     if (r_type == "type") {
-      return (
-        <div>
-
-        </div>
-      );
-    }
-    else if (r_type == "course") {
+      return <div></div>;
+    } else if (r_type == "course") {
       return (
         <div>
           <div className="courseD" id="cpdCourseType">
@@ -134,13 +166,12 @@ function AddCPD() {
           {renderCourseDetails(courseType)}
         </div>
       );
-    }
-    else if (r_type == "workshops") {
+    } else if (r_type == "workshops") {
       return (
         <div>
           <div className="courseD">
             <h4 className="textName">Workshop Type </h4>
-            <select name="select" id="types" onChange={e => setWorkshopType(e.target.value)}>
+            <select name="select" id="types" onChange={setWType}>
               <option value="">--Select Workshop Type--</option>
               <option value="CSSLworkshop">CSSL Workshop</option>
               <option value="others">Others</option>
@@ -151,15 +182,14 @@ function AddCPD() {
               className="input"
               type="date"
               placeholder="--Workshop Date--"
-              onChange={e => setWorkshopDate(e.target.value)}
+              onChange={setWDate}
             />
             <hr className="line"></hr>
           </div>
           {renderWorkshopDetails(workshopType, workshopDate)}
         </div>
       );
-    }
-    else if (r_type == "guestLec") {
+    } else if (r_type == "guestLec") {
       return (
         <div>
           <div className="courseD">
@@ -173,16 +203,12 @@ function AddCPD() {
           <hr className="line"></hr>
         </div>
       );
-    }
-    else if (r_type == "others") {
+    } else if (r_type == "others") {
       return (
         <div>
           <div className="courseD">
             <h4 className="textName">Event</h4>
-            <input
-              className="input"
-              placeholder="--Enter Event Title--"
-            />
+            <input className="input" placeholder="--Enter Event Title--" />
             <h4 className="textName">Event Description</h4>
             <p className="para">Add Description About The Event</p>
             <textarea className="note"></textarea>
@@ -190,25 +216,15 @@ function AddCPD() {
           <hr className="line"></hr>
         </div>
       );
-    }
-    else {
-      return (
-        <div>
-
-        </div>
-      );
+    } else {
+      return <div></div>;
     }
   }
 
   function renderCourseDetails(c_type) {
     if (c_type == "") {
-      return (
-        <div>
-
-        </div>
-      );
-    }
-    else if (c_type == "CSSLcourse") {
+      return <div></div>;
+    } else if (c_type == "CSSLcourse") {
       return (
         <div>
           <div className="courseD">
@@ -222,9 +238,7 @@ function AddCPD() {
           <hr className="line"></hr>
         </div>
       );
-
-    }
-    else if (c_type == "others") {
+    } else if (c_type == "others") {
       return (
         <div>
           <div className="courseD">
@@ -238,26 +252,15 @@ function AddCPD() {
           <hr className="line"></hr>
         </div>
       );
-
-    }
-    else {
-      return (
-        <div>
-
-        </div>
-      );
+    } else {
+      return <div></div>;
     }
   }
 
   function renderWorkshopDetails(w_type, w_date) {
     if (w_type == "" || w_date == "") {
-      return (
-        <div>
-
-        </div>
-      );
-    }
-    else if (w_type == "CSSLworkshop") {
+      return <div></div>;
+    } else if (w_type == "CSSLworkshop") {
       return (
         <div>
           <div className="courseD">
@@ -271,9 +274,7 @@ function AddCPD() {
           <hr className="line"></hr>
         </div>
       );
-
-    }
-    else if (w_type == "others") {
+    } else if (w_type == "others") {
       return (
         <div>
           <div className="courseD">
@@ -287,17 +288,10 @@ function AddCPD() {
           <hr className="line"></hr>
         </div>
       );
-
-    }
-    else {
-      return (
-        <div>
-
-        </div>
-      );
+    } else {
+      return <div></div>;
     }
   }
-
 }
 
 export default AddCPD;

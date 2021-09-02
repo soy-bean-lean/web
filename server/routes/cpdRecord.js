@@ -49,7 +49,7 @@ Record.post("/getCourse", (req, res) => {
   const courseType = req.body.type;
   if (courseType == "CSSLcourse") {
     connection.query(
-      "SELECT name,duration,conductedBy FROM csslcourse;",
+      "SELECT name FROM csslcourse;",
       (error, result) => {
         if (error) console.log(error);
         else {
@@ -64,18 +64,50 @@ Record.post("/getCourse", (req, res) => {
         (error, result) => {
           if (error) console.log(error);
           else {
-            console.log(result);
             res.send(result);
           }
         }
       );
   }
   else{
-    result = "Select Course Type";
+    const result = "Select Course Type";
     res.send(result);
   }
-  console.log(courseType);
-  res.send(courseType);
+});
+
+//get workshop
+Record.post("/getWorkshop", (req, res) => {
+  const mid = "cssl001";
+  const workshopType = req.body.type;
+  const workshopDate = req.body.wdate;
+  console.log(workshopType,workshopDate);
+  if (workshopType == "CSSLworkshop") {
+    connection.query(
+      "SELECT title FROM csslworkshop WHERE fromDate = ?;",
+      [workshopDate],
+      (error, result) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+  else if(workshopType == "others"){
+    connection.query(
+        "SELECT title FROM csslworkshop;",
+        (error, result) => {
+          if (error) console.log(error);
+          else {
+            res.send(result);
+          }
+        }
+      );
+  }
+  else{
+    const result = "Select Workshop Type";
+    res.send(result);
+  }
 });
 
 export default Record;
