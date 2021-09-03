@@ -18,6 +18,8 @@ function BasicCourseInfo() {
       console.log(level);
       console.log(mode);
   }
+
+  // https://dev.to/maureenoldyck/upload-images-with-react-expressjs-and-mysql-47jn  (file upload)
   return (
     <>
       <div className="course-basic-info">
