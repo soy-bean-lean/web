@@ -48,43 +48,32 @@ Record.post("/getCourse", (req, res) => {
   const mid = req.body.mId;
   const courseType = req.body.type;
   if (courseType == "CSSLcourse") {
-    connection.query(
-      "SELECT name FROM csslcourse;",
-      (error, result) => {
-        if (error) console.log(error);
-        else {
-          res.send(result);
-        }
+    connection.query("SELECT name FROM csslcourse;", (error, result) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
       }
-    );
-  }
-  else if(courseType == "others"){
-    connection.query(
-        "SELECT name FROM othercourse;",
-        (error, result) => {
-          if (error) console.log(error);
-          else {
-            res.send(result);
-          }
-        }
-      );
-  }
-  else{
+    });
+  } else if (courseType == "others") {
+    connection.query("SELECT name FROM othercourse;", (error, result) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    });
+  } else {
     const result = "Select Course Type";
     res.send(result);
   }
 });
 
-//get workshop
+//get workshops
 Record.post("/getWorkshop", (req, res) => {
   const mid = req.body.mId;
   const workshopType = req.body.type;
-  const workshopDate = req.body.wdate;
-
   if (workshopType == "CSSLworkshop") {
     connection.query(
-      "SELECT title FROM csslworkshop WHERE fromDate = ?;",
-      [workshopDate],
+      "SELECT title, fromDate, toDate FROM csslworkshop;",
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -92,19 +81,17 @@ Record.post("/getWorkshop", (req, res) => {
         }
       }
     );
-  }
-  else if(workshopType == "others"){
+  } else if (workshopType == "others") {
     connection.query(
-        "SELECT title FROM csslworkshop;",
-        (error, result, feilds) => {
-          if (error) console.log(error);
-          else {
-            res.send(result);
-          }
+      "SELECT title, fromDate, toDate FROM csslworkshop;",
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
         }
-      );
-  }
-  else{
+      }
+    );
+  } else {
     const result = "Select Workshop Type";
     res.send(result);
   }
@@ -116,7 +103,7 @@ Record.post("/getGuestLecture", (req, res) => {
   const g_date = req.body.gDate;
   connection.query(
     "SELECT guestlecture.university, guestlecture.description FROM guestlecture INNER JOIN glselect ON guestlecture.gId = glselect.gId WHERE guestlecture.date = ? AND glselect.memberId = ?;",
-    [g_date,mid],
+    [g_date, mid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
