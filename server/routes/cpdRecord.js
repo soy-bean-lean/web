@@ -80,12 +80,12 @@ Record.post("/getWorkshop", (req, res) => {
   const mid = "cssl001";
   const workshopType = req.body.type;
   const workshopDate = req.body.wdate;
-  console.log(workshopType,workshopDate);
+
   if (workshopType == "CSSLworkshop") {
     connection.query(
       "SELECT title FROM csslworkshop WHERE fromDate = ?;",
       [workshopDate],
-      (error, result) => {
+      (error, result, feilds) => {
         if (error) console.log(error);
         else {
           res.send(result);
@@ -96,7 +96,7 @@ Record.post("/getWorkshop", (req, res) => {
   else if(workshopType == "others"){
     connection.query(
         "SELECT title FROM csslworkshop;",
-        (error, result) => {
+        (error, result, feilds) => {
           if (error) console.log(error);
           else {
             res.send(result);

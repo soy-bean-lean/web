@@ -9,57 +9,43 @@ function AddCPD() {
   const [workshopType, setWorkshopType] = useState("");
   const [workshopDate, setWorkshopDate] = useState("");
 
-  const getCourses = (event) => {
-    setCourseType(event.target.value);
-    console.log(courseType);
-    const submitData = {
-      type: event.target.value,
+  const getCourses = () => {
+    const submitCourseData = {
+      type: courseType,
     };
     axios
-      .post("http://localhost:3001/cpd/getCourse", submitData)
+      .post("http://localhost:3001/cpd/getCourse", submitCourseData)
 
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
           //alert(response);
-          console.log(response);
+          console.log("Response:",response);
         }
       })
       .catch((error) => {
         alert(error);
       });
   };
-  const setWType = (event) => {
-    setWorkshopType({workshopType:event.target.value});
-    getWorkshops();
-  }
 
-  const setWDate = (event) => {
-    setWorkshopDate({workshopDate:event.target.value});
-    getWorkshops();
-  }
   const getWorkshops = () => {
-    //setWorkshopType(event.target.value);
-    //setWorkshopDate(event.target.value);
-    console.log(workshopDate,workshopType);
 
-    const submitData = {
+    const submitWorkshopData = {
       type: workshopType,
-      //wdate: event.target.value 
-      wdate: workshopDate
+      wdate: workshopDate,
     };
-    //console.log("Date:",workshopDate);
+
     if (workshopType != "" && workshopDate != "") {
       axios
-        .post("http://localhost:3001/cpd/getWorkshop", submitData)
+        .post("http://localhost:3001/cpd/getWorkshop", submitWorkshopData)
 
         .then((response) => {
           if (response.data.error) {
             alert(response.data.error);
           } else {
             //alert(response);
-            console.log(response);
+            console.log("Response:",response);
           }
         })
         .catch((error) => {
@@ -156,7 +142,7 @@ function AddCPD() {
         <div>
           <div className="courseD" id="cpdCourseType">
             <h4 className="textName">Course Type </h4>
-            <select name="select" id="types" onChange={getCourses}>
+            <select name="select" id="types" onChange={(e) => setCourseType(e.target.value)}>
               <option value="">--Select Course Type--</option>
               <option value="CSSLcourse">CSSL Courses</option>
               <option value="others">Others</option>
@@ -171,7 +157,7 @@ function AddCPD() {
         <div>
           <div className="courseD">
             <h4 className="textName">Workshop Type </h4>
-            <select name="select" id="types" onChange={setWType}>
+            <select name="select" id="types" onChange={(e) => setWorkshopType(e.target.value)}>
               <option value="">--Select Workshop Type--</option>
               <option value="CSSLworkshop">CSSL Workshop</option>
               <option value="others">Others</option>
@@ -182,7 +168,7 @@ function AddCPD() {
               className="input"
               type="date"
               placeholder="--Workshop Date--"
-              onChange={setWDate}
+              onChange={(e) => setWorkshopDate(e.target.value)}
             />
             <hr className="line"></hr>
           </div>
@@ -225,6 +211,7 @@ function AddCPD() {
     if (c_type == "") {
       return <div></div>;
     } else if (c_type == "CSSLcourse") {
+      getCourses();
       return (
         <div>
           <div className="courseD">
@@ -239,6 +226,7 @@ function AddCPD() {
         </div>
       );
     } else if (c_type == "others") {
+      getCourses();
       return (
         <div>
           <div className="courseD">
@@ -261,6 +249,7 @@ function AddCPD() {
     if (w_type == "" || w_date == "") {
       return <div></div>;
     } else if (w_type == "CSSLworkshop") {
+      getWorkshops();
       return (
         <div>
           <div className="courseD">
@@ -275,6 +264,7 @@ function AddCPD() {
         </div>
       );
     } else if (w_type == "others") {
+      getWorkshops();
       return (
         <div>
           <div className="courseD">
