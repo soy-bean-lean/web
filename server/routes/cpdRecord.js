@@ -22,7 +22,7 @@ Record.post("/", (req, res) => {
 
 //insert new cpd record
 Record.post("/addRecord", (req, res) => {
-  const mid = "cssl001";
+  const mid = req.body.mId;
   const recType = req.body.type;
   const proof = req.body.proof;
   const note = req.body.note;
@@ -45,7 +45,7 @@ Record.post("/addRecord", (req, res) => {
 
 //get courses
 Record.post("/getCourse", (req, res) => {
-  const mid = "cssl001";
+  const mid = req.body.mId;
   const courseType = req.body.type;
   if (courseType == "CSSLcourse") {
     connection.query(
@@ -77,7 +77,7 @@ Record.post("/getCourse", (req, res) => {
 
 //get workshop
 Record.post("/getWorkshop", (req, res) => {
-  const mid = "cssl001";
+  const mid = req.body.mId;
   const workshopType = req.body.type;
   const workshopDate = req.body.wdate;
 
@@ -112,10 +112,11 @@ Record.post("/getWorkshop", (req, res) => {
 
 //get all the guest lectures which are conducted by the relevant member
 Record.post("/getGuestLecture", (req, res) => {
-  const mid = "cssl001";
+  const mid = req.body.mId;
+  const g_date = req.body.gDate;
   connection.query(
-    "SELECT recordId, type, status FROM cpdrecords WHERE memberId = ?;",
-    [mid],
+    "SELECT guestlecture.university, guestlecture.description FROM guestlecture INNER JOIN glselect ON guestlecture.gId = glselect.gId WHERE guestlecture.date = ? AND glselect.memberId = ?;",
+    [g_date,mid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {

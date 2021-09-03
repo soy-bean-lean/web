@@ -13,7 +13,7 @@ function AddCPD() {
 
   const getCourses = () => {
     const submitCourseData = {
-      mid: "",
+      mId: "cssl001",
       type: courseType,
     };
     axios
@@ -34,7 +34,7 @@ function AddCPD() {
 
   const getWorkshops = () => {
     const submitWorkshopData = {
-      mid: "",
+      mId: "cssl001",
       type: workshopType,
       wdate: workshopDate,
     };
@@ -59,7 +59,8 @@ function AddCPD() {
 
   const getGuestLectures = () => {
     const submitGLData = {
-      mid: "",
+      mId: "cssl001",
+      gDate: glDate,
     };
     axios
       .post("http://localhost:3001/cpd/getGuestLecture", submitGLData)
