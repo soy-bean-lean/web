@@ -8,9 +8,12 @@ function AddCPD() {
   const [courseType, setCourseType] = useState("");
   const [workshopType, setWorkshopType] = useState("");
   const [workshopDate, setWorkshopDate] = useState("");
+  const [guestLecture, setGuestLecture] = useState("");
+  const [glDate, setGLDate] = useState("");
 
   const getCourses = () => {
     const submitCourseData = {
+      mid: "",
       type: courseType,
     };
     axios
@@ -21,7 +24,7 @@ function AddCPD() {
           alert(response.data.error);
         } else {
           //alert(response);
-          console.log("Response:",response);
+          console.log("Response:", response);
         }
       })
       .catch((error) => {
@@ -30,8 +33,8 @@ function AddCPD() {
   };
 
   const getWorkshops = () => {
-
     const submitWorkshopData = {
+      mid: "",
       type: workshopType,
       wdate: workshopDate,
     };
@@ -45,13 +48,33 @@ function AddCPD() {
             alert(response.data.error);
           } else {
             //alert(response);
-            console.log("Response:",response);
+            console.log("Response:", response);
           }
         })
         .catch((error) => {
           alert(error);
         });
     }
+  };
+
+  const getGuestLectures = () => {
+    const submitGLData = {
+      mid: "",
+    };
+    axios
+      .post("http://localhost:3001/cpd/getGuestLecture", submitGLData)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          //alert(response);
+          console.log("Response:", response);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   return (
@@ -142,7 +165,11 @@ function AddCPD() {
         <div>
           <div className="courseD" id="cpdCourseType">
             <h4 className="textName">Course Type </h4>
-            <select name="select" id="types" onChange={(e) => setCourseType(e.target.value)}>
+            <select
+              name="select"
+              id="types"
+              onChange={(e) => setCourseType(e.target.value)}
+            >
               <option value="">--Select Course Type--</option>
               <option value="CSSLcourse">CSSL Courses</option>
               <option value="others">Others</option>
@@ -157,7 +184,11 @@ function AddCPD() {
         <div>
           <div className="courseD">
             <h4 className="textName">Workshop Type </h4>
-            <select name="select" id="types" onChange={(e) => setWorkshopType(e.target.value)}>
+            <select
+              name="select"
+              id="types"
+              onChange={(e) => setWorkshopType(e.target.value)}
+            >
               <option value="">--Select Workshop Type--</option>
               <option value="CSSLworkshop">CSSL Workshop</option>
               <option value="others">Others</option>
@@ -179,14 +210,16 @@ function AddCPD() {
       return (
         <div>
           <div className="courseD">
-            <h4 className="textName">Activity</h4>
-            <select name="select" id="types">
-              <option value="">--Select Activity--</option>
-              <option value="gl001">UCSC - ML Lecture</option>
-              <option value="gl002">UOM - Python Programming Lecture</option>
-            </select>
+            <h4 className="textName">Guest Lecture Date </h4>
+            <input
+              className="input"
+              type="date"
+              placeholder="--Workshop Date--"
+              onChange={(e) => setGLDate(e.target.value)}
+            />
+            <hr className="line"></hr>
           </div>
-          <hr className="line"></hr>
+          {renderGuestLectureList(glDate)}
         </div>
       );
     } else if (r_type == "others") {
@@ -281,6 +314,29 @@ function AddCPD() {
     } else {
       return <div></div>;
     }
+  }
+
+  function renderGuestLectureList(g_date){
+    if(g_date == ""){
+      return <div></div>;
+    }
+    else{
+      getGuestLectures();
+      return (
+        <div>
+          <div className="courseD">
+            <h4 className="textName">Guest Lecture</h4>
+            <select name="select" id="types">
+              <option value="">--Select Guest Lecture--</option>
+              <option value="gl001">UCSC - ML Lecture</option>
+              <option value="gl002">UOM - Python Programming Lecture</option>
+            </select>
+          </div>
+          <hr className="line"></hr>
+        </div>
+      );
+    }
+
   }
 }
 
