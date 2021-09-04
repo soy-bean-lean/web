@@ -13,7 +13,7 @@ function BasicCourseInfo() {
 
   const [uploadStatus,setUploadStatus] = useState("");
 
-  const uploadImage = (event) => {
+  const uploadImage = () => {
     //const file = event.target.files[0];
     const formData = new FormData();
     formData.append('image', imgFile);
@@ -41,6 +41,9 @@ function BasicCourseInfo() {
       console.log(language);
       console.log(level);
       console.log(mode);
+      console.log(imgFile);
+
+      uploadImage();
   }
 
   // https://dev.to/maureenoldyck/upload-images-with-react-expressjs-and-mysql-47jn  (file upload)
