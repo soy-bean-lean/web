@@ -9,7 +9,31 @@ function BasicCourseInfo() {
   const [language, setLanguage] = useState("");
   const [level, setLevel] = useState("");
   const [mode, setMode] = useState("");
+  const [imgFile, setImgFile] = useState();
 
+  const [uploadStatus,setUploadStatus] = useState("");
+
+  const uploadImage = (event) => {
+    //const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', imgFile);
+
+    fetch('http://localhost:3001/csslcourse/basicInfo',{
+      method: "POST",
+      body: formData,
+      headers:{
+        'Accept': 'multipart/form-data',
+      },
+      credentials: "include",
+    })
+    .then(res => res.json())
+    .then(res => {
+      setUploadStatus(res.msg);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
   const display = () =>{
       console.log(courseTitle);
       console.log(courseDes);
@@ -81,6 +105,7 @@ function BasicCourseInfo() {
                 id="course-img"
                 name="course-img"
                 accept="image/*"
+                onChange={(e) => setImgFile(e.target.files[0])}
               ></input>
             </div>
           </div>

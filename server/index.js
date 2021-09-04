@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import multer from "multer";
 import userRouter from "./routes/User.js";
 import Job from "./routes/jobsSQL.js";
 import cookieParser from "cookie-parser";
@@ -16,6 +17,21 @@ app.use(
     extended: true,
   })
 );
+
+const storage = multer.diskStorage({
+  destination: (req,file,cb) => {
+    cb(null, "uploads");
+  },
+  filename:function (req,file,cb){
+    const ext = file.mimetype.split("/")[1];
+    cb(null, Date.now() +'-'+ file.originalname);
+  }
+});
+
+const upload = multer({ 
+  storage: storage 
+});
+
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -36,6 +52,8 @@ app.use(
     },
   })
 );
+
+
 //routers
 app.use("/auth", userRouter);
 app.use("/job", Job);
