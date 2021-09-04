@@ -25,10 +25,19 @@ Course.route("/basicInfo")
         res.send({msg:'Not an Image File.'})
     }
     else{
+        const lecturer = req.body.lecturer;
+        const title = req.body.title;
+        const description = req.body.description;
+        const duration = req.body.duration;
+        const language = req.body.language;
+        const level = req.body.level;
         const image = req.file.filename;
+        const mode = req.body.mode;
+        const status = "Pending";
+
         connection.query(
-            "INSERT INTO test (image) VALUES (?);",
-            [image],
+            "INSERT INTO csslcourse (name, description, duration, language, skillLevel, image, mode, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?);",
+            [title,description,duration,language,level,image,mode,lecturer,status],
             (error, result, feilds) => {
               if (error) console.log(error);
               else {

@@ -13,10 +13,18 @@ function BasicCourseInfo() {
 
   const [uploadStatus,setUploadStatus] = useState("");
 
-  const uploadImage = () => {
+  const insertCourseInfo = () => {
     //const file = event.target.files[0];
+    const mId = "cssl001";
     const formData = new FormData();
     formData.append('image', imgFile);
+    formData.append('title',courseTitle);
+    formData.append('description',courseDes);
+    formData.append('duration',courseDuration);
+    formData.append('language',language);
+    formData.append('level',level);
+    formData.append('mode',mode);
+    formData.append('lecturer',mId);
 
     fetch('http://localhost:3001/csslcourse/basicInfo',{
       method: "POST",
@@ -29,24 +37,13 @@ function BasicCourseInfo() {
     .then(res => res.json())
     .then(res => {
       setUploadStatus(res.msg);
+      alert(uploadStatus);
     })
     .catch(error => {
       console.log(error);
     })
   }
-  const display = () =>{
-      console.log(courseTitle);
-      console.log(courseDes);
-      console.log(courseDuration);
-      console.log(language);
-      console.log(level);
-      console.log(mode);
-      console.log(imgFile);
 
-      uploadImage();
-  }
-
-  // https://dev.to/maureenoldyck/upload-images-with-react-expressjs-and-mysql-47jn  (file upload)
   return (
     <>
       <div className="course-basic-info">
@@ -117,7 +114,7 @@ function BasicCourseInfo() {
                             type="submit"
                             className="course-btn-submit"
                             value="Submit"
-                            onClick={display}
+                            onClick={insertCourseInfo}
                         />
             {/*<Link to={"/addcourseContent/"} className="course-btn-submit" onClick={display}>
               <a href="#" className="course-btn-submit">
