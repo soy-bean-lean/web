@@ -131,17 +131,17 @@ function App() {
       </>
     );
   } else {
-    //const mname = "Jihani";
-   const mtype = "Secretariat";
+  //   const mname = "Jihani";
+  //  const mtype = "Secretariat";
 
     //const mname = "Supun";
     // const mtype = "Council";
 
     const mname = "Chamika";
-  //const mtype = "Professional";
+  const mtype = "Professional";
 
-    //const mname = "Anushka";
-   // const mtype = "Chartered";
+    // const mname = "Anushka";
+    // const mtype = "Chartered";
 
     if (mtype == "Professional") {
       return (
@@ -182,7 +182,7 @@ function App() {
               <Route path="/paymentsP" component={paymentsPro} />
 
               <Route path="/addCourse" component={courseInfo} />
-              <Route path="/addcourseContent" component={courseContentInfo} />
+              <Route path="/addcourseContent/:id" component={courseContentInfo} />
             </Switch>
           </Router>
         </>
