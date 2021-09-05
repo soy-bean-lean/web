@@ -134,11 +134,11 @@ function App() {
   //   const mname = "Jihani";
   //  const mtype = "Secretariat";
 
-    // const mname = "Supun";
-    //  const mtype = "Council";
+    //const mname = "Supun";
+    // const mtype = "Council";
 
     const mname = "Chamika";
-    const mtype = "Professional";
+  const mtype = "Professional";
 
     // const mname = "Anushka";
     // const mtype = "Chartered";
@@ -207,7 +207,7 @@ function App() {
 
               <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
-              <Route path="/reportsP" component={reportsPro} />
+              <Route path="/reportsC" component={reportsCha} />
               <Route path="/job" component={jobView} />
               <Route path="/jobAddvertisment" component={jobAddvertisment} />
               <Route path="/createCV" component={createCV} />
