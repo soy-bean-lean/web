@@ -4,7 +4,6 @@ import { Link, useHistory } from "react-router-dom";
 import CourseContent from "./courseContentInfo";
 
 function BasicCourseInfo() {
-  console.log("Rendering Course Content");
   const [courseTitle, setCourseTitle] = useState("");
   const [courseDes, setCourseDes] = useState("");
   const [courseDuration, setCourseDuration] = useState("");
@@ -14,13 +13,13 @@ function BasicCourseInfo() {
   const [imgFile, setImgFile] = useState();
 
   const [uploadStatus, setUploadStatus] = useState("");
-  const [page, setPage] = useState("Course");
+  const [page, setPage] = useState("Content");
 
   let history = useHistory();
 
   const InsertCourseInfo = () => {
     //const file = event.target.files[0];
-    /*const mId = "cssl001";
+    const mId = "cssl001";
     const formData = new FormData();
     formData.append("image", imgFile);
     formData.append("title", courseTitle);
@@ -43,24 +42,21 @@ function BasicCourseInfo() {
       .then((res) => {
         setUploadStatus(res.msg);
         alert("Successful");
-        /*let path = '/addcourseContent';
-        history.push(path);
         const next = "Content";
         setPage(next);
+        /*let path = "/addcourseContent/" + courseTitle;
+        history.push(path);*/
       })
       .catch((error) => {
         console.log(error);
-      });*/
-
-      let path = "/addcourseContent/" + courseTitle;
-      history.push(path);
+      });
     
   };
   if (page == "Course") {
     return (
       <>
         <div className="course-basic-info">
-          <h1 className="course-basic-info-title">BASIC COURSE DETAILS</h1>
+          <h2 className="course-basic-info-title">BASIC COURSE DETAILS</h2>
           <hr></hr>
           <div className="course-basic-info-form">
             <div className="course-basic-info-block">
@@ -74,11 +70,9 @@ function BasicCourseInfo() {
               </div>
               <div className="course-field-block">
                 <h4 className="course-info-title">Description</h4>
-                <input
-                  className="input"
-                  placeholder="--Course Description--"
+                <textarea
                   onChange={(e) => setCourseDes(e.target.value)}
-                ></input>
+                ></textarea>
               </div>
               <div className="course-field-block">
                 <h4 className="course-info-title">Duration</h4>
@@ -162,7 +156,7 @@ function BasicCourseInfo() {
   }
   else if(page=="Content"){
     return(
-      <h1 style={{padding:"100px"}}>Course Name:{courseTitle}</h1>
+      <CourseContent title={courseTitle}/>
   );
   }
 }

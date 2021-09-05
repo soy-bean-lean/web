@@ -1,5 +1,9 @@
+.course-basic-info-main{
+    height: max-content;
+}
+
 .course-basic-info{
-    height: 500px;
+    height: 600px;
     padding-top: 65px;
 }
 
@@ -20,7 +24,7 @@
 }
 
 .course-info-title{
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     font-size: 20px;
     width: 250px;
     font-weight: 200;
@@ -40,6 +44,18 @@
     color: black;
     
   }
+
+.course-info-title textarea {
+    margin-bottom: 15px;
+    margin-left: 20px;
+    width: 70%;
+    height: 150px;
+    font-size: 14px;
+    padding-left: 10px;
+    color: black;
+    overflow-y: scroll;
+}
+
 
   .course-basic-info-form .course-btn-block{
     margin: 20px;
