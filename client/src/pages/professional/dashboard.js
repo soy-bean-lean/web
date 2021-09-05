@@ -46,15 +46,16 @@ function Home() {
     datasets: [
       {
         label: "Credit Progress",
-        fill: false,
+        fill: true,
         lineTension: 0.5,
-        backgroundColor: "#136CDC",
+        backgroundColor: "#bdc8ff",
         borderColor: "#136CDC",
         borderWidth: 3,
         data: months,
       },
     ],
   };
+  
   var courseData = [0, 0, 0];
   var workshopData = [0, 0, 0];
   var otherData = [0, 0, 0];
@@ -102,53 +103,37 @@ function Home() {
         console.log(year + "===========" + type + "============" + credit)
       )
     );
-  console.log(
-    "__________________" +
-      courseData +
-      "==" +
-      workshopData +
-      "==" +
-      otherData +
-      "___________________________"
-  );
-  //const  year = dataCPDYear[i].Year;
-  /*var type = dataCPDYear[i].type;
-    var credit = dataCPDYear[i].Credits;
-    var l = yearData.length;
-    if (yearData[l] === year) {
-    } else {
-      yearData.push(year);
-    }
-    if (type === "C") {
-      courseData[l] = credit;
-    }
-    console.log(dataCPDYear[i]);*/
+
 
   const state2 = {
     labels: yearData,
     datasets: [
       {
         label: "Courses",
-        backgroundColor: "#94C0E1",
-        hoverBackgroundColor: "#060b60",
+        backgroundColor: "#f5e9ae",
+        borderColor:"#e6ca40",
+        borderWidth :2,
         data: courseData,
       },
       {
         label: "Workshops",
-        backgroundColor: "#4C90C3",
-        hoverBackgroundColor: "#060b60",
+        backgroundColor: "#bdffc1",
+        borderColor:"#43ba4a",
+        borderWidth :2,
         data: workshopData,
       },
       {
         label: "Guest Lecture",
-        backgroundColor: "#447fab",
-        hoverBackgroundColor: "#060b60",
+        backgroundColor: "#a0b0f2",
+        borderColor:"#4d6ceb",
+        borderWidth :2,
         data: guestLect,
       },
       {
         label: "Other",
-        backgroundColor: "#4199DC",
-        hoverBackgroundColor: "#060b60",
+        backgroundColor: "#f5a4a7",
+        borderColor:"#de3e43",
+        borderWidth :2,
         data: otherData,
       },
     ],
@@ -156,8 +141,7 @@ function Home() {
 
   useEffect(() => {
     const data = {
-      month: "",
-      credit: "",
+     id:"",
     };
     axios
       .post("http://localhost:3001/Dash/getCPDData", data)
@@ -173,13 +157,10 @@ function Home() {
       .catch((error) => {
         alert(error);
       });
-    const dataY = {
-      Year: "",
-      credit: "",
-      type: "",
-    };
+
+    
     axios
-      .post("http://localhost:3001/Dash/getCPDDataYear", dataY)
+      .post("http://localhost:3001/Dash/getCPDDataYear", data)
 
       .then((response) => {
         if (response.data.error) {
@@ -211,11 +192,11 @@ function Home() {
 
       <div className="chartPro">
         <center>
-          <h3>Last 3 Year Credit Progress</h3>
+          <h3>Year wise Credits</h3>
         </center>{" "}
         <Bar
           data={state2}
-          width={100}
+          width={80}
           height={14}
           options={
             ({ options },
@@ -258,7 +239,7 @@ function Home() {
 
       <div className="chart3">
         <center>
-          <h3>Last Year Credit Progress</h3>
+          <h3>Monthly Credits</h3>
         </center>
         <div className="ONG2">
           <Line

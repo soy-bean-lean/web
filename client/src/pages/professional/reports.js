@@ -5,6 +5,7 @@ import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";
 import { Redirect } from "react-router-dom";
 import Tabs from "./tabs";
 import axios from "axios";
+import CountUp from "react-countup";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -24,6 +25,9 @@ function Reports() {
   const [dataCPDYear, setDataYear] = useState(null);
   const [length, setLength] = useState(null);
   const [lengthYear, setLengthYear] = useState(null);
+  const [cpdDataCounts, setcpdDataCounts] = useState(null);
+  const [blogCount, setBlogCount] = useState(null);
+
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (var i = 0; i < length; i++) {
     months[dataCPD[i].month] = dataCPD[i].credits;
@@ -48,13 +52,14 @@ function Reports() {
         label: "Credit Progress",
         fill: false,
         lineTension: 0.5,
-        backgroundColor: "#662bad",
-        borderColor: "#662bad",
+        backgroundColor: "#cfb874",
+        borderColor: "#cfb874",
         borderWidth: 3,
         data: months,
       },
     ],
   };
+
   var courseData = [0, 0, 0];
   var workshopData = [0, 0, 0];
   var otherData = [0, 0, 0];
@@ -70,89 +75,49 @@ function Reports() {
         (type = dataCPDYear.type),
         (credit = dataCPDYear.Credits),
         (l = yearData.length),
-        console.log(
-          "year is -" +
-            year +
-            "------" +
-            yearData.length +
-            "-----" +
-            yearData[l - 1]
-        ),
+        console.log(),
         yearData.length !== 0
           ? yearData[l - 1] == year
             ? (l = yearData.length - 1)
             : yearData.push(year)
           : yearData.push(year),
-        type === "C"
-          ? (courseData[l] = credit)
-          : console.log("-->" + l + "---------"),
-        type === "W"
-          ? (workshopData[l] = credit)
-          : console.log("-->" + l + "---------"),
-        type === "G"
-          ? (guestLect[l] = credit)
-          : console.log("-->" + l + "---------"),
-        type === "O"
-          ? (otherData[l] = credit)
-          : console.log("-->" + l + "---------"),
-        console.log(yearData),
-        console.log(courseData + "-->" + l + "---------"),
-        console.log(workshopData + "-->" + l + "---------"),
-        console.log(otherData + "-->" + l + "---------"),
-        console.log(year + "===========" + type + "============" + credit)
+        type === "C" ? (courseData[l] = credit) : console.log(),
+        type === "W" ? (workshopData[l] = credit) : console.log(),
+        type === "G" ? (guestLect[l] = credit) : console.log(),
+        type === "O" ? (otherData[l] = credit) : console.log()
       )
     );
-  console.log(
-    "__________________" +
-      courseData +
-      "==" +
-      workshopData +
-      "==" +
-      otherData +
-      "___________________________"
-  );
-  //const  year = dataCPDYear[i].Year;
-  /*var type = dataCPDYear[i].type;
-    var credit = dataCPDYear[i].Credits;
-    var l = yearData.length;
-    if (yearData[l] === year) {
-    } else {
-      yearData.push(year);
-    }
-    if (type === "C") {
-      courseData[l] = credit;
-    }
-    console.log(dataCPDYear[i]);*/
 
-  const state2 = {
-    labels: yearData,
-    datasets: [
-      {
-        label: "Courses",
-        backgroundColor: "#95e381",
-        hoverBackgroundColor: "#060b60",
-        data: courseData,
-      },
-      {
-        label: "Workshops",
-        backgroundColor: "#5a9e47",
-        hoverBackgroundColor: "#060b60",
-        data: workshopData,
-      },
-      {
-        label: "Guest Lecture",
-        backgroundColor: "#3c752b",
-        hoverBackgroundColor: "#060b60",
-        data: guestLect,
-      },
-      {
-        label: "Other",
-        backgroundColor: "#245217",
-        hoverBackgroundColor: "#060b60",
-        data: otherData,
-      },
-    ],
-  };
+    const state2 = {
+      labels: yearData,
+      datasets: [
+        {
+          label: "Courses",
+          backgroundColor: "#ffebb0",
+          hoverBackgroundColor: "#ffebb0",
+          data: courseData,
+        },
+        {
+          label: "Workshops",
+          backgroundColor: "#cfb874",
+          hoverBackgroundColor: "#cfb874",
+          data: workshopData,
+        },
+        {
+          label: "Guest Lecture",
+          backgroundColor: "#a1873b",
+          hoverBackgroundColor: "#a1873b",
+          data: guestLect,
+        },
+        {
+          label: "Other",
+          backgroundColor: "#695210",
+          hoverBackgroundColor: "#695210",
+          data: otherData,
+        },
+      ],
+    };
+  
 
   useEffect(() => {
     const data = {
@@ -185,8 +150,6 @@ function Reports() {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          console.log(response.data);
-
           setLengthYear(response.data.length);
 
           setDataYear(response.data);
@@ -195,17 +158,63 @@ function Reports() {
       .catch((error) => {
         alert(error);
       });
+
+    const dataCounts = {
+      Id: "", //session Id
+    };
+    axios
+      .post("http://localhost:3001/reports/getCounts", dataCounts)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          //console.log(response.data);
+          setcpdDataCounts(response.data);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+
+    axios
+      .post("http://localhost:3001/reports/getBlogCount", dataCounts)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setBlogCount(response.data);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }, []);
+  var all = 0;
+  var type;
+  var W;
+
+  var C;
+  cpdDataCounts &&
+    cpdDataCounts.map(
+      (cpdDataCounts) => (
+        (all = all + cpdDataCounts.credits * 1),
+        (type = cpdDataCounts.type),
+        type === "C" ? (C = cpdDataCounts.credits * 1) : console.log(),
+        type === "O" ? (W = cpdDataCounts.credits * 1) : console.log()
+      )
+    );
+  var blogsCount;
+  blogCount && blogCount.map((blogCount) => (blogsCount = blogCount.blogs * 1));
 
   const classes = useStyles();
   return (
     <div className="reports">
-         <div className = "PieChart">
-
-         </div>
-         <div className = "LineChart">
-         <center>
-          <h3>Last Year Credit Progress</h3>
+      <div className="PieChart"></div>
+      <div className="LineChart">
+        <center>
+          <h3 className="heading">Monthly Credits</h3>
         </center>
         <div>
           <Line
@@ -228,16 +237,31 @@ function Reports() {
             }
           />
         </div>
-         </div>
-         <div className = "CPDCount">
-         
-         </div>
-         <div className = "BlogCount">
-
-         </div>
-         <div className = "BarChart">
-         <center>
-          <h3>Last 3 Year Credit Progress</h3>
+      </div>
+      <div className="CPDCount">
+        <h2 className="des">CPD Count</h2>
+        <CountUp className="count" start={0} end={all} duration={3}></CountUp>
+      </div>
+      <div className="BlogCount">
+        <h2 className="des">Your Blogs</h2>
+        <CountUp
+          className="count"
+          start={0}
+          end={blogsCount}
+          duration={3}
+        ></CountUp>
+      </div>
+      <div className="CourseCount">
+        <h2 className="des">Courses CPD's</h2>
+        <CountUp className="count" start={0} end={C} duration={3}></CountUp>
+      </div>
+      <div className="WorkshopCount">
+        <h2 className="des">Workshop CPD's</h2>
+        <CountUp className="count" start={0} end={W} duration={3}></CountUp>
+      </div>
+      <div className="BarChart">
+        <center>
+          <h3 className="heading">Year Wise Credits</h3>
         </center>{" "}
         <Bar
           data={state2}
@@ -258,10 +282,7 @@ function Reports() {
             })
           }
         />
-         </div>
-         <div className = "Donut">
-
-         </div>
+      </div>
     </div>
   );
 }

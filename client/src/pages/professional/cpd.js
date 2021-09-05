@@ -121,6 +121,8 @@ function Records() {
         label: "CPD Uploads",
         fill: false,
         lineTension:5,
+        height:300,
+        width:300,
         borderRadius:5,
         backgroundColor: ["#0a8010","#8d800a","#ff0404"],
         borderColor: "#fff",

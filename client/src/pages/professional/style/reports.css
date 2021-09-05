@@ -1,52 +1,85 @@
 .reports {
   display: grid;
   width: auto;
-  height: 720px;
+  height: 700px;
   margin-bottom: 40px;
   padding-top: 60px;
+  overflow-x: scroll;
   background-color: rgb(255, 255, 255);
-  grid-template-columns: 1fr  1fr 1fr;
-  grid-template-rows: 0.5fr 0.5fr 1fr;
+  grid-template-columns: 1fr 1fr 0.6fr;
+  grid-template-rows: 0.5fr 0.5fr 0.5fr 0.5fr;
   grid-template-areas:
     "PieChart LineChart  CPDCount"
     "PieChart LineChart  BlogCount"
-    "BarChart BarChart Donut";
+    "BarChart BarChart CourseCount"
+    "BarChart BarChart WorkshopCount";
 }
-.reports .BarChart{
+.heading {
+  padding-top: 20px;
+}
+.des {
+  margin-top: 10px;
+  margin-left: 50px;
+  font-size: 30px;
+}
+.count {
+  font-size: 70px;
+  size: 15px;
+  margin-left: 150px;
+}
+.reports .BarChart {
   background-color: rgb(255, 255, 255);
-  border-radius: 15px;
   align-content: center;
-  margin-top: 3%;
-  border: 2px solid rgb(6, 10, 95);
   grid-area: BarChart;
+  border-right: 2px solid rgb(6, 10, 95);
+  border-bottom: 2px solid rgb(6, 10, 95);
 }
-.reports .BarChart canvas{
-    height: 100%;
-  
+.reports .BarChart canvas {
+  height: 100%;
 }
-.reports .PieChart{
-  background-color: rgb(51, 104, 153);
+.reports .PieChart canvas {
+  height: 100px;
+  width: 100px;
+}
+.reports .PieChart {
   grid-area: PieChart;
+  padding-bottom: 5px;
+  border-bottom: 2px solid rgb(0, 0, 0);
 }
-.reports .LineChart{
-  margin-top: 3%;
-  border-radius: 15px;
-
-  border: 2px solid rgb(6, 10, 95);
+.reports .LineChart {
+  border-left: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(0, 0, 0);
+  border-right: 2px solid rgb(0, 0, 0);
 
   grid-area: LineChart;
 }
-.reports .CPDCount{
-  background-color: rgb(153, 126, 51);
+.reports .CPDCount {
+  background-color: #ffebb0;
+  border-bottom: 2px solid rgb(0, 0, 0);
+
   grid-area: CPDCount;
 }
-.reports .Donut{
+.reports .Donut {
   background-color: rgb(51, 153, 82);
+
   grid-area: Donut;
 }
-.reports .BlogCount{
-  background-color: rgb(153, 51, 90);
+.reports .BlogCount {
+  background-color: #a1873b;
   grid-area: BlogCount;
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+.reports .CourseCount {
+  border-bottom: 2px solid rgb(0, 0, 0);
+
+  background-color: #ffebb0;
+  grid-area: CourseCount;
+}
+.reports .WorkshopCount {
+  background-color: #a1873b;
+  border-bottom: 2px solid rgb(0, 0, 0);
+
+  grid-area: WorkshopCount;
 }
 /*
 .reports .progress {
@@ -165,4 +198,3 @@
     margin-right: 2%;
     margin-left: 1%;
   }*/
-
