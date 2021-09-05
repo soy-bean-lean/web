@@ -182,7 +182,7 @@ function App() {
               <Route path="/paymentsP" component={paymentsPro} />
 
               <Route path="/addCourse" component={courseInfo} />
-              <Route path="/addcourseContent" component={courseContentInfo} />
+              <Route path="/addcourseContent/:id" component={courseContentInfo} />
             </Switch>
           </Router>
         </>
