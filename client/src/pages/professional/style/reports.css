@@ -1,9 +1,168 @@
-.title {
-  display: flex;
+.reports {
+  display: grid;
+  width: auto;
+  height: 720px;
+  margin-bottom: 40px;
+  padding-top: 60px;
+  background-color: rgb(255, 255, 255);
+  grid-template-columns: 1fr  1fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr 1fr;
+  grid-template-areas:
+    "PieChart LineChart  CPDCount"
+    "PieChart LineChart  BlogCount"
+    "BarChart BarChart Donut";
+}
+.reports .BarChart{
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
   align-content: center;
-  justify-content: center;
+  margin-top: 3%;
+  border: 2px solid rgb(6, 10, 95);
+  grid-area: BarChart;
 }
-.title h1 {
-  margin-top: 150px;
-  justify-content: center;
+.reports .BarChart canvas{
+    height: 100%;
+  
 }
+.reports .PieChart{
+  background-color: rgb(51, 104, 153);
+  grid-area: PieChart;
+}
+.reports .LineChart{
+  margin-top: 3%;
+  border-radius: 15px;
+
+  border: 2px solid rgb(6, 10, 95);
+
+  grid-area: LineChart;
+}
+.reports .CPDCount{
+  background-color: rgb(153, 126, 51);
+  grid-area: CPDCount;
+}
+.reports .Donut{
+  background-color: rgb(51, 153, 82);
+  grid-area: Donut;
+}
+.reports .BlogCount{
+  background-color: rgb(153, 51, 90);
+  grid-area: BlogCount;
+}
+/*
+.reports .progress {
+  grid-area: progressBar;
+}
+.recent p {
+  padding-left: 10px;
+  padding-top: 3px;
+}
+
+.row1 {
+  display: block;
+}
+.row1 .a {
+  width: 45%;
+  float: left;
+}
+.row1 .b {
+  border: rgb(112, 93, 97);
+  width: 45%;
+  float: right;
+}
+
+@-webkit-keyframes animate-positive {
+  0% {
+    width: 0;
+  }
+}
+@keyframes animate-positive {
+  0% {
+    width: 0;
+  }
+}
+
+.reports .chart1 {
+  border-radius: 15px;
+  align-content: center;
+  margin: 1%;
+
+  height: 67%;
+  float: right;
+  border: 2px solid rgb(6, 10, 95);
+  background-color: rgb(255, 255, 255);
+  grid-area: chart1;
+}
+.chart1 canvas {
+  height: 100%;
+}
+.recentAct .recent {
+  margin-top: 3%;
+  border: 1px solid #060a5f;
+  height: 32px;
+  border-radius: 0 20px 20px 0;
+  width: 95%;
+}/*
+.recentAct {
+  border-radius: 15px;
+  padding: 5px;
+  align-content: center;
+  margin-left: 2%;
+  margin-right: 1%;
+  width: 95%;
+  height: 100%;
+  float: right;
+  padding-left: 20px;
+  border: 2px solid rgb(6, 10, 95);
+  background-color: rgb(255, 255, 255);
+  grid-area: recent;
+}
+.reports .chart3 {
+  margin-left: 1%;
+  margin-right: 2%;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+
+  align-content: center;
+  border-radius: 15px;
+  border: 2px solid rgb(6, 10, 95);
+  background-color: rgb(255, 255, 255);
+  grid-area: chart3;
+}
+.reports .chart2 {
+  margin-left: 1%;
+  margin-right: 2%;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+
+  align-content: center;
+  border-radius: 15px;
+  border: 2px solid rgb(6, 10, 95);
+  background-color: rgb(255, 255, 255);
+  grid-area: chart2;
+}
+
+@media only screen and (max-width: 900px) {
+  .reports {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      "progressBar"
+      "recent"
+      "chart3"
+      "chart1";
+  }
+
+  .reports .recentAct {
+    width: 90%;
+    margin-right: 2%;
+    margin-left: 1%;
+  }
+
+  .reports .progress {
+    width: 100%;
+    margin-right: 2%;
+    margin-left: 1%;
+  }*/
+

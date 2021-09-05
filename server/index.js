@@ -2,11 +2,13 @@ import express from "express";
 import cors from "cors";
 import userRouter from "./routes/User.js";
 import Job from "./routes/jobsSQL.js";
+import Dash from "./routes/dashBoardSQL.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import session from "express-session";
 import connection from "./db.js";
 import Record from "./routes/cpdRecord.js";
+import dashBoardSQL from "./routes/dashBoardSQL.js";
 
 const app = express();
 
@@ -39,6 +41,7 @@ app.use(
 //routers
 app.use("/auth", userRouter);
 app.use("/job", Job);
+app.use("/Dash", dashBoardSQL);
 app.use("/cpdP", Record);
 
 

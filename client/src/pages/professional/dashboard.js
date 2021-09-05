@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./style/dashboard.css";
-import { makeStyles, Paper, Grid } from "@material-ui/core";
+import { makeStyles, Paper, Grid, alpha } from "@material-ui/core";
 import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";
 import { Redirect } from "react-router-dom";
 import Tabs from "./tabs";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -14,62 +15,188 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
   },
 }));
-const state = {
-  labels: [
-    "JAN",
-    "FEB",
-    "MAR",
-    "APR",
-    "MAY",
-    "JUN",
-    "JUL",
-    "AUG",
-    "SEP",
-    "OCT",
-    "NOV",
-    "DEC",
-  ],
-  datasets: [
-    {
-      label: "Credit Progress",
-      fill: false,
-      lineTension: 0.5,
-      backgroundColor: "#136CDC",
-      borderColor: "#136CDC",
-      borderWidth: 3,
-      data: [10, 20, 40, 60, 60, 60, 72, 81, 90, 88, 90, 99],
-    },
-  ],
-};
 
-const state2 = {
-  labels: ["2015", "2016", "2017", "2018", "2019", "2020"],
-  datasets: [
-    {
-      label: "Courses",
-      backgroundColor: "#94C0E1",
-      hoverBackgroundColor: "#060b60",
-      data: [2, 10, 4, 6, 8, 12],
-    },
-    {
-      label: "Workshops",
-      backgroundColor: "#4C90C3",
-      hoverBackgroundColor: "#060b60",
-      data: [2, 8, 10, 1, 4, 15],
-    },
-    {
-      label: "Other",
-      backgroundColor: "#4199DC",
-      hoverBackgroundColor: "#060b60",
-      data: [10, 4, 5, 6, 10, 13],
-    },
-  ],
-};
 const options = {
   maintainAspectRatio: false,
 };
-
 function Home() {
+  const [dataCPD, setData] = useState(null);
+  const [dataCPDYear, setDataYear] = useState(null);
+  const [length, setLength] = useState(null);
+  const [lengthYear, setLengthYear] = useState(null);
+  var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  for (var i = 0; i < length; i++) {
+    months[dataCPD[i].month] = dataCPD[i].credits;
+  }
+  const state = {
+    labels: [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
+    ],
+    datasets: [
+      {
+        label: "Credit Progress",
+        fill: false,
+        lineTension: 0.5,
+        backgroundColor: "#136CDC",
+        borderColor: "#136CDC",
+        borderWidth: 3,
+        data: months,
+      },
+    ],
+  };
+  var courseData = [0, 0, 0];
+  var workshopData = [0, 0, 0];
+  var otherData = [0, 0, 0];
+  var guestLect = [0, 0, 0];
+  var yearData = [];
+  var year, type, credit;
+  var l;
+
+  dataCPDYear &&
+    dataCPDYear.map(
+      (dataCPDYear) => (
+        (year = dataCPDYear.Year),
+        (type = dataCPDYear.type),
+        (credit = dataCPDYear.Credits),
+        (l = yearData.length),
+        console.log(
+          "year is -" +
+            year +
+            "------" +
+            yearData.length +
+            "-----" +
+            yearData[l - 1]
+        ),
+        yearData.length !== 0
+          ? yearData[l - 1] == year
+            ? (l = yearData.length - 1)
+            : yearData.push(year)
+          : yearData.push(year),
+        type === "C"
+          ? (courseData[l] = credit)
+          : console.log("-->" + l + "---------"),
+        type === "W"
+          ? (workshopData[l] = credit)
+          : console.log("-->" + l + "---------"),
+        type === "G"
+          ? (guestLect[l] = credit)
+          : console.log("-->" + l + "---------"),
+        type === "O"
+          ? (otherData[l] = credit)
+          : console.log("-->" + l + "---------"),
+        console.log(yearData),
+        console.log(courseData + "-->" + l + "---------"),
+        console.log(workshopData + "-->" + l + "---------"),
+        console.log(otherData + "-->" + l + "---------"),
+        console.log(year + "===========" + type + "============" + credit)
+      )
+    );
+  console.log(
+    "__________________" +
+      courseData +
+      "==" +
+      workshopData +
+      "==" +
+      otherData +
+      "___________________________"
+  );
+  //const  year = dataCPDYear[i].Year;
+  /*var type = dataCPDYear[i].type;
+    var credit = dataCPDYear[i].Credits;
+    var l = yearData.length;
+    if (yearData[l] === year) {
+    } else {
+      yearData.push(year);
+    }
+    if (type === "C") {
+      courseData[l] = credit;
+    }
+    console.log(dataCPDYear[i]);*/
+
+  const state2 = {
+    labels: yearData,
+    datasets: [
+      {
+        label: "Courses",
+        backgroundColor: "#94C0E1",
+        hoverBackgroundColor: "#060b60",
+        data: courseData,
+      },
+      {
+        label: "Workshops",
+        backgroundColor: "#4C90C3",
+        hoverBackgroundColor: "#060b60",
+        data: workshopData,
+      },
+      {
+        label: "Guest Lecture",
+        backgroundColor: "#447fab",
+        hoverBackgroundColor: "#060b60",
+        data: guestLect,
+      },
+      {
+        label: "Other",
+        backgroundColor: "#4199DC",
+        hoverBackgroundColor: "#060b60",
+        data: otherData,
+      },
+    ],
+  };
+
+  useEffect(() => {
+    const data = {
+      month: "",
+      credit: "",
+    };
+    axios
+      .post("http://localhost:3001/Dash/getCPDData", data)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setData(response.data);
+          setLength(response.data.length);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+    const dataY = {
+      Year: "",
+      credit: "",
+      type: "",
+    };
+    axios
+      .post("http://localhost:3001/Dash/getCPDDataYear", dataY)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log(response.data);
+
+          setLengthYear(response.data.length);
+
+          setDataYear(response.data);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
   const classes = useStyles();
   return (
     <div className="mainDashPro">
@@ -82,56 +209,51 @@ function Home() {
         </div>
       </div>
 
-        <div className="chartPro">
+      <div className="chartPro">
         <center>
-          <h3>Last Year Credit Progress</h3>
-        </center>
-          {" "}
-          <Bar
-            data={state2}
-            width={100}
-            height={14}
-            options={
-              ({ options },
-              {
-                title: {
-                  display: true,
-                  text: "Credit Progress Last Year",
-                  fontSize: 20,
-                },
-                legend: {
-                  display: true,
-                  position: "left",
-                },
-              })
-            }
-          />
-         
-        </div>
+          <h3>Last 3 Year Credit Progress</h3>
+        </center>{" "}
+        <Bar
+          data={state2}
+          width={100}
+          height={14}
+          options={
+            ({ options },
+            {
+              title: {
+                display: true,
+                text: "Credit Progress Last Year",
+                fontSize: 20,
+              },
+              legend: {
+                display: true,
+                position: "left",
+              },
+            })
+          }
+        />
+      </div>
 
-        <div className="recentAct">
-          <h3>Recent Activities</h3>
-          <div className="recent">
-            <p> Uploaded CPD - CSSL Course In Java- 2021 / July /20</p>
-          </div>
-          <div className="recent">
+      <div className="recentAct">
+        <h3>Recent Activities</h3>
+        <div className="recent">
+          <p> Uploaded CPD - CSSL Course In Java- 2021 / July /20</p>
+        </div>
+        <div className="recent">
+          {" "}
+          <p> Start Course - Angular - The Complete Guide - 2021 / July /10</p>
+        </div>
+        <div className="recent">
+          {" "}
+          <p> Apply a Job -Cambi Software (SE)- 2021 / June /29</p>
+        </div>
+        <div className="recent">
+          {" "}
+          <p>
             {" "}
-            <p>
-              {" "}
-              Start Course - Angular - The Complete Guide - 2021 / July /10
-            </p>
-          </div>
-          <div className="recent">
-            {" "}
-            <p> Apply a Job -Cambi Software (SE)- 2021 / June /29</p>
-          </div>
-          <div className="recent">
-            {" "}
-            <p>
-              {" "}
-              Uploaded CPD -Attendt to a Workshop in Microsoft - 2021 / June /25
-            </p>
-          </div>
+            Uploaded CPD -Attendt to a Workshop in Microsoft - 2021 / June /25
+          </p>
+        </div>
       </div>
 
       <div className="chart3">
@@ -139,7 +261,7 @@ function Home() {
           <h3>Last Year Credit Progress</h3>
         </center>
         <div className="ONG2">
-        <Line
+          <Line
             data={state}
             width={220}
             height={80}
