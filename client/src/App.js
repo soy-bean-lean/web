@@ -131,8 +131,8 @@ function App() {
       </>
     );
   } else {
-    //const mname = "Jihani";
-   //const mtype = "Secretariat";
+  //   const mname = "Jihani";
+  //  const mtype = "Secretariat";
 
     // const mname = "Supun";
     //  const mtype = "Council";
@@ -140,8 +140,8 @@ function App() {
     const mname = "Chamika";
     const mtype = "Professional";
 
-    //const mname = "Anushka";
-    //const mtype = "Chartered";
+    // const mname = "Anushka";
+    // const mtype = "Chartered";
 
     if (mtype == "Professional") {
       return (
