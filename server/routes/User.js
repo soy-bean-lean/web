@@ -109,12 +109,12 @@ userRouter.post("/", async (req, res) => {
 
 */
 
-userRouter.post("/login", async (req, res) => { 
+userRouter.get("/login", async (req, res) => { 
         
     const username = req.body.username;
     const password = req.body.password;
     connection.query(
-        'SELECT * FROM logininfo WHERE un = ?', 
+        'SELECT * FROM memberlogin WHERE un = ?', 
         [username], 
         (err, result) => {
             
@@ -128,6 +128,19 @@ userRouter.post("/login", async (req, res) => {
                         if (!match) res.json({ error: "Incorrect password" });
 
                         //GET THE TYPE
+
+                        connection.query(
+                            'SELECT userType FROM user WHERE email = ?', 
+                             [username],
+                            (error, result, feilds) => {
+                              if (error) console.log(error);
+                              else {
+                               // console.log(result);
+                                res.send(result);
+                              }
+                            }
+                          );
+
                         connection.query(
                             'SELECT userType FROM user WHERE email = ?', 
                             [username], 

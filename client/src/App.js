@@ -28,6 +28,7 @@ import reportsPro from "./pages/professional/reports";
 
 import jobView from "./pages/professional/job";
 import jobAddvertisment from "./pages/professional/jobView";
+import questionare from "./pages/professional/questionare";
 
 import createCV from "./pages/professional/genarateCV";
 
@@ -68,6 +69,7 @@ import jobAss from "./pages/associate/job";
 //Secretary
 import dashboardSec from "./pages/secretary/dashboard";
 import addJob from "./pages/secretary/addJob";
+import addQuestion from "./pages/secretary/addQuestion";
 import addWorkshops from "./pages/secretary/addWorkshops";
 
 import manageWorkshop from "./pages/secretary/manageWorkshop";
@@ -130,7 +132,7 @@ function App() {
     );
   } else {
     //const mname = "Jihani";
-   // const mtype = "Secretariat";
+   //const mtype = "Secretariat";
 
     // const mname = "Supun";
     //  const mtype = "Council";
@@ -172,7 +174,9 @@ function App() {
               <Route path="/reportsP" component={reportsPro} />
 
               <Route path="/job" component={jobView} />
-              <Route path="/jobAddvertisment" component={jobAddvertisment} />
+              <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
+              <Route path="/questionare/:id" component={questionare} />
+
               <Route path="/createCV" component={createCV} />
 
               <Route path="/paymentsP" component={paymentsPro} />
@@ -221,6 +225,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={dashboardSec} />
               <Route path="/addJob" component={addJob} />
+              <Route path="/addQuestions" component={addQuestion} />
               <Route path="/manWorkshop" component={manageWorkshop} />
               
               <Route path="/addWorkshops" component={addWorkshops} />

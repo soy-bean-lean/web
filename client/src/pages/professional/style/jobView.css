@@ -12,7 +12,6 @@
 .mainR {
   margin-top: 8%;
   grid-area: mainR;
-  overflow-y: scroll;
   padding: 2%;
 border-left:1px black;
 background-color: antiquewhite;
@@ -20,8 +19,10 @@ background-color: antiquewhite;
 .mainL {
   grid-area: mainL;
   margin-top: 12%;
-  margin-left: 12%;
+  margin-left: 8%;
   padding: 2%;
+
+overflow-y: scroll;
 }
 .footer {
   height: auto;
@@ -33,6 +34,7 @@ background-color: antiquewhite;
   margin-top: 150px;
   justify-content: center;
   margin-right: 10%;
+  margin-bottom: 1%;
   margin-left: 1%;
 }
 .btn a {

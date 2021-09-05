@@ -62,6 +62,7 @@ function Registration() {
       .oneOf([Yup.ref("password"), null], "Password must match")
       .required("Confirm password is required"),
   });
+  
   const onSubmit = (data) => {
     history.push("./login");
     axios.post("http://localhost:3001/auth", data).then((response) => {
