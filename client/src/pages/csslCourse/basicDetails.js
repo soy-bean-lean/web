@@ -14,7 +14,7 @@ function BasicCourseInfo() {
   const [imgFile, setImgFile] = useState();
 
   const [uploadStatus, setUploadStatus] = useState("");
-  const [page, setPage] = useState("Content");
+  const [page, setPage] = useState("Course");
 
   let history = useHistory();
 
@@ -42,8 +42,9 @@ function BasicCourseInfo() {
       .then((res) => res.json())
       .then((res) => {
         setUploadStatus(res.msg);
+        console.log(res.data);
         //set course id
-        setCourseId();
+        setCourseId(res.data.insertId);
         alert("Successful");
         const next = "Content";
         setPage(next);
@@ -159,7 +160,7 @@ function BasicCourseInfo() {
   }
   else if(page=="Content"){
     return(
-      <CourseContent title={courseTitle}/>
+      <CourseContent cid={courseId} title={courseTitle}/>
   );
   }
 }

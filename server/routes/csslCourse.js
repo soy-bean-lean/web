@@ -48,7 +48,6 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
-          //console.log(result);
           res.send({
             data: result,
             msg: "Successfully Saved.",
@@ -93,6 +92,22 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
           data: result,
           msg: "Successfully Saved.",
         });
+      }
+    }
+  );
+});
+
+Course.post("/getContentNo", (req, res) => {
+  const cId = req.body.id;
+  connection.query(
+    //"SELECT contentNo FROM coursecontent WHERE courseId = ? ORDER BY contentNo DESC LIMIT 1;",
+    "SELECT max(contentNo) AS contentNo FROM coursecontent WHERE courseId = ?;",
+    [cId],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        console.log("Result",result);
+        res.send(result);
       }
     }
   );

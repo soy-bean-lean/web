@@ -1,38 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./courseContentInfo.css";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 
 function AddCourseContent(props) {
-
   const [contentTitle, setContentTitle] = useState("");
   const [contentDes, setContentDes] = useState("");
   const [contentType, setContentType] = useState("");
   const [contentFile, setContentFile] = useState();
   const [videoLink, setVideoLink] = useState("");
-  const [contentNo, setContentNo] = useState(2);
+  const [contentNum, setContentNum] = useState(0);
 
   const [uploadStatus, setUploadStatus] = useState("");
-  
-  const cId = 1;
+
+  const cId = props.cid;
   //const {id} = useParams();
   //setCourseTitle(props.location.state);
 
   let history = useHistory();
 
+  useEffect(() => {
+    const sendData = {
+      id: props.cid,
+    };
+    axios
+      .post("http://localhost:3001/csslcourse/getContentNo", sendData)
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log("response:", response.data[0].contentNo);
+
+          if (response.data[0].contentNo != null) {
+            setContentNum(response.data[0].contentNo + 1);
+          } else {
+            setContentNum(contentNum + 1);
+          }
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
   const InsertCourseContent = () => {
+
     const mId = "cssl001";
+    const contentId = "cssl00" + cId + "-0" + contentNum;
+    console.log("ID:", contentId);
+
     const formData = new FormData();
-
-    //getContentNo
-    const contentId = "cssl00" + cId + "-0" + contentNo; 
-
     formData.append("courseId", cId);
-    formData.append("contentNo", contentNo);
+    formData.append("contentNo", contentNum);
     formData.append("contentId", contentId);
     formData.append("title", contentTitle);
     formData.append("description", contentDes);
     formData.append("type", contentType);
+
     if(contentType == "File"){
         formData.append("cfile", contentFile);
     }
@@ -57,13 +82,12 @@ function AddCourseContent(props) {
       .catch((error) => {
         console.log(error);
       });
-    
   };
 
   const redirectCourseList = () => {
     let path = "/";
     history.push(path);
-  }
+  };
 
   const resetComponents = () => {
     console.log(props.title);
@@ -81,11 +105,11 @@ function AddCourseContent(props) {
         <div className="content-basic-info-form">
           <h3 className="content-basic-info-title">{props.title}</h3>
           <input
-              type="submit"
-              className="content-btn-redirect"
-              value="Go to Course List"
-              onClick={redirectCourseList}
-            />
+            type="submit"
+            className="content-btn-redirect"
+            value="Go to Course List"
+            onClick={redirectCourseList}
+          />
           <div className="content-basic-info-block">
             <div className="content-field-block">
               <h4 className="content-info-title">Title</h4>
@@ -99,7 +123,7 @@ function AddCourseContent(props) {
             <div className="content-field-block">
               <h4 className="content-info-title">Description</h4>
               <textarea
-                value = {contentDes}
+                value={contentDes}
                 onChange={(e) => setContentDes(e.target.value)}
               ></textarea>
             </div>
@@ -117,7 +141,6 @@ function AddCourseContent(props) {
               </select>
             </div>
             {renderContentAdd(contentType)}
-            
           </div>
           <div className="content-btn-block">
             <input
@@ -133,46 +156,42 @@ function AddCourseContent(props) {
               onClick={InsertCourseContent}
             />
           </div>
-
         </div>
       </div>
     </div>
   );
 
-  function renderContentAdd(type){
-      if(type == "File"){
-        return(
-            <div className="content-field-block">
-              <h4 className="content-info-title">Content File</h4>
-              <input
-                type="file"
-                className="input"
-                id="content-file"
-                name="content-file"
-                accept =".xlsx, .xls, .doc, .docx, .ppt, .pptx, .txt, .pdf, image/*"
-                onChange={(e) => setContentFile(e.target.files[0])}
-              ></input>
-            </div>
-        );
-      }
-      else if(type == "Video"){
-        return(
-            <div className="content-field-block">
-              <h4 className="content-info-title">Video Link</h4><h7>(Upload Video to Youtube and Place Youtube Video Link here.)</h7>
-              <input
-                className="input"
-                value={videoLink}
-                placeholder="--Youtube Video Link--"
-                onChange={(e) => setVideoLink(e.target.value)}
-              ></input>
-            </div>
-        );
-      }
-      else{
-        return(
-            <div></div>
-        );
-      }
+  function renderContentAdd(type) {
+    if (type == "File") {
+      return (
+        <div className="content-field-block">
+          <h4 className="content-info-title">Content File</h4>
+          <input
+            type="file"
+            className="input"
+            id="content-file"
+            name="content-file"
+            accept=".xlsx, .xls, .doc, .docx, .ppt, .pptx, .txt, .pdf, image/*"
+            onChange={(e) => setContentFile(e.target.files[0])}
+          ></input>
+        </div>
+      );
+    } else if (type == "Video") {
+      return (
+        <div className="content-field-block">
+          <h4 className="content-info-title">Video Link</h4>
+          <h7>(Upload Video to Youtube and Place Youtube Video Link here.)</h7>
+          <input
+            className="input"
+            value={videoLink}
+            placeholder="--Youtube Video Link--"
+            onChange={(e) => setVideoLink(e.target.value)}
+          ></input>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 }
 
