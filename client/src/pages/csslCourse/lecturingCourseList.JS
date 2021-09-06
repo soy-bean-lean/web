@@ -51,7 +51,7 @@ function LecCourseList() {
             <div className="recAllign">
               <div className="recDes">{course.description}</div>
               <div data-status={course.status} className="recPending">
-                {record.status}
+                {course.status}
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@ function LecCourseList() {
             <div className="recAllign">
               <div className="recDes">{course.description}</div>
               <div data-status={course.status} className="recPending">
-                {record.status}
+                {course.status}
               </div>
             </div>
           </div>
