@@ -76,6 +76,16 @@ dashBoardSQL.post("/payments", (req, res) => {
 });
 
 
-
-
 export default dashBoardSQL;
+
+
+/*
+
+recent Activities 
+blog
+courseenrollment
+cpdrecords
+forum,
+jobapplication
+workshopparticipate
+*/

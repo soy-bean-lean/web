@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
 import userRouter from "./routes/User.js";
 import Job from "./routes/jobsSQL.js";
 import cookieParser from "cookie-parser";
@@ -38,7 +39,9 @@ app.use(
       expires: 60 * 60 * 24 * 1000,
     },
   })
-);
+)
+var __dirname = path.resolve();
+app.use('/uploads', express.static(__dirname+ './uploads'));
 
 //routers
 app.use("/auth", userRouter);

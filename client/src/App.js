@@ -132,16 +132,16 @@ function App() {
     );
   } else {
   //   const mname = "Jihani";
-  //  const mtype = "Secretariat";
+    //const mtype = "Secretariat";
 
     //const mname = "Supun";
-    // const mtype = "Council";
+    //const mtype = "Council";
 
     const mname = "Chamika";
-  const mtype = "Professional";
+ const mtype = "Professional";
 
     // const mname = "Anushka";
-    // const mtype = "Chartered";
+ //    const mtype = "Chartered";
 
     if (mtype == "Professional") {
       return (
@@ -209,7 +209,9 @@ function App() {
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsC" component={reportsCha} />
               <Route path="/job" component={jobView} />
-              <Route path="/jobAddvertisment" component={jobAddvertisment} />
+              <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
+              <Route path="/questionare/:id" component={questionare} />
+
               <Route path="/createCV" component={createCV} />
 
               <Route path="/paymentsP" component={paymentsPro} />

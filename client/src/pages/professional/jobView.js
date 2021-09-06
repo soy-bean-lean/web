@@ -8,8 +8,13 @@ import axios from "axios";
 function Job() {
   const { id } = useParams();
   const [compayData, setCompayData] = useState(null);
+  const [image, setImage] = useState("");
 
   useEffect(() => {
+    const data = {
+      memberId: "1001",
+      jobId: id,
+    };
     axios
       .get("http://localhost:3001/job/getJobView", { params: { id: id } })
       .then((response) => {
@@ -18,15 +23,18 @@ function Job() {
         } else {
           setCompayData(response.data);
           console.log(compayData);
-          console.log(compayData);
 
-          console.log(response.data);
+          console.log(image);
         }
       })
       .catch((error) => {
         alert(error);
       });
   }, []);
+
+// setImage("http://localhost:3001/uploads/a.png");
+  //console.log(image);
+
   const jobview =
     compayData &&
     compayData.map((compayData) => (
@@ -41,7 +49,9 @@ function Job() {
 
             <p>{compayData.description}</p>
           </div>
-          <div className="mainR">Image Here</div>
+          <div className="mainR">
+
+          </div>
           <div className="footer">
             <Link to={"/questionare/" + id} className="btn">
               <a href="#" className="review">
