@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import CourseContent from "./courseContentInfo";
 
 function BasicCourseInfo() {
+  const [courseId, setCourseId] = useState();
   const [courseTitle, setCourseTitle] = useState("");
   const [courseDes, setCourseDes] = useState("");
   const [courseDuration, setCourseDuration] = useState("");
@@ -41,6 +42,8 @@ function BasicCourseInfo() {
       .then((res) => res.json())
       .then((res) => {
         setUploadStatus(res.msg);
+        //set course id
+        setCourseId();
         alert("Successful");
         const next = "Content";
         setPage(next);
