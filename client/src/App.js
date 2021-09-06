@@ -36,7 +36,7 @@ import paymentsPro from "./pages/professional/payments";
 
 import courseInfo from "./pages/csslCourse/basicDetails";
 import courseContentInfo from "./pages/csslCourse/courseContentInfo";
-import abc from "./pages/csslCourse/lecturingCourseList";
+import lecCourseList from "./pages/csslCourse/lecturingCourseList";
 
 //chartered
 import dashboardCha from "./pages/chartered/dashboard";
@@ -182,7 +182,7 @@ function App() {
 
               <Route path="/paymentsP" component={paymentsPro} />
 
-              {/*<Route path="/lecCourse" component={lecCourseList} />*/}
+              <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
               <Route path="/addcourseContent/:id" component={courseContentInfo} />
             </Switch>

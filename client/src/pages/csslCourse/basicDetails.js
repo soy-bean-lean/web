@@ -14,7 +14,7 @@ function BasicCourseInfo() {
   const [imgFile, setImgFile] = useState();
 
   const [uploadStatus, setUploadStatus] = useState("");
-  const [page, setPage] = useState("Course");
+  const [page, setPage] = useState("Content");
 
   let history = useHistory();
 

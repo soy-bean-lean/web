@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "./lecCourseList.css";
 
 function LecCourseList() {
   const [course, setCourse] = useState(null);
 
   useEffect(() => {
     const formData = {
-      id: "",
+      mId: "cssl001",
     };
     axios
       .post("http://localhost:3001/csslcourse/", formData)
@@ -29,11 +30,11 @@ function LecCourseList() {
     course &&
     course.map((course, i) => (
       <>
-        <div className="recentRec" key={i}>
-          <div className="recType">{course.type}</div>
-          <div className="recAllign">
-            <div className="recDes">{course.description}</div>
-            <div data-status={course.status} className="recPending">
+        <div className="lec-course-list" key={i}>
+          <div className="lec-course-list-cid">{course.courseId}</div>
+          <div className="lec-course-list-align">
+            <div className="lec-course-list-title">{course.name}</div>
+            <div data-status={course.status} className="lec-course-list-status">
               {course.status}
             </div>
           </div>
@@ -46,11 +47,11 @@ function LecCourseList() {
     course.map((course, i) =>
       course.status === "OnGoing" ? (
         <>
-          <div className="recentRec" key={i}>
-            <div className="recType">{course.type}</div>
-            <div className="recAllign">
-              <div className="recDes">{course.description}</div>
-              <div data-status={course.status} className="recPending">
+          <div className="lec-course-list" key={i}>
+            <div className="lec-course-list-cid">{course.courseId}</div>
+            <div className="lec-course-list-align">
+              <div className="lec-course-list-title">{course.name}</div>
+              <div data-status={course.status} className="lec-course-list-status">
                 {course.status}
               </div>
             </div>
@@ -66,11 +67,11 @@ function LecCourseList() {
     course.map((course, i) =>
       course.status === "Approved" ? (
         <>
-          <div className="recentRec" key={i}>
-            <div className="recType">{course.type}</div>
-            <div className="recAllign">
-              <div className="recDes">{course.description}</div>
-              <div data-status={course.status} className="recPending">
+          <div className="lec-course-list" key={i}>
+            <div className="lec-course-list-cid">{course.courseId}</div>
+            <div className="lec-course-list-align">
+              <div className="lec-course-list-title">{course.name}</div>
+              <div data-status={course.status} className="lec-course-list-status">
                 {course.status}
               </div>
             </div>
@@ -86,11 +87,11 @@ function LecCourseList() {
     course.map((course, i) =>
       course.status === "Pending" ? (
         <>
-          <div className="recentRec" key={i}>
-            <div className="recType">{course.type}</div>
-            <div className="recAllign">
-              <div className="recDes">{course.description}</div>
-              <div data-status={course.status} className="recPending">
+          <div className="lec-course-list" key={i}>
+            <div className="lec-course-list-cid">{course.courseId}</div>
+            <div className="lec-course-list-align">
+              <div className="lec-course-list-title">{course.name}</div>
+              <div data-status={course.status} className="lec-course-list-status">
                 {course.status}
               </div>
             </div>
@@ -106,11 +107,11 @@ function LecCourseList() {
     course.map((course, i) =>
       course.status === "Rejected" ? (
         <>
-          <div className="recentRec" key={i}>
-            <div className="recType">{course.type}</div>
-            <div className="recAllign">
-              <div className="recDes">{course.description}</div>
-              <div data-status={course.status} className="recPending">
+          <div className="lec-course-list" key={i}>
+            <div className="lec-course-list-cid">{course.courseId}</div>
+            <div className="lec-course-list-align">
+              <div className="lec-course-list-title">{course.name}</div>
+              <div data-status={course.status} className="lec-course-list-status">
                 {course.status}
               </div>
             </div>
@@ -122,8 +123,8 @@ function LecCourseList() {
     );
 
   return (
-    <div className="mainCPD">
-      <div className="recentCPDRec">
+    <div className="lec-course-list-main">
+      <div className="lec-course-list-sub">
         <Tabs /*style={{ paddingTop: "5px", paddingLeft: "3px" }}*/>
           {" "}
           <TabList>
@@ -133,29 +134,28 @@ function LecCourseList() {
             <Tab>Pending</Tab>
             <Tab>Rejected</Tab>
           </TabList>
-          <h3 className="titleRecent">Recent CPD Submissions</h3>
-          <TabPanel className="all">
-            <div className="btn-cpdAdd"></div>
-            <div className="recList">{allCourseList}</div>
+          <h3 className="lec-course-list-form-title">CONDUCTING COURSES</h3>
+          <TabPanel className="lec-course-list-all">
+            <div className="lec-course-list-courses">{allCourseList}</div>
           </TabPanel>
           <TabPanel className="ongoing">
-            <div className="recList">{ongoingCourses}</div>
+            <div className="lec-course-list-courses">{ongoingCourses}</div>
           </TabPanel>
           <TabPanel className="approved">
-            <div className="recList">{approvedCourses}</div>
+            <div className="lec-course-list-courses">{approvedCourses}</div>
           </TabPanel>
           <TabPanel className="pending">
-            <div className="recList">{pendingCourses}</div>
+            <div className="lec-course-list-courses">{pendingCourses}</div>
           </TabPanel>
           <TabPanel className="rejected">
-            <div className="recList">{rejectedCourses}</div>
+            <div className="lec-course-list-courses">{rejectedCourses}</div>
           </TabPanel>
         </Tabs>
       </div>
-      <div className="cpdAdd">
-        <div className="add-cpd-btn">
-          <Link to={"/addCPD/"} className="add-cpd-btn">
-            <a href="#" className="add-cpd-btn">
+      <div className="lec-course-list-new-course">
+        <div className="lec-course-list-new-course-btn">
+          <Link to={"/addCourse/"} className="lec-course-list-new-course-btn">
+            <a href="#" className="lec-course-list-new-course-btn">
               ADD
             </a>
           </Link>
