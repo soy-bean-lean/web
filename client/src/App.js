@@ -34,6 +34,7 @@ import createCV from "./pages/professional/genarateCV";
 
 import paymentsPro from "./pages/professional/payments";
 
+import lecCourseList from "./pages/csslCourse/lecturingCourseList";
 import courseInfo from "./pages/csslCourse/basicDetails";
 import courseContentInfo from "./pages/csslCourse/courseContentInfo";
 
@@ -181,6 +182,7 @@ function App() {
 
               <Route path="/paymentsP" component={paymentsPro} />
 
+              <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
               <Route path="/addcourseContent/:id" component={courseContentInfo} />
             </Switch>
