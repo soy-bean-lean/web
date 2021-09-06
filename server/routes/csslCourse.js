@@ -18,6 +18,7 @@ const upload = multer({
 
 const Course = Router();
 
+
 Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
   if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
     res.send({ msg: "Not an Image File." });
@@ -30,7 +31,7 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
     const level = req.body.level;
     const image = req.file.filename;
     const mode = req.body.mode;
-    const status = "Pending";
+    const status = "OnGoing";
 
     connection.query(
       "INSERT INTO csslcourse (name, description, duration, language, skillLevel, image, mode, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?);",
@@ -96,6 +97,22 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
     }
   );
 });
+
+Course.post("/", (req, res) => {
+  const mid = req.body.mId;
+  connection.query(
+    "SELECT courseId, name, status FROM csslcourse WHERE conductedBy = ?;",
+    [mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        console.log("Result",result);
+        res.send(result);
+      }
+    }
+  );
+});
+
 
 Course.post("/getContentNo", (req, res) => {
   const cId = req.body.id;
