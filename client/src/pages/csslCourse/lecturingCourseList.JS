@@ -36,9 +36,9 @@ function LecCourseList() {
             <div className="lec-course-list-title">
               <Link
                 to={"/courseView/cssl00"+ course.courseId + "/" + course.name}
-                className=""
+                className="lec-course-list-link"
               >
-                <a href="#" className="">
+                <a href="#" className="lec-course-list-link">
                   {course.name}
                 </a>
               </Link>
@@ -59,7 +59,16 @@ function LecCourseList() {
           <div className="lec-course-list" key={i}>
             <div className="lec-course-list-cid">{course.courseId}</div>
             <div className="lec-course-list-align">
-              <div className="lec-course-list-title">{course.name}</div>
+              <div className="lec-course-list-title">
+              <Link
+                to={"/courseView/cssl00"+ course.courseId + "/" + course.name}
+                className="lec-course-list-link"
+              >
+                <a href="#" className="lec-course-list-link">
+                  {course.name}
+                </a>
+              </Link>
+              </div>
               <div data-status={course.status} className="lec-course-list-status">
                 {course.status}
               </div>
@@ -79,7 +88,16 @@ function LecCourseList() {
           <div className="lec-course-list" key={i}>
             <div className="lec-course-list-cid">{course.courseId}</div>
             <div className="lec-course-list-align">
-              <div className="lec-course-list-title">{course.name}</div>
+              <div className="lec-course-list-title">
+              <Link
+                to={"/courseView/cssl00"+ course.courseId + "/" + course.name}
+                className="lec-course-list-link"
+              >
+                <a href="#" className="lec-course-list-link">
+                  {course.name}
+                </a>
+              </Link>
+              </div>
               <div data-status={course.status} className="lec-course-list-status">
                 {course.status}
               </div>
@@ -99,7 +117,16 @@ function LecCourseList() {
           <div className="lec-course-list" key={i}>
             <div className="lec-course-list-cid">{course.courseId}</div>
             <div className="lec-course-list-align">
-              <div className="lec-course-list-title">{course.name}</div>
+              <div className="lec-course-list-title">
+              <Link
+                to={"/courseView/cssl00"+ course.courseId + "/" + course.name}
+                className="lec-course-list-link"
+              >
+                <a href="#" className="lec-course-list-link">
+                  {course.name}
+                </a>
+              </Link>
+              </div>
               <div data-status={course.status} className="lec-course-list-status">
                 {course.status}
               </div>
@@ -119,7 +146,16 @@ function LecCourseList() {
           <div className="lec-course-list" key={i}>
             <div className="lec-course-list-cid">{course.courseId}</div>
             <div className="lec-course-list-align">
-              <div className="lec-course-list-title">{course.name}</div>
+              <div className="lec-course-list-title">
+              <Link
+                to={"/courseView/cssl00"+ course.courseId + "/" + course.name}
+                className="lec-course-list-link"
+              >
+                <a href="#" className="lec-course-list-link">
+                  {course.name}
+                </a>
+              </Link>
+              </div>
               <div data-status={course.status} className="lec-course-list-status">
                 {course.status}
               </div>

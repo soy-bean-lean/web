@@ -106,7 +106,20 @@ Course.post("/", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-        console.log("Result",result);
+        res.send(result);
+      }
+    }
+  );
+});
+
+Course.post("/getContentList", (req, res) => {
+  const cid = req.body.cId;
+  connection.query(
+    "SELECT contentId, title, description FROM coursecontent WHERE courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
         res.send(result);
       }
     }

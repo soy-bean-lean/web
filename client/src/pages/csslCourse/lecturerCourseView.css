@@ -3,17 +3,94 @@
   padding-top: 60px;
 }
 
-.lecturer-course-view-content-list {
-  height: 92%;
-  overflow-y: scroll;
+.lecturer-course-view-top{
+    align-items: center;
+    padding: 10px;
 }
 
+.lecturer-course-view-content-list {
+  height: 92%;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: auto;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.lcv-content-edit-btn{
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  
+}
+
+.lcv-content-edit-btn {
+  background: #d4c818;
+  border: none;
+  border-radius: 5%;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  align-items: center;
+}
+
+
 .lecturer-course-view-title {
-  top: 2%;
+  top: 5%;
   position: relative;
-  padding: 10px;
   text-align: center;
 }
+
+.lec-course-view-content{
+  padding: 5px;
+}
+
+.lec-course-view-content-title {
+  padding: 5px;
+  border: 2px solid #7883e2;
+  font-weight: 600;
+  border-radius: 10px 10px 0px 0px;
+  height: auto;
+  width: 130px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+}
+
+.lec-course-view-content-align {
+  background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
+  font-weight: 500;
+  border-radius: 0px 8px 8px 8px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.lec-course-view-content-des {
+  padding: 5px;
+  justify-content: left;
+  align-items: center;
+  width: 90%;
+  /*margin-right: 400px;
+    display: flex;*/
+}
+
+.lec-course-view-content-btn{
+  margin-left: auto;
+  padding: 5px;
+  border-radius: 8px 8px 8px 8px;
+  height: inherit;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
 
 .lecturer-course-view-content-list .lecturer-course-view-block {
   margin: 20px;
@@ -61,8 +138,8 @@
 }
 
 .lcv-course-edit-btn {
-  top: -5%;
-  left: 75%;
+  top: 2%;
+  left: 67%;
   position: relative;
   background: #d4c818;
   border: none;
@@ -72,11 +149,13 @@
   padding: 8px;
   font-size: 16px;
   color: rgb(0, 0, 0);
+  text-align: center;
+  align-items: center;
 }
 
 .lcv-course-del-btn {
-    top: -5%;
-    left: 77%;
+    top: 2%;
+    left: 69%;
     position: relative;
     background: #ee2727;
     border: none;
@@ -86,4 +165,22 @@
     padding: 8px;
     font-size: 16px;
     color: rgb(0, 0, 0);
+    text-align: center;
+    align-items: center;
+  }
+
+  .lcv-course-approve-btn{
+    top: 2%;
+    left: 65%;
+    position: relative;
+    background: #2eee27;
+    border: none;
+    border-radius: 5%;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    align-items: center;
   }

@@ -62,6 +62,18 @@
     /*margin-right: 400px;
       display: flex;*/
   }
+
+  .lec-course-list-link{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    
+  }
+
+  .lec-course-list-link:hover{
+    color: rgb(36, 13, 172);  
+  }
+
   .lec-course-list-status {
     color: white;
   }
