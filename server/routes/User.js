@@ -1,182 +1,120 @@
 import Router from "express";
 import connection from "../db.js";
 import bcrypt from "bcrypt";
+import pkg from "jsonwebtoken";
+import validateToken from "../middlewares/AuthMiddleware.js";
+
+const { sign } = pkg;
 
 const userRouter = Router();
-//------Anushka's Code------
 
-/*userRouter.post("/", async (req, res) => { 
-    
-    connection.query(
-        'SELECT * FROM users WHERE username=?', 
-        [req.body.email], 
-        (err, result) => {
-            
-        if (result.length <= 0){
-            const password = req.body.password;
-            bcrypt.hash(password,10).then((hash) => {
-                connection.query(`INSERT INTO users (username, password) VALUES (?, ?)`, 
-                [req.body.email, hash],(err, result)=> {
-                    connection.query(`INSERT INTO posts (title, postText) VALUES (?, ?)`, 
-                    [result.insertId, req.body.email])
-                    res.json("success");
-                });
-            })
-        }else{
-            res.json({ error: "Username already exists" });   
-        }
-    })   
-    
-});*/
+//Register
 
-//--------------------------------
+userRouter.post("/", async (req, res) => {
+  //member details
+  const title = req.body.title;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const residentialAddress = req.body.residentialAddress;
+  const contactNumber = req.body.contactNumber;
+  const birthDate = req.body.birthDate;
+  const email = req.body.email;
+  const password = req.body.password;
+  const userType = req.body.category;
 
-userRouter.post("/", async (req, res) => { 
-    const type = req.body.category;
-    const title = req.body.title;
-    const fname = req.body.firstName;
-    const sName = req.body.secondName
-    const lname = req.body.lastName;
-    const desig = req.body.designation;
-    const mail = req.body.email;
-    const pw = req.body.password;
-    connection.query(
-        'SELECT * FROM logininfo WHERE un = ?', 
-        [mail], 
-        (err, result) => {
-            
-        if (result.length <= 0){
-            bcrypt.hash(pw,10).then((hash) => {
-                connection.query(`INSERT INTO user (title,firstName,lastName,email,userType,) VALUES (?, ?,?,?,?)`, 
-                [title, fname, lname, mail, type],(err, result)=> {
-                    connection.query(`INSERT INTO logininfo (un, pw) VALUES (?, ?)`, 
-                    [mail,pw]),
-                    res.json("success");
-                });
-            })
-        }else{
-            res.json({ error: "Username already exists" });   
-        }
-    })   
-    
-});
+  //employment details
+  const designation = req.body.designation;
+  const companyName = req.body.companyName;
+  const businessAddress = req.body.businessAddress;
 
-/*userRouter.post("/login", async (req, res) => { 
-        
-    const username = req.body.username;
-    const password = req.body.password;
-
-    connection.query(
-        'SELECT * FROM users WHERE username=?',
-        console.log("anushka2") 
-        [username], 
-        (err, result) => {
-            
-        if (result.length > 0){
-
-            connection.query(
-                'SELECT password FROM users WHERE username=?', 
-                [username], 
-                (err, row) => {
-                    bcrypt.compare(password, row[0].password).then((match) => {  
-                        if (!match) res.json({ error: "Incorrect password" });
-
-                        //GET THE TYPE
-                        connection.query(
-                            'SELECT id FROM users WHERE username=?', 
-                            [username], 
-                            (err, id_res) => {
-
-                                // const id = result[0].id;
-                                // const token = jwt.sign({id}, "jwtSecret", {
-                                //     expiresIn:1000,
-                                    
-                                // })
-
-                              //  req.session.user = result;
-                                res.json({
-                                    id: id_res[0].id,
-                                    username: username
-                                });  
-                            })                                            
-                    });                
-                })            
-        }
-        else
-            res.json({ error: "Username doesn't exists" });            
-    })
-});
-
-*/
-
-userRouter.get("/login", async (req, res) => { 
-        
-    const username = req.body.username;
-    const password = req.body.password;
-    connection.query(
-        'SELECT * FROM memberlogin WHERE un = ?', 
-        [username], 
-        (err, result) => {
-            
-        if (result.length > 0){
-
-            connection.query(
-                'SELECT pw FROM users WHERE un = ?', 
-                [username], 
-                (err, row) => {
-                    bcrypt.compare(password, row[0].password).then((match) => {  
-                        if (!match) res.json({ error: "Incorrect password" });
-
-                        //GET THE TYPE
-
-                        connection.query(
-                            'SELECT userType FROM user WHERE email = ?', 
-                             [username],
-                            (error, result, feilds) => {
-                              if (error) console.log(error);
-                              else {
-                               // console.log(result);
-                                res.send(result);
-                              }
-                            }
-                          );
-
-                        connection.query(
-                            'SELECT userType FROM user WHERE email = ?', 
-                            [username], 
-                            (err, resType) => {
-
-                                req.session.user = result;
-                                res.json({
-                                    username: username,
-                                    type : resType[0].userType
-                                });  
-                            })                                            
-                    });                
-                })            
-        }
-        else
-            res.json({ error: "Username doesn't exists" });            
-    })
-});
-
-
-userRouter.get("/login", (req, res) => {
-    if (req.session.user) {
-      res.json({ loggedIn: true, user: req.session.user });
-    } else {
-      res.json({ loggedIn: false, error: "You have to be logged in"});
-     // console.log("darshana");
+  connection.query(
+    "SELECT * FROM user WHERE email = ?",
+    [email],
+    (err, result) => {
+      if (result.length <= 0) {
+        bcrypt.hash(password, 10).then((hash) => {
+          connection.query(
+            `INSERT INTO user (title,firstName,lastName,residentialAddress,contactNumber,birthDate,email,password,userType) VALUES (?,?,?,?,?,?,?,?,?)`,
+            [
+              title,
+              firstName,
+              lastName,
+              residentialAddress,
+              contactNumber,
+              birthDate,
+              email,
+              hash,
+              userType,
+            ],
+            (err, row) => {
+              if (err) {
+                res.json({ error });
+              } else {
+                connection.query(
+                  `INSERT INTO employmentdetails (memberID, designation, companyName, businessAddress) VALUES (?,?,?,?)`,
+                  [row.insertId, designation, companyName, businessAddress],
+                  (err, result) => {
+                    if (err) {
+                      res.json({ error });
+                    } else {
+                      res.json("successfully added to database");
+                    }
+                  }
+                );
+              }
+            }
+          );
+        });
+      } else {
+        res.json({ error: "Username already exists" });
+      }
     }
+  );
 });
 
 
-// userRouter.get("/auth", validateToken, (req, res) => {
-//     // const username = req.body.username;
-//     // const password = req.body.password;
-    
-//     // console.log(username);
-//    // res.json(req.body.username);
-// });
+//login
+//userRouter.post("/login", validateToken, async (req, res) => {
+userRouter.post("/login", async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  connection.query(
+    "SELECT * FROM user WHERE email = ?",
+    [username],
+    (err, result) => {
+      if (result.length > 0) {
+        bcrypt.compare(password, result[0].password).then((match) => {
+          if (!match) {
+            res.json({ errorPass: "Incorrect password" });
+          } else {
+            const accessToken = sign(
+              {
+                firstName: result[0].firstName,
+                lastName: result[0].lastName,
+                id: result[0].id,
+                role: result[0].userType,
+              },
+              "importantsecret"
+            );
+            res.json({
+              token: accessToken,
+              firstName: result[0].firstName,
+              lastName: result[0].lastName,
+              id: result[0].id,
+              role: result[0].userType,
+            });
+          }
+        });
+      } else {
+        res.json({ errorUser: "Username doesn't exists" });
+      }
+    }
+  );
+});
+
+userRouter.get("/auth", validateToken, (req, res) => {
+  res.json(req.user);
+});
 
 export default userRouter;

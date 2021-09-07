@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import userRouter from "./routes/User.js";
+import secretaryRouter from "./routes/secretary.js";
 import Job from "./routes/jobsSQL.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -29,6 +30,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(
   session({
     key: "userId",
@@ -40,6 +42,7 @@ app.use(
     },
   })
 )
+
 var __dirname = path.resolve();
 app.use('/uploads', express.static(__dirname+ './uploads'));
 
@@ -52,6 +55,8 @@ app.use("/reports", reportSQL);
 
 app.use("/cpd", Record);
 app.use("/csslcourse", Course);
+
+app.use("/secretary", secretaryRouter);
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

@@ -179,6 +179,7 @@ function Home() {
   }, []);
 
   const classes = useStyles();
+
   return (
     <div className="mainDashPro">
       <div className="progress">

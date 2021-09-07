@@ -5,9 +5,11 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "./helpers/AuthContext";
 
 import Registration from "./pages/registration/Registration";
 import Login from "./pages/login/Login";
+import PageNotFound from "./pages/pageNotFound";
 
 //professional
 import dashboardPro from "./pages/professional/dashboard";
@@ -93,65 +95,77 @@ import regRejectedCou from "./pages/council/regRejectedC";
 import cpdCou from "./pages/council/cpd";
 
 function App() {
-  //   const [loginStatus, setLoginStatus] = useState(false);
-  //   const [role, setRole] = useState("");
+  
+  const [authState, setAuthState] = useState({
+    fname: "",
+    lname: "",
+    role: "",
+    id: 0,
+    status: false,
+  });
 
-  //   axios.defaults.withCredentials = true;
-  //   //console.log("role");
-  //   useEffect(() => {
-  //     axios.get("http://localhost:3001/auth/login").then(response) => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            fname: response.data.firstName,
+            lname: response.data.lastName,
+            role: response.data.role,
+            id: response.data.id,
+            status: true,
+          });
+        }
+      });
+  }, []);
 
-  //        //console.log(response);
+  return (
+    <AuthContext.Provider value={{ authState, setAuthState }}>
+      <Router>
+        <Switch>
+          {!authState.status && (
+            <>
+              <Route path="/" exact component={Login} />
+              <Route path="/registration" exact component={Registration} />
+            </>
+          )}
+          {authState.role == "student" && (
+            <>    
+            <Navbar />
+              <Route path="/dashboardStu" exact component={dashboardCha} />
+              <Route path="/courseS" component={courseStu} />
+              <Route path="/workshopS" component={workshopStu} />
+              <Route path="/blogS" component={blogStu} />
+              <Route path="/forumS" component={forumStu} />
+              <Route path="/reportsS" component={reportsStu} />
+              <Route path="/paymentsS" component={paymentsStu} />                     
+            </>
+          )} 
 
-  //       if (response.data.loggedIn == true) {
+          {authState.role == "associate" && (
+            <>    
+            <Navbar />
+              <Route path="/dashboardA" exact component={dashboardAss} />
+              <Route path="/courseA" component={courseAss} />
+              <Route path="/blogA" component={blogAss} />
+              <Route path="/forumA" component={forumAss} />
+              <Route path="/reportsA" component={reportsAss} />
+              <Route path="/jobA" component={jobAss} />
+              <Route path="/paymentsA" component={paymentsAss} />                    
+            </>
+          )} 
 
-  //         setLoginStatus(true);
-  //         setRole(response.data.user[0].username);
-  //       // } else {
-  // //         //alert(response.data.error);
-  //         }
-  //     });
-  //   }, []);
-
-  //  // console.log(loginStatus);
-  //   console.log(role);
-  //const loginStatus=true;
-  // const [loginStatus, setLoginStatus] = useState(false);
-
-  const loginStatus = true;
-  const role = false;
-
-  if (loginStatus == false) {
-    return (
-      <>
-        <Router>
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/registration" exact component={Registration} />
-          </Switch>
-        </Router>
-      </>
-    );
-  } else {
-  //   const mname = "Jihani";
-    //const mtype = "Secretariat";
-
-    //const mname = "Supun";
-    //const mtype = "Council";
-
-    const mname = "Chamika";
- const mtype = "Professional";
-
-    // const mname = "Anushka";
- //    const mtype = "Chartered";
-
-    if (mtype == "Professional") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardPro} />
+          {authState.role == "professional" && (
+            <>
+              <Navbar />
+              <Route path="/dashboardP" exact component={dashboardPro} />
               <Route path="/cpdP" component={cpdPro} />
               <Route path="/addCPD" component={cpdAddPro} />
               <Route path="/courseP" component={coursePro} />
@@ -159,116 +173,69 @@ function App() {
               <Route path="/coursMyViewP/:id" component={coursMyView} />
               <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
               <Route path="/courseReviewP/:id" component={courseReviewP} />
-
               <Route path="/workshopP" component={workshopPro} />
               <Route path="/workshopViewP" component={workshopViewPro} />
-
               <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
               <Route path="/job" component={jobView} />
-              <Route path="/paymentsP" component={paymentsPro} />
-
-              <Route path="/courseP" component={coursePro} />
-              <Route path="/workshopP" component={workshopPro} />
-              <Route path="/blogP" component={blogsPro} />
-              <Route path="/forumP" component={forumPro} />
-              <Route path="/reportsP" component={reportsPro} />
-
-              <Route path="/job" component={jobView} />
-              <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
+              <Route
+                path="/jobAddvertisment/:id"
+                component={jobAddvertisment}
+              />
               <Route path="/questionare/:id" component={questionare} />
-
               <Route path="/createCV" component={createCV} />
-
               <Route path="/paymentsP" component={paymentsPro} />
-
               <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
               <Route path="/addcourseContent/:id" component={courseContentInfo} />
               <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Chartered") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardCha} />
+            </>
+          )}          
+
+          {authState.role == "chartered" && (
+            <>    
+            <Navbar />
+              <Route path="/dashboardC" exact component={dashboardCha} />    
               <Route path="/cpdP" component={cpdPro} />
               <Route path="/addCPD" component={cpdAddPro} />
-              <Route path="/courseP" component={coursePro} />
+              <Route path="/courseP" component={courseCha} />
               <Route path="/coursViewP/:id" component={coursView} />
               <Route path="/coursMyViewP/:id" component={coursMyView} />
               <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
               <Route path="/courseReviewP/:id" component={courseReviewP} />
-
               <Route path="/workshopP" component={workshopPro} />
               <Route path="/workshopViewP" component={workshopViewPro} />
-
               <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsC" component={reportsCha} />
               <Route path="/job" component={jobView} />
               <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
               <Route path="/questionare/:id" component={questionare} />
-
-              <Route path="/createCV" component={createCV} />
-
-              <Route path="/paymentsP" component={paymentsPro} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Secretariat") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardSec} />
+              <Route path="/createCV" component={createCV} />  
+              <Route path="/paymentsP" component={paymentsPro} />           
+            </>
+          )}      
+          
+          {authState.role == "secretariat" && (
+            <>
+            <Navbar />
+              <Route path="/dashboardSec" exact component={dashboardSec} />
               <Route path="/addJob" component={addJob} />
               <Route path="/addQuestions" component={addQuestion} />
               <Route path="/manWorkshop" component={manageWorkshop} />
-              
               <Route path="/addWorkshops" component={addWorkshops} />
-
               <Route path="/regApprove" component={regApprove} />
               <Route path="/regPending" component={regPending} />
               <Route path="/regRejected" component={regRejected} />
               <Route path="/paymentsSec" component={paymentsSec} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Associate") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              {/* // <Route path="/home" exact render={(props) => <Home />}/> */}
-              <Route path="/" exact component={dashboardAss} />
-              <Route path="/courseA" component={courseAss} />
-              <Route path="/blogA" component={blogAss} />
-              <Route path="/forumA" component={forumAss} />
-              <Route path="/reportsA" component={reportsAss} />
-              <Route path="/jobA" component={jobAss} />
-              <Route path="/paymentsA" component={paymentsAss} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Council") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardCou} />
+            </>
+          )}
+
+          {authState.role == "council" && (
+            <>
+            <Navbar />
+              <Route path="/dashboardCou" exact component={dashboardCou} />
               <Route path="/jobCou" component={addJob} />
               <Route path="/blogCou" component={blogsCou} />
               <Route path="/workshopCou" component={verifyWorkshop} />
@@ -277,30 +244,13 @@ function App() {
               <Route path="/regRejectedC" component={regRejectedCou} />
               <Route path="/regApproveC" component={regApproveCou} />
               <Route path="/paymentCou" component={paymentCou} />
-              <Route path="/cpdCou" component={cpdCou} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Student") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardCha} />
-              <Route path="/courseS" component={courseStu} />
-              <Route path="/workshopS" component={workshopStu} />
-              <Route path="/blogS" component={blogStu} />
-              <Route path="/forumS" component={forumStu} />
-              <Route path="/reportsS" component={reportsStu} />
-              <Route path="/paymentsS" component={paymentsStu} />
-            </Switch>
-          </Router>
-        </>
-      );
-    }
-  }
+              <Route path="/cpdCou" component={cpdCou} />            
+            </>
+          )}
+        </Switch>
+      </Router>
+    </AuthContext.Provider>
+  );
 }
 
 export default App;
