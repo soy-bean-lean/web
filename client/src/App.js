@@ -37,6 +37,7 @@ import paymentsPro from "./pages/professional/payments";
 import courseInfo from "./pages/csslCourse/basicDetails";
 import courseContentInfo from "./pages/csslCourse/courseContentInfo";
 import lecCourseList from "./pages/csslCourse/lecturingCourseList";
+import lecturerCourseView from "./pages/csslCourse/lecturerCourseView";
 
 //chartered
 import dashboardCha from "./pages/chartered/dashboard";
@@ -185,6 +186,7 @@ function App() {
               <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
               <Route path="/addcourseContent/:id" component={courseContentInfo} />
+              <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
             </Switch>
           </Router>
         </>
