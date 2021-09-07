@@ -12,7 +12,7 @@ export default[
   {
     id: 2,
     mid:180,
-    mname: "Supun Nanayakkara",
+    mname: "Supun ",
     email:"supunnanayakkara@gmail.com",
     status: "Professional Member",
     regdate: "10/02/2012",
@@ -46,7 +46,7 @@ export default[
   },
   {
     id: 6,
-    mid:290,
+    mid:288,
     mname: "Sudeshi Uthpala",
     email:"jihaninanayakkara@gmail.com",
     status: "Associate Member",

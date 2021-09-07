@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -17,371 +17,404 @@ import progileImg from "../imgs/p3.jpg";
 import progileImgSec from "../imgs/p4.jpeg";
 import progileImgCha from "../imgs/char.jpeg";
 import progileImgCouncil from "../imgs/council.jpeg";
+import {AuthContext} from '../helpers/AuthContext';
+import { useHistory } from "react-router-dom";
 
-function Navbar(props) {
+function Navbar() {
+
+  let history = useHistory();
+  const {authState, setAuthState} = useContext(AuthContext);
   const [sidebar, setSidebar] = useState(true);
   const showSidebar = () => setSidebar(!sidebar);
-  if (props.type == "Associate") {
-    return (
-      <>
-        <div className="buttons">
-          <a href="#" className="Logout">
-            Logout
-          </a>
-          <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+  
+  const logout =()=>{
+    console.log("anushka");
+    localStorage.removeItem("accessToken");
+    setAuthState({
+      fname: "",
+      lname: "",
+      role: "",
+      id: 0,
+      status: false,
+    });
+    history.push("/");
+  };
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
-          </div>
-        </div>
+    if (authState.role == "associate") {
+      return (
+        <>
+        <button onClick={logout}>
+              
+              Logout
+            </button> 
+          <div className="buttons">
+                    
+            <div className="panal">
+              <Link to="#" className="notification">
+                <MdIcons.MdNotifications />
+              </Link>
 
-        <IconContext.Provider value={{ color: "#fff" }}>
-          <div className="navbar">
-            <Link to="#" className="menu-bars">
-              <FaIcons.FaBars onClick={showSidebar} />
-            </Link>
+              <Link to="#" className="settings">
+                <AiIcons.AiFillSetting />
+              </Link>
+              
+            </div>
           </div>
-          <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+          
+          <IconContext.Provider value={{ color: "#fff" }}>
             <div className="navbar">
-              <Link to="#" className="menu-bars-collaps">
+              <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={showSidebar} />
               </Link>
             </div>
-            <ul className="nav-menu-items" onClick={showSidebar}>
-              <li className="navbar-toggle">
-                <div className="profile">
-                  <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+            <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+              <div className="navbar">
+                <Link to="#" className="menu-bars-collaps">
+                  <FaIcons.FaBars onClick={showSidebar} />
+                </Link>
+              </div>
+              <ul className="nav-menu-items" onClick={showSidebar}>
+                <li className="navbar-toggle">
+                  <div className="profile">
+                    <div className="profileImg">
+                      <img src={progileImg} className="pic"></img>
+                    </div>
+                    <div className="profileDetails">
+                      <h2>{authState.fname}</h2>
+
+                      <p>{authState.role}</p>
+                    </div>
                   </div>
-                  <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                </li>
 
-                    <p>{props.type}</p>
-                  </div>
-                </div>
-              </li>
+                {SidebarDataAssociate.map((item, index) => {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </IconContext.Provider>
+        </>
+      );
+    } 
+    else if (authState.role == "professional") {
+      return (
+        <>
+        <button onClick={logout}>
+              
+              Logout
+            </button> 
+          <div className="buttons">
+            
+            <div className="panal">
+              <Link to="#" className="notification">
+                <MdIcons.MdNotifications />
+              </Link>
 
-              {SidebarDataAssociate.map((item, index) => {
-                return (
-                  <li key={index} className={item.cName}>
-                    <Link to={item.path}>
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </IconContext.Provider>
-      </>
-    );
-  } 
-  else if (props.type == "Professional") {
-    return (
-      <>
-        <div className="buttons">
-          <a href="#" className="Logout">
-            Logout
-          </a>
-          <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
-
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
+              <Link to="#" className="settings">
+                <AiIcons.AiFillSetting />
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <IconContext.Provider value={{ color: "#fff" }}>
-          <div className="navbar">
-            <Link to="#" className="menu-bars">
-              <FaIcons.FaBars onClick={showSidebar} />
-            </Link>
-          </div>
-          <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+          <IconContext.Provider value={{ color: "#fff" }}>
             <div className="navbar">
-              <Link to="#" className="menu-bars-collaps">
+              <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={showSidebar} />
               </Link>
             </div>
-            <ul className="nav-menu-items" onClick={showSidebar}>
-              <li className="navbar-toggle">
-                <div className="profile">
-                  <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+            <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+              <div className="navbar">
+                <Link to="#" className="menu-bars-collaps">
+                  <FaIcons.FaBars onClick={showSidebar} />
+                </Link>
+              </div>
+              <ul className="nav-menu-items" onClick={showSidebar}>
+                <li className="navbar-toggle">
+                  <div className="profile">
+                    <div className="profileImg">
+                      <img src={progileImg} className="pic"></img>
+                    </div>
+                    <div className="profileDetails">
+                      <h2>{authState.fname}</h2>
+
+                      <p>{authState.role}</p>
+                    </div>
                   </div>
-                  <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                </li>
 
-                    <p>{props.type}</p>
-                  </div>
-                </div>
-              </li>
+                {SidebarDataPro.map((item, index) => {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </IconContext.Provider>
+        </>
+      );
+    } 
+    else if (authState.role == "student") {
+      return (
+        <>
+        <button onClick={logout}>
+              
+              Logout
+            </button> 
+          <div className="buttons">
+            
+            <div className="panal">
+              <Link to="#" className="notification">
+                <MdIcons.MdNotifications />
+              </Link>
 
-              {SidebarDataPro.map((item, index) => {
-                return (
-                  <li key={index} className={item.cName}>
-                    <Link to={item.path}>
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </IconContext.Provider>
-      </>
-    );
-  } 
-  else if (props.type == "Student") {
-    return (
-      <>
-        <div className="buttons">
-          <a href="#" className="Logout">
-            Logout
-          </a>
-          <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
-
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
+              <Link to="#" className="settings">
+                <AiIcons.AiFillSetting />
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <IconContext.Provider value={{ color: "#fff" }}>
-          <div className="navbar">
-            <Link to="#" className="menu-bars">
-              <FaIcons.FaBars onClick={showSidebar} />
-            </Link>
-          </div>
-          <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+          <IconContext.Provider value={{ color: "#fff" }}>
             <div className="navbar">
-              <Link to="#" className="menu-bars-collaps">
+              <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={showSidebar} />
               </Link>
             </div>
-            <ul className="nav-menu-items" onClick={showSidebar}>
-              <li className="navbar-toggle">
-                <div className="profile">
-                  <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+            <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+              <div className="navbar">
+                <Link to="#" className="menu-bars-collaps">
+                  <FaIcons.FaBars onClick={showSidebar} />
+                </Link>
+              </div>
+              <ul className="nav-menu-items" onClick={showSidebar}>
+                <li className="navbar-toggle">
+                  <div className="profile">
+                    <div className="profileImg">
+                      <img src={progileImg} className="pic"></img>
+                    </div>
+                    <div className="profileDetails">
+                      <h2>{authState.fname}</h2>
+
+                      <p>{authState.role}</p>
+                    </div>
                   </div>
-                  <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                </li>
 
-                    <p>{props.type}</p>
-                  </div>
-                </div>
-              </li>
+                {SidebarDataStudent.map((item, index) => {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </IconContext.Provider>
+        </>
+      );
+    } 
+    else if (authState.role == "chartered") {
+      return (
+        <>
+        <button onClick={logout}>
+              
+              Logout
+            </button> 
+          <div className="buttons">
+            
+            <div className="panal">
+              <Link to="#" className="notification">
+                <MdIcons.MdNotifications />
+              </Link>
 
-              {SidebarDataStudent.map((item, index) => {
-                return (
-                  <li key={index} className={item.cName}>
-                    <Link to={item.path}>
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </IconContext.Provider>
-      </>
-    );
-  } 
-  else if (props.type == "Chartered") {
-    return (
-      <>
-        <div className="buttons">
-          <a href="#" className="Logout">
-            Logout
-          </a>
-          <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
-
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
+              <Link to="#" className="settings">
+                <AiIcons.AiFillSetting />
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <IconContext.Provider value={{ color: "#fff" }}>
-          <div className="navbar">
-            <Link to="#" className="menu-bars">
-              <FaIcons.FaBars onClick={showSidebar} />
-            </Link>
-          </div>
-          <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+          <IconContext.Provider value={{ color: "#fff" }}>
             <div className="navbar">
-              <Link to="#" className="menu-bars-collaps">
+              <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={showSidebar} />
               </Link>
             </div>
-            <ul className="nav-menu-items" onClick={showSidebar}>
-              <li className="navbar-toggle">
-                <div className="profile">
-                  <div className="profileImg">
-                    <img src={progileImgCha} className="pic"></img>
+            <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+              <div className="navbar">
+                <Link to="#" className="menu-bars-collaps">
+                  <FaIcons.FaBars onClick={showSidebar} />
+                </Link>
+              </div>
+              <ul className="nav-menu-items" onClick={showSidebar}>
+                <li className="navbar-toggle">
+                  <div className="profile">
+                    <div className="profileImg">
+                      <img src={progileImgCha} className="pic"></img>
+                    </div>
+                    <div className="profileDetails">
+                      <h2>{authState.fname}</h2>
+
+                      <p>{authState.role}</p>
+                    </div>
                   </div>
-                  <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                </li>
 
-                    <p>{props.type}</p>
-                  </div>
-                </div>
-              </li>
+                {SidebarDataCha.map((item, index) => {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </IconContext.Provider>
+        </>
+      );
+    } 
+    else if (authState.role == "council") {
+      return (
+        <>
+        <button onClick={logout}>
+              
+              Logout
+            </button> 
+          <div className="buttons">
+            
+            <div className="panal">
+              <Link to="#" className="notification">
+                <MdIcons.MdNotifications />
+              </Link>
 
-              {SidebarDataCha.map((item, index) => {
-                return (
-                  <li key={index} className={item.cName}>
-                    <Link to={item.path}>
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </IconContext.Provider>
-      </>
-    );
-  } 
-  else if (props.type == "Council") {
-    return (
-      <>
-        <div className="buttons">
-          <a href="#" className="Logout">
-            Logout
-          </a>
-          <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
-
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
+              <Link to="#" className="settings">
+                <AiIcons.AiFillSetting />
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <IconContext.Provider value={{ color: "#fff" }}>
-          <div className="navbar">
-            <Link to="#" className="menu-bars">
-              <FaIcons.FaBars onClick={showSidebar} />
-            </Link>
-          </div>
-          <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+          <IconContext.Provider value={{ color: "#fff" }}>
             <div className="navbar">
-              <Link to="#" className="menu-bars-collaps">
+              <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={showSidebar} />
               </Link>
             </div>
-            <ul className="nav-menu-items" onClick={showSidebar}>
-              <li className="navbar-toggle">
-                <div className="profile">
-                  <div className="profileImg">
-                    <img src={progileImgCouncil} className="pic"></img>
+            <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+              <div className="navbar">
+                <Link to="#" className="menu-bars-collaps">
+                  <FaIcons.FaBars onClick={showSidebar} />
+                </Link>
+              </div>
+              <ul className="nav-menu-items" onClick={showSidebar}>
+                <li className="navbar-toggle">
+                  <div className="profile">
+                    <div className="profileImg">
+                      <img src={progileImgCouncil} className="pic"></img>
+                    </div>
+                    <div className="profileDetails">
+                      <h2>{authState.fname}</h2>
+
+                      <p>{authState.role}</p>
+                    </div>
                   </div>
-                  <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                </li>
 
-                    <p>{props.type}</p>
-                  </div>
-                </div>
-              </li>
+                {SidebarDataCouncil.map((item, index) => {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </IconContext.Provider>
+        </>
+      );
+    } 
+    else if (authState.role == "secretariat") {
+      return (
+        <>
+         
+          <div className="buttons">
+           
+            <button className="Logout" onClick={logout}>
+              
+              Logout
+            </button>
+            <div className="panal">
+              <Link to="#" className="notification">
+                <MdIcons.MdNotifications />
+              </Link>
 
-              {SidebarDataCouncil.map((item, index) => {
-                return (
-                  <li key={index} className={item.cName}>
-                    <Link to={item.path}>
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </IconContext.Provider>
-      </>
-    );
-  } 
-  else if (props.type == "Secretariat") {
-    return (
-      <>
-        <div className="buttons">
-          <a href="#" className="Logout">
-            Logout
-          </a>
-          <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
-
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
+              <Link to="#" className="settings">
+                <AiIcons.AiFillSetting />
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <IconContext.Provider value={{ color: "#fff" }}>
-          <div className="navbar">
-            <Link to="#" className="menu-bars">
-              <FaIcons.FaBars onClick={showSidebar} />
-            </Link>
-          </div>
-          <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+          <IconContext.Provider value={{ color: "#fff" }}>
             <div className="navbar">
-              <Link to="#" className="menu-bars-collaps">
+              <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={showSidebar} />
               </Link>
             </div>
-            <ul className="nav-menu-items" onClick={showSidebar}>
-              <li className="navbar-toggle">
-                <div className="profile">
-                  <div className="profileImg">
-                    <img src={progileImgSec} className="pic"></img>
+            <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+              <div className="navbar">
+                <Link to="#" className="menu-bars-collaps">
+                  <FaIcons.FaBars onClick={showSidebar} />
+                </Link>
+              </div>
+              <ul className="nav-menu-items" onClick={showSidebar}>
+                <li className="navbar-toggle">
+                  <div className="profile">
+                    <div className="profileImg">
+                      <img src={progileImgSec} className="pic"></img>
+                    </div>
+                    <div className="profileDetails">
+                      <h2>{authState.fname}</h2>
+
+                      <p>{authState.role}</p>
+                    </div>
                   </div>
-                  <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                </li>
 
-                    <p>{props.type}</p>
-                  </div>
-                </div>
-              </li>
-
-              {SidebarDataSec.map((item, index) => {
-                return (
-                  <li key={index} className={item.cName}>
-                    <Link to={item.path}>
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </IconContext.Provider>
-      </>
-    );
-  } 
-
+                {SidebarDataSec.map((item, index) => {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </IconContext.Provider>
+        </>
+      );
+    } 
+  
 }
 
 export default Navbar;

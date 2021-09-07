@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import userRouter from "./routes/User.js";
-import addJob from "./routes/jobs.js";
+import Job from "./routes/jobsSQL.js"
+import secretaryRouter from "./routes/secretary.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import session from "express-session";
@@ -24,57 +25,11 @@ app.use(
 );
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  session({
-    key: "userId",
-    secret: "csslSecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 60 * 60 * 24 * 1000,
-    },
-  })
-);
+
 //routers
 app.use("/auth", userRouter);
-app.use("/job", addJob);
-
-app.post("/job/getJobs", (req, res) => {
-  const name = req.body.companyName;
-  const location = req.body.location;
-  const role = req.body.jobRole;
-  console.log(name);
-  console.log(location);
-  console.log(role);
-  const sqlSelect =
-    "SELECT jvId , companyName , location ,designation from jobvacancy where companyName like '" +
-    name +
-    "%' and location like '" +
-    location +
-    "%' and designation like '" +
-    role +
-    "%'";
-  console.log(sqlSelect);
-  connection.query(sqlSelect, (err, result) => {
-    res.send(result);
-  });
-});
-
-app.get("/job/getJobView", (req, res) => {
-  const jid = req.query.id;
-  console.log(jid);
-  connection.query(
-    "SELECT jvId , companyName , location ,designation,description ,contact ,email from jobvacancy where jvId = ?;",
-    [jid],
-    (error, result, feilds) => {
-      if (error) console.log(error);
-      else {
-        // console.log(result);
-        res.send(result);
-      }
-    }
-  );
-});
+app.use("/secretary", secretaryRouter);
+app.use("/job", Job);
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

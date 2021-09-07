@@ -1,50 +1,150 @@
 import React from "react";
 import "./style/regApprove.css";
-import data from "./data";
+//import {user} from "./data";
 import Card from "@material-ui/core/Card";
 import DataTable from "react-data-table-component";
-import { Link } from "react-router-dom";
+import { Link  } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const Button = () => <button type="button">Verified</button>;
+
+function RegPending() {
+// const Button = () => <button type="button">Verified</button>;
+  const [data, setData] = useState([]);
+  //const [user, setUser] = useState(userDetails);
+  const [noApprovedUsers, setnoApprovedUsers] = useState(0);
+  const [noRejectedUsers, setnoRejecteddUsers] = useState(0);
+  const [noPendingUsers, setnoPendingUsers] = useState(0);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:3001/secretary/regPending", data)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setData(response.data);
+          setnoPendingUsers(response.data.length);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:3001/secretary/regApproved", data)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setnoApprovedUsers(response.data.length);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:3001/secretary/regRejected", data)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setnoRejecteddUsers(response.data.length);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
+  const Approve = (id) => {
+  console.log(id);
+  const data = { id: id };
+  axios.post("http://localhost:3001/secretary/approve", data).then((response) => {
+    if (response.data.error) {
+      console.log(response.data.error);     
+    } else {
+     // history.push("./"); 
+    }
+  });
+};
+
+const Reject = (userID) => {
+  console.log(userID);
+  const data = { id: userID };
+  axios.post("http://localhost:3001/secretary/reject", data).then((response) => {
+    if (response.data.error) {
+      console.log(response.data.error);     
+    } else {
+     // history.push("./"); 
+    }
+  });
+  console.log(data);
+};
 
 const columns = [
   {
-    name: "Member ID",
-    selector: "mid",
+    name: "Member Name",
+    selector: (row) => `${row.title} ${row.firstName}  ${row.lastName}`,
     sortable: true,
     width: "200px",
   },
   {
-    name: "Member Name",
-    selector: "mname",
+    name: "Address",
+    selector: (row) => `${row.residentialAddress}`,
     sortable: true,
   },
   {
-    name: "Status",
-    selector: "status",
+    name: "Contact Number",
+    selector: (row) => `${row.contactNumber}`,
+    sortable: true,
+  },
+  {
+    name: "Role",
+    selector: (row) => `${row.userType}`,
     sortable: true,
   },
   {
     name: "Resgistred Date",
-    selector: "regdate",
+    selector: (row) => `${row.dateTime}`,
     sortable: true,
   },
   {
-    name: "Action",
+    name: "View Details",
+    button: true,
+    cell: () => <Link to={"/darshana/"}>View More</Link>,
+  },
+  {
     button: true,
     cell: () => (
-      <Link to={"/regRejected/"} style={{ textDecoration: "none" }}>
-        <Button className="approveBtn">Verified</Button>
-      </Link>
+      <button onClick={() => Approve()} className="approveBtn" type="button">
+       Approve
+      </button>
+    ),
+  },
+  {
+    button: true,
+    cell: () => (
+      <button onClick={() => Reject("userID")} className="rejectBtn" type="button">
+        Reject
+      </button>
     ),
   },
 ];
 
 const conditionalRowStyles = [
   {
-    when: (row) => row.status === "Student Member",
+    when: (row) => row.userType === "student",
     style: {
-      backgroundColor: "#A3E4D7",
+      backgroundColor: "#D5E6F3",
       color: "black",
       "&:hover": {
         cursor: "pointer",
@@ -52,7 +152,7 @@ const conditionalRowStyles = [
     },
   },
   {
-    when: (row) => row.status === "Associate Member",
+    when: (row) => row.userType === "associate",
     style: {
       backgroundColor: "#94C0E1",
       color: "black",
@@ -62,7 +162,7 @@ const conditionalRowStyles = [
     },
   },
   {
-    when: (row) => row.status === "Professional Member",
+    when: (row) => row.userType === "professional",
     style: {
       backgroundColor: "#4C90C3",
       color: "black",
@@ -73,7 +173,6 @@ const conditionalRowStyles = [
   },
 ];
 
-function regPending() {
   return (
     <>
       {" "}
@@ -82,36 +181,38 @@ function regPending() {
           <Link to={"/regApprove"} style={{ textDecoration: "none" }}>
             <div className="approved" style={{ backgroundColor: "white" }}>
               <h3>Verified Users</h3>
-              <h1>161</h1>
+              <h1>{noApprovedUsers}</h1>
             </div>
           </Link>
           <Link to={"/regPending/"} style={{ textDecoration: "none" }}>
             <div className="pending" style={{ backgroundColor: "#0a0363" }}>
               <h3 style={{ color: "white" }}>Pending Users</h3>
-              <h1 style={{ color: "white" }}>10</h1>
+              <h1 style={{ color: "white" }}>{noPendingUsers}</h1>
             </div>
           </Link>
           <Link to={"/regRejected/"} style={{ textDecoration: "none" }}>
             <div className="rejected" style={{ backgroundColor: "WHITE" }}>
               <h3>Rejected Users</h3>
-              <h1>02</h1>
+              <h1>{noRejectedUsers}</h1>
             </div>
           </Link>
         </div>
-        <div className="rightPanelS">
-          <Card>
-            <DataTable
-              title="Pending Members"
-              columns={columns}
-              data={data}
-              pagination
-              conditionalRowStyles={conditionalRowStyles}
-            />
-          </Card>
-        </div>
+        {data.map((index) => (
+          <div className="rightPanelS">
+            <Card>
+              <DataTable
+                title="Pending Members"
+                columns={columns}
+                data={data}
+                pagination
+                conditionalRowStyles={conditionalRowStyles}
+              />
+            </Card>
+          </div>
+        ))}
       </div>
     </>
   );
 }
 
-export default regPending;
+export default RegPending;

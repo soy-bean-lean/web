@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import "./style/dashboard.css";
 import { makeStyles, Paper, Grid } from "@material-ui/core";
 import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";
 import { Redirect } from "react-router-dom";
 import Tabs from "./tabs";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -70,7 +71,9 @@ const options = {
 };
 
 function Home() {
+  let history = useHistory();
   const classes = useStyles();
+
   return (
     <div className="mainDashPro">
       <div className="progress">
@@ -82,56 +85,51 @@ function Home() {
         </div>
       </div>
 
-        <div className="chartPro">
+      <div className="chartPro">
         <center>
           <h3>Last Year Credit Progress</h3>
-        </center>
-          {" "}
-          <Bar
-            data={state2}
-            width={100}
-            height={14}
-            options={
-              ({ options },
-              {
-                title: {
-                  display: true,
-                  text: "Credit Progress Last Year",
-                  fontSize: 20,
-                },
-                legend: {
-                  display: true,
-                  position: "left",
-                },
-              })
-            }
-          />
-         
-        </div>
+        </center>{" "}
+        <Bar
+          data={state2}
+          width={100}
+          height={14}
+          options={
+            ({ options },
+            {
+              title: {
+                display: true,
+                text: "Credit Progress Last Year",
+                fontSize: 20,
+              },
+              legend: {
+                display: true,
+                position: "left",
+              },
+            })
+          }
+        />
+      </div>
 
-        <div className="recentAct">
-          <h3>Recent Activities</h3>
-          <div className="recent">
-            <p> Uploaded CPD - CSSL Course In Java- 2021 / July /20</p>
-          </div>
-          <div className="recent">
+      <div className="recentAct">
+        <h3>Recent Activities</h3>
+        <div className="recent">
+          <p> Uploaded CPD - CSSL Course In Java- 2021 / July /20</p>
+        </div>
+        <div className="recent">
+          {" "}
+          <p> Start Course - Angular - The Complete Guide - 2021 / July /10</p>
+        </div>
+        <div className="recent">
+          {" "}
+          <p> Apply a Job -Cambi Software (SE)- 2021 / June /29</p>
+        </div>
+        <div className="recent">
+          {" "}
+          <p>
             {" "}
-            <p>
-              {" "}
-              Start Course - Angular - The Complete Guide - 2021 / July /10
-            </p>
-          </div>
-          <div className="recent">
-            {" "}
-            <p> Apply a Job -Cambi Software (SE)- 2021 / June /29</p>
-          </div>
-          <div className="recent">
-            {" "}
-            <p>
-              {" "}
-              Uploaded CPD -Attendt to a Workshop in Microsoft - 2021 / June /25
-            </p>
-          </div>
+            Uploaded CPD -Attendt to a Workshop in Microsoft - 2021 / June /25
+          </p>
+        </div>
       </div>
 
       <div className="chart3">
@@ -139,7 +137,7 @@ function Home() {
           <h3>Last Year Credit Progress</h3>
         </center>
         <div className="ONG2">
-        <Line
+          <Line
             data={state}
             width={220}
             height={80}
