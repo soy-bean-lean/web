@@ -1,13 +1,166 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./style/addCPD.css";
 import { Link } from "react-router-dom";
-
 
 function AddCPD() {
   const [recType, setRecType] = useState("type");
   const [courseType, setCourseType] = useState("");
   const [workshopType, setWorkshopType] = useState("");
   const [workshopDate, setWorkshopDate] = useState("");
+  const [glDate, setGLDate] = useState("");
+
+  const [inCourseList, setInCourseList] = useState(null);
+  const [outCourseList, setOutCourseList] = useState(null);
+  const [inWorkshopList, setInWorkshopList] = useState(null);
+  const [outWorkshopList, setOutWorkshopList] = useState(null);
+  const [guestLectureList, setGuestLectureList] = useState(null);
+
+  //retireve course details from database (cssl courses and other courses - depending on the selection)
+  const getCourses = (event) => {
+    setCourseType(event.target.value);
+
+    const submitCourseData = {
+      mId: "cssl001",
+      type: event.target.value,
+    };
+    axios
+      .post("http://localhost:3001/cpd/getCourse", submitCourseData)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          if (submitCourseData.type == "CSSLcourse") {
+            setInCourseList(response.data);
+          } else if (submitCourseData.type == "others") {
+            setOutCourseList(response.data);
+          } else {
+            alert("Error:", response.data);
+          }
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  //retireve workshop details from database (cssl workshop and other workshop - depending on the selection)
+  const getWorkshops = (event) => {
+    setWorkshopType(event.target.value);
+
+    const submitWorkshopData = {
+      mId: "cssl001",
+      type: event.target.value,
+    };
+
+    axios
+      .post("http://localhost:3001/cpd/getWorkshop", submitWorkshopData)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          if (submitWorkshopData.type == "CSSLworkshop") {
+            setInWorkshopList(response.data);
+          } else if (submitWorkshopData.type == "others") {
+            setOutWorkshopList(response.data);
+          } else {
+            alert("Error:", response.data);
+          }
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  //retireve guest lecture details from database
+  const getGuestLectures = (event) => {
+    setGLDate(event.target.value);
+
+    const submitGLData = {
+      mId: "cssl001",
+      gDate: event.target.value,
+    };
+    axios
+      .post("http://localhost:3001/cpd/getGuestLecture", submitGLData)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setGuestLectureList(response.data);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  //load data to CSSL Course dropdown list
+  const allInCourses =
+    inCourseList &&
+    inCourseList.map((li, i) => {
+      return (
+        <option key={i} value={li.name}>
+          {li.name}
+        </option>
+      );
+    }, this);
+
+  //load data to Course dropdown list
+  const allOutCourses =
+    outCourseList &&
+    outCourseList.map((li, i) => {
+      return (
+        <option key={i} value={li.name}>
+          {li.name}
+        </option>
+      );
+    }, this);
+
+  //load data to CSSL Workshop dropdown list
+  const allInWorkshops =
+    inWorkshopList &&
+    inWorkshopList.map((li, i) => {
+      const fromDate = li.fromDate.substring(0, 10);
+      const toDate = li.toDate.substring(0, 10);
+
+      if (workshopDate >= fromDate && workshopDate <= toDate) {
+        return (
+          <option key={i} value={li.title}>
+            {li.title}
+          </option>
+        );
+      }
+    }, this);
+
+  //load data to Other Workshop dropdown list
+  const allOutWorkshops =
+  outWorkshopList &&
+  outWorkshopList.map((li, i) => {
+    const fromDate = li.fromDate.substring(0, 10);
+    const toDate = li.toDate.substring(0, 10);
+    if (workshopDate >= fromDate && workshopDate <= toDate) {
+      return (
+        <option key={i} value={li.title}>
+          {li.title}
+        </option>
+      );
+    }
+  }, this);
+
+  //load data to Guest Lecture dropdown list
+  const allguestLectures =
+    guestLectureList &&
+    guestLectureList.map((li, i) => {
+      return (
+        <option key={i} value={li.university}>
+          {li.university}
+        </option>
+      );
+    }, this);
 
   return (
     <div className="h2">
@@ -16,7 +169,6 @@ function AddCPD() {
 
       <div className="addCPDMain">
         <div className="addForm">
-
           {/* Subject for CPD Record */}
           <div className="courseD">
             <h4 className="textName">Subject</h4>
@@ -27,7 +179,11 @@ function AddCPD() {
           {/* Select Type of the CPD Record */}
           <div className="cpdType">
             <h4 className="textName">Record Type </h4>
-            <select name="select" id="types" onChange={e => setRecType(e.target.value)}>
+            <select
+              name="select"
+              id="types"
+              onChange={(e) => setRecType(e.target.value)}
+            >
               <option value="type">--Select Type--</option>
               <option value="course">Courses</option>
               <option value="workshops">Workshops</option>
@@ -37,11 +193,12 @@ function AddCPD() {
           </div>
           <hr className="line"></hr>
 
+          {/*render other fields according to the record type*/}
           {renderDetails(recType)}
 
           <div className="courseD">
             <h4 className="textName">Assigned Credits</h4>
-            <input className="input" readOnly></input>
+            <input className="input" readOnly placeholder="No Credit Value Assigned"></input>
           </div>
           <hr className="line"></hr>
 
@@ -68,7 +225,6 @@ function AddCPD() {
           </div>
         </div>
 
-
         <div className="submitBtn">
           <div className="bottom">
             <Link to={"/cpdP/"} className="review">
@@ -89,34 +245,29 @@ function AddCPD() {
 
   function renderDetails(r_type) {
     if (r_type == "type") {
-      return (
-        <div>
-
-        </div>
-      );
-    }
-    else if (r_type == "course") {
+      return <div></div>;
+    } else if (r_type == "course") {
       return (
         <div>
           <div className="courseD" id="cpdCourseType">
             <h4 className="textName">Course Type </h4>
-            <select name="select" id="types" onChange={e => setCourseType(e.target.value)}>
+            <select name="select" id="types" onChange={getCourses}>
               <option value="">--Select Course Type--</option>
               <option value="CSSLcourse">CSSL Courses</option>
               <option value="others">Others</option>
             </select>
             <hr className="line"></hr>
           </div>
+          {/*render other fields according to the course type*/}
           {renderCourseDetails(courseType)}
         </div>
       );
-    }
-    else if (r_type == "workshops") {
+    } else if (r_type == "workshops") {
       return (
         <div>
           <div className="courseD">
             <h4 className="textName">Workshop Type </h4>
-            <select name="select" id="types" onChange={e => setWorkshopType(e.target.value)}>
+            <select name="select" id="types" onChange={getWorkshops}>
               <option value="">--Select Workshop Type--</option>
               <option value="CSSLworkshop">CSSL Workshop</option>
               <option value="others">Others</option>
@@ -127,38 +278,37 @@ function AddCPD() {
               className="input"
               type="date"
               placeholder="--Workshop Date--"
-              onChange={e => setWorkshopDate(e.target.value)}
+              onChange={(e) => setWorkshopDate(e.target.value)}
             />
             <hr className="line"></hr>
           </div>
+          {/*render other fields according to the workshop type and date*/}
           {renderWorkshopDetails(workshopType, workshopDate)}
         </div>
       );
-    }
-    else if (r_type == "guestLec") {
+    } else if (r_type == "guestLec") {
       return (
         <div>
           <div className="courseD">
-            <h4 className="textName">Activity</h4>
-            <select name="select" id="types">
-              <option value="">--Select Activity--</option>
-              <option value="gl001">UCSC - ML Lecture</option>
-              <option value="gl002">UOM - Python Programming Lecture</option>
-            </select>
+            <h4 className="textName">Guest Lecture Date </h4>
+            <input
+              className="input"
+              type="date"
+              placeholder="--Workshop Date--"
+              onChange={getGuestLectures}
+            />
+            <hr className="line"></hr>
           </div>
-          <hr className="line"></hr>
+          {/*render other field according to the guest lecture date*/}
+          {renderGuestLectureList(glDate)}
         </div>
       );
-    }
-    else if (r_type == "others") {
+    } else if (r_type == "others") {
       return (
         <div>
           <div className="courseD">
             <h4 className="textName">Event</h4>
-            <input
-              className="input"
-              placeholder="--Enter Event Title--"
-            />
+            <input className="input" placeholder="--Enter Event Title--" />
             <h4 className="textName">Event Description</h4>
             <p className="para">Add Description About The Event</p>
             <textarea className="note"></textarea>
@@ -166,24 +316,16 @@ function AddCPD() {
           <hr className="line"></hr>
         </div>
       );
-    }
-    else {
-      return (
-        <div>
-
-        </div>
-      );
+    } else {
+      return <div></div>;
     }
   }
 
   function renderCourseDetails(c_type) {
     if (c_type == "") {
-      return (
-        <div>
-
-        </div>
-      );
+      return <div></div>;
     }
+    //render CSSL Course related fields
     else if (c_type == "CSSLcourse") {
       return (
         <div>
@@ -191,15 +333,14 @@ function AddCPD() {
             <h4 className="textName">CSSL Courses</h4>
             <select name="select" id="types">
               <option value="">--Select Course--</option>
-              <option value="Java">Java</option>
-              <option value="db">Database</option>
+              {allInCourses}
             </select>
           </div>
           <hr className="line"></hr>
         </div>
       );
-
     }
+    //render Other Course related fields
     else if (c_type == "others") {
       return (
         <div>
@@ -207,32 +348,45 @@ function AddCPD() {
             <h4 className="textName">Courses</h4>
             <select name="select" id="types">
               <option value="">--Select Course--</option>
-              <option value="cprog">C Programming</option>
-              <option value="ml">Machine Learning</option>
+              <option value="other">Other</option>
+              {allOutCourses}
             </select>
           </div>
           <hr className="line"></hr>
         </div>
       );
-
-    }
-    else {
-      return (
-        <div>
-
-        </div>
-      );
+    } else {
+      return <div></div>;
     }
   }
 
-  function renderWorkshopDetails(w_type, w_date) {
-    if (w_type == "" || w_date == "") {
+  /*function renderWorkshopDate(w_type) {
+    if (w_type == "") {
+      return <div></div>;
+    } else {
       return (
         <div>
-
+          <div className="courseD">
+           <h4 className="textName">Workshop Date </h4>
+            <input
+              className="input"
+              type="date"
+              placeholder="--Workshop Date--"
+              onChange={getWorkshops}
+            />
+            <hr className="line"></hr>
+          </div>
+          {renderWorkshopDetails(workshopType, workshopDate)}
         </div>
       );
     }
+  }*/
+
+  function renderWorkshopDetails(w_type, w_date) {
+    if (w_type == "" || w_date == "") {
+      return <div></div>;
+    }
+    //render CSSL Workshop related fields
     else if (w_type == "CSSLworkshop") {
       return (
         <div>
@@ -240,46 +394,52 @@ function AddCPD() {
             <h4 className="textName">CSSL Workshops</h4>
             <select name="select" id="types">
               <option value="">--Select Workshop--</option>
-              <option value="Java">Java Workshop</option>
-              <option value="db">Database Workshop</option>
+              {allInWorkshops}
             </select>
           </div>
           <hr className="line"></hr>
         </div>
       );
-
     }
+    //render Other Course related fields
     else if (w_type == "others") {
       return (
         <div>
           <div className="courseD">
             <h4 className="textName">Workshops</h4>
             <select name="select" id="types">
-              <option value="">--Select Workshop--</option>
-              <option value="os">OS Workshop</option>
-              <option value="ml">ML Workshop</option>
+              <option value="">--Select Workshop--</option>\
+              <option value="other">Other</option>
+              {allOutWorkshops}
             </select>
           </div>
           <hr className="line"></hr>
         </div>
       );
-
+    } else {
+      return <div></div>;
     }
-    else {
+  }
+
+  //render Guest Lecture related fields
+  function renderGuestLectureList(g_date) {
+    if (g_date == "") {
+      return <div></div>;
+    } else {
       return (
         <div>
-
+          <div className="courseD">
+            <h4 className="textName">Guest Lecture</h4>
+            <select name="select" id="types">
+              <option value="">--Select Guest Lecture--</option>
+              {allguestLectures}
+            </select>
+          </div>
+          <hr className="line"></hr>
         </div>
       );
     }
   }
-
 }
 
 export default AddCPD;
-/*Type
-Div dekk
-Field
-Credit readonly
-Prof
-Note*/

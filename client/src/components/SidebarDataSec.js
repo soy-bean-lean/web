@@ -39,6 +39,12 @@ export const SidebarDataSec = [
     cName: 'nav-text'
   },
   {
+    title: 'Add Questions',
+    path: '/addQuestions',
+    icon: <FaIcons.FaQuestion />,
+    cName: 'nav-text'
+  },
+  {
     title: 'Payments',
     path: '/paymentsSec',
     icon: <AiIcons.AiFillDollarCircle />,

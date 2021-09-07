@@ -1,36 +1,48 @@
-.job-basic-info{
+.jobQuestion-basic-info{
     height: 500px;
     padding-top: 65px;
 }
 
-.job-basic-info-form{
+.jobQuestion-basic-info-form{
     height: 500px;
     overflow-y: scroll;
 }
 
-.job-basic-info-title{
+.jobQuestion-basic-info-title{
     padding: 10px;
     text-align: center;
 }
 
-.job-basic-info-form .job-basic-info-block{
+.jobQuestion-basic-info-form .jobQuestion-basic-info-block {
     margin: 20px;
     margin-left: 25%;
     width: 60%;
 }
+.jobQuestion-answer{
+    margin: 20px;
+    margin-left: 5%;
+}
+.jobQuestion-answer input{
+    font-size: 20px;
+    margin-left: 3%;
+    margin-right: 2%;
+}
+.jobQuestion-answer label{
+    font-size: 20px;
 
-.job-info-title{
+}
+.jobQuestion-info-title{
     margin-bottom: 15px;
     font-size: 20px;
     width: 250px;
     font-weight: 200;
 }
 
-.job-field-block{
+.jobQuestion-field-block{
     padding-bottom: 20px;
 }
 
-.job-basic-info-block select , .job-basic-info-block .input{
+.jobQuestion-basic-info-block select , .jobQuestion-basic-info-block .input{
     margin-bottom: 15px;
     margin-left: 40px;
     width: 70%;
@@ -41,23 +53,22 @@
     
   }
 
-  .job-basic-info-form .job-btn-block{
+  .jobQuestion-basic-info-form .jobQuestion-btn-block{
     margin: 20px;
     margin-left: 10%;
     width: 60%;
   }
 
-  .job-btn-submit{
+  .jobQuestion-btn-submit{
     background: #060a5f;
     border: none;
     font-weight: 600;
     text-decoration: none;
-    padding: 8px;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-left: 65%;
     border-radius: 5px;
-    margin-bottom: 10px;
     font-size: 16px;
     color: rgb(255, 255, 255);
   }

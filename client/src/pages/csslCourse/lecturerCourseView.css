@@ -1,0 +1,89 @@
+.lecturer-course-view {
+  height: 600px;
+  padding-top: 60px;
+}
+
+.lecturer-course-view-content-list {
+  height: 92%;
+  overflow-y: scroll;
+}
+
+.lecturer-course-view-title {
+  top: 2%;
+  position: relative;
+  padding: 10px;
+  text-align: center;
+}
+
+.lecturer-course-view-content-list .lecturer-course-view-block {
+  margin: 20px;
+  margin-left: 25%;
+  width: 60%;
+}
+
+.course-info-title {
+  margin-bottom: 20px;
+  font-size: 20px;
+  width: 250px;
+  font-weight: 200;
+}
+
+.course-field-block {
+  padding-bottom: 20px;
+}
+
+.lecturer-course-view-block select,
+.lecturer-course-view-block .input {
+  margin-bottom: 15px;
+  margin-left: 40px;
+  width: 70%;
+  height: 30px;
+  font-size: 20px;
+  padding-left: 20px;
+  color: black;
+}
+
+.course-info-title textarea {
+  margin-bottom: 15px;
+  margin-left: 20px;
+  width: 70%;
+  height: 150px;
+  font-size: 14px;
+  padding-left: 10px;
+  color: black;
+  overflow-y: scroll;
+}
+
+.lecturer-course-view-content-list .course-btn-block {
+  margin: 20px;
+  margin-left: 10%;
+  width: 60%;
+}
+
+.lcv-course-edit-btn {
+  top: -5%;
+  left: 75%;
+  position: relative;
+  background: #d4c818;
+  border: none;
+  border-radius: 5%;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+}
+
+.lcv-course-del-btn {
+    top: -5%;
+    left: 77%;
+    position: relative;
+    background: #ee2727;
+    border: none;
+    border-radius: 5%;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+  }

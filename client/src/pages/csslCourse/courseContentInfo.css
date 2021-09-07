@@ -1,40 +1,40 @@
-.course-basic-info-main{
+.content-basic-info-main{
     height: max-content;
 }
 
-.course-basic-info{
+.content-basic-info{
     height: 600px;
     padding-top: 65px;
 }
 
-.course-basic-info-form{
+.content-basic-info-form{
     height: 500px;
     overflow-y: scroll;
 }
 
-.course-basic-info-title{
+.content-basic-info-title{
     padding: 10px;
     text-align: center;
 }
 
-.course-basic-info-form .course-basic-info-block{
+.content-basic-info-form .content-basic-info-block{
     margin: 20px;
     margin-left: 25%;
     width: 60%;
 }
 
-.course-info-title{
+.content-info-title{
     margin-bottom: 20px;
     font-size: 20px;
     width: 250px;
     font-weight: 200;
 }
 
-.course-field-block{
+.content-field-block{
     padding-bottom: 20px;
 }
 
-.course-basic-info-block select , .course-basic-info-block .input{
+.content-basic-info-block select , .content-basic-info-block .input{
     margin-bottom: 15px;
     margin-left: 40px;
     width: 70%;
@@ -45,7 +45,7 @@
     
   }
 
-.course-info-title textarea {
+.content-info-title textarea {
     margin-bottom: 15px;
     margin-left: 20px;
     width: 70%;
@@ -57,13 +57,13 @@
 }
 
 
-  .course-basic-info-form .course-btn-block{
+  .content-basic-info-form .content-btn-block{
     margin: 20px;
     margin-left: 10%;
     width: 60%;
   }
 
-  .course-btn-submit{
+  .content-btn-submit{
     background: #060a5f;
     border: none;
     font-weight: 600;
@@ -74,5 +74,18 @@
     border-radius: 5px;
     font-size: 16px;
     color: rgb(255, 255, 255);
+  }
+
+  .content-btn-redirect{
+    background: #0cbe38;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 5px;
+    float: right;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    color: rgb(0, 0, 0);
   }
 

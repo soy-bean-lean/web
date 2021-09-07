@@ -129,7 +129,7 @@ Job.post("/sendAnswers", (req, res) => {
   console.log(numberOfQuestion);
   for (let Qnumber = 1; Qnumber <= numberOfQuestion; Qnumber++) {
     console.log(
-      "_______" + Qnumber + "____________"
+      "_____________________" + Qnumber + "__________________________________"
     );
     const sqlSelect =
       "SELECT Correct from jobquestions where Qnumber =" + Qnumber + "";

@@ -30,6 +30,7 @@ import reportsPro from "./pages/professional/reports";
 
 import jobView from "./pages/professional/job";
 import jobAddvertisment from "./pages/professional/jobView";
+import questionare from "./pages/professional/questionare";
 
 import createCV from "./pages/professional/genarateCV";
 
@@ -37,6 +38,8 @@ import paymentsPro from "./pages/professional/payments";
 
 import courseInfo from "./pages/csslCourse/basicDetails";
 import courseContentInfo from "./pages/csslCourse/courseContentInfo";
+import lecCourseList from "./pages/csslCourse/lecturingCourseList";
+import lecturerCourseView from "./pages/csslCourse/lecturerCourseView";
 
 //chartered
 import dashboardCha from "./pages/chartered/dashboard";
@@ -70,6 +73,7 @@ import jobAss from "./pages/associate/job";
 //Secretary
 import dashboardSec from "./pages/secretary/dashboard";
 import addJob from "./pages/secretary/addJob";
+import addQuestion from "./pages/secretary/addQuestion";
 import addWorkshops from "./pages/secretary/addWorkshops";
 
 import manageWorkshop from "./pages/secretary/manageWorkshop";
@@ -175,16 +179,17 @@ function App() {
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
               <Route path="/job" component={jobView} />
-              <Route path="/paymentsP" component={paymentsPro} />
-              <Route path="/courseP" component={coursePro} />
-              <Route path="/workshopP" component={workshopPro} />
               <Route
                 path="/jobAddvertisment/:id"
                 component={jobAddvertisment}
               />
+              <Route path="/questionare/:id" component={questionare} />
               <Route path="/createCV" component={createCV} />
+              <Route path="/paymentsP" component={paymentsPro} />
+              <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
-              <Route path="/addcourseContent" component={courseContentInfo} />
+              <Route path="/addcourseContent/:id" component={courseContentInfo} />
+              <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
             </>
           )}          
 
@@ -192,9 +197,9 @@ function App() {
             <>    
             <Navbar />
               <Route path="/dashboardC" exact component={dashboardCha} />    
-              <Route path="/cpdC" component={cpdCha} />
+              <Route path="/cpdP" component={cpdPro} />
               <Route path="/addCPD" component={cpdAddPro} />
-              <Route path="/courseCha" component={courseCha} />
+              <Route path="/courseP" component={courseCha} />
               <Route path="/coursViewP/:id" component={coursView} />
               <Route path="/coursMyViewP/:id" component={coursMyView} />
               <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
@@ -203,23 +208,21 @@ function App() {
               <Route path="/workshopViewP" component={workshopViewPro} />
               <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
-              <Route path="/reportsP" component={reportsPro} />
+              <Route path="/reportsC" component={reportsCha} />
               <Route path="/job" component={jobView} />
-              <Route path="/paymentsP" component={paymentsPro} />
-              <Route path="/courseP" component={coursePro} />
-              <Route path="/workshopP" component={workshopPro} />            
               <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
-              <Route path="/createCV" component={createCV} />
-              <Route path="/addCourse" component={courseInfo} />
-              <Route path="/addcourseContent" component={courseContentInfo} />                       
+              <Route path="/questionare/:id" component={questionare} />
+              <Route path="/createCV" component={createCV} />  
+              <Route path="/paymentsP" component={paymentsPro} />           
             </>
-          )}
-
+          )}      
+          
           {authState.role == "secretariat" && (
             <>
             <Navbar />
               <Route path="/dashboardSec" exact component={dashboardSec} />
               <Route path="/addJob" component={addJob} />
+              <Route path="/addQuestions" component={addQuestion} />
               <Route path="/manWorkshop" component={manageWorkshop} />
               <Route path="/addWorkshops" component={addWorkshops} />
               <Route path="/regApprove" component={regApprove} />
