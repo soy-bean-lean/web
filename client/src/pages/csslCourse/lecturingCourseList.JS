@@ -33,7 +33,16 @@ function LecCourseList() {
         <div className="lec-course-list" key={i}>
           <div className="lec-course-list-cid">{course.courseId}</div>
           <div className="lec-course-list-align">
-            <div className="lec-course-list-title">{course.name}</div>
+            <div className="lec-course-list-title">
+              <Link
+                to={"/courseView/cssl00"+ course.courseId + "/" + course.name}
+                className=""
+              >
+                <a href="#" className="">
+                  {course.name}
+                </a>
+              </Link>
+            </div>
             <div data-status={course.status} className="lec-course-list-status">
               {course.status}
             </div>
