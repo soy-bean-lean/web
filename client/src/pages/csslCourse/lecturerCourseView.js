@@ -53,12 +53,16 @@ function LecturerCourseView() {
             {content.title}
           </div>
           <div className="lec-course-view-content-align">
-            <div className="lec-course-view-content-des">{content.description}</div>
+            <div className="lec-course-view-content-des">
+              {content.description}
+            </div>
             <div className="lec-course-view-content-btn">
               <Link
                 to={
                   "/editCourseContent/cssl00" +
                   id +
+                  "/" +
+                  title +
                   "/" +
                   content.contentId +
                   "/" +
@@ -112,22 +116,15 @@ function LecturerCourseView() {
             value="Delete Course"
           />
           <Link
-                to={
-                  "/addCourseContent/cssl00" +
-                  id +
-                  "/" +
-                  title
-                }
-                className="lcv-content-add-btn"
-              >
-                <a href="#" className="lcv-content-add-btn">
-                  Add Content
-                </a>
-              </Link>
+            to={"/addCourseContent/cssl00" + id + "/" + title}
+            className="lcv-content-add-btn"
+          >
+            <a href="#" className="lcv-content-add-btn">
+              Add Content
+            </a>
+          </Link>
         </div>
-        <div className="lecturer-course-view-content-list">
-            {contentList}
-        </div>
+        <div className="lecturer-course-view-content-list">{contentList}</div>
       </div>
     </>
   );
