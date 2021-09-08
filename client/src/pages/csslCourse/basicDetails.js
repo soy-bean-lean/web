@@ -56,6 +56,108 @@ function BasicCourseInfo() {
       });
     
   };
+
+  return (
+    <>
+      <div className="course-basic-info">
+        <h2 className="course-basic-info-title">BASIC COURSE DETAILS</h2>
+        <hr></hr>
+        <div className="course-basic-info-form">
+          <div className="course-basic-info-block">
+            <div className="course-field-block">
+              <h4 className="course-info-title">Name</h4>
+              <input
+                className="input"
+                placeholder="--Course Title--"
+                onChange={(e) => setCourseTitle(e.target.value)}
+              ></input>
+            </div>
+            <div className="course-field-block">
+              <h4 className="course-info-title">Description</h4>
+              <textarea
+                onChange={(e) => setCourseDes(e.target.value)}
+              ></textarea>
+            </div>
+            <div className="course-field-block">
+              <h4 className="course-info-title">Duration</h4>
+              <input
+                className="input"
+                placeholder="--Approximate Duration--"
+                onChange={(e) => setCourseDuration(e.target.value)}
+              ></input>
+            </div>
+            <div className="course-field-block">
+              <h4 className="course-info-title">Language</h4>
+              <select
+                name="select"
+                id="course-language"
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                <option value="type">--Select Language--</option>
+                <option value="English">English</option>
+                <option value="Sinhala">Sinhala</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div className="course-field-block">
+              <h4 className="course-info-title">Level</h4>
+              <select
+                name="select"
+                id="course-level"
+                onChange={(e) => setLevel(e.target.value)}
+              >
+                <option value="type">--Select Level--</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+            <div className="course-field-block">
+              <h4 className="course-info-title">Mode</h4>
+              <select
+                name="select"
+                id="course-mode"
+                onChange={(e) => setMode(e.target.value)}
+              >
+                <option value="type">--Select Mode--</option>
+                <option value="Online">Online</option>
+                <option value="Offline">Offline</option>
+              </select>
+            </div>
+            <div className="course-field-block">
+              <h4 className="course-info-title">Course Image</h4>
+              <input
+                type="file"
+                className="input"
+                id="course-img"
+                name="course-img"
+                accept="image/*"
+                onChange={(e) => setImgFile(e.target.files[0])}
+              ></input>
+            </div>
+          </div>
+          <div className="course-btn-block">
+            {/*<input
+              type="submit"
+              className="course-btn-submit"
+              value="Submit"
+              onClick={InsertCourseInfo}
+            />*/}
+            {<Link
+              to={"/addcourseContent/cssl00" + courseId + "/" + courseTitle}
+              className="course-btn-submit"
+              onClick={InsertCourseInfo}
+            >
+              <a href="#" className="course-btn-submit">
+                Create Course
+              </a>
+            </Link>}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+  /*
   if (page == "Course") {
     return (
       <>
@@ -143,7 +245,7 @@ function BasicCourseInfo() {
                 value="Submit"
                 onClick={InsertCourseInfo}
               />
-              {/*<Link
+              {<Link
                 to={"/addcourseContent/"}
                 className="course-btn-submit"
                 onClick={InsertCourseInfo}
@@ -151,7 +253,7 @@ function BasicCourseInfo() {
                 <a href="#" className="course-btn-submit">
                   Submit
                 </a>
-              </Link>*/}
+              </Link>}
             </div>
           </div>
         </div>
@@ -162,6 +264,6 @@ function BasicCourseInfo() {
     return(
       <CourseContent cid={courseId} title={courseTitle}/>
   );
-  }
+  }*/
 }
 export default BasicCourseInfo;

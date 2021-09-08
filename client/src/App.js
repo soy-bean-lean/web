@@ -186,7 +186,7 @@ function App() {
               <Route path="/paymentsP" component={paymentsPro} />
               <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
-              <Route path="/addcourseContent/:id" component={courseContentInfo} />
+              <Route path="/addcourseContent/cssl00:id/:title" component={courseContentInfo} />
               <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
             </>
           )}          

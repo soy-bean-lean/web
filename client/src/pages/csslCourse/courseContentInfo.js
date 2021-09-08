@@ -14,15 +14,17 @@ function AddCourseContent(props) {
 
   const [uploadStatus, setUploadStatus] = useState("");
 
-  const cId = props.cid;
-  //const {id} = useParams();
+  //const cId = props.cid;
+  const {id} = useParams();
+  const {title} = useParams();
   //setCourseTitle(props.location.state);
 
   let history = useHistory();
 
   useEffect(() => {
     const sendData = {
-      id: props.cid,
+      //id: props.cid,
+      id: id,
     };
     axios
       .post("http://localhost:3001/csslcourse/getContentNo", sendData)
@@ -47,11 +49,11 @@ function AddCourseContent(props) {
   const InsertCourseContent = () => {
 
     const mId = "cssl001";
-    const contentId = "cssl00" + cId + "-0" + contentNum;
+    const contentId = "cssl00" + id + "-0" + contentNum;
     console.log("ID:", contentId);
 
     const formData = new FormData();
-    formData.append("courseId", cId);
+    formData.append("courseId", id);
     formData.append("contentNo", contentNum);
     formData.append("contentId", contentId);
     formData.append("title", contentTitle);
@@ -85,12 +87,11 @@ function AddCourseContent(props) {
   };
 
   const redirectCourseList = () => {
-    let path = "/";
+    let path = "/lecCourse";
     history.push(path);
   };
 
   const resetComponents = () => {
-    console.log(props.title);
     setContentTitle("");
     setContentDes("");
     setContentType("");
@@ -103,7 +104,7 @@ function AddCourseContent(props) {
         <h2 className="content-basic-info-title">COURSE CONTENT DETAILS</h2>
         <hr></hr>
         <div className="content-basic-info-form">
-          <h3 className="content-basic-info-title">{props.title}</h3>
+          <h3 className="content-basic-info-title">{title}</h3>
           <input
             type="submit"
             className="content-btn-redirect"
