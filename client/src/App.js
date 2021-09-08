@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import { useLocation } from "react-router";
-import { useHistory } from "react-router-dom";
 import { AuthContext } from "./helpers/AuthContext";
 
 import Registration from "./pages/registration/Registration";

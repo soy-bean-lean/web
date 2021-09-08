@@ -156,7 +156,6 @@ Job.get("/getJobView", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-        // console.log(result);
         res.send(result);
       }
     }
