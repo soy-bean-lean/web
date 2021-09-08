@@ -15,7 +15,7 @@
   }
   .lec-course-list-sub {
     height: 90%;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     grid-area: activity;
   }
   
@@ -29,6 +29,7 @@
   
   .lec-course-list-courses {
     margin: 10px;
+    overflow-y: auto;
   }
   
   .lec-course-list-cid {

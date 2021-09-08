@@ -37,6 +37,23 @@
   align-items: center;
 }
 
+.lcv-content-exam-btn{
+  text-decoration: none;
+}
+
+.lcv-content-exam-btn a{
+  background: #3cff00;
+  border: none;
+  border-radius: 5%;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  align-items: center;
+}
+
 
 .lecturer-course-view-title {
   top: 5%;
@@ -89,6 +106,9 @@
   justify-content: center;
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: space-between;
 }
 
 
@@ -181,6 +201,25 @@
     padding: 8px;
     font-size: 16px;
     color: rgb(0, 0, 0);
+    text-align: center;
+    align-items: center;
+  }
+
+  .lcv-content-add-btn{
+    text-decoration: none;
+  }
+  .lcv-content-add-btn a{
+    top: 2%;
+    right: 17%;
+    position: relative;
+    background: #1628d1;
+    text-decoration: none;
+    border: none;
+    border-radius: 5%;
+    font-weight: 600;
+    padding: 8px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
     text-align: center;
     align-items: center;
   }

@@ -144,7 +144,7 @@ function BasicCourseInfo() {
               onClick={InsertCourseInfo}
             />*/}
             {<Link
-              to={"/addcourseContent/cssl00" + courseId + "/" + courseTitle}
+              to={"/addCourseContent/cssl00" + courseId + "/" + courseTitle}
               className="course-btn-submit"
               onClick={InsertCourseInfo}
             >
