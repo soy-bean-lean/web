@@ -39,6 +39,7 @@ import courseContentInfo from "./pages/csslCourse/courseContentInfo";
 import lecCourseList from "./pages/csslCourse/lecturingCourseList";
 import lecturerCourseView from "./pages/csslCourse/lecturerCourseView";
 import editCourseContent from "./pages/csslCourse/editCourseContent";
+import editCourseInfo from "./pages/csslCourse/editCourseDetails";
 
 //chartered
 import dashboardCha from "./pages/chartered/dashboard";
@@ -189,6 +190,7 @@ function App() {
               <Route path="/addCourse" component={courseInfo} />
               <Route path="/addCourseContent/cssl00:id/:title" component={courseContentInfo} />
               <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
+              <Route path="/editCourse/cssl00:id/:title" component={editCourseInfo} />
               <Route path="/editCourseContent/cssl00:id/:title/:cntId/:cntTitle" component={editCourseContent} />
             </>
           )}          

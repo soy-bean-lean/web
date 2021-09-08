@@ -91,6 +91,11 @@ function AddCourseContent(props) {
     history.push(path);
   };
 
+  const redirectCourse = () => {
+    let path = "/courseView/cssl00"+ id + "/" + title;
+    history.push(path);
+  };
+
   const resetComponents = () => {
     setContentTitle("");
     setContentDes("");
@@ -107,9 +112,15 @@ function AddCourseContent(props) {
           <h3 className="content-basic-info-title">{title}</h3>
           <input
             type="submit"
-            className="content-btn-redirect"
-            value="Go to Course List"
+            className="content-btn-redirect-list"
+            value="Course List"
             onClick={redirectCourseList}
+          />
+          <input
+            type="submit"
+            className="content-btn-redirect-course"
+            value="Go to Course"
+            onClick={redirectCourse}
           />
           <div className="content-basic-info-block">
             <div className="content-field-block">

@@ -3,9 +3,9 @@
   padding-top: 60px;
 }
 
-.lecturer-course-view-top{
-    align-items: center;
-    padding: 10px;
+.lecturer-course-view-top {
+  align-items: center;
+  padding: 10px;
 }
 
 .lecturer-course-view-content-list {
@@ -15,13 +15,14 @@
   width: auto;
   align-items: center;
   overflow-y: auto;
+  top: 28%;
+  position: absolute;
 }
 
-.lcv-content-edit-btn{
+.lcv-content-edit-btn {
   text-decoration: none;
   color: rgb(0, 0, 0);
   font-weight: 600;
-  
 }
 
 .lcv-content-edit-btn {
@@ -37,11 +38,11 @@
   align-items: center;
 }
 
-.lcv-content-exam-btn{
+.lcv-content-exam-btn {
   text-decoration: none;
 }
 
-.lcv-content-exam-btn a{
+.lcv-content-exam-btn a {
   background: #3cff00;
   border: none;
   border-radius: 5%;
@@ -54,14 +55,13 @@
   align-items: center;
 }
 
-
 .lecturer-course-view-title {
   top: 5%;
   position: relative;
   text-align: center;
 }
 
-.lec-course-view-content{
+.lec-course-view-content {
   padding: 5px;
 }
 
@@ -97,7 +97,7 @@
     display: flex;*/
 }
 
-.lec-course-view-content-btn{
+.lec-course-view-content-btn {
   margin-left: auto;
   padding: 5px;
   border-radius: 8px 8px 8px 8px;
@@ -110,7 +110,6 @@
   flex-direction: column;
   align-content: space-between;
 }
-
 
 .lecturer-course-view-content-list .lecturer-course-view-block {
   margin: 20px;
@@ -157,11 +156,37 @@
   width: 60%;
 }
 
+.lcv-redirect-btn,
+.lcv-content-add-btn,
 .lcv-course-edit-btn {
+  text-decoration: none;
+}
+
+.lcv-course-edit-btn a {
   top: 2%;
   left: 67%;
   position: relative;
   background: #d4c818;
+  border: none;
+  border-radius: 5%;
+  font-weight: 600;
+  padding: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  align-items: center;
+}
+
+.lcv-course-approve-btn,
+.lcv-course-del-btn:hover {
+  cursor: pointer;
+}
+
+.lcv-course-del-btn {
+  top: 2%;
+  left: 69%;
+  position: relative;
+  background: #ee2727;
   border: none;
   border-radius: 5%;
   font-weight: 600;
@@ -173,53 +198,50 @@
   align-items: center;
 }
 
-.lcv-course-del-btn {
-    top: 2%;
-    left: 69%;
-    position: relative;
-    background: #ee2727;
-    border: none;
-    border-radius: 5%;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 8px;
-    font-size: 16px;
-    color: rgb(0, 0, 0);
-    text-align: center;
-    align-items: center;
-  }
+.lcv-course-approve-btn {
+  top: 2%;
+  left: 65%;
+  position: relative;
+  background: #2eee27;
+  border: none;
+  border-radius: 5%;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  align-items: center;
+}
 
-  .lcv-course-approve-btn{
-    top: 2%;
-    left: 65%;
-    position: relative;
-    background: #2eee27;
-    border: none;
-    border-radius: 5%;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 8px;
-    font-size: 16px;
-    color: rgb(0, 0, 0);
-    text-align: center;
-    align-items: center;
-  }
+.lcv-content-add-btn a {
+  top: 22%;
+  left: 11%;
+  position: absolute;
+  background: #1628d1;
+  text-decoration: none;
+  border: none;
+  border-radius: 5%;
+  font-weight: 600;
+  padding: 8px;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  align-items: center;
+}
 
-  .lcv-content-add-btn{
-    text-decoration: none;
-  }
-  .lcv-content-add-btn a{
-    top: 2%;
-    right: 17%;
-    position: relative;
-    background: #1628d1;
-    text-decoration: none;
-    border: none;
-    border-radius: 5%;
-    font-weight: 600;
-    padding: 8px;
-    font-size: 16px;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    align-items: center;
-  }
+.lcv-redirect-btn a {
+  top: 15.4%;
+  left: 3%;
+  position: absolute;
+  background: #0cbe38;
+  text-decoration: none;
+  border: none;
+  border-radius: 5%;
+  font-weight: 600;
+  padding: 8px;
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  align-items: center;
+}

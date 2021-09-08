@@ -105,11 +105,24 @@ function LecturerCourseView() {
             className="lcv-course-approve-btn"
             value="Get Approval"
           />
-          <input
+          <Link
+            to={
+              "/editCourse/cssl00" +
+              id +
+              "/" +
+              title
+            }
+            className="lcv-course-edit-btn"
+          >
+            <a href="#" className="lcv-course-edit-btn">
+              Edit Course
+            </a>
+          </Link>
+          {/*<input
             type="submit"
             className="lcv-course-edit-btn"
             value="Edit Course"
-          />
+          />*/}
           <input
             type="submit"
             className="lcv-course-del-btn"
@@ -121,6 +134,14 @@ function LecturerCourseView() {
           >
             <a href="#" className="lcv-content-add-btn">
               Add Content
+            </a>
+          </Link>
+          <Link
+            to={"/lecCourse"}
+            className="lcv-redirect-btn"
+          >
+            <a href="#" className="lcv-redirect-btn">
+              Course List
             </a>
           </Link>
         </div>

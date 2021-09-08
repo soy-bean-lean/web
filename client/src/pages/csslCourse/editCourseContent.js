@@ -101,8 +101,8 @@ function EditCourseContent(props) {
           <h3 className="content-basic-info-title">{title}</h3>
           <input
             type="submit"
-            className="content-btn-redirect"
-            value="Go to Course"
+            className="content-btn-redirect-list"
+            value="Back to Course"
             onClick={redirectCourse}
           />
           <div className="content-basic-info-block">
