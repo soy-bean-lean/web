@@ -10,7 +10,6 @@ function EditCourseContent(props) {
   const [contentType, setContentType] = useState("");
   const [contentFile, setContentFile] = useState();
   const [videoLink, setVideoLink] = useState("");
-  const [contentNum, setContentNum] = useState(0);
 
   const [uploadStatus, setUploadStatus] = useState("");
 

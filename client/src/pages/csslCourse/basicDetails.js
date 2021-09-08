@@ -57,12 +57,23 @@ function BasicCourseInfo() {
     
   };
 
+  const redirectCourseList = () => {
+    let path = "/lecCourse";
+    history.push(path);
+  };
+
   return (
     <>
       <div className="course-basic-info">
         <h2 className="course-basic-info-title">BASIC COURSE DETAILS</h2>
         <hr></hr>
         <div className="course-basic-info-form">
+        <input
+            type="submit"
+            className="course-btn-redirect-list"
+            value="Course List"
+            onClick={redirectCourseList}
+          />
           <div className="course-basic-info-block">
             <div className="course-field-block">
               <h4 className="course-info-title">Name</h4>

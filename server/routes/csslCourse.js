@@ -158,4 +158,18 @@ Course.post("/getContentInfo", (req, res) => {
   );
 });
 
+Course.post("/getCourseInfo", (req, res) => {
+  const cid = req.body.cid;
+  connection.query(
+    "SELECT name, description, duration, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 export default Course;
