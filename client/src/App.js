@@ -7,6 +7,7 @@ import { AuthContext } from "./helpers/AuthContext";
 
 import Registration from "./pages/registration/Registration";
 import Login from "./pages/login/Login";
+import settings from "./components/settings/settings";
 import PageNotFound from "./pages/pageNotFound";
 
 //professional
@@ -167,6 +168,7 @@ function App() {
           {authState.role == "professional" && (
             <>
               <Navbar />
+
               <Route path="/dashboardP" exact component={dashboardPro} />
               <Route path="/cpdP" component={cpdPro} />
               <Route path="/addCPD" component={cpdAddPro} />
@@ -198,6 +200,10 @@ function App() {
               <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
               <Route path="/editCourse/cssl00:id/:title" component={editCourseInfo} />
               <Route path="/editCourseContent/cssl00:id/:title/:cntId/:cntTitle" component={editCourseContent} />
+            
+            
+              <Route path="/settings" exact component={settings} />
+
             </>
           )}          
 
@@ -245,7 +251,7 @@ function App() {
             <>
             <Navbar />
               <Route path="/dashboardCou" exact component={dashboardCou} />
-              <Route path="/jobCou" component={addJob} />
+              <Route path="/jobCou" component={addJobCou} />
               <Route path="/blogCou" component={blogsCou} />
               <Route path="/workshopCou" component={verifyWorkshop} />
               <Route path="/reportsCou" component={reportCou} />

@@ -72,7 +72,7 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
 Job.route("/addJobApplicaation").post(
   uploadCV.single("image"),
   (req, res, err) => {
-    if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
+    if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|pdf|PDF|png|PNG)$/)) {
       res.send({ msg: "Not an Image File." });
     } else {
       const Currentdate = req.body.Currentdate;

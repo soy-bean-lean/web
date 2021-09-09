@@ -3,6 +3,8 @@ import "./style/basicDetails.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddJob() {
   const [companyName, setCompanyName] = useState("");
@@ -40,14 +42,20 @@ function AddJob() {
       .then((res) => res.json())
       .then((res) => {
        
-        console.log(res.data);
-        //set course id
-        alert("Successful");
-        const next = "Content";
-        /*let path = "/addcourseContent/" + courseTitle;
-        history.push(path);*/
+        toast.success("Job Vacancy Has Successfully Added!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
+        history.push("/dashboardSec");
+
       })
       .catch((error) => {
+        toast.error("Unable to Uploaded Job Vacancy,Try Again!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
+        history.push("/addjob");
+
         console.log(error);
       });
     
