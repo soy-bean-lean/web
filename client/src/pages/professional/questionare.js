@@ -42,6 +42,7 @@ function Questionare() {
         console.log(Qnumber + "is Correct");
         finalMarks = finalMarks + 1;
       }
+     // history.push("/");
     }
     console.log(finalMarks);
     axios
@@ -165,6 +166,8 @@ function Questionare() {
       {Questions}
 
       <div className="send">
+      
+      
         <Link className="sendQues">
           <a href="#" className="sendData" onClick={submit}>
             Submit Answers

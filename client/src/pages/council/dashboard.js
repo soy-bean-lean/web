@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import "./style/dashboard.css";
 import { makeStyles, Paper, Grid } from "@material-ui/core";
 import { Line, Pie, Bar } from "react-chartjs-2";
@@ -12,69 +14,172 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
     height: 200,
-    width:100,
+    width: 100,
   },
 }));
-
-const state = {
-  labels: ["2012","2013","2014","2015","2016","2017","2018","2019","2020"],
-  datasets: [
-    {
-     label:"Total Members",
-      fill: false,
-      lineTension:0.5,
-      backgroundColor: " #5DADE2 ",
-      borderColor: "#5DADE2 ",
-      borderWidth: 3,
-      data: [100, 200, 400, 450, 120, 290, 360, 281,345],
-    },
-  ],
-};
-
-const state1 = {
-  labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG"],
-  datasets: [
-    {
-      label: "Toatal Workshop",
-      backgroundColor:"#85C1E9",
-      hoverBackgroundColor:"#5499C7",
-      data: [10, 20, 9, 8, 10, 9, 6, 11],
-    },
-  ],
-};
-
-const state2 = {
-  labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG"],
-  datasets: [
-    {
-     label:"Total Activity",
-      fill: true,
-      lineTension:0.5,
-      backgroundColor: " #D4E6F1 ",
-      borderColor: "#7FB3D5",
-      borderWidth: 1,
-      data: [10, 20, 40, 20, 40, 50, 66, 41],
-    },
-  ],
-};
-
 
 
 
 const options = {
   maintainAspectRatio: false,
 };
-
 function Home() {
+  const [dataCPD, setData] = useState(null);
+  const [members, setMemebrs] = useState(null);
+  const [workshops, setWorkshops] = useState(null);
+  const [length, setLength] = useState(null);
+  const [lengthMember, setLengthMember] = useState(null);
+  const [workshopsLength, setLengthWorkshops] = useState(null);
+  const [lengthYear, setLengthYear] = useState(null);
+
+  var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  for (var i = 0; i < length; i++) {
+    months[dataCPD[i].month] = dataCPD[i].credits;
+  }
+
+  var monthsWorkshops = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  for (var i = 0; i < workshopsLength; i++) {
+    monthsWorkshops[workshops[i].month] = workshops[i].workshops;
+  }
+  
+  var years = [];
+  var yearData = [];
+
+  members &&
+    members.map(
+      (members) => (years.push(members.year), yearData.push(members.members))
+    );
+  const state2 = {
+    labels: [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
+    ],
+    datasets: [
+      {
+        label: "Total Activity",
+        fill: true,
+        lineTension: 0.5,
+        backgroundColor: " #ffccd0 ",
+        borderColor: "#ff6370",
+        borderWidth: 1,
+        data: months,
+      },
+    ],
+  };
+  const state = {
+    labels: years,
+    datasets: [
+      {
+        label: "Total Members",
+        fill: true,
+        lineTension: 0.5,
+        backgroundColor: " #c5fcd4 ",
+        borderColor: "#187d34 ",
+        borderWidth: 3,
+        data: yearData,
+      },
+    ],
+  };
+  const state1 = {
+    labels: [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
+    ],
+    datasets: [
+      {
+        label: "Toatal Workshop",
+        fill: true,
+        backgroundColor: "#defff9",
+        borderColor:"#8ee6d6",
+        hoverBackgroundColor: "#9ff5e5",
+        borderWidth: 2,
+        
+        data: monthsWorkshops,
+      },
+    ],
+  };
+  useEffect(() => {
+    const data = {
+      id: "",
+    };
+    axios
+      .post("http://localhost:3001/Dash/getCPDData", data)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setData(response.data);
+          setLength(response.data.length);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+    axios
+      .post("http://localhost:3001/Dash/getWorkshops", data)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log(response.data)
+
+          setWorkshops(response.data);
+          setLengthWorkshops(response.data.length);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+
+    axios
+      .post("http://localhost:3001/Dash/getMemberData", data)
+
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setMemebrs(response.data);
+          setLengthMember(response.data.length);
+        }
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
   const classes = useStyles();
   return (
     <div className="main">
       <div className="Charts">
         <div className="chart1">
+          <center>
+            <h3>Workshop Count</h3>
+          </center>
           <Bar
             data={state1}
-            width={220}
-            height={80}
+            width={150}
+            height={50}
             options={
               ({ options },
               {
@@ -93,30 +198,22 @@ function Home() {
         </div>
 
         <div className="chart2">
-
-        <center><h3>CPD Activity Progree</h3></center>
-           <Line
-            data={state2}
-            width={220}
-            height={70}
-            options={
-              ({ options }
-              )
-            }
-          />
-        
+          <center>
+            <h3>CPD Activity Progree</h3>
+          </center>
+          <Line data={state2} width={220} height={70} options={{ options }} />
         </div>
       </div>
 
       <div className="OnGoing">
-        <center><h2>Members in CSSL</h2></center>
+        <center>
+          <h2>Members in CSSL</h2>
+        </center>
         <div className="ONG">
-        
-        <Line
+          <Line
             data={state}
             width={220}
-            height={40}
-            
+            height={45}
             options={
               ({ options },
               {

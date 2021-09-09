@@ -11,22 +11,56 @@ function AddJob() {
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+  const [imgFile, setImgFile] = useState();
 
   //  const [image, setImage] = useState("");
 
   let history = useHistory();
 
   const addJob = () => {
-    const data = {
+    const formData = new FormData();
+    formData.append("image", imgFile);
+    formData.append("companyName", companyName);
+    formData.append("jobRole", jobRole);
+    formData.append("location", location);
+    formData.append("contact", contact);
+    formData.append("email", email);
+    formData.append("description", description);
+
+    /*const data = {
       companyName: companyName,
       jobRole: jobRole,
       location: location,
       contact: contact,
       email: email,
       description: description,
-    };
-    console.log("line 15");
-    axios.post("http://localhost:3001/job", data).then((response) => {
+    };*/
+
+    fetch("http://localhost:3001/job", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "multipart/form-data",
+      },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+       
+        console.log(res.data);
+        //set course id
+        alert("Successful");
+        const next = "Content";
+        /*let path = "/addcourseContent/" + courseTitle;
+        history.push(path);*/
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
+  };
+
+    /*axios.post("http://localhost:3001/job", formData).then((response) => {
       console.log("line 16");
 
       if (response.data.error) {
@@ -39,7 +73,7 @@ function AddJob() {
         history.push("/");
       }
     });
-  };
+  };*/
   return (
     <>
       <div className="job-basic-info">
@@ -110,12 +144,13 @@ function AddJob() {
             <div className="job-field-block">
               <h4 className="job-info-title">Advertisement Image</h4>
               <input
-                type="file"
-                className="input"
-                id="job-img"
-                name="job-img"
-                accept="image/*"
-              ></input>
+                  type="file"
+                  className="input"
+                  id="course-img"
+                  name="course-img"
+                  accept="image/*"
+                  onChange={(e) => setImgFile(e.target.files[0])}
+                ></input>
             </div>
           </div>
           <button className="job-btn-submit" onClick={addJob}>

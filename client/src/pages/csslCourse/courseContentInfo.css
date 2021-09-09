@@ -1,0 +1,114 @@
+.content-basic-info-main{
+    height: max-content;
+}
+
+.content-basic-info{
+    height: 600px;
+    padding-top: 65px;
+}
+
+.content-basic-info-form{
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.content-basic-info-title{
+    padding: 10px;
+    text-align: center;
+}
+
+.content-basic-info-form .content-basic-info-block{
+    margin: 20px;
+    margin-left: 25%;
+    width: 60%;
+}
+
+.content-info-title{
+    margin-bottom: 20px;
+    font-size: 20px;
+    width: 250px;
+    font-weight: 200;
+}
+
+.content-field-block{
+    padding-bottom: 20px;
+}
+
+.content-basic-info-block select , .content-basic-info-block .input{
+    margin-bottom: 15px;
+    margin-left: 40px;
+    width: 70%;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 20px;
+    color: black;
+    
+  }
+
+.content-info-title textarea {
+    margin-bottom: 15px;
+    margin-left: 20px;
+    width: 70%;
+    height: 150px;
+    font-size: 14px;
+    padding-left: 10px;
+    color: black;
+    overflow-y: scroll;
+}
+
+
+  .content-basic-info-form .content-btn-block{
+    margin: 20px;
+    margin-left: 10%;
+    width: 60%;
+  }
+
+  .content-btn-submit{
+    background: #060a5f;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 5px;
+    float: right;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+  }
+
+  .content-btn-redirect-list{
+    position: absolute;
+    top: 18%;
+    right: 5%;
+    background: #0c2dbe;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 5px;
+    float: right;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+  }
+
+  .content-btn-redirect-course{
+    position: absolute;
+    top: 18%;
+    right: 15%;
+    background: #0cbe38;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 5px;
+    float: right;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+  }
+
+  .content-btn-redirect-list, .content-btn-redirect-course:hover{
+    cursor: pointer;
+  }
+
