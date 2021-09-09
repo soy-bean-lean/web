@@ -143,4 +143,33 @@ Course.post("/getContentNo", (req, res) => {
   );
 });
 
+Course.post("/getContentInfo", (req, res) => {
+  const cid = req.body.cId;
+  const cntid = req.body.cntId;
+  connection.query(
+    "SELECT title, description, contentType, content FROM coursecontent WHERE contentId = ? AND courseId = ?;",
+    [cntid,cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+Course.post("/getCourseInfo", (req, res) => {
+  const cid = req.body.cid;
+  connection.query(
+    "SELECT name, description, duration, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 export default Course;

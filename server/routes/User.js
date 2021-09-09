@@ -80,11 +80,12 @@ userRouter.post("/login", async (req, res) => {
   const password = req.body.password;
 
   connection.query(
-    "SELECT * FROM user WHERE email = ?",
+    //temporary sql query for testing
+    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
     [username],
     (err, result) => {
       if (result.length > 0) {
-        bcrypt.compare(password, result[0].password).then((match) => {
+        bcrypt.compare(password, result[0].pw).then((match) => {
           if (!match) {
             res.json({ errorPass: "Incorrect password" });
           } else {
@@ -109,6 +110,7 @@ userRouter.post("/login", async (req, res) => {
       } else {
         res.json({ errorUser: "Username doesn't exists" });
       }
+      console.log(result);
     }
   );
 });

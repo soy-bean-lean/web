@@ -24,8 +24,8 @@ export const SidebarDataPro = [
       icon: <FaIcons.FaGraduationCap />,
       cName: 'nav-text'
     },{
-      title: 'New Course',
-      path: '/addCourse',
+      title: 'Lecturing Courses',
+      path: '/lecCourse',
       icon: <FaIcons.FaGraduationCap />,
       cName: 'nav-text'
     },

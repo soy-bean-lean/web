@@ -53,12 +53,16 @@ function LecturerCourseView() {
             {content.title}
           </div>
           <div className="lec-course-view-content-align">
-            <div className="lec-course-view-content-des">{content.description}</div>
+            <div className="lec-course-view-content-des">
+              {content.description}
+            </div>
             <div className="lec-course-view-content-btn">
               <Link
                 to={
-                  "/courseView/cssl00" +
+                  "/editCourseContent/cssl00" +
                   id +
+                  "/" +
+                  title +
                   "/" +
                   content.contentId +
                   "/" +
@@ -70,6 +74,21 @@ function LecturerCourseView() {
                   Edit
                 </a>
               </Link>
+              {/*<Link
+                to={
+                  "/addExam/cssl00" +
+                  id +
+                  "/" +
+                  content.contentId +
+                  "/" +
+                  content.title
+                }
+                className="lcv-content-exam-btn"
+              >
+                <a href="#" className="lcv-content-exam-btn">
+                  Add Exam
+                </a>
+              </Link>*/}
             </div>
           </div>
         </div>
@@ -86,20 +105,47 @@ function LecturerCourseView() {
             className="lcv-course-approve-btn"
             value="Get Approval"
           />
-          <input
+          <Link
+            to={
+              "/editCourse/cssl00" +
+              id +
+              "/" +
+              title
+            }
+            className="lcv-course-edit-btn"
+          >
+            <a href="#" className="lcv-course-edit-btn">
+              Edit Course
+            </a>
+          </Link>
+          {/*<input
             type="submit"
             className="lcv-course-edit-btn"
             value="Edit Course"
-          />
+          />*/}
           <input
             type="submit"
             className="lcv-course-del-btn"
             value="Delete Course"
           />
+          <Link
+            to={"/addCourseContent/cssl00" + id + "/" + title}
+            className="lcv-content-add-btn"
+          >
+            <a href="#" className="lcv-content-add-btn">
+              Add Content
+            </a>
+          </Link>
+          <Link
+            to={"/lecCourse"}
+            className="lcv-redirect-btn"
+          >
+            <a href="#" className="lcv-redirect-btn">
+              Course List
+            </a>
+          </Link>
         </div>
-        <div className="lecturer-course-view-content-list">
-            {contentList}
-        </div>
+        <div className="lecturer-course-view-content-list">{contentList}</div>
       </div>
     </>
   );
