@@ -34,6 +34,7 @@ import createCV from "./pages/professional/genarateCV";
 
 import paymentsPro from "./pages/professional/payments";
 
+
 import courseInfo from "./pages/csslCourse/basicDetails";
 import courseContentInfo from "./pages/csslCourse/courseContentInfo";
 import lecCourseList from "./pages/csslCourse/lecturingCourseList";
@@ -227,6 +228,7 @@ function App() {
               <Route path="/regPending" component={regPending} />
               <Route path="/regRejected" component={regRejected} />
               <Route path="/paymentsSec" component={paymentsSec} />
+
             </>
           )}
 

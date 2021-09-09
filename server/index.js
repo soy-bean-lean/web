@@ -4,6 +4,7 @@ import path from "path";
 import userRouter from "./routes/User.js";
 import secretaryRouter from "./routes/secretary.js";
 import Job from "./routes/jobsSQL.js";
+import mailRouter from "./routes/mail.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import session from "express-session";
@@ -33,12 +34,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
-    key: "userId",
-    secret: "csslSecret",
+    key: "accessToken",
+    secret: "importantsecret",
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60 * 24 * 1000,
+      expires: 60,
     },
   })
 )
@@ -57,6 +58,7 @@ app.use("/cpd", Record);
 app.use("/csslcourse", Course);
 
 app.use("/secretary", secretaryRouter);
+app.use("/mail", mailRouter);
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
