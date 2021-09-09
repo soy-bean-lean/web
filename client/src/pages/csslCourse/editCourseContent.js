@@ -4,19 +4,20 @@ import "./courseContentInfo.css";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 
-function AddCourseContent(props) {
+function EditCourseContent(props) {
   const [contentTitle, setContentTitle] = useState("");
   const [contentDes, setContentDes] = useState("");
   const [contentType, setContentType] = useState("");
   const [contentFile, setContentFile] = useState();
   const [videoLink, setVideoLink] = useState("");
-  const [contentNum, setContentNum] = useState(0);
 
   const [uploadStatus, setUploadStatus] = useState("");
 
   //const cId = props.cid;
-  const {id} = useParams();
-  const {title} = useParams();
+  const { id } = useParams();
+  const { title } = useParams();
+  const { cntId } = useParams();
+  const { cntTitle } = useParams();
   //setCourseTitle(props.location.state);
 
   let history = useHistory();
@@ -24,21 +25,16 @@ function AddCourseContent(props) {
   useEffect(() => {
     const sendData = {
       //id: props.cid,
-      id: id,
+      cId: id,
+      cntId: cntId,
     };
     axios
-      .post("http://localhost:3001/csslcourse/getContentNo", sendData)
+      .post("http://localhost:3001/csslcourse/getContentInfo", sendData)
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          console.log("response:", response.data[0].contentNo);
-
-          if (response.data[0].contentNo != null) {
-            setContentNum(response.data[0].contentNo + 1);
-          } else {
-            setContentNum(contentNum + 1);
-          }
+          setComponents(response.data[0]);
         }
       })
       .catch((error) => {
@@ -46,28 +42,22 @@ function AddCourseContent(props) {
       });
   }, []);
 
-  const InsertCourseContent = () => {
-
-    const mId = "cssl001";
-    const contentId = "cssl00" + id + "-0" + contentNum;
-    console.log("ID:", contentId);
+  const updateCourseContent = () => {
 
     const formData = new FormData();
     formData.append("courseId", id);
-    formData.append("contentNo", contentNum);
-    formData.append("contentId", contentId);
+    formData.append("contentId", cntId);
     formData.append("title", contentTitle);
     formData.append("description", contentDes);
     formData.append("type", contentType);
 
-    if(contentType == "File"){
-        formData.append("cfile", contentFile);
-    }
-    else{
-        formData.append("vlink", videoLink);
+    if (contentType == "File") {
+      formData.append("cfile", contentFile);
+    } else {
+      formData.append("vlink", videoLink);
     }
 
-    fetch("http://localhost:3001/csslcourse/courseContent", {
+    fetch("http://localhost:3001/csslcourse/editCourseContent", {
       method: "POST",
       body: formData,
       headers: {
@@ -79,16 +69,11 @@ function AddCourseContent(props) {
       .then((res) => {
         setUploadStatus(res.msg);
         alert("Successfully Saved Details");
-        resetComponents();
+        redirectCourse();
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const redirectCourseList = () => {
-    let path = "/lecCourse";
-    history.push(path);
   };
 
   const redirectCourse = () => {
@@ -96,12 +81,15 @@ function AddCourseContent(props) {
     history.push(path);
   };
 
-  const resetComponents = () => {
-    setContentTitle("");
-    setContentDes("");
-    setContentType("");
-    setContentFile();
-    setVideoLink("");
+  const setComponents = (record) => {
+    setContentTitle(record.title);
+    setContentDes(record.description);
+    setContentType(record.contentType);
+    if (record.contentType == "File") {
+      setContentFile(record.content);
+    } else {
+      setVideoLink(record.content);
+    }
   };
   return (
     <div className="content-basic-info-main">
@@ -113,13 +101,7 @@ function AddCourseContent(props) {
           <input
             type="submit"
             className="content-btn-redirect-list"
-            value="Course List"
-            onClick={redirectCourseList}
-          />
-          <input
-            type="submit"
-            className="content-btn-redirect-course"
-            value="Go to Course"
+            value="Back to Course"
             onClick={redirectCourse}
           />
           <div className="content-basic-info-block">
@@ -158,14 +140,8 @@ function AddCourseContent(props) {
             <input
               type="submit"
               className="content-btn-submit"
-              value="Save & Finish"
-              onClick={InsertCourseContent}
-            />
-            <input
-              type="submit"
-              className="content-btn-submit"
-              value="Save & Next Content"
-              onClick={InsertCourseContent}
+              value="Update"
+              onClick={updateCourseContent}
             />
           </div>
         </div>
@@ -207,4 +183,4 @@ function AddCourseContent(props) {
   }
 }
 
-export default AddCourseContent;
+export default EditCourseContent;

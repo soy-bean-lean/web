@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./style/regApprove.css";
 //import {user} from "./data";
 import Card from "@material-ui/core/Card";
 import DataTable from "react-data-table-component";
 import { Link  } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../helpers/AuthContext";
 
 
 function RegPending() {
 // const Button = () => <button type="button">Verified</button>;
   const [data, setData] = useState([]);
+  const { authState, setAuthState } = useContext(AuthContext);
   //const [user, setUser] = useState(userDetails);
   const [noApprovedUsers, setnoApprovedUsers] = useState(0);
   const [noRejectedUsers, setnoRejecteddUsers] = useState(0);
   const [noPendingUsers, setnoPendingUsers] = useState(0);
+  let history = useHistory();  
 
   useEffect(() => {
     axios
@@ -66,28 +69,26 @@ function RegPending() {
   }, []);
 
   const Approve = (id) => {
-  console.log(id);
-  const data = { id: id };
+  const data = { userID: id, secID: authState.id };
   axios.post("http://localhost:3001/secretary/approve", data).then((response) => {
     if (response.data.error) {
       console.log(response.data.error);     
     } else {
-     // history.push("./"); 
+      history.push("/regApprove"); 
     }
   });
 };
 
-const Reject = (userID) => {
-  console.log(userID);
-  const data = { id: userID };
+const Reject = (id) => {
+  const data = { userID: id, secID: authState.id };
+ 
   axios.post("http://localhost:3001/secretary/reject", data).then((response) => {
     if (response.data.error) {
       console.log(response.data.error);     
     } else {
-     // history.push("./"); 
+      history.push("/regRejected"); 
     }
   });
-  console.log(data);
 };
 
 const columns = [
@@ -124,16 +125,16 @@ const columns = [
   },
   {
     button: true,
-    cell: () => (
-      <button onClick={() => Approve()} className="approveBtn" type="button">
-       Approve
+    cell: (row) => (      
+      <button onClick={() => Approve(`${row.id}`)} className="approveBtn" type="button">        
+        Approve
       </button>
     ),
   },
   {
     button: true,
-    cell: () => (
-      <button onClick={() => Reject("userID")} className="rejectBtn" type="button">
+    cell: (row) => (
+      <button onClick={() => Reject(`${row.id}`)} className="rejectBtn" type="button">
         Reject
       </button>
     ),
@@ -197,13 +198,14 @@ const conditionalRowStyles = [
             </div>
           </Link>
         </div>
-        {data.map((index) => (
+        {data.map((value, key) => (
           <div className="rightPanelS">
             <Card>
               <DataTable
                 title="Pending Members"
                 columns={columns}
                 data={data}
+                key = {key}
                 pagination
                 conditionalRowStyles={conditionalRowStyles}
               />
