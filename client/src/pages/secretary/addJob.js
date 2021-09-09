@@ -27,14 +27,7 @@ function AddJob() {
     formData.append("email", email);
     formData.append("description", description);
 
-    /*const data = {
-      companyName: companyName,
-      jobRole: jobRole,
-      location: location,
-      contact: contact,
-      email: email,
-      description: description,
-    };*/
+
 
     fetch("http://localhost:3001/job", {
       method: "POST",

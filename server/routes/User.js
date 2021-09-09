@@ -82,6 +82,7 @@ userRouter.post("/login", async (req, res) => {
   connection.query(
     //temporary sql query for testing
     "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
+
     [username],
     (err, result) => {
       if (result.length > 0) {

@@ -28,6 +28,7 @@ import reportsPro from "./pages/professional/reports";
 
 import jobView from "./pages/professional/job";
 import jobAddvertisment from "./pages/professional/jobView";
+import addJobCV from "./pages/professional/addCV";
 import questionare from "./pages/professional/questionare";
 
 import createCV from "./pages/professional/genarateCV";
@@ -180,6 +181,10 @@ function App() {
               <Route
                 path="/jobAddvertisment/:id"
                 component={jobAddvertisment}
+              />
+              <Route
+                path="/addJobCV/:id:finalMarks"
+                component={addJobCV}
               />
               <Route path="/questionare/:id" component={questionare} />
               <Route path="/createCV" component={createCV} />

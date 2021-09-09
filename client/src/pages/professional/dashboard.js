@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./style/dashboard.css";
 import { makeStyles, Paper, Grid, alpha } from "@material-ui/core";
 import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";
 import { Redirect } from "react-router-dom";
 import Tabs from "./tabs";
 import axios from "axios";
+import { AuthContext } from "../../helpers/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -16,10 +17,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const options = {
   maintainAspectRatio: false,
 };
 function Home() {
+  const { authState, setAuthState } = useContext(AuthContext);
+
   const [dataCPD, setData] = useState(null);
   const [dataCPDYear, setDataYear] = useState(null);
   const [length, setLength] = useState(null);
@@ -55,7 +59,7 @@ function Home() {
       },
     ],
   };
-  
+
   var courseData = [0, 0, 0];
   var workshopData = [0, 0, 0];
   var otherData = [0, 0, 0];
@@ -104,36 +108,35 @@ function Home() {
       )
     );
 
-
   const state2 = {
     labels: yearData,
     datasets: [
       {
         label: "Courses",
         backgroundColor: "#f5e9ae",
-        borderColor:"#e6ca40",
-        borderWidth :2,
+        borderColor: "#e6ca40",
+        borderWidth: 2,
         data: courseData,
       },
       {
         label: "Workshops",
         backgroundColor: "#bdffc1",
-        borderColor:"#43ba4a",
-        borderWidth :2,
+        borderColor: "#43ba4a",
+        borderWidth: 2,
         data: workshopData,
       },
       {
         label: "Guest Lecture",
         backgroundColor: "#a0b0f2",
-        borderColor:"#4d6ceb",
-        borderWidth :2,
+        borderColor: "#4d6ceb",
+        borderWidth: 2,
         data: guestLect,
       },
       {
         label: "Other",
         backgroundColor: "#f5a4a7",
-        borderColor:"#de3e43",
-        borderWidth :2,
+        borderColor: "#de3e43",
+        borderWidth: 2,
         data: otherData,
       },
     ],
@@ -141,8 +144,9 @@ function Home() {
 
   useEffect(() => {
     const data = {
-     id:"",
+      memberId: authState.id,
     };
+    console.log(data.memberId);
     axios
       .post("http://localhost:3001/Dash/getCPDData", data)
 
@@ -158,7 +162,6 @@ function Home() {
         alert(error);
       });
 
-    
     axios
       .post("http://localhost:3001/Dash/getCPDDataYear", data)
 

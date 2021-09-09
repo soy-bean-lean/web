@@ -119,7 +119,7 @@ function Job() {
       <div className="CV">
         <Link to={"/createCV"} className="cvCreate">
           <a href="#" className="review">
-            Genarate My CV
+            Create My CV
           </a>
         </Link>
       </div>
