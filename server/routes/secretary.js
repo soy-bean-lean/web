@@ -1,5 +1,6 @@
 import Router from "express";
 import connection from "../db.js";
+import { createTransport } from "nodemailer";
 
 const secretaryRouter = Router();
 
@@ -9,9 +10,8 @@ secretaryRouter.post("/regPending", async (req, res) => {
     [0, "student", "associate", "professional", "chartered"],
     (error, result, feilds) => {
       if (error) {
-        console.log(error);
+        res.send(error);
       } else {
-        // console.log(result);
         res.send(result);
       }
     }
@@ -24,9 +24,8 @@ secretaryRouter.post("/regApproved", async (req, res) => {
     [1, "student", "associate", "professional", "chartered"],
     (error, result, feilds) => {
       if (error) {
-        console.log(error);
+        res.send(error);
       } else {
-        // console.log(result);
         res.send(result);
       }
     }
@@ -39,9 +38,8 @@ secretaryRouter.post("/regRejected", async (req, res) => {
     [2, "student", "associate", "professional", "chartered"],
     (error, result, feilds) => {
       if (error) {
-        console.log(error);
+        res.send(error);
       } else {
-        // console.log(result);
         res.send(result);
       }
     }
@@ -49,45 +47,125 @@ secretaryRouter.post("/regRejected", async (req, res) => {
 });
 
 secretaryRouter.post("/approve", async (req, res) => {
+  const userID = req.body.userID;
+  const secID = req.body.secID;
 
-    const id = req.body.id;
-    console.log("Anushka");
-    console.log(id);
+  connection.query(
+    "SELECT * FROM `user` WHERE `id` = ? ;",
+    [userID],
+    (error, row) => {
+      if (error) {
+        res.send(error);
+      } else {
+        connection.query(
+          "UPDATE `user` SET `status` = ?, `approval`=? WHERE `id` = ? ;",
+          [1, secID, userID],
+          (error, result, feilds) => {
+            if (error) {
+              res.send(error);
+            } else {
+              const frommail = "vegemartucsc@gmail.com";
+              const tomail = row[0].email;
+              const web = "http://localhost:3000/";
+              let smtpTransport = createTransport({
+                service: "Gmail",
+                port: 465,
 
-    connection.query(
+                auth: {
+                  user: "vegemartucsc@gmail.com",
+                  pass: "vegemart 123",
+                },
+              });
 
-      "UPDATE `user` SET `status` = ? WHERE `id` = ? ;",
-      [1, id],
-      (error, result, feilds) => {
-        if (error) {
-          console.log(error);
-        } else {
-          // console.log(result);
-          res.send(result);
-        }
+              var mailOptions = {
+                from: frommail,
+                to: tomail,
+                subject: "CSSL Registration Approved",
+                html: `
+                <p>Hi ${row[0].firstName}, Your account have been approved by the CSSL.</p><p> You can log in to your account now.</p>
+                ${web}                
+                `,
+              };
+
+              smtpTransport.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  res.json({
+                    msg: "fail",
+                  });
+                } else {
+                  res.json({
+                    msg: "success",
+                  });
+                }
+              });
+
+              smtpTransport.close();
+              res.send(result);
+            }
+          }
+        );
       }
-    );
-  });
+    }
+  );
+});
 
-  secretaryRouter.post("/reject", async (req, res) => {
+secretaryRouter.post("/reject", async (req, res) => {
+  const userID = req.body.userID;
+  const secID = req.body.secID;
 
-    const id = req.body.id;
-    console.log("Anushka");
-    console.log(id);
+  connection.query(
+    "SELECT * FROM `user` WHERE `id` = ? ;",
+    [userID],
+    (error, row, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        connection.query(
+          "UPDATE `user` SET `status` = ?, `approval`=? WHERE `id` = ? ;",
+          [2, secID, userID],
+          (error, result, feilds) => {
+            if (error) {
+              res.send(error);
+            } else {
+              const frommail = "vegemartucsc@gmail.com";
+              const tomail = row[0].email;
+              let smtpTransport = createTransport({
+                service: "Gmail",
+                port: 465,
 
-    connection.query(
+                auth: {
+                  user: "vegemartucsc@gmail.com",
+                  pass: "vegemart 123",
+                },
+              });
 
-      "UPDATE `user` SET `status` = ? WHERE `id` = ? ;",
-      [2, id],
-      (error, result, feilds) => {
-        if (error) {
-          console.log(error);
-        } else {
-          // console.log(result);
-          res.send(result);
-        }
+              var mailOptions = {
+                from: frommail,
+                to: tomail,
+                subject: "CSSL Registration Rejected",
+                html: `<p>Hi ${row[0].firstName}, Your Registration for CSSL have been rejected by the CSSL.</p><p> Please try to contact 1997 for more details. Thank you.</p>`,
+              };
+
+              smtpTransport.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  res.json({
+                    msg: "fail",
+                  });
+                } else {
+                  res.json({
+                    msg: "success",
+                  });
+                }
+              });
+
+              smtpTransport.close();
+              res.send(result);
+            }
+          }
+        );
       }
-    );
-  });
+    }
+  );
+});
 
 export default secretaryRouter;
