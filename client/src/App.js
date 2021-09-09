@@ -23,7 +23,8 @@ import courseReviewP from "./pages/professional/coursReviews";
 
 import workshopPro from "./pages/professional/workshops";
 import workshopViewPro from "./pages/professional/workshopsView";
-import blogsPro from "./pages/professional/blog";
+//import blogsPro from "./pages/professional/blog";
+import blogsPro from "./pages/professional/addBlog";
 import forumPro from "./pages/professional/forum";
 import reportsPro from "./pages/professional/reports";
 
