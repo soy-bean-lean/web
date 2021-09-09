@@ -144,7 +144,7 @@ Course.post("/getContentNo", (req, res) => {
 });
 
 Course.post("/getContentInfo", (req, res) => {
-  const cid = req.body.cId;
+  const cid = req.body.cid;
   const cntid = req.body.cntId;
   connection.query(
     "SELECT title, description, contentType, content FROM coursecontent WHERE contentId = ? AND courseId = ?;",
@@ -171,5 +171,20 @@ Course.post("/getCourseInfo", (req, res) => {
     }
   );
 });
+
+Course.post("/getCourseImg", (req, res) => {
+  const cid = req.body.cId;
+  connection.query(
+    "SELECT image FROM csslcourse WHERE courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 
 export default Course;

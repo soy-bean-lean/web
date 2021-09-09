@@ -54,7 +54,6 @@ function BasicCourseInfo() {
       .catch((error) => {
         console.log(error);
       });
-    
   };
 
   const redirectCourseList = () => {
@@ -68,7 +67,7 @@ function BasicCourseInfo() {
         <h2 className="course-basic-info-title">BASIC COURSE DETAILS</h2>
         <hr></hr>
         <div className="course-basic-info-form">
-        <input
+          <input
             type="submit"
             className="course-btn-redirect-list"
             value="Course List"
@@ -154,15 +153,17 @@ function BasicCourseInfo() {
               value="Submit"
               onClick={InsertCourseInfo}
             />*/}
-            {<Link
-              to={"/addCourseContent/cssl00" + courseId + "/" + courseTitle}
-              className="course-btn-submit"
-              onClick={InsertCourseInfo}
-            >
-              <a href="#" className="course-btn-submit">
-                Create Course
-              </a>
-            </Link>}
+            {
+              <Link
+                to={"/addCourseContent/cssl00" + courseId + "/" + courseTitle}
+                className="course-btn-submit"
+                onClick={InsertCourseInfo}
+              >
+                <a href="#" className="course-btn-submit">
+                  Create Course
+                </a>
+              </Link>
+            }
           </div>
         </div>
       </div>
