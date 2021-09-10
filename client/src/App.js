@@ -9,11 +9,7 @@ import Registration from "./pages/registration/Registration";
 import Login from "./pages/login/Login";
 import settings from "./components/settings/settings";
 import PageNotFound from "./pages/pageNotFound";
-<<<<<<< HEAD
-import PaymentModal from './pages/professional/payments';
-=======
 import PaymentModal from './pages/payment';
->>>>>>> 4f82d7f27ff744cadc2e3406b47434e5916a5f86
 
 //professional
 import dashboardPro from "./pages/professional/dashboard";

@@ -3,9 +3,9 @@ import React from 'react';
 function addBlog(){
     return(
         <div className="write">
-        {/* {file && (
+        {file && (
           <img className="writeImg" src={URL.createObjectURL(file)} alt="" />
-        )} */}
+        )}
         <form className="writeForm" >
           <div className="writeFormGroup">
             <label htmlFor="fileInput">
@@ -15,7 +15,7 @@ function addBlog(){
               type="file"
               id="fileInput"
               style={{ display: "none" }}
-            //   onChange={(e) => setFile(e.target.files[0])}
+              onChange={(e) => setFile(e.target.files[0])}
             />
             <input
               type="text"
