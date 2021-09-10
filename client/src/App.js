@@ -8,6 +8,7 @@ import { AuthContext } from "./helpers/AuthContext";
 import Registration from "./pages/registration/Registration";
 import Login from "./pages/login/Login";
 import PageNotFound from "./pages/pageNotFound";
+import PaymentModal from './pages/payment';
 
 //professional
 import dashboardPro from "./pages/professional/dashboard";
@@ -135,6 +136,7 @@ function App() {
             <>
               <Route path="/" exact component={Login} />
               <Route path="/registration" exact component={Registration} />
+              <Route path="/payment" component={PaymentModal} />
             </>
           )}
           {authState.role == "student" && (
@@ -232,7 +234,6 @@ function App() {
               <Route path="/regPending" component={regPending} />
               <Route path="/regRejected" component={regRejected} />
               <Route path="/paymentsSec" component={paymentsSec} />
-
             </>
           )}
 
