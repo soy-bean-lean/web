@@ -4,7 +4,7 @@ import connection from "../db.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads");
+    cb(null, "uploads/jobvacancy");
   },
   filename: function (req, file, cb) {
     const ext = file.mimetype.split("/")[1];
@@ -15,10 +15,24 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
 });
+const storageCV= multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/jobApplicationCVs");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const uploadCV = multer({
+  storage: storageCV,
+});
 
 const Job = Router();
 
 const getJobs = Router();
+
 Job.route("/").post(upload.single("image"), (req, res, err) => {
   if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
     res.send({ msg: "Not an Image File." });
@@ -31,11 +45,19 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
     const description = req.body.description;
     const addBy = 1000;
     const image = req.file.filename;
-    
 
     connection.query(
       `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy,advertisment) VALUES (?,?,?,?,?,?,?,?)`,
-      [companyName, location, jobRole, email, contact, description, addBy,image],
+      [
+        companyName,
+        location,
+        jobRole,
+        email,
+        contact,
+        description,
+        addBy,
+        image,
+      ],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -46,28 +68,48 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
     );
   }
 });
-/*
-Job.post("/", async (req, res) => {
-  const companyName = req.body.companyName;
-  const jobRole = req.body.jobRole;
-  const location = req.body.location;
-  const contact = req.body.contact;
-  const email = req.body.email;
-  const description = req.body.description;
-  const addBy = 100;
 
-  connection.query(
-    `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy) VALUES (?,?,?,?,?,?,?)`,
-    [companyName, location, jobRole, email, contact, description, addBy],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json("success");
-      }
+Job.route("/addJobApplicaation").post(
+  uploadCV.single("image"),
+  (req, res, err) => {
+    if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|pdf|PDF|png|PNG)$/)) {
+      res.send({ msg: "Not an Image File." });
+    } else {
+      const Currentdate = req.body.Currentdate;
+      const memberId = req.body.memberId;
+      const jobId = req.body.jobId;
+      const marks = req.body.marks;
+
+      const description = req.body.description;
+      const cvFile = req.file.filename;
+
+      const answerSheet = "req.file.answerSheet;";
+      console.log(""+cvFile);
+      connection.query(
+        `INSERT INTO jobapplicant (jvId ,memberId,description,cv,sheet,date,marks,status) VALUES (?,?,?,?,?,?,?,?)`,
+        [
+          jobId,
+          memberId,
+          description,
+          cvFile,
+          answerSheet,
+          Currentdate,
+          marks,
+          "pending",
+        ],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+
+            res.json("success");
+          }
+        }
+      );
     }
-  );
-});*/
+  }
+);
+
 Job.post("/addQuestion", async (req, res) => {
   const question = req.body.question;
   const ans1 = req.body.ans1;
@@ -107,44 +149,6 @@ Job.post("/getJobs", (req, res) => {
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
-});
-
-Job.post("/sendAnswers", (req, res) => {
-  const numberOfQuestion = req.body.length * 1 - 1;
-  var marks = 0;
-  var memberId = "1001";
-  var jobId = req.body[0];
-  var finalMarks = 0;
-  /* connection.query(
-    `INSERT INTO jobapplicant ( jvId  , memberId  ,date ,status) VALUES (?,?,?,?)`,
-    [question, ans1, ans2, ""],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json("success");
-      }
-    }
-  );*/
-  console.log(numberOfQuestion);
-  for (let Qnumber = 1; Qnumber <= numberOfQuestion; Qnumber++) {
-    console.log(
-      "_____________________" + Qnumber + "__________________________________"
-    );
-    const sqlSelect =
-      "SELECT Correct from jobquestions where Qnumber =" + Qnumber + "";
-    connection.query(sqlSelect, (err, result) => {
-      const answer = result[0].Correct;
-      console.log(answer);
-      if (answer == req.body[Qnumber]) {
-        marks = marks + 1;
-      }
-      finalMarks = (marks / numberOfQuestion) * 100;
-
-      console.log("marks _> " + Qnumber + "================= " + finalMarks);
-    });
-  }
-  console.log("finalMarks -> " + finalMarks);
 });
 
 Job.get("/getJobView", (req, res) => {

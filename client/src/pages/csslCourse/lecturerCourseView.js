@@ -8,12 +8,22 @@ function LecturerCourseView() {
   const { id } = useParams();
   const { title } = useParams();
 
+  const [courseImg, setCourseImg] = useState("");
   const [content, setContent] = useState(null);
 
   useEffect(() => {
     const formData = {
       cId: id,
     };
+    axios
+      .post("http://localhost:3001/csslcourse/getCourseImg", formData)
+      .then((res) => {
+        setCourseImg("http://localhost:3001/uploads/" + res.data[0].image)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
     axios
       .post("http://localhost:3001/csslcourse/getContentList", formData)
 
@@ -129,14 +139,6 @@ function LecturerCourseView() {
             value="Delete Course"
           />
           <Link
-            to={"/addCourseContent/cssl00" + id + "/" + title}
-            className="lcv-content-add-btn"
-          >
-            <a href="#" className="lcv-content-add-btn">
-              Add Content
-            </a>
-          </Link>
-          <Link
             to={"/lecCourse"}
             className="lcv-redirect-btn"
           >
@@ -144,6 +146,16 @@ function LecturerCourseView() {
               Course List
             </a>
           </Link>
+          <Link
+            to={"/addCourseContent/cssl00" + id + "/" + title}
+            className="lcv-content-add-btn"
+          >
+            <a href="#" className="lcv-content-add-btn">
+              Add Content
+            </a>
+          </Link>
+          {/*courseImg && <img src={courseImg} alt="Image" className="lcv-course-image" />*/}
+
         </div>
         <div className="lecturer-course-view-content-list">{contentList}</div>
       </div>

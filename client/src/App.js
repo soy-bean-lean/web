@@ -7,6 +7,7 @@ import { AuthContext } from "./helpers/AuthContext";
 
 import Registration from "./pages/registration/Registration";
 import Login from "./pages/login/Login";
+import settings from "./components/settings/settings";
 import PageNotFound from "./pages/pageNotFound";
 import PaymentModal from './pages/payment';
 
@@ -23,12 +24,14 @@ import courseReviewP from "./pages/professional/coursReviews";
 
 import workshopPro from "./pages/professional/workshops";
 import workshopViewPro from "./pages/professional/workshopsView";
-import blogsPro from "./pages/professional/blog";
+//import blogsPro from "./pages/professional/blog";
+import blogsPro from "./pages/professional/addBlog";
 import forumPro from "./pages/professional/forum";
 import reportsPro from "./pages/professional/reports";
 
 import jobView from "./pages/professional/job";
 import jobAddvertisment from "./pages/professional/jobView";
+import addJobCV from "./pages/professional/addCV";
 import questionare from "./pages/professional/questionare";
 
 import createCV from "./pages/professional/genarateCV";
@@ -168,6 +171,7 @@ function App() {
           {authState.role == "professional" && (
             <>
               <Navbar />
+
               <Route path="/dashboardP" exact component={dashboardPro} />
               <Route path="/cpdP" component={cpdPro} />
               <Route path="/addCPD" component={cpdAddPro} />
@@ -186,6 +190,10 @@ function App() {
                 path="/jobAddvertisment/:id"
                 component={jobAddvertisment}
               />
+              <Route
+                path="/addJobCV/:id:finalMarks"
+                component={addJobCV}
+              />
               <Route path="/questionare/:id" component={questionare} />
               <Route path="/createCV" component={createCV} />
               <Route path="/paymentsP" component={paymentsPro} />
@@ -195,6 +203,10 @@ function App() {
               <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
               <Route path="/editCourse/cssl00:id/:title" component={editCourseInfo} />
               <Route path="/editCourseContent/cssl00:id/:title/:cntId/:cntTitle" component={editCourseContent} />
+            
+            
+              <Route path="/settings" exact component={settings} />
+
             </>
           )}          
 
@@ -241,7 +253,7 @@ function App() {
             <>
             <Navbar />
               <Route path="/dashboardCou" exact component={dashboardCou} />
-              <Route path="/jobCou" component={addJob} />
+              <Route path="/jobCou" component={addJobCou} />
               <Route path="/blogCou" component={blogsCou} />
               <Route path="/workshopCou" component={verifyWorkshop} />
               <Route path="/reportsCou" component={reportCou} />

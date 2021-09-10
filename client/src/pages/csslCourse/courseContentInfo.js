@@ -3,11 +3,13 @@ import axios from "axios";
 import "./courseContentInfo.css";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
+import TextEditor from "../../components/RichTextEditor";
 
 function AddCourseContent(props) {
   const [contentTitle, setContentTitle] = useState("");
   const [contentDes, setContentDes] = useState("");
   const [contentType, setContentType] = useState("");
+  const [note, setNote] = useState("");
   const [contentFile, setContentFile] = useState();
   const [videoLink, setVideoLink] = useState("");
   const [contentNum, setContentNum] = useState(0);
@@ -103,6 +105,10 @@ function AddCourseContent(props) {
     setContentFile();
     setVideoLink("");
   };
+
+  const display = (val) =>{
+    console.log(val);
+  }
   return (
     <div className="content-basic-info-main">
       <div className="content-basic-info">
@@ -138,6 +144,10 @@ function AddCourseContent(props) {
                 value={contentDes}
                 onChange={(e) => setContentDes(e.target.value)}
               ></textarea>
+            </div>
+            <div className="content-field-block">
+              <h4 className="content-info-title">Note</h4>
+              <TextEditor onValueChange={display}/>
             </div>
             <div className="content-field-block">
               <h4 className="content-info-title">Content Type</h4>

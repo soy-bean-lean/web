@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import "./style/questionare.css";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -7,6 +8,9 @@ import { useParams } from "react-router-dom";
 
 function Questionare() {
   const { id } = useParams();
+
+
+
 
   const [answer, setAnswer] = useState([id, 0, 0, 0, 0, 0]);
   const [data, setData] = useState(null);
@@ -31,10 +35,9 @@ function Questionare() {
       });
   }, []);
 
-  const submit = () => {
-    console.log(answer);
+  function next() {
     console.log(data);
-    var finalMarks=0;
+    var finalMarks = 0;
 
     for (let Qnumber = 1; Qnumber <= 5; Qnumber++) {
       if (answer[Qnumber] === data[Qnumber - 1].Correct) {
@@ -42,21 +45,11 @@ function Questionare() {
         console.log(Qnumber + "is Correct");
         finalMarks = finalMarks + 1;
       }
-     // history.push("/");
     }
     console.log(finalMarks);
-    axios
-      .post("http://localhost:3001/job/sendAnswers", answer)
-      .then((response) => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          serCorrection(response.data);
-
-          //history.push("/");
-        }
-      });
-  };
+    history.push("/addJobCV/" + id + finalMarks * 15051);
+  }
+ 
   const Questions =
     data &&
     data.map((data) => (
@@ -162,16 +155,15 @@ function Questionare() {
       </>
     ));
   return (
-    <div className="questionare">
+    <div className="questionare" id="divToPrint">
       {Questions}
 
       <div className="send">
-      
-      
         <Link className="sendQues">
-          <a href="#" className="sendData" onClick={submit}>
+          <a href="#" className="sendData" onClick={next}>
             Submit Answers
           </a>
+
         </Link>
       </div>
     </div>

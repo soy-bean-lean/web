@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useContext, useEffect } from "react";
 import axios from "axios";
 
 import "./style/dashboard.css";
 import { makeStyles, Paper, Grid } from "@material-ui/core";
 import { Line, Pie, Bar } from "react-chartjs-2";
-
+import { AuthContext } from "../../helpers/AuthContext";
 import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +24,8 @@ const options = {
   maintainAspectRatio: false,
 };
 function Home() {
+  const { authState, setAuthState } = useContext(AuthContext);
+
   const [dataCPD, setData] = useState(null);
   const [members, setMemebrs] = useState(null);
   const [workshops, setWorkshops] = useState(null);
@@ -120,7 +122,7 @@ function Home() {
   };
   useEffect(() => {
     const data = {
-      id: "",
+      memberId:authState.id,
     };
     axios
       .post("http://localhost:3001/Dash/getCPDData", data)

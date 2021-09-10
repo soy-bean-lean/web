@@ -3,7 +3,8 @@ import "./style/addQuestion.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function AddQuestion() {
   const [question, setQuestion] = useState("");
   const [ans1, setAnswer1] = useState("");
@@ -25,14 +26,24 @@ function AddQuestion() {
       ans4: ans4,
       correct: correct,
     };
-    axios.post("http://localhost:3001/job/addQuestion", data).then((response) => {
-      if (response.data.error) {
-      
-        alert(response.data.error);
-      } else {
-        history.push("/");
-      }
-    });
+
+    axios
+      .post("http://localhost:3001/job/addQuestion", data)
+      .then((response) => {
+        if (response.data.error) {
+          toast.error("Unable to Add Your Question,Try Again!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          });
+          history.push("/jobCou");
+        } else {
+          toast.success("Job Question Has Successfully Added!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          });
+          history.push("/dashboardSec");
+        }
+      });
   };
   return (
     <>

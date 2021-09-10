@@ -110,7 +110,7 @@ function Navbar() {
               <MdIcons.MdNotifications />
             </Link>
 
-            <Link to="#" className="settings">
+            <Link to="/settings" className="settings">
               <AiIcons.AiFillSetting />
             </Link>
           </div>

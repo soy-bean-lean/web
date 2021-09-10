@@ -3,10 +3,121 @@ import connection from "../db.js";
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import validateToken from "../middlewares/AuthMiddleware.js";
+import multer from "multer";
 
 const { sign } = pkg;
 
 const userRouter = Router();
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/profileImages");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+//addProfile pic
+
+userRouter
+  .route("/updateProfileImage")
+  .post(upload.single("image"), (req, res, err) => {
+    if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
+      res.send({ msg: "Not an Image File." });
+    } else {
+      const image = req.file.filename;
+      const memberId = req.body.memberId;
+
+      connection.query(
+        " UPDATE user SET profileImage = " +
+          " ' " +
+          image +
+          " ' " +
+          "  WHERE id = " +
+          memberId +
+          ";",
+        console.log(
+          " UPDATE user SET profileImage = " +
+            image +
+            "  WHERE id = " +
+            memberId +
+            ";"
+        ),
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.json("success");
+          }
+        }
+      );
+    }
+  });
+
+userRouter.post("/updateBasicDetails", async (req, res) => {
+  const memberId = req.body.memberId;
+  const firstName = req.body.firstName;
+  const lastName = req.body.secondName;
+  console.log(firstName);
+  console.log(req.body);
+  const residentialAddress = req.body.address;
+  const contactNumber = req.body.contact;
+  const birthDate = req.body.dob;
+  const nic = req.body.nic;
+  const email = req.body.email;
+  connection.query(
+    " UPDATE user SET firstName = '" +
+      firstName +
+      " ' , lastName = '" +
+      lastName +
+      " ' ,residentialAddress = '" +
+      residentialAddress +
+      " ' ,contactNumber = '" +
+      contactNumber +
+      " ' ,birthDate = '" +
+      birthDate +
+      " ' ,email = '" +
+      email +
+      " ' ,nic = '" +
+      nic +
+      " '  WHERE id = " +
+      memberId +
+      ";",
+    console.log(
+      " UPDATE user SET firstName = '" +
+        firstName +
+        " ' , lastName = '" +
+        lastName +
+        " ' ,residentialAddress = '" +
+        residentialAddress +
+        " ' ,contactNumber = '" +
+        contactNumber +
+        " ' ,birthDate = '" +
+        birthDate +
+        " ' ,email = '" +
+        email +
+        " ' ,nic = '" +
+        nic +
+        " '  WHERE id = " +
+        memberId +
+        ";"
+    ),
+
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json("success");
+      }
+    }
+  );
+
+});
 
 //Register
 
@@ -72,7 +183,6 @@ userRouter.post("/", async (req, res) => {
   );
 });
 
-
 //login
 //userRouter.post("/login", validateToken, async (req, res) => {
 userRouter.post("/login", async (req, res) => {
@@ -82,6 +192,7 @@ userRouter.post("/login", async (req, res) => {
   connection.query(
     //temporary sql query for testing
     "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
+
     [username],
     (err, result) => {
       if (result.length > 0) {
@@ -113,6 +224,16 @@ userRouter.post("/login", async (req, res) => {
       console.log(result);
     }
   );
+});
+userRouter.post("/getProfileData", (req, res) => {
+  const memberId = req.body.memberId;
+
+  const sqlSelect =
+    "select firstName ,lastName ,residentialAddress ,email,nic,contactNumber, birthDate from user where id = "+memberId+";"
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
 });
 
 userRouter.get("/auth", validateToken, (req, res) => {

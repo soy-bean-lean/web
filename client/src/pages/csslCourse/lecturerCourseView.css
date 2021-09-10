@@ -15,8 +15,8 @@
   width: auto;
   align-items: center;
   overflow-y: auto;
-  top: 28%;
-  position: absolute;
+  top: 10%;
+  position: relative;
 }
 
 .lcv-content-edit-btn {
@@ -215,7 +215,7 @@
 }
 
 .lcv-content-add-btn a {
-  top: 22%;
+  top: 23%;
   left: 11%;
   position: absolute;
   background: #1628d1;

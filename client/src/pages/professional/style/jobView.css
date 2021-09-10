@@ -10,19 +10,22 @@
     "footer mainR";
 }
 .mainR {
-  margin-top: 8%;
   grid-area: mainR;
   padding: 2%;
-border-left:1px black;
-background-color: antiquewhite;
+  border-left: 1px black;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }
 .mainL {
   grid-area: mainL;
+
   margin-top: 12%;
   margin-left: 8%;
   padding: 2%;
 
-overflow-y: scroll;
+  overflow-y: scroll;
 }
 .footer {
   height: auto;
@@ -30,12 +33,16 @@ overflow-y: scroll;
   float: left;
   grid-area: footer;
 }
-.title h1 {
-  margin-top: 150px;
+.mainL h1 {
   justify-content: center;
   margin-right: 10%;
-  margin-bottom: 1%;
-  margin-left: 1%;
+  margin-bottom: 2%;
+}
+.mainL .a {
+  margin-bottom: 10px;
+}
+.addvertizement {
+  width: 90%;
 }
 .btn a {
   background: #060a5f;

@@ -3,6 +3,7 @@ import axios from "axios";
 import "./courseContentInfo.css";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
+import TextEditor from "../../components/RichTextEditor";
 
 function EditCourseContent(props) {
   const [contentTitle, setContentTitle] = useState("");
@@ -120,6 +121,10 @@ function EditCourseContent(props) {
                 value={contentDes}
                 onChange={(e) => setContentDes(e.target.value)}
               ></textarea>
+            </div>
+            <div className="content-field-block">
+              <h4 className="content-info-title">Note</h4>
+              <TextEditor />
             </div>
             <div className="content-field-block">
               <h4 className="content-info-title">Content Type</h4>
