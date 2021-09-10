@@ -153,7 +153,9 @@ function App() {
               <Route path="/blogS" component={blogStu} />
               <Route path="/forumS" component={forumStu} />
               <Route path="/reportsS" component={reportsStu} />
-              <Route path="/paymentsS" component={paymentsStu} />                     
+              <Route path="/paymentsS" component={paymentsStu} />          
+              <Route path="/settings" exact component={settings} />
+           
             </>
           )} 
 
@@ -166,7 +168,9 @@ function App() {
               <Route path="/forumA" component={forumAss} />
               <Route path="/reportsA" component={reportsAss} />
               <Route path="/jobA" component={jobAss} />
-              <Route path="/paymentsA" component={paymentsAss} />                    
+              <Route path="/paymentsA" component={paymentsAss} />      
+              <Route path="/settings" exact component={settings} />
+              
             </>
           )} 
 
@@ -232,7 +236,9 @@ function App() {
               <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
               <Route path="/questionare/:id" component={questionare} />
               <Route path="/createCV" component={createCV} />  
-              <Route path="/paymentsP" component={paymentsPro} />           
+              <Route path="/paymentsP" component={paymentsPro} />   
+              <Route path="/settings" exact component={settings} />
+        
             </>
           )}      
           
@@ -248,6 +254,8 @@ function App() {
               <Route path="/regPending" component={regPending} />
               <Route path="/regRejected" component={regRejected} />
               <Route path="/paymentsSec" component={paymentsSec} />
+              <Route path="/settings" exact component={settings} />
+
             </>
           )}
 
@@ -263,7 +271,9 @@ function App() {
               <Route path="/regRejectedC" component={regRejectedCou} />
               <Route path="/regApproveC" component={regApproveCou} />
               <Route path="/paymentCou" component={paymentCou} />
-              <Route path="/cpdCou" component={cpdCou} />            
+              <Route path="/cpdCou" component={cpdCou} /> 
+              <Route path="/settings" exact component={settings} />
+           
             </>
           )}
         </Switch>

@@ -32,13 +32,15 @@ function Navbar() {
     setAuthState({
       fname: "",
       lname: "",
+      progileImg: "",
       role: "",
       id: 0,
       status: false,
     });
     history.push("/");
   };
-
+  const image =
+    "http://localhost:3001/uploads/profileImages/" + authState.profileImage;
   if (authState.role == "associate") {
     return (
       <>
@@ -51,7 +53,7 @@ function Navbar() {
               <MdIcons.MdNotifications />
             </Link>
 
-            <Link to="#" className="settings">
+            <Link to="/settings" className="settings">
               <AiIcons.AiFillSetting />
             </Link>
           </div>
@@ -73,7 +75,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -132,7 +134,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -169,7 +171,7 @@ function Navbar() {
               <MdIcons.MdNotifications />
             </Link>
 
-            <Link to="#" className="settings">
+            <Link to="/settings" className="settings">
               <AiIcons.AiFillSetting />
             </Link>
           </div>
@@ -191,7 +193,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -228,7 +230,7 @@ function Navbar() {
               <MdIcons.MdNotifications />
             </Link>
 
-            <Link to="#" className="settings">
+            <Link to="/settings" className="settings">
               <AiIcons.AiFillSetting />
             </Link>
           </div>
@@ -250,7 +252,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgCha} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -287,7 +289,7 @@ function Navbar() {
               <MdIcons.MdNotifications />
             </Link>
 
-            <Link to="#" className="settings">
+            <Link to="/settings" className="settings">
               <AiIcons.AiFillSetting />
             </Link>
           </div>
@@ -309,7 +311,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgCouncil} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -346,7 +348,7 @@ function Navbar() {
               <MdIcons.MdNotifications />
             </Link>
 
-            <Link to="#" className="settings">
+            <Link to="/settings" className="settings">
               <AiIcons.AiFillSetting />
             </Link>
           </div>
@@ -368,7 +370,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgSec} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>

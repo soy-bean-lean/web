@@ -13,7 +13,6 @@ function Settings() {
   const { authState, setAuthState } = useContext(AuthContext);
   const memberId = authState.id;
 
-  console.log(authState.profileImage);
 
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
@@ -37,7 +36,6 @@ function Settings() {
     const formData = new FormData();
     formData.append("image", imgFile);
     formData.append("memberId", memberId);
-
     fetch("http://localhost:3001/auth/updateProfileImage", {
       method: "POST",
       body: formData,
@@ -94,9 +92,10 @@ function Settings() {
       })
       .catch((error) => {
         toast.error("Unable to Update Profile ,Try Again!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
-          });      });
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
+      });
   };
 
   const updatePassword = () => {
@@ -105,15 +104,13 @@ function Settings() {
       currentPass: currentPassword,
       newPass: newPassword,
       confirmPass: confirmPassword,
-    
     };
-    if(newPassword === confirmPassword){
-
-    }else{
-        toast.error("Passwords does not Match", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
-          });
+    if (newPassword === confirmPassword) {
+    } else {
+      toast.error("Passwords does not Match", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
     /*axios
       .post("http://localhost:3001/auth/updateBasicDetails", formData2)
@@ -135,7 +132,6 @@ function Settings() {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
           });      });*/
-          
   };
 
   useEffect(() => {
@@ -157,8 +153,6 @@ function Settings() {
           setContact(response.data[0].contactNumber);
           setNIC(response.data[0].nic);
           setDOB(response.data[0].birthDate);
-          console.log(response.data);
-          console.log(ProfileData[0]);
         }
       })
       .catch((error) => {

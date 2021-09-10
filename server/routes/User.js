@@ -34,20 +34,14 @@ userRouter
       const memberId = req.body.memberId;
 
       connection.query(
-        " UPDATE user SET profileImage = " +
-          " ' " +
+        " UPDATE user SET profileImage =" +
+          " '" +
           image +
-          " ' " +
+          "'" +
           "  WHERE id = " +
           memberId +
           ";",
-        console.log(
-          " UPDATE user SET profileImage = " +
-            image +
-            "  WHERE id = " +
-            memberId +
-            ";"
-        ),
+
         (err, result) => {
           if (err) {
             console.log(err);
@@ -63,8 +57,6 @@ userRouter.post("/updateBasicDetails", async (req, res) => {
   const memberId = req.body.memberId;
   const firstName = req.body.firstName;
   const lastName = req.body.secondName;
-  console.log(firstName);
-  console.log(req.body);
   const residentialAddress = req.body.address;
   const contactNumber = req.body.contact;
   const birthDate = req.body.dob;
@@ -88,25 +80,6 @@ userRouter.post("/updateBasicDetails", async (req, res) => {
       " '  WHERE id = " +
       memberId +
       ";",
-    console.log(
-      " UPDATE user SET firstName = '" +
-        firstName +
-        " ' , lastName = '" +
-        lastName +
-        " ' ,residentialAddress = '" +
-        residentialAddress +
-        " ' ,contactNumber = '" +
-        contactNumber +
-        " ' ,birthDate = '" +
-        birthDate +
-        " ' ,email = '" +
-        email +
-        " ' ,nic = '" +
-        nic +
-        " '  WHERE id = " +
-        memberId +
-        ";"
-    ),
 
     (err, result) => {
       if (err) {
@@ -116,7 +89,6 @@ userRouter.post("/updateBasicDetails", async (req, res) => {
       }
     }
   );
-
 });
 
 //Register
@@ -200,7 +172,6 @@ userRouter.post("/login", async (req, res) => {
           if (!match) {
             res.json({ errorPass: "Incorrect password" });
           } else {
-            console.log(result[0].profileImage);
             const accessToken = sign(
               {
                 firstName: result[0].firstName,
@@ -211,6 +182,7 @@ userRouter.post("/login", async (req, res) => {
               },
               "importantsecret"
             );
+            console.log("_____" + result[0].profileImage);
             res.json({
               token: accessToken,
               firstName: result[0].firstName,
@@ -224,7 +196,6 @@ userRouter.post("/login", async (req, res) => {
       } else {
         res.json({ errorUser: "Username doesn't exists" });
       }
-      console.log(result);
     }
   );
 });
@@ -232,7 +203,9 @@ userRouter.post("/getProfileData", (req, res) => {
   const memberId = req.body.memberId;
 
   const sqlSelect =
-    "select firstName ,lastName ,residentialAddress ,email,nic,contactNumber, birthDate from user where id = "+memberId+";"
+    "select firstName ,lastName ,residentialAddress ,email,nic,contactNumber, birthDate from user where id = " +
+    memberId +
+    ";";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
