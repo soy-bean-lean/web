@@ -144,7 +144,7 @@ Course.post("/getContentNo", (req, res) => {
 });
 
 Course.post("/getContentInfo", (req, res) => {
-  const cid = req.body.cid;
+  const cid = req.body.cId;
   const cntid = req.body.cntId;
   connection.query(
     "SELECT title, description, contentType, content FROM coursecontent WHERE contentId = ? AND courseId = ?;",

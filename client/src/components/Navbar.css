@@ -179,7 +179,7 @@ align-items: center;
 }
 */
 
-span {
+.navbar-span-cls {
     margin-left: 16px;
 }
 
