@@ -8,7 +8,7 @@ import axios from "axios";
 function Job() {
   const { id } = useParams();
   const [compayData, setCompayData] = useState(null);
-  const [image, setImage] = useState("");
+  const [image, setJobImage] = useState("");
 
   useEffect(() => {
     const data = {
@@ -17,14 +17,17 @@ function Job() {
     };
     axios
       .get("http://localhost:3001/job/getJobView", { params: { id: id } })
+
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
           setCompayData(response.data);
           console.log(compayData);
-
-          console.log(image);
+          setJobImage(
+            "http://localhost:3001/uploads/jobvacancy/" +
+              response.data[0].advertisment
+          );
         }
       })
       .catch((error) => {
@@ -32,26 +35,23 @@ function Job() {
       });
   }, []);
 
-// setImage("http://localhost:3001/uploads/a.png");
+  // setImage("http://localhost:3001/uploads/a.png");
   //console.log(image);
 
   const jobview =
     compayData &&
     compayData.map((compayData) => (
       <>
-        <div className="headder">
           <div className="mainL">
             <h1>{compayData.companyName}</h1>
-            <h2>{compayData.designation}</h2>
-            <h4>{compayData.location}</h4>
-            <h4>{compayData.contact}</h4>
-            <h4>{compayData.email}</h4>
+            <h2 className="a">{compayData.designation}</h2>
+            <h4 className="a" >{compayData.location}</h4>
+            <h4 className="a">{compayData.contact}</h4>
+            <h4 className="a">{compayData.email}</h4>
 
             <p>{compayData.description}</p>
           </div>
-          <div className="mainR">
-
-          </div>
+          <div className="mainR"></div>
           <div className="footer">
             <Link to={"/questionare/" + id} className="btn">
               <a href="#" className="review">
@@ -64,10 +64,24 @@ function Job() {
               </a>
             </Link>
           </div>
-        </div>
       </>
     ));
-  return <div className="jobviewS">{jobview}</div>;
+  return (
+    <>
+    
+    <div className="headder">
+      
+    {jobview}
+    <div className="mainR">
+        {image && <img src={image} alt="Image" className="addvertizement" />}
+      </div>
+    </div>
+
+
+     
+      ;
+    </>
+  );
 }
 
 export default Job;

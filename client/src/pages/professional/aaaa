@@ -1,0 +1,115 @@
+import React, { useState, useContext, useEffect } from "react";
+import "./style/basicDetails.css";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { AuthContext } from "../../helpers/AuthContext";
+
+function AddCV() {
+  const { id } = useParams();
+  const { finalMarks } = useParams(0);
+  const marks = ((finalMarks * 1) / 15051) * 20;
+  var today = new Date(),
+    Currentdate =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+  const { authState, setAuthState } = useContext(AuthContext);
+
+  const [description, setDescription] = useState("");
+  const [jobId, setJobId] = useState("");
+  const [memberId, setMemberId] = useState("");
+  const [cvFile, setCVFile] = useState();
+  const [answerSheet, setAnswerSheet] = useState();
+
+  setJobId(id);
+  setMemberId(authState.id);
+
+  let history = useHistory();
+
+  const addJob = () => {
+    const formData = new FormData();
+    formData.append("cvFile", cvFile);
+    formData.append("answerSheet", answerSheet);
+    formData.append("description", description);
+    formData.append("marks", marks);
+    formData.append("jobId", jobId);
+    formData.append("memberId", memberId);
+    formData.append("Currentdate", Currentdate);
+
+    fetch("http://localhost:3001/job/addJobApplicaation", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "multipart/form-data",
+      },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.data);
+        //set course id
+        alert("Successful");
+        const next = "Content";
+        /*let path = "/addcourseContent/" + courseTitle;
+        history.push(path);*/
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  return (
+    <>
+      <div className="job-basic-info">
+        <h1 className="job-basic-info-title">Add CV</h1>
+        <hr></hr>
+        <div className="job-basic-info-form">
+          <div className="job-basic-info-block">
+            <div className="job-field-block">
+              <h4 className="job-info-title">Description</h4>
+              <textarea
+                className="note"
+                placeholder="--Description--"
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
+              ></textarea>
+            </div>
+            <div className="job-field-block">
+              <h4 className="job-info-title">Add CV Here</h4>
+              <input
+                type="file"
+                className="input"
+                id="course-img"
+                name="course-img"
+                accept="image/*"
+                onChange={(e) => setCVFile(e.target.files[0])}
+              ></input>
+            </div>
+            <div className="job-field-block">
+              <h4 className="job-info-title">Add Answer Sheet</h4>
+              <input
+                type="file"
+                className="input"
+                id="course-img"
+                name="course-img"
+                accept="image/*"
+                onChange={(e) => setAnswerSheet(e.target.files[0])}
+              ></input>
+            </div>
+          </div>
+          <button className="job-btn-submit" onClick={addJob}>
+            {" "}
+            Add{" "}
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default AddCV;

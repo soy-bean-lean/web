@@ -18,7 +18,6 @@ function LecturerCourseView() {
     axios
       .post("http://localhost:3001/csslcourse/getCourseImg", formData)
       .then((res) => {
-        console.log(res);
         setCourseImg("http://localhost:3001/uploads/" + res.data[0].image)
       })
       .catch((error) => {

@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import { useLocation } from "react-router";
-import { useHistory } from "react-router-dom";
+import { AuthContext } from "./helpers/AuthContext";
 
 import Registration from "./pages/registration/Registration";
 import Login from "./pages/login/Login";
+import settings from "./components/settings/settings";
+import PageNotFound from "./pages/pageNotFound";
+import PaymentModal from './pages/professional/payments';
 
 //professional
 import dashboardPro from "./pages/professional/dashboard";
@@ -22,20 +24,27 @@ import courseReviewP from "./pages/professional/coursReviews";
 
 import workshopPro from "./pages/professional/workshops";
 import workshopViewPro from "./pages/professional/workshopsView";
-import blogsPro from "./pages/professional/blog";
+//import blogsPro from "./pages/professional/blog";
+import blogsPro from "./pages/professional/addBlog";
 import forumPro from "./pages/professional/forum";
 import reportsPro from "./pages/professional/reports";
 
 import jobView from "./pages/professional/job";
 import jobAddvertisment from "./pages/professional/jobView";
+import addJobCV from "./pages/professional/addCV";
 import questionare from "./pages/professional/questionare";
 
 import createCV from "./pages/professional/genarateCV";
 
 import paymentsPro from "./pages/professional/payments";
 
+
 import courseInfo from "./pages/csslCourse/basicDetails";
 import courseContentInfo from "./pages/csslCourse/courseContentInfo";
+import lecCourseList from "./pages/csslCourse/lecturingCourseList";
+import lecturerCourseView from "./pages/csslCourse/lecturerCourseView";
+import editCourseContent from "./pages/csslCourse/editCourseContent";
+import editCourseInfo from "./pages/csslCourse/editCourseDetails";
 
 //chartered
 import dashboardCha from "./pages/chartered/dashboard";
@@ -91,179 +100,160 @@ import regRejectedCou from "./pages/council/regRejectedC";
 import cpdCou from "./pages/council/cpd";
 
 function App() {
-  //   const [loginStatus, setLoginStatus] = useState(false);
-  //   const [role, setRole] = useState("");
+  
+  const [authState, setAuthState] = useState({
+    fname: "",
+    lname: "",
+    role: "",
+    id: 0,
+    status: false,
+  });
 
-  //   axios.defaults.withCredentials = true;
-  //   //console.log("role");
-  //   useEffect(() => {
-  //     axios.get("http://localhost:3001/auth/login").then(response) => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            fname: response.data.firstName,
+            lname: response.data.lastName,
+            role: response.data.role,
+            id: response.data.id,
+            status: true,
+          });
+        }
+      });
+  }, []);
 
-  //        //console.log(response);
+  return (
+    <AuthContext.Provider value={{ authState, setAuthState }}>
+      <Router>
+        <Switch>
+          {!authState.status && (
+            <>
+              <Route path="/" exact component={Login} />
+              <Route path="/registration" exact component={Registration} />
+              <Route path="/payment" component={PaymentModal} />
+            </>
+          )}
+          {authState.role == "student" && (
+            <>    
+            <Navbar />
+              <Route path="/dashboardStu" exact component={dashboardCha} />
+              <Route path="/courseS" component={courseStu} />
+              <Route path="/workshopS" component={workshopStu} />
+              <Route path="/blogS" component={blogStu} />
+              <Route path="/forumS" component={forumStu} />
+              <Route path="/reportsS" component={reportsStu} />
+              <Route path="/paymentsS" component={paymentsStu} />                     
+            </>
+          )} 
 
-  //       if (response.data.loggedIn == true) {
-
-  //         setLoginStatus(true);
-  //         setRole(response.data.user[0].username);
-  //       // } else {
-  // //         //alert(response.data.error);
-  //         }
-  //     });
-  //   }, []);
-
-  //  // console.log(loginStatus);
-  //   console.log(role);
-  //const loginStatus=true;
-  // const [loginStatus, setLoginStatus] = useState(false);
-
-  const loginStatus = true;
-  const role = false;
-
-  if (loginStatus == false) {
-    return (
-      <>
-        <Router>
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/registration" exact component={Registration} />
-          </Switch>
-        </Router>
-      </>
-    );
-  } else {
-  //   const mname = "Jihani";
-  //  const mtype = "Secretariat";
-
-    // const mname = "Supun";
-    //  const mtype = "Council";
-
-    const mname = "Chamika";
-    const mtype = "Professional";
-
-    // const mname = "Anushka";
-    // const mtype = "Chartered";
-
-    if (mtype == "Professional") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardPro} />
-              <Route path="/cpdP" component={cpdPro} />
-              <Route path="/addCPD" component={cpdAddPro} />
-              <Route path="/courseP" component={coursePro} />
-              <Route path="/coursViewP/:id" component={coursView} />
-              <Route path="/coursMyViewP/:id" component={coursMyView} />
-              <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
-              <Route path="/courseReviewP/:id" component={courseReviewP} />
-
-              <Route path="/workshopP" component={workshopPro} />
-              <Route path="/workshopViewP" component={workshopViewPro} />
-
-              <Route path="/blogP" component={blogsPro} />
-              <Route path="/forumP" component={forumPro} />
-              <Route path="/reportsP" component={reportsPro} />
-              <Route path="/job" component={jobView} />
-              <Route path="/paymentsP" component={paymentsPro} />
-
-              <Route path="/courseP" component={coursePro} />
-              <Route path="/workshopP" component={workshopPro} />
-              <Route path="/blogP" component={blogsPro} />
-              <Route path="/forumP" component={forumPro} />
-              <Route path="/reportsP" component={reportsPro} />
-
-              <Route path="/job" component={jobView} />
-              <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
-              <Route path="/questionare/:id" component={questionare} />
-
-              <Route path="/createCV" component={createCV} />
-
-              <Route path="/paymentsP" component={paymentsPro} />
-
-              <Route path="/addCourse" component={courseInfo} />
-              <Route path="/addcourseContent" component={courseContentInfo} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Chartered") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardCha} />
-              <Route path="/cpdP" component={cpdPro} />
-              <Route path="/addCPD" component={cpdAddPro} />
-              <Route path="/courseP" component={coursePro} />
-              <Route path="/coursViewP/:id" component={coursView} />
-              <Route path="/coursMyViewP/:id" component={coursMyView} />
-              <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
-              <Route path="/courseReviewP/:id" component={courseReviewP} />
-
-              <Route path="/workshopP" component={workshopPro} />
-              <Route path="/workshopViewP" component={workshopViewPro} />
-
-              <Route path="/blogP" component={blogsPro} />
-              <Route path="/forumP" component={forumPro} />
-              <Route path="/reportsP" component={reportsPro} />
-              <Route path="/job" component={jobView} />
-              <Route path="/jobAddvertisment" component={jobAddvertisment} />
-              <Route path="/createCV" component={createCV} />
-
-              <Route path="/paymentsP" component={paymentsPro} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Secretariat") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardSec} />
-              <Route path="/addJob" component={addJob} />
-              <Route path="/addQuestions" component={addQuestion} />
-              <Route path="/manWorkshop" component={manageWorkshop} />
-              
-              <Route path="/addWorkshops" component={addWorkshops} />
-
-              <Route path="/regApprove" component={regApprove} />
-              <Route path="/regPending" component={regPending} />
-              <Route path="/regRejected" component={regRejected} />
-              <Route path="/paymentsSec" component={paymentsSec} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Associate") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              {/* // <Route path="/home" exact render={(props) => <Home />}/> */}
-              <Route path="/" exact component={dashboardAss} />
+          {authState.role == "associate" && (
+            <>    
+            <Navbar />
+              <Route path="/dashboardA" exact component={dashboardAss} />
               <Route path="/courseA" component={courseAss} />
               <Route path="/blogA" component={blogAss} />
               <Route path="/forumA" component={forumAss} />
               <Route path="/reportsA" component={reportsAss} />
               <Route path="/jobA" component={jobAss} />
-              <Route path="/paymentsA" component={paymentsAss} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Council") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardCou} />
-              <Route path="/jobCou" component={addJob} />
+              <Route path="/paymentsA" component={paymentsAss} />                    
+            </>
+          )} 
+
+          {authState.role == "professional" && (
+            <>
+              <Navbar />
+
+              <Route path="/dashboardP" exact component={dashboardPro} />
+              <Route path="/cpdP" component={cpdPro} />
+              <Route path="/addCPD" component={cpdAddPro} />
+              <Route path="/courseP" component={coursePro} />
+              <Route path="/coursViewP/:id" component={coursView} />
+              <Route path="/coursMyViewP/:id" component={coursMyView} />
+              <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
+              <Route path="/courseReviewP/:id" component={courseReviewP} />
+              <Route path="/workshopP" component={workshopPro} />
+              <Route path="/workshopViewP" component={workshopViewPro} />
+              <Route path="/blogP" component={blogsPro} />
+              <Route path="/forumP" component={forumPro} />
+              <Route path="/reportsP" component={reportsPro} />
+              <Route path="/job" component={jobView} />
+              <Route
+                path="/jobAddvertisment/:id"
+                component={jobAddvertisment}
+              />
+              <Route
+                path="/addJobCV/:id:finalMarks"
+                component={addJobCV}
+              />
+              <Route path="/questionare/:id" component={questionare} />
+              <Route path="/createCV" component={createCV} />
+              <Route path="/paymentsP" component={paymentsPro} />
+              <Route path="/lecCourse" component={lecCourseList} />
+              <Route path="/addCourse" component={courseInfo} />
+              <Route path="/addCourseContent/cssl00:id/:title" component={courseContentInfo} />
+              <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
+              <Route path="/editCourse/cssl00:id/:title" component={editCourseInfo} />
+              <Route path="/editCourseContent/cssl00:id/:title/:cntId/:cntTitle" component={editCourseContent} />
+            
+            
+              <Route path="/settings" exact component={settings} />
+
+            </>
+          )}          
+
+          {authState.role == "chartered" && (
+            <>    
+            <Navbar />
+              <Route path="/dashboardC" exact component={dashboardCha} />    
+              <Route path="/cpdP" component={cpdPro} />
+              <Route path="/addCPD" component={cpdAddPro} />
+              <Route path="/courseP" component={courseCha} />
+              <Route path="/coursViewP/:id" component={coursView} />
+              <Route path="/coursMyViewP/:id" component={coursMyView} />
+              <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
+              <Route path="/courseReviewP/:id" component={courseReviewP} />
+              <Route path="/workshopP" component={workshopPro} />
+              <Route path="/workshopViewP" component={workshopViewPro} />
+              <Route path="/blogP" component={blogsPro} />
+              <Route path="/forumP" component={forumPro} />
+              <Route path="/reportsC" component={reportsCha} />
+              <Route path="/job" component={jobView} />
+              <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
+              <Route path="/questionare/:id" component={questionare} />
+              <Route path="/createCV" component={createCV} />  
+              <Route path="/paymentsP" component={paymentsPro} />           
+            </>
+          )}      
+          
+          {authState.role == "secretariat" && (
+            <>
+            <Navbar />
+              <Route path="/dashboardSec" exact component={dashboardSec} />
+              <Route path="/addJob" component={addJob} />
+              <Route path="/addQuestions" component={addQuestion} />
+              <Route path="/manWorkshop" component={manageWorkshop} />
+              <Route path="/addWorkshops" component={addWorkshops} />
+              <Route path="/regApprove" component={regApprove} />
+              <Route path="/regPending" component={regPending} />
+              <Route path="/regRejected" component={regRejected} />
+              <Route path="/paymentsSec" component={paymentsSec} />
+            </>
+          )}
+
+          {authState.role == "council" && (
+            <>
+            <Navbar />
+              <Route path="/dashboardCou" exact component={dashboardCou} />
+              <Route path="/jobCou" component={addJobCou} />
               <Route path="/blogCou" component={blogsCou} />
               <Route path="/workshopCou" component={verifyWorkshop} />
               <Route path="/reportsCou" component={reportCou} />
@@ -271,30 +261,13 @@ function App() {
               <Route path="/regRejectedC" component={regRejectedCou} />
               <Route path="/regApproveC" component={regApproveCou} />
               <Route path="/paymentCou" component={paymentCou} />
-              <Route path="/cpdCou" component={cpdCou} />
-            </Switch>
-          </Router>
-        </>
-      );
-    } else if (mtype == "Student") {
-      return (
-        <>
-          <Router>
-            <Navbar name={mname} type={mtype} />
-            <Switch>
-              <Route path="/" exact component={dashboardCha} />
-              <Route path="/courseS" component={courseStu} />
-              <Route path="/workshopS" component={workshopStu} />
-              <Route path="/blogS" component={blogStu} />
-              <Route path="/forumS" component={forumStu} />
-              <Route path="/reportsS" component={reportsStu} />
-              <Route path="/paymentsS" component={paymentsStu} />
-            </Switch>
-          </Router>
-        </>
-      );
-    }
-  }
+              <Route path="/cpdCou" component={cpdCou} />            
+            </>
+          )}
+        </Switch>
+      </Router>
+    </AuthContext.Provider>
+  );
 }
 
 export default App;

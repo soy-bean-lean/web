@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+// import jsPDF from "jspdf";
+// import html2canvas from "html2canvas";
 import "./style/reports.css";
 import { makeStyles, Paper, Grid, alpha } from "@material-ui/core";
 import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";
@@ -6,6 +8,7 @@ import { Redirect } from "react-router-dom";
 import Tabs from "./tabs";
 import axios from "axios";
 import CountUp from "react-countup";
+import { AuthContext } from "../../helpers/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -21,6 +24,22 @@ const options = {
   maintainAspectRatio: false,
 };
 function Reports() {
+  // function printDocument() {
+  //   const input = document.getElementById("divToPrint");
+  //   html2canvas(input).then((canvas) => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF({
+  //       orientation: "landscape",
+  //       unit: "in",
+  //       format: [10, 9],
+  //     });
+  //     pdf.addImage(imgData, "JPEG", 0, 0);
+  //     // pdf.output('dataurlnewwindow');
+  //     pdf.save("download.pdf");
+  //   });
+  // }
+  const { authState, setAuthState } = useContext(AuthContext);
+
   const [dataCPD, setData] = useState(null);
   const [dataCPDYear, setDataYear] = useState(null);
   const [length, setLength] = useState(null);
@@ -88,41 +107,41 @@ function Reports() {
       )
     );
 
-    const state2 = {
-      labels: yearData,
-      datasets: [
-        {
-          label: "Courses",
-          backgroundColor: "#ffebb0",
-          hoverBackgroundColor: "#ffebb0",
-          data: courseData,
-        },
-        {
-          label: "Workshops",
-          backgroundColor: "#cfb874",
-          hoverBackgroundColor: "#cfb874",
-          data: workshopData,
-        },
-        {
-          label: "Guest Lecture",
-          backgroundColor: "#a1873b",
-          hoverBackgroundColor: "#a1873b",
-          data: guestLect,
-        },
-        {
-          label: "Other",
-          backgroundColor: "#695210",
-          hoverBackgroundColor: "#695210",
-          data: otherData,
-        },
-      ],
-    };
-  
+  const state2 = {
+    labels: yearData,
+    datasets: [
+      {
+        label: "Courses",
+        backgroundColor: "#ffebb0",
+        hoverBackgroundColor: "#ffebb0",
+        data: courseData,
+      },
+      {
+        label: "Workshops",
+        backgroundColor: "#cfb874",
+        hoverBackgroundColor: "#cfb874",
+        data: workshopData,
+      },
+      {
+        label: "Guest Lecture",
+        backgroundColor: "#a1873b",
+        hoverBackgroundColor: "#a1873b",
+        data: guestLect,
+      },
+      {
+        label: "Other",
+        backgroundColor: "#695210",
+        hoverBackgroundColor: "#695210",
+        data: otherData,
+      },
+    ],
+  };
 
   useEffect(() => {
     const data = {
       month: "",
       credit: "",
+      memberId: authState.id,
     };
     axios
       .post("http://localhost:3001/Dash/getCPDData", data)
@@ -142,6 +161,7 @@ function Reports() {
       Year: "",
       credit: "",
       type: "",
+      memberId: authState.id,
     };
     axios
       .post("http://localhost:3001/Dash/getCPDDataYear", dataY)
@@ -160,7 +180,7 @@ function Reports() {
       });
 
     const dataCounts = {
-      Id: "", //session Id
+      memberId: authState.id,
     };
     axios
       .post("http://localhost:3001/reports/getCounts", dataCounts)
@@ -210,8 +230,15 @@ function Reports() {
 
   const classes = useStyles();
   return (
-    <div className="reports">
-      <div className="PieChart"></div>
+    <div className="reports" id="divToPrint">
+      <div className="PieChart">
+      <div className="send">
+          <a href="#" className="sendData" >
+            Submit Answers
+          </a>
+        </div>
+
+      </div>
       <div className="LineChart">
         <center>
           <h3 className="heading">Monthly Credits</h3>
@@ -282,6 +309,7 @@ function Reports() {
             })
           }
         />
+        
       </div>
     </div>
   );
