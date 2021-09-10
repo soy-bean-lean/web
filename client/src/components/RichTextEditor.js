@@ -185,39 +185,3 @@ const TextEditor = (props) => {
   )
 }
 export default TextEditor;
-
-/*function TextEditor(props) {
-    const [editorState, setEditorState] = useState(() =>
-      EditorState.createEmpty()
-    );
-    const [convertedContent, setConvertedContent] = useState(null);
-    const onEditorStateChange = (state) => {
-      setEditorState(state);
-      //convertContentToHTML();
-    };
-    
-    const convertContentToHTML = () => {
-      let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-      setConvertedContent(currentContentAsHTML);
-      props.onValueChange(convertedContent);
-    };
-  
-    const createMarkup = (html) => {
-      return {
-        __html: DOMPurify.sanitize(html),
-      };
-    };
-    return (
-      <div className="text-editor">
-        <Editor
-          editorState={editorState}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
-          onEditorStateChange={onEditorStateChange}
-        />
-        {/*<div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div>}
-      </div>
-    );
-  }
-  export default TextEditor;*/
