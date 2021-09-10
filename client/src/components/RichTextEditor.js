@@ -7,7 +7,6 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './RichTextEditor.css';
 
 const toolbar = {
-
         options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
         inline: {
           inDropdown: false,
