@@ -27,7 +27,6 @@ function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   const logout = () => {
-    console.log("anushka");
     localStorage.removeItem("accessToken");
     setAuthState({
       fname: "",
@@ -49,12 +48,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="/settings" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -108,13 +105,11 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
 
-            <Link to="/settings" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
+
+            <Link to="/profileInfor" className="edit">
+                      <FaIcons.FaUserAlt />
+                    </Link>
           </div>
         </div>
 
@@ -138,10 +133,12 @@ function Navbar() {
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
-
                     <p>{authState.role}</p>
+                   
                   </div>
+                
                 </div>
+
               </li>
 
               {SidebarDataPro.map((item, index) => {
@@ -167,12 +164,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="/settings" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -226,12 +221,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="/settings" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -285,12 +278,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="/settings" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -344,12 +335,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="/settings" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>

@@ -7,7 +7,8 @@ import { AuthContext } from "./helpers/AuthContext";
 
 import Registration from "./pages/registration/Registration";
 import Login from "./pages/login/Login";
-import settings from "./components/settings/settings";
+import settings from "./components/settingsAndInfo/settings";
+import profileInfo from "./components/settingsAndInfo/Infor";
 import PageNotFound from "./pages/pageNotFound";
 import PaymentModal from './pages/payment';
 
@@ -155,6 +156,7 @@ function App() {
               <Route path="/reportsS" component={reportsStu} />
               <Route path="/paymentsS" component={paymentsStu} />          
               <Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
            
             </>
           )} 
@@ -169,8 +171,8 @@ function App() {
               <Route path="/reportsA" component={reportsAss} />
               <Route path="/jobA" component={jobAss} />
               <Route path="/paymentsA" component={paymentsAss} />      
-              <Route path="/settings" exact component={settings} />
-              
+<Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />              
             </>
           )} 
 
@@ -211,8 +213,8 @@ function App() {
               <Route path="/editCourseContent/cssl00:id/:title/:cntId/:cntTitle" component={editCourseContent} />
             
             
-              <Route path="/settings" exact component={settings} />
-
+<Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
             </>
           )}          
 
@@ -237,8 +239,8 @@ function App() {
               <Route path="/questionare/:id" component={questionare} />
               <Route path="/createCV" component={createCV} />  
               <Route path="/paymentsP" component={paymentsPro} />   
-              <Route path="/settings" exact component={settings} />
-        
+<Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />        
             </>
           )}      
           
@@ -254,8 +256,8 @@ function App() {
               <Route path="/regPending" component={regPending} />
               <Route path="/regRejected" component={regRejected} />
               <Route path="/paymentsSec" component={paymentsSec} />
-              <Route path="/settings" exact component={settings} />
-
+<Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
             </>
           )}
 
@@ -272,8 +274,8 @@ function App() {
               <Route path="/regApproveC" component={regApproveCou} />
               <Route path="/paymentCou" component={paymentCou} />
               <Route path="/cpdCou" component={cpdCou} /> 
-              <Route path="/settings" exact component={settings} />
-           
+<Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />           
             </>
           )}
         </Switch>

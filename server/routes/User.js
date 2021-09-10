@@ -199,6 +199,54 @@ userRouter.post("/login", async (req, res) => {
     }
   );
 });
+
+userRouter.post("/updatePassword", async (req, res) => {
+  const currentPassword = req.body.currentPassword;
+  const newPassword = req.body.newPassword;
+  const memberId = req.body.memberId;
+
+  connection.query(
+    //temporary sql query for testing
+    "SELECT password,email from user  WHERE id = ?",
+
+    [memberId],
+    (err, result) => {
+      if (result.length > 0) {
+        bcrypt.compare(currentPassword, result[0].password).then((match) => {
+          if (!match) {
+            res.json({ errorPass: "errorCurrent" });
+          } else {
+
+         /*   bcrypt.hash(newPassword, 10).then((hash) => {
+              connection.query("UPDATE user SET password = '"+hash+" where id="+memberId+";",  
+                (err, result) => {
+                  if (err) {
+                    res.json({ errorPass: "error" });
+                  } else {
+                    res.json("success");
+                  }
+                }
+              );
+            });
+            bcrypt.hash(newPassword, 10).then((hash) => {
+              connection.query("UPDATE user SET pw = '"+hash+" where un="+result[0].email+";",  
+                (err, result) => {
+                  if (err) {
+                    res.json({ errorPass: "error" });
+                  } else {
+                    res.json("success");
+                  }
+                }
+              );
+            });*/
+          }
+        });
+      } else{
+        res.json({ errorPass: "error" });
+      }
+    }
+  );
+});
 userRouter.post("/getProfileData", (req, res) => {
   const memberId = req.body.memberId;
 

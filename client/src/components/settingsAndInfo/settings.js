@@ -13,7 +13,6 @@ function Settings() {
   const { authState, setAuthState } = useContext(AuthContext);
   const memberId = authState.id;
 
-
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [NIC, setNIC] = useState("");
@@ -31,7 +30,18 @@ function Settings() {
   //  const [image, setImage] = useState("");
 
   let history = useHistory();
-
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({
+      fname: "",
+      lname: "",
+      progileImg: "",
+      role: "",
+      id: 0,
+      status: false,
+    });
+    history.push("/");
+  };
   const addProfilPic = () => {
     const formData = new FormData();
     formData.append("image", imgFile);
@@ -105,33 +115,39 @@ function Settings() {
       newPass: newPassword,
       confirmPass: confirmPassword,
     };
-    if (newPassword === confirmPassword) {
-    } else {
+    if (newPassword !== confirmPassword) {
       toast.error("Passwords does not Match", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
+    } else {
+      axios
+        .post("http://localhost:3001/auth/updatePassword", formData2)
+        .then((response) => {
+          if (response.data.errorPass === "errorCurrent") {
+            toast.error("Current Password invalid ,Try Again!", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+            });
+          } else if (response.data.errorPass === "error") {
+            toast.error("Can not update your password, Try Again!", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+            });
+          }else{
+            toast.success("Your Password  Has Successfully Updated!", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+            });
+          }
+        })
+        .catch((error) => {
+          toast.error("Can not update your password, Try Again!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          });
+        });
     }
-    /*axios
-      .post("http://localhost:3001/auth/updateBasicDetails", formData2)
-      .then((response) => {
-        if (response.data.error) {
-          toast.error("Unable to Update Profile ,Try Again!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
-          });
-        } else {
-          toast.success("Your Profile  Has Successfully Updated!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
-          });
-        }
-      })
-      .catch((error) => {
-        toast.error("Unable to Update Profile ,Try Again!", {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
-          });      });*/
   };
 
   useEffect(() => {
@@ -163,7 +179,7 @@ function Settings() {
   return (
     <>
       <div className="setting-basic-info">
-        <h1 className="setting-basic-info-title">Settings</h1>
+        <h1 className="setting-basic-info-title">Edit Profile</h1>
         <hr></hr>
         <div className="setting-basic-info-form">
           <div className="setting-basic-info-block">
