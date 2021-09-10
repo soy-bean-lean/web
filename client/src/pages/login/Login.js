@@ -55,6 +55,7 @@ function Login() {
             lname: response.data.lastName,
             role: response.data.role,
             id: response.data.id,
+            profileImage: response.data.profileImage,
             status: true,
           });
           if(response.data.role == "student"){

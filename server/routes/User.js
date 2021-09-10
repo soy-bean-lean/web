@@ -200,12 +200,14 @@ userRouter.post("/login", async (req, res) => {
           if (!match) {
             res.json({ errorPass: "Incorrect password" });
           } else {
+            console.log(result[0].profileImage);
             const accessToken = sign(
               {
                 firstName: result[0].firstName,
                 lastName: result[0].lastName,
                 id: result[0].id,
                 role: result[0].userType,
+                profileImage: result[0].profileImage,
               },
               "importantsecret"
             );
@@ -215,6 +217,7 @@ userRouter.post("/login", async (req, res) => {
               lastName: result[0].lastName,
               id: result[0].id,
               role: result[0].userType,
+              profileImage: result[0].profileImage,
             });
           }
         });

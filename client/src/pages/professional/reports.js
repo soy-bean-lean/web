@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-
+//import jsPDF from "jspdf";
+//import html2canvas from "html2canvas";
 import "./style/reports.css";
 import { makeStyles, Paper, Grid, alpha } from "@material-ui/core";
 import { Line, Pie, Doughnut, Bar } from "react-chartjs-2";

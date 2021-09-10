@@ -106,6 +106,7 @@ function App() {
     lname: "",
     role: "",
     id: 0,
+    profileImage: "",
     status: false,
   });
 
@@ -125,6 +126,7 @@ function App() {
             lname: response.data.lastName,
             role: response.data.role,
             id: response.data.id,
+            profileImage: response.data.profileImage,
             status: true,
           });
         }
