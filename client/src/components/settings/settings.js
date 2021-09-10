@@ -13,6 +13,8 @@ function Settings() {
   const { authState, setAuthState } = useContext(AuthContext);
   const memberId = authState.id;
 
+  console.log(authState.profileImage);
+
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [NIC, setNIC] = useState("");
