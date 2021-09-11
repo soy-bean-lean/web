@@ -461,7 +461,7 @@ function AddCPD() {
             <select name="select" id="types" onChange={getOtherCourseDetails}>
               <option value=""></option>
               <option value="Online Course">Online Course</option>
-              <option value="Offline">Offline</option>
+              <option value="Onsite Course">Onsite Course</option>
             </select>
             <hr className="line"></hr>
           </div>
@@ -527,7 +527,7 @@ function AddCPD() {
             {rederOnlineOtherCourseList(platform, partner)}
           </div>
         );
-      } else if (mode == "Offline") {
+      } else if (mode == "Onsite Course") {
         return (
           <div>
             <div className="courseD">

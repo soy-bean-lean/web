@@ -186,5 +186,20 @@ Course.post("/getCourseImg", (req, res) => {
   );
 });
 
+Course.post("/getCourseList", (req, res) => {
+  const mid = req.body.mId;
+  const status = "Approved";
+  connection.query(
+    "SELECT * FROM csslcourse WHERE status = ?;",
+    [status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 
 export default Course;
