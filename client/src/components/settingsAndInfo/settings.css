@@ -1,0 +1,79 @@
+.setting-basic-info{
+    height: 500px;
+    padding-top: 65px;
+}
+
+.setting-basic-info-form{
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.setting-basic-info-title{
+    padding: 10px;
+    text-align: center;
+}
+
+.setting-basic-info-form .setting-basic-info-block{
+    margin: 20px;
+    margin-left: 25%;
+    width: 60%;
+}
+
+.setting-info-title{
+    margin-bottom: 15px;
+    font-size: 20px;
+    width: 250px;
+    font-weight: 200;
+}
+
+.setting-field-block{
+    padding-bottom: 20px;
+}
+
+.setting-basic-info-block select , .setting-basic-info-block .input{
+    margin-bottom: 15px;
+    margin-left: 40px;
+    width: 70%;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 20px;
+    color: black;
+    
+  }
+
+  .setting-basic-info-form .setting-btn-block{
+    margin: 20px;
+    margin-left: 10%;
+    width: 60%;
+  }
+
+  .setting-btn-submit{
+    background: #060a5f;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-left: 45%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+  }
+
+  .setting-btn-update{
+    background: #060a5f;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-left: 60%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+  }
+

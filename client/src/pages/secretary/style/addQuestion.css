@@ -1,0 +1,75 @@
+.jobQuestion-basic-info{
+    height: 500px;
+    padding-top: 65px;
+}
+
+.jobQuestion-basic-info-form{
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.jobQuestion-basic-info-title{
+    padding: 10px;
+    text-align: center;
+}
+
+.jobQuestion-basic-info-form .jobQuestion-basic-info-block {
+    margin: 20px;
+    margin-left: 25%;
+    width: 60%;
+}
+.jobQuestion-answer{
+    margin: 20px;
+    margin-left: 5%;
+}
+.jobQuestion-answer input{
+    font-size: 20px;
+    margin-left: 3%;
+    margin-right: 2%;
+}
+.jobQuestion-answer label{
+    font-size: 20px;
+
+}
+.jobQuestion-info-title{
+    margin-bottom: 15px;
+    font-size: 20px;
+    width: 250px;
+    font-weight: 200;
+}
+
+.jobQuestion-field-block{
+    padding-bottom: 20px;
+}
+
+.jobQuestion-basic-info-block select , .jobQuestion-basic-info-block .input{
+    margin-bottom: 15px;
+    margin-left: 40px;
+    width: 70%;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 20px;
+    color: black;
+    
+  }
+
+  .jobQuestion-basic-info-form .jobQuestion-btn-block{
+    margin: 20px;
+    margin-left: 10%;
+    width: 60%;
+  }
+
+  .jobQuestion-btn-submit{
+    background: #060a5f;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 65%;
+    border-radius: 5px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+  }
+

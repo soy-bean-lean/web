@@ -9,7 +9,7 @@ import * as MdIcons from  "react-icons/md";
 export const SidebarDataSec = [
   {
     title: 'Dashboard',
-    path: '/',
+    path: '/dashboardSec',
     icon: <AiIcons.AiFillDashboard />,
     cName: 'nav-text'
   },
@@ -20,7 +20,12 @@ export const SidebarDataSec = [
     icon: <AiIcons.AiFillFileText />,
     cName: 'nav-text'
   },
-  
+  {
+    title: 'Add Workshops',
+    path: '/addWorkshops',
+    icon: <GIIcons.GiTeacher />,
+    cName: 'nav-text'
+  },  
   {
     title: 'Manage Workshops',
     path: '/manWorkshop',
@@ -28,9 +33,15 @@ export const SidebarDataSec = [
     cName: 'nav-text'
   },
   {
-    title: 'Add Job Vacancies',
-    path: '/addJob',
+    title: 'Job Vacancies',
+    path: '/ViewCurrentJobs',
     icon: <FaIcons.FaUserAlt />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Add Questions',
+    path: '/addQuestions',
+    icon: <FaIcons.FaQuestion />,
     cName: 'nav-text'
   },
   {

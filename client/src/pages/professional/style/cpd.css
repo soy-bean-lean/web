@@ -1,51 +1,54 @@
+.mainCPD {
+  height: 720px;
+  display: grid;
+  background-color: rgb(255, 255, 255);
+  padding-top: 65px;
+  grid-template-columns: 2fr 0.8fr;
+  grid-template-rows: 0.1fr 1fr;
+  grid-template-areas:
+    "activity button "
+    "activity chart ";
+}
+.mainCPD .chartPro {
+  height: 80px;
+  grid-area: chart;
+}
+.recentCPDRec {
+  height: 90%;
+  overflow-y: scroll;
+  grid-area: activity;
+}
 
-  .recentCPDRec{
-    margin: 5% 5%;
-    /*padding: 15px;*/
-    border: 2px solid rgb(6, 10, 95);
-    border-radius: 15px 0px 0px 15px;
-    height: 480px;
-    justify-content: center;
-    align-items: flex-start;
-    display: block;
-    background-color: rgb(255, 255, 255);
-    overflow-y: auto;
-    width: 90%;
-  }
-
-  .titleRecent{
-    padding-left: 15px;
-  }
-
+.titleRecent {
+  padding-left: 15px;
+}
 
 .recentRec {
   padding: 5px;
-  width: 1000px;
 }
 
-  .recList{
-    margin: 10px;
-  }
+.recList {
+  margin: 10px;
+}
 
-  .recType{
-    padding: 5px;
-    border: 2px solid #7883e2;
-    font-weight: 600;
-    border-radius: 10px 10px 0px 0px;
-    height: auto;
-    width: 130px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    background-color: rgb(255, 255, 255);
-  }
+.recType {
+  padding: 5px;
+  border: 2px solid #7883e2;
+  font-weight: 200;
+  border-radius: 10px 10px 0px 0px;
+  height: auto;
+  width: 170px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+}
 
 .recAllign {
   background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
-  font-weight: 500;
+  font-weight: 200;
   border-radius: 0px 8px 8px 8px;
-  height: 40px;
-  width: inherit;
+  height:30px;
   display: flex;
   align-items: center;
   padding-left: 10px;
@@ -58,69 +61,91 @@
   /*margin-right: 400px;
     display: flex;*/
 }
-.recPending{
+.recPending {
   color: white;
 }
 
+.recPending[data-status="Pending"] {
+  margin-left: auto;
+  padding: 5px;
+  border-radius: 8px 8px 8px 8px;
+  height: inherit;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: #8d800a;
+}
 
-.recPending[data-status="Pending"]{
-    margin-left: auto;
-    padding: 5px;
-    border-radius: 8px 8px 8px 8px;
-    height: inherit;
-    width:100px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    background-color: rgb(141, 128, 10);
+.recPending[data-status="Approved"] {
+  margin-left: auto;
+  padding: 5px;
+  border-radius: 8px 8px 8px 8px;
+  height: inherit;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: #0a8010;
+}
+
+.recPending[data-status="Rejected"] {
+  margin-left: auto;
+  padding: 5px;
+  border-radius: 8px 8px 8px 8px;
+  height: inherit;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: #ff0404;
+}
+.cpdAdd {
+  grid-area: button;
+  margin-right: 40%;
+  margin-bottom: 10%;
+  margin-top: 2%;
+}
+.btn-cpdAdd {
+  display: block;
+  width: 90%;
+  /*float: left;*/
+  margin-left: 5.5%;
+  justify-content: center;
+}
+
+.add-cpd-btn a {
+  background: #060a5f;
+  border: none;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 5px;
+  float: right;
+  margin: 5px;
+
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+}
+@media only screen and (max-width: 900px) {
+  .mainCPD {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
+    grid-template-areas:
+      "activity"
+      "button";
   }
-  
-.recPending[data-status="Approved"]{
-    margin-left: auto;
-    padding: 5px;
-    border-radius: 8px 8px 8px 8px;
-    height: inherit;
-    width:100px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    background-color: rgb(10, 128, 16);
+
+  .mainCPD .cpdAdd {
+    margin: 0;
+    margin-right: 50%;
+    border-bottom: 1px solid black;
   }
-
-.recPending[data-status="Rejected"]{
-    margin-left: auto;
-    padding: 5px;
-    border-radius: 8px 8px 8px 8px;
-    height: inherit;
-    width:100px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    background-color: rgb(255, 4, 4);
+  .recentCPDRec {
+    width: 100%;
+    height: 500px;
+    margin-right: 1%;
+    margin-left: 1%;
   }
-
-  .btn-cpdAdd{
-    display: block;
-    width: 90%;
-    /*float: left;*/
-    margin-left: 5.5%;
-    justify-content: center;
-  }
-
-  .add-cpd-btn a {
-    background: #060a5f;
-    border: none;
-    font-weight: 600;
-    text-decoration: none;
-    padding:5px;
-    float: right;
-    margin: 5px;
-    
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    color: rgb(255, 255, 255);
-  }
-
-
-
+}

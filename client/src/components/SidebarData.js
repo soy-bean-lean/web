@@ -58,5 +58,10 @@ export const SidebarData = [
     path: '/payments',
     icon: <AiIcons.AiFillDollarCircle />,
     cName: 'nav-text'
+  },{
+    title: 'Lecturing Courses',
+    path: '/lecCourse',
+    icon: <FaIcons.FaGraduationCap />,
+    cName: 'nav-text'
   }
 ];

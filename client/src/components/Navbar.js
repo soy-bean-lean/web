@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { SidebarDataAssociate } from "./SidebarDataAssociate";
 import { SidebarDataCha } from "./SidebarDataCha";
-import {SidebarDataCouncil} from "./SidebarDataCouncil";
+import { SidebarDataCouncil } from "./SidebarDataCouncil";
 import { SidebarDataPro } from "./SidebarDataPro";
-import {SidebarDataSec} from "./SidebarDataSec";
+import { SidebarDataSec } from "./SidebarDataSec";
 import { SidebarDataStudent } from "./SidebarDataStudent";
-
-
 
 import "./Navbar.css";
 import { IconContext } from "react-icons";
@@ -19,24 +17,41 @@ import progileImg from "../imgs/p3.jpg";
 import progileImgSec from "../imgs/p4.jpeg";
 import progileImgCha from "../imgs/char.jpeg";
 import progileImgCouncil from "../imgs/council.jpeg";
+import { AuthContext } from "../helpers/AuthContext";
+import { useHistory } from "react-router-dom";
 
-function Navbar(props) {
-  const [sidebar, setSidebar] = useState(true);
+function Navbar() {
+  let history = useHistory();
+  const { authState, setAuthState } = useContext(AuthContext);
+  const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
-  if (props.type == "Associate") {
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({
+      fname: "",
+      lname: "",
+      progileImg: "",
+      role: "",
+      id: 0,
+      status: false,
+    });
+    history.push("/");
+  };
+  const image =
+    "http://localhost:3001/uploads/profileImages/" + authState.profileImage;
+  if (authState.role == "associate") {
     return (
       <>
         <div className="buttons">
-          <a href="#" className="Logout">
+          <button className="Logout" onClick={logout}>
             Logout
-          </a>
+          </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -57,12 +72,12 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                    <h2>{authState.fname}</h2>
 
-                    <p>{props.type}</p>
+                    <p>{authState.role}</p>
                   </div>
                 </div>
               </li>
@@ -72,7 +87,7 @@ function Navbar(props) {
                   <li key={index} className={item.cName}>
                     <Link to={item.path}>
                       {item.icon}
-                      <span>{item.title}</span>
+                      <span className="navbar-span-cls">{item.title}</span>
                     </Link>
                   </li>
                 );
@@ -82,22 +97,19 @@ function Navbar(props) {
         </IconContext.Provider>
       </>
     );
-  } 
-  else if (props.type == "Professional") {
+  } else if (authState.role == "professional") {
     return (
       <>
         <div className="buttons">
-          <a href="#" className="Logout">
+          <button className="Logout" onClick={logout}>
             Logout
-          </a>
+          </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
+
+            <Link to="/profileInfor" className="edit">
+                      <FaIcons.FaUserAlt />
+                    </Link>
           </div>
         </div>
 
@@ -117,14 +129,16 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
-                    <h2>{props.name}</h2>
-
-                    <p>{props.type}</p>
+                    <h2>{authState.fname}</h2>
+                    <p>{authState.role}</p>
+                   
                   </div>
+                
                 </div>
+
               </li>
 
               {SidebarDataPro.map((item, index) => {
@@ -132,7 +146,7 @@ function Navbar(props) {
                   <li key={index} className={item.cName}>
                     <Link to={item.path}>
                       {item.icon}
-                      <span>{item.title}</span>
+                      <span className="navbar-span-cls">{item.title}</span>
                     </Link>
                   </li>
                 );
@@ -142,21 +156,18 @@ function Navbar(props) {
         </IconContext.Provider>
       </>
     );
-  } 
-  else if (props.type == "Student") {
+  } else if (authState.role == "student") {
     return (
       <>
         <div className="buttons">
-          <a href="#" className="Logout">
+          <button className="Logout" onClick={logout}>
             Logout
-          </a>
+          </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -177,12 +188,12 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                    <h2>{authState.fname}</h2>
 
-                    <p>{props.type}</p>
+                    <p>{authState.role}</p>
                   </div>
                 </div>
               </li>
@@ -192,7 +203,7 @@ function Navbar(props) {
                   <li key={index} className={item.cName}>
                     <Link to={item.path}>
                       {item.icon}
-                      <span>{item.title}</span>
+                      <span className="navbar-span-cls">{item.title}</span>
                     </Link>
                   </li>
                 );
@@ -202,21 +213,18 @@ function Navbar(props) {
         </IconContext.Provider>
       </>
     );
-  } 
-  else if (props.type == "Chartered") {
+  } else if (authState.role == "chartered") {
     return (
       <>
         <div className="buttons">
-          <a href="#" className="Logout">
+          <button className="Logout" onClick={logout}>
             Logout
-          </a>
+          </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -237,12 +245,12 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgCha} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                    <h2>{authState.fname}</h2>
 
-                    <p>{props.type}</p>
+                    <p>{authState.role}</p>
                   </div>
                 </div>
               </li>
@@ -252,7 +260,7 @@ function Navbar(props) {
                   <li key={index} className={item.cName}>
                     <Link to={item.path}>
                       {item.icon}
-                      <span>{item.title}</span>
+                      <span className="navbar-span-cls">{item.title}</span>
                     </Link>
                   </li>
                 );
@@ -262,21 +270,18 @@ function Navbar(props) {
         </IconContext.Provider>
       </>
     );
-  } 
-  else if (props.type == "Council") {
+  } else if (authState.role == "council") {
     return (
       <>
         <div className="buttons">
-          <a href="#" className="Logout">
+          <button className="Logout" onClick={logout}>
             Logout
-          </a>
+          </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -297,12 +302,12 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgCouncil} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                    <h2>{authState.fname}</h2>
 
-                    <p>{props.type}</p>
+                    <p>{authState.role}</p>
                   </div>
                 </div>
               </li>
@@ -312,7 +317,7 @@ function Navbar(props) {
                   <li key={index} className={item.cName}>
                     <Link to={item.path}>
                       {item.icon}
-                      <span>{item.title}</span>
+                      <span className="navbar-span-cls">{item.title}</span>
                     </Link>
                   </li>
                 );
@@ -322,21 +327,18 @@ function Navbar(props) {
         </IconContext.Provider>
       </>
     );
-  } 
-  else if (props.type == "Secretariat") {
+  } else if (authState.role == "secretariat") {
     return (
       <>
         <div className="buttons">
-          <a href="#" className="Logout">
+          <button className="Logout" onClick={logout}>
             Logout
-          </a>
+          </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -357,12 +359,12 @@ function Navbar(props) {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgSec} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
-                    <h2>{props.name}</h2>
+                    <h2>{authState.fname}</h2>
 
-                    <p>{props.type}</p>
+                    <p>{authState.role}</p>
                   </div>
                 </div>
               </li>
@@ -372,7 +374,7 @@ function Navbar(props) {
                   <li key={index} className={item.cName}>
                     <Link to={item.path}>
                       {item.icon}
-                      <span>{item.title}</span>
+                      <span className="navbar-span-cls">{item.title}</span>
                     </Link>
                   </li>
                 );
@@ -382,8 +384,7 @@ function Navbar(props) {
         </IconContext.Provider>
       </>
     );
-  } 
-
+  }
 }
 
 export default Navbar;

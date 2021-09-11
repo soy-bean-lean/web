@@ -21,7 +21,7 @@
 
 .profileDetails {
     width: 100%;
-    margin-bottom: 45px;
+    margin-bottom: 5px;
     margin-left: 15px;
 }
 
@@ -89,6 +89,15 @@
     background: #029909;
     border: none;
     font-weight: 600;
+    text-decoration: none;
+    padding: 10px 25px 10px 25px;
+    float: right;
+    margin: 10px 20px 20px 25px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    cursor: pointer!important;
 }
 
 .menu-bars {
@@ -170,54 +179,57 @@ align-items: center;
 }
 */
 
-span {
+.navbar-span-cls {
     margin-left: 16px;
+    font-size: 18px;
 }
-
 
 .progress {
     margin: 10px;
     padding: 5px;
     border: 2px solid rgb(6, 10, 95);
     border-radius: 15px;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  grid-area: progress;
-  padding: 5px;
-  background-color: rgb(255, 255, 255);
-}
-.progressBar {
-    display: block;
-  width: 60%;
-  justify-content: center;
-  border-radius: 15px;
-  overflow: visible;
-  border: 1px solid rgb(6, 10, 95);
-  float: top;
-}
-.progressColour {
-  height: 10px;
-  width: 75%;
-  background-color: rgb(6, 10, 95);
-  border-radius: 15px;
-  animation: animate-positive 2s;
-}
-.progressValue {
-  width: 65px;
-  height: 25px;
-  font-size: 20px;
-  font-weight: 1000;
-  color: rgb(6, 10, 95);
-  align-content: center;
-  border-radius: 15px;
-  border-top: 0px;
-  position: absolute;
-  bottom: -5px;
-  right: -70px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    grid-area: progress;
+    padding: 5px;
+    background-color: rgb(255, 255, 255);
 }
 
-.progress h3{
+.progressBar {
+    display: block;
+    width: 60%;
+    justify-content: center;
+    border-radius: 15px;
+    overflow: visible;
+    border: 1px solid rgb(6, 10, 95);
+    float: top;
+}
+
+.progressColour {
+    height: 10px;
+    width: 75%;
+    background-color: rgb(6, 10, 95);
+    border-radius: 15px;
+    animation: animate-positive 2s;
+}
+
+.progressValue {
+    width: 65px;
+    height: 25px;
+    font-size: 20px;
+    font-weight: 1000;
+    color: rgb(6, 10, 95);
+    align-content: center;
+    border-radius: 15px;
+    border-top: 0px;
+    position: absolute;
+    bottom: -5px;
+    right: -70px;
+}
+
+.progress h3 {
     margin-left: 25px;
 }

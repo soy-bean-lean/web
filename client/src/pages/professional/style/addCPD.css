@@ -24,17 +24,28 @@
   width: 250px;
   font-weight: 200;
 }
-
-select ,input{
+.addCPDMain input{
   margin-bottom: 15px;
   margin-left: 40px;
-  width: 70%;
+  width: 50%;
   height: 30px;
   font-size: 20px;
   padding-left: 20px;
   color: black;
   
 }
+
+.addCPDMain select{
+  margin-bottom: 15px;
+  margin-left: 40px;
+  width: max-content;
+  height: 30px;
+  font-size: 20px;
+  padding-left: 20px;
+  color: black;
+  
+}
+
 textarea {
     margin-bottom: 15px;
     margin-left: 40px;
@@ -56,8 +67,7 @@ margin-bottom: 20px;}
     margin-left: 10%;
     width: 60%;
   }
-  .review {
-  }
+  
   .bottom a {
     background: #060a5f;
     border: none;
@@ -68,7 +78,6 @@ margin-bottom: 20px;}
     margin: 5px;
     border-radius: 5px;
     font-size: 14px;
-    font-weight: 600;
     color: rgb(255, 255, 255);
   }
   
