@@ -1,0 +1,96 @@
+.job-basic-info{
+    height: 500px;
+    padding-top: 65px;
+}
+.JobButns{
+    height: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr  0.5fr 0.5fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "a a update delete ";
+    margin-top: 5px;
+    margin-right: 28%;
+}
+.job-basic-info-form{
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.job-basic-info-title{
+    padding: 10px;
+    text-align: center;
+}
+
+.job-basic-info-form .job-basic-info-block{
+    margin: 20px;
+    margin-left: 25%;
+    width: 60%;
+}
+
+.job-info-title{
+    margin-bottom: 15px;
+    font-size: 20px;
+    width: 250px;
+    font-weight: 200;
+}
+
+.job-field-block{
+    padding-bottom: 20px;
+}
+
+.job-basic-info-block select , .job-basic-info-block .input{
+    margin-bottom: 15px;
+    margin-left: 40px;
+    width: 70%;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 20px;
+    color: black;
+    
+  }
+
+  .job-basic-info-form .job-btn-block{
+    margin: 20px;
+    margin-left: 10%;
+    width: 60%;
+  }
+
+  .delete{
+    background: #ac0b0b;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px;
+
+    grid-area: delete;
+    border-radius: 5px;
+    margin: 5px;
+    margin-left: 20px;
+    margin-right: 20px;    font-size: 16px;
+    color: rgb(255, 255, 255);
+  }
+
+  .update{
+    background: #060a5f;
+    border: none;
+    grid-area: update;
+
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px;
+
+    margin: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+  }
+
+
+  .jobviewedit {
+    margin-left: 2%;
+    overflow-y: scroll;
+    height: 540px;
+    grid-area: main;
+  }

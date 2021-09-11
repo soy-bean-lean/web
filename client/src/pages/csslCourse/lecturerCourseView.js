@@ -18,12 +18,12 @@ function LecturerCourseView() {
     axios
       .post("http://localhost:3001/csslcourse/getCourseImg", formData)
       .then((res) => {
-        setCourseImg("http://localhost:3001/uploads/" + res.data[0].image)
+        setCourseImg("http://localhost:3001/uploads/" + res.data[0].image);
       })
       .catch((error) => {
         console.log(error);
       });
-      
+
     axios
       .post("http://localhost:3001/csslcourse/getContentList", formData)
 
@@ -84,22 +84,28 @@ function LecturerCourseView() {
                   Edit
                 </a>
               </Link>
-              {/*<Link
+            </div>
+            
+            <div className="lec-course-view-content-btn">
+              <Link
                 to={
-                  "/addExam/cssl00" +
+                  "/editCourseContent/cssl00" +
                   id +
+                  "/" +
+                  title +
                   "/" +
                   content.contentId +
                   "/" +
                   content.title
                 }
-                className="lcv-content-exam-btn"
+                className="lcv-content-quiz-btn"
               >
-                <a href="#" className="lcv-content-exam-btn">
-                  Add Exam
+                <a href="#" className="lcv-content-quiz-btn">
+                  Quiz
                 </a>
-              </Link>*/}
+              </Link>
             </div>
+
           </div>
         </div>
       </>
@@ -116,12 +122,7 @@ function LecturerCourseView() {
             value="Get Approval"
           />
           <Link
-            to={
-              "/editCourse/cssl00" +
-              id +
-              "/" +
-              title
-            }
+            to={"/editCourse/cssl00" + id + "/" + title}
             className="lcv-course-edit-btn"
           >
             <a href="#" className="lcv-course-edit-btn">
@@ -138,10 +139,7 @@ function LecturerCourseView() {
             className="lcv-course-del-btn"
             value="Delete Course"
           />
-          <Link
-            to={"/lecCourse"}
-            className="lcv-redirect-btn"
-          >
+          <Link to={"/lecCourse"} className="lcv-redirect-btn">
             <a href="#" className="lcv-redirect-btn">
               Course List
             </a>
@@ -155,7 +153,6 @@ function LecturerCourseView() {
             </a>
           </Link>
           {/*courseImg && <img src={courseImg} alt="Image" className="lcv-course-image" />*/}
-
         </div>
         <div className="lecturer-course-view-content-list">{contentList}</div>
       </div>

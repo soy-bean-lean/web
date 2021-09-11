@@ -8,6 +8,9 @@
     "profileLeft  paymentsRightTop"
     "profileLeft  paymentsRightBottem";
 }
+.done{
+
+}
 .countPay {
   font-size: 80px;
   size: 15px;
@@ -15,7 +18,9 @@ margin-left: 150px;
 }
 .paymentsRightTop {
   margin-top: 12%;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-area: paymentsRightTop;
   border: 1px solid black;
 }
@@ -25,13 +30,13 @@ margin-left: 150px;
   margin-top: 10%;
   height: 588px;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.8fr 2fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
   grid-template-areas:
     "myImage  fullName"
-    "myImage  myemail"
+    "myImage  myBirthDay"
     "myContact  myContact"
-    "myBirthDay  myBirthDay"
+    "myemail  myemail"
     "myNic  myNic"
     "myAddress  myAddress"
     "updateButn  updateButn";
@@ -53,11 +58,10 @@ margin-left: 150px;
 
 .myImage {
   grid-area: myImage;
-  display: flex;
   justify-content: center;
   align-items: center;
-
   border-radius: 80px;
+  margin-top: -14px;
 }
 .updateButn {
   grid-area: updateButn;
@@ -68,54 +72,45 @@ margin-left: 150px;
   border-radius: 80px;
 }
 .mypIC {
-  width: 80%;
+  width: 90%;
+  margin: 10px;
   border-radius: 30px;
 }
 .fullName {
   grid-area: fullName;
   margin: 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .myemail {
   grid-area: myemail;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
+  padding-top: 20px;
+  padding-left: 150px;
 }
 .myContact {
   grid-area: myContact;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  margin-top: 60px;
+  padding-left: 150px;
+  padding-top: 80px;
+
 }
 .myAddress {
   grid-area: myAddress;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
+  padding-left: 150px;
 }
 .myNic {
   grid-area: myNic;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
+  padding-left: 150px;
 }
 .myBirthDay {
   grid-area: myBirthDay;
   margin: 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   display: flex;
-  justify-content: center;
-  align-items: center;
+ 
 }
 
 .paymentsRightBottem {

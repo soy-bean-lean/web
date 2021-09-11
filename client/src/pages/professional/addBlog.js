@@ -1,12 +1,13 @@
-import React from "react";
+
+import React, { useState, useContext, useEffect } from "react";
+
 import "./style/addBlog.css";
 
-
 import axios from "axios";
-function addBlog() {
-  // const [title, setTitle] = useState("");
-  // const [desc, setDesc] = useState("");
-  // const [image, setBlogImage] = useState(null);
+function AddBlog() {
+   const [title, setTitle] = useState("");
+   const [desc, setDesc] = useState("");
+  const [file, setFile] = useState(null);
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -33,9 +34,9 @@ function addBlog() {
 
   return (
     <div className="write">
-      {/* {file && (
+     {file && (
           <img className="writeImg" src={URL.createObjectURL(file)} alt="" />
-        )} */}
+        )} 
       <img className="writeImg" alt="" />
       {/* <form className="writeForm" onSubmit={handleSubmit}> */}
       <form className="writeForm" >
@@ -46,8 +47,8 @@ function addBlog() {
           <input
             type="file"
             id="fileInput"
-            style={{ display: "none" }}
-            //   onChange={(e) => setFile(e.target.files[0])}
+           
+               onChange={(e) => setFile(e.target.files[0])}
           />
           <input
             type="text"
@@ -73,4 +74,4 @@ function addBlog() {
   );
 }
 
-export default addBlog;
+export default AddBlog;

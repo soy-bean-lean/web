@@ -73,15 +73,15 @@ function Info() {
           </div>
           <div className="myAddress">
             {" "}
-            <p>{address}</p>
+            <h4>{address}</h4>
           </div>
           <div className="myNic">
             {" "}
-            <h2>{NIC}</h2>
+            <h2> {NIC}</h2>
           </div>
           <div className="myBirthDay">
             {" "}
-            <h2>{dob}</h2>
+        <h2>   Date Of Birth Day           -      {dob}</h2>
           </div>
 
           <div className="updateButn">
@@ -93,7 +93,17 @@ function Info() {
             </Link>
           </div>
         </div>
-        <div className="paymentsRightTop"></div>
+        <div className="paymentsRightTop">
+          <div>
+          {image && <img src={image} alt="Image" className="mypIC" />}
+
+          </div>
+          <br></br>
+          <div>
+          {image && <img src={image} alt="Image" className="mypIC" />}
+
+            </div>
+        </div>
         <div className="paymentsRightBottem">
           <h2 className="tpc">My Total Payments</h2>
           <br></br>

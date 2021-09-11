@@ -23,7 +23,7 @@ import { useHistory } from "react-router-dom";
 function Navbar() {
   let history = useHistory();
   const { authState, setAuthState } = useContext(AuthContext);
-  const [sidebar, setSidebar] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
 
   const logout = () => {
