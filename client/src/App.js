@@ -25,8 +25,8 @@ import courseReviewP from "./pages/professional/coursReviews";
 
 import workshopPro from "./pages/professional/workshops";
 import workshopViewPro from "./pages/professional/workshopsView";
-//import blogsPro from "./pages/professional/blog";
-import blogsPro from "./pages/professional/addBlog";
+import blogsPro from "./pages/professional/blog";
+import addBlogPro from "./pages/professional/addBlog";
 import forumPro from "./pages/professional/forum";
 import reportsPro from "./pages/professional/reports";
 
@@ -80,6 +80,9 @@ import dashboardSec from "./pages/secretary/dashboard";
 import addJob from "./pages/secretary/addJob";
 import addQuestion from "./pages/secretary/addQuestion";
 import addWorkshops from "./pages/secretary/addWorkshops";
+
+import ViewCurrentJobs from "./pages/secretary/viewCurrentJobs";
+import editDeleteJob from "./pages/secretary/editDeleteJob";
 
 import manageWorkshop from "./pages/secretary/manageWorkshop";
 import paymentsSec from "./pages/secretary/payment";
@@ -187,7 +190,8 @@ function App() {
               <Route path="/courseReviewP/:id" component={courseReviewP} />
               <Route path="/workshopP" component={workshopPro} />
               <Route path="/workshopViewP" component={workshopViewPro} />
-              <Route path="/blogP" component={blogsPro} />
+              <Route path="/addBlogs" component={addBlogPro} />
+              <Route path="/blogP" component={addBlogPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
               <Route path="/job" component={jobView} />
@@ -256,8 +260,12 @@ function App() {
             <>
               <Navbar />
               <Route path="/dashboardSec" exact component={dashboardSec} />
-              <Route path="/addJob" component={addJob} />
+              <Route path="/ViewCurrentJobs" component={ViewCurrentJobs} />
+
               <Route path="/addQuestions" component={addQuestion} />
+              
+              <Route path="/addNewJob" component={addJob} />
+              <Route path="/editDeleteJob/:id" component={editDeleteJob} />
               <Route path="/manWorkshop" component={manageWorkshop} />
               <Route path="/addWorkshops" component={addWorkshops} />
               <Route path="/regApprove" component={regApprove} />

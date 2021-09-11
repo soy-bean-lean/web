@@ -1,13 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./style/basicDetails.css";
+import "./style/editJobs.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../../helpers/AuthContext";
+import { useParams } from "react-router-dom";
 
-function AddJob() {
+function EditDelete() {
+  const { id } = useParams();
+  const add = "";
+
   const [companyName, setCompanyName] = useState("");
   const [jobRole, setJobRole] = useState("");
   const [location, setLocation] = useState("");
@@ -21,38 +25,31 @@ function AddJob() {
 
   let history = useHistory();
 
-  const addJob = () => {
-    const formData = new FormData();
-    formData.append("image", imgFile);
-    formData.append("companyName", companyName);
-    formData.append("jobRole", jobRole);
-    formData.append("location", location);
-    formData.append("contact", contact);
-    formData.append("email", email);
-    formData.append("description", description);
-    formData.append("memberId", authState.id);
+  const updateJob = () => {
+    const jobData = {
+      image: imgFile,
+      companyName: companyName,
+      jobRole: jobRole,
+      location: location,
+      contact: contact,
+      email: email,
+      description: description,
+      imgFile: imgFile,
+      jvId: id,
+    };
 
+    axios
+      .post("http://localhost:3001/job/updateJob", jobData)
 
-    fetch("http://localhost:3001/job", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Accept: "multipart/form-data",
-      },
-      credentials: "include",
-    })
-      .then((res) => res.json())
       .then((res) => {
-       
-        toast.success("Job Vacancy Has Successfully Added!", {
+        toast.success("Job Vacancy Has Successfully Updated!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
         history.push("/dashboardSec");
-
       })
       .catch((error) => {
-        toast.error("Unable to Uploaded Job Vacancy,Try Again!", {
+        toast.error("Unable to Update Job Vacancy,Try Again!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
@@ -60,13 +57,38 @@ function AddJob() {
 
         console.log(error);
       });
-    
   };
+  useEffect(() => {
+    const data = {
+      jid: id,
+    };
+
+    axios
+      .get("http://localhost:3001/job/getJobView", { params: { id: id } })
+
+      .then((response) => {
+        if (response.data.error) {
+          //    alert(response.data.error);
+        } else {
+          console.log(response.data[0]);
+          setCompanyName(response.data[0].companyName);
+          setJobRole(response.data[0].designation);
+          setLocation(response.data[0].location);
+          setEmail(response.data[0].email);
+          setContact(response.data[0].contact);
+          setDescription(response.data[0].description);
+          add = response.data[0].advertisment;
+        }
+      })
+      .catch((error) => {
+        //   alert(error);
+      });
+  }, []);
 
   return (
     <>
       <div className="job-basic-info">
-        <h1 className="job-basic-info-title">Add Job Vacancies</h1>
+        <h1 className="job-basic-info-title">Edit Or Delete Job Vacancies</h1>
         <hr></hr>
         <div className="job-basic-info-form">
           <div className="job-basic-info-block">
@@ -74,7 +96,7 @@ function AddJob() {
               <h4 className="job-info-title">Company Name</h4>
               <input
                 className="input"
-                placeholder="--Company Name--"
+                value={companyName}
                 onChange={(event) => {
                   setCompanyName(event.target.value);
                 }}
@@ -84,7 +106,7 @@ function AddJob() {
               <h4 className="job-info-title">Job Role</h4>
               <input
                 className="input"
-                placeholder="--Job Role--"
+                value={jobRole}
                 onChange={(event) => {
                   setJobRole(event.target.value);
                 }}
@@ -94,7 +116,7 @@ function AddJob() {
               <h4 className="job-info-title">Location</h4>
               <input
                 className="input"
-                placeholder="--Location--"
+                value={location}
                 onChange={(event) => {
                   setLocation(event.target.value);
                 }}
@@ -104,7 +126,7 @@ function AddJob() {
               <h4 className="job-info-title">Contact Number</h4>
               <input
                 className="input"
-                placeholder="--Contact Number--"
+                value={contact}
                 onChange={(event) => {
                   setContact(event.target.value);
                 }}
@@ -114,7 +136,7 @@ function AddJob() {
               <h4 className="job-info-title">Email</h4>
               <input
                 className="input"
-                placeholder="--Email--"
+                value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}
@@ -124,32 +146,31 @@ function AddJob() {
               <h4 className="job-info-title">Description</h4>
               <textarea
                 className="note"
-                placeholder="--Description--"
+                value={description}
                 onChange={(event) => {
                   setDescription(event.target.value);
                 }}
               ></textarea>
             </div>
-            <div className="job-field-block">
-              <h4 className="job-info-title">Advertisement Image</h4>
-              <input
-                  type="file"
-                  className="input"
-                  id="course-img"
-                  name="course-img"
-                  accept="image/*"
-                  onChange={(e) => setImgFile(e.target.files[0])}
-                ></input>
-            </div>
           </div>
-          <button className="job-btn-submit" onClick={addJob}>
+        <div className="JobButns">
+        <button className="update" onClick={updateJob}>
             {" "}
-            Add{" "}
+            Update{" "}
           </button>
+          <br>
+          </br>
+          <button className="delete" onClick={updateJob}>
+            {" "}
+            Delete{" "}
+          </button>
+        </div>
+
+
         </div>
       </div>
     </>
   );
 }
 
-export default AddJob;
+export default EditDelete;

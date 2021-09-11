@@ -89,6 +89,7 @@ userRouter.post("/updateBasicDetails", async (req, res) => {
       }
     }
   );
+
 });
 
 //Register
@@ -216,8 +217,7 @@ userRouter.post("/updatePassword", async (req, res) => {
           if (!match) {
             res.json({ errorPass: "errorCurrent" });
           } else {
-
-         /*   bcrypt.hash(newPassword, 10).then((hash) => {
+            /*   bcrypt.hash(newPassword, 10).then((hash) => {
               connection.query("UPDATE user SET password = '"+hash+" where id="+memberId+";",  
                 (err, result) => {
                   if (err) {
@@ -241,7 +241,7 @@ userRouter.post("/updatePassword", async (req, res) => {
             });*/
           }
         });
-      } else{
+      } else {
         res.json({ errorPass: "error" });
       }
     }
