@@ -24,20 +24,7 @@ const options = {
   maintainAspectRatio: false,
 };
 function Reports() {
-  function printDocument() {
-    const input = document.getElementById("divToPrint");
-    // html2canvas(input).then((canvas) => {
-    //   const imgData = canvas.toDataURL("image/png");
-    //   const pdf = new jsPDF({
-    //     orientation: "landscape",
-    //     unit: "in",
-    //     format: [10, 9],
-    //   });
-    //   pdf.addImage(imgData, "JPEG", 0, 0);
-    //   // pdf.output('dataurlnewwindow');
-    //   pdf.save("download.pdf");
-    // });
-  }
+ 
   const { authState, setAuthState } = useContext(AuthContext);
 
   const [dataCPD, setData] = useState(null);
@@ -233,7 +220,7 @@ function Reports() {
     <div className="reports" id="divToPrint">
       <div className="PieChart">
       <div className="send">
-          <a href="#" className="sendData" onClick={printDocument}>
+          <a href="#" className="sendData" >
             Submit Answers
           </a>
         </div>

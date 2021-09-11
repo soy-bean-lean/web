@@ -21,7 +21,7 @@
 
 .profileDetails {
     width: 100%;
-    margin-bottom: 45px;
+    margin-bottom: 5px;
     margin-left: 15px;
 }
 
@@ -179,7 +179,7 @@ align-items: center;
 }
 */
 
-span {
+.navbar-span-cls {
     margin-left: 16px;
 }
 

@@ -7,9 +7,10 @@ import { AuthContext } from "./helpers/AuthContext";
 
 import Registration from "./pages/registration/Registration";
 import Login from "./pages/login/Login";
-import settings from "./components/settings/settings";
+import settings from "./components/settingsAndInfo/settings";
+import profileInfo from "./components/settingsAndInfo/Infor";
 import PageNotFound from "./pages/pageNotFound";
-import PaymentModal from './pages/payment';
+import PaymentModal from "./pages/payment";
 
 //professional
 import dashboardPro from "./pages/professional/dashboard";
@@ -37,7 +38,6 @@ import questionare from "./pages/professional/questionare";
 import createCV from "./pages/professional/genarateCV";
 
 import paymentsPro from "./pages/professional/payments";
-
 
 import courseInfo from "./pages/csslCourse/basicDetails";
 import courseContentInfo from "./pages/csslCourse/courseContentInfo";
@@ -100,7 +100,6 @@ import regRejectedCou from "./pages/council/regRejectedC";
 import cpdCou from "./pages/council/cpd";
 
 function App() {
-  
   const [authState, setAuthState] = useState({
     fname: "",
     lname: "",
@@ -145,30 +144,34 @@ function App() {
             </>
           )}
           {authState.role == "student" && (
-            <>    
-            <Navbar />
+            <>
+              <Navbar />
               <Route path="/dashboardStu" exact component={dashboardCha} />
               <Route path="/courseS" component={courseStu} />
               <Route path="/workshopS" component={workshopStu} />
               <Route path="/blogS" component={blogStu} />
               <Route path="/forumS" component={forumStu} />
               <Route path="/reportsS" component={reportsStu} />
-              <Route path="/paymentsS" component={paymentsStu} />                     
+              <Route path="/paymentsS" component={paymentsStu} />
+              <Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
             </>
-          )} 
+          )}
 
           {authState.role == "associate" && (
-            <>    
-            <Navbar />
+            <>
+              <Navbar />
               <Route path="/dashboardA" exact component={dashboardAss} />
               <Route path="/courseA" component={courseAss} />
               <Route path="/blogA" component={blogAss} />
               <Route path="/forumA" component={forumAss} />
               <Route path="/reportsA" component={reportsAss} />
               <Route path="/jobA" component={jobAss} />
-              <Route path="/paymentsA" component={paymentsAss} />                    
+              <Route path="/paymentsA" component={paymentsAss} />
+              <Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
             </>
-          )} 
+          )}
 
           {authState.role == "professional" && (
             <>
@@ -192,30 +195,38 @@ function App() {
                 path="/jobAddvertisment/:id"
                 component={jobAddvertisment}
               />
-              <Route
-                path="/addJobCV/:id:finalMarks"
-                component={addJobCV}
-              />
+              <Route path="/addJobCV/:id:finalMarks" component={addJobCV} />
               <Route path="/questionare/:id" component={questionare} />
               <Route path="/createCV" component={createCV} />
               <Route path="/paymentsP" component={paymentsPro} />
               <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
-              <Route path="/addCourseContent/cssl00:id/:title" component={courseContentInfo} />
-              <Route path="/courseView/cssl00:id/:title" component={lecturerCourseView} />
-              <Route path="/editCourse/cssl00:id/:title" component={editCourseInfo} />
-              <Route path="/editCourseContent/cssl00:id/:title/:cntId/:cntTitle" component={editCourseContent} />
-              <Route path="/payment" component={PaymentModal} />
-            
-              <Route path="/settings" exact component={settings} />
+              <Route
+                path="/addCourseContent/cssl00:id/:title"
+                component={courseContentInfo}
+              />
+              <Route
+                path="/courseView/cssl00:id/:title"
+                component={lecturerCourseView}
+              />
+              <Route
+                path="/editCourse/cssl00:id/:title"
+                component={editCourseInfo}
+              />
+              <Route
+                path="/editCourseContent/cssl00:id/:title/:cntId/:cntTitle"
+                component={editCourseContent}
+              />
 
+              <Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
             </>
-          )}          
+          )}
 
           {authState.role == "chartered" && (
-            <>    
-            <Navbar />
-              <Route path="/dashboardC" exact component={dashboardCha} />    
+            <>
+              <Navbar />
+              <Route path="/dashboardC" exact component={dashboardCha} />
               <Route path="/cpdP" component={cpdPro} />
               <Route path="/addCPD" component={cpdAddPro} />
               <Route path="/courseP" component={courseCha} />
@@ -229,16 +240,21 @@ function App() {
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsC" component={reportsCha} />
               <Route path="/job" component={jobView} />
-              <Route path="/jobAddvertisment/:id" component={jobAddvertisment} />
+              <Route
+                path="/jobAddvertisment/:id"
+                component={jobAddvertisment}
+              />
               <Route path="/questionare/:id" component={questionare} />
-              <Route path="/createCV" component={createCV} />  
-              <Route path="/paymentsP" component={paymentsPro} />           
+              <Route path="/createCV" component={createCV} />
+              <Route path="/paymentsP" component={paymentsPro} />
+              <Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
             </>
-          )}      
-          
+          )}
+
           {authState.role == "secretariat" && (
             <>
-            <Navbar />
+              <Navbar />
               <Route path="/dashboardSec" exact component={dashboardSec} />
               <Route path="/addJob" component={addJob} />
               <Route path="/addQuestions" component={addQuestion} />
@@ -248,12 +264,14 @@ function App() {
               <Route path="/regPending" component={regPending} />
               <Route path="/regRejected" component={regRejected} />
               <Route path="/paymentsSec" component={paymentsSec} />
+              <Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
             </>
           )}
 
           {authState.role == "council" && (
             <>
-            <Navbar />
+              <Navbar />
               <Route path="/dashboardCou" exact component={dashboardCou} />
               <Route path="/jobCou" component={addJobCou} />
               <Route path="/blogCou" component={blogsCou} />
@@ -263,7 +281,9 @@ function App() {
               <Route path="/regRejectedC" component={regRejectedCou} />
               <Route path="/regApproveC" component={regApproveCou} />
               <Route path="/paymentCou" component={paymentCou} />
-              <Route path="/cpdCou" component={cpdCou} />            
+              <Route path="/cpdCou" component={cpdCou} />
+              <Route path="/settings" exact component={settings} />
+              <Route path="/profileInfor" exact component={profileInfo} />
             </>
           )}
         </Switch>

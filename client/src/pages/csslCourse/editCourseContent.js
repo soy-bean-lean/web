@@ -92,6 +92,11 @@ function EditCourseContent(props) {
       setVideoLink(record.content);
     }
   };
+
+  const display = (val) =>{
+    console.log(val);
+  }
+
   return (
     <div className="content-basic-info-main">
       <div className="content-basic-info">
@@ -124,7 +129,7 @@ function EditCourseContent(props) {
             </div>
             <div className="content-field-block">
               <h4 className="content-info-title">Note</h4>
-              <TextEditor />
+              <TextEditor onValueChange={display} />
             </div>
             <div className="content-field-block">
               <h4 className="content-info-title">Content Type</h4>
