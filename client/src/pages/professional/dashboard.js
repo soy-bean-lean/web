@@ -32,6 +32,7 @@ function Home() {
   for (var i = 0; i < length; i++) {
     months[dataCPD[i].month] = dataCPD[i].credits;
   }
+  console.log(months);
   const state = {
     labels: [
       "JAN",
@@ -72,7 +73,7 @@ function Home() {
     dataCPDYear.map(
       (dataCPDYear) => (
         (year = dataCPDYear.Year),
-        (type = dataCPDYear.type),
+        (type = dataCPDYear.types),
         (credit = dataCPDYear.Credits),
         (l = yearData.length),
         console.log(
@@ -99,12 +100,8 @@ function Home() {
           : console.log("-->" + l + "---------"),
         type === "O"
           ? (otherData[l] = credit)
-          : console.log("-->" + l + "---------"),
-        console.log(yearData),
-        console.log(courseData + "-->" + l + "---------"),
-        console.log(workshopData + "-->" + l + "---------"),
-        console.log(otherData + "-->" + l + "---------"),
-        console.log(year + "===========" + type + "============" + credit)
+          : console.log("-->" + l + "---------")
+       
       )
     );
 
