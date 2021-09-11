@@ -27,18 +27,19 @@ function Navbar() {
   const showSidebar = () => setSidebar(!sidebar);
 
   const logout = () => {
-    console.log("anushka");
     localStorage.removeItem("accessToken");
     setAuthState({
       fname: "",
       lname: "",
+      progileImg: "",
       role: "",
       id: 0,
       status: false,
     });
     history.push("/");
   };
-
+  const image =
+    "http://localhost:3001/uploads/profileImages/" + authState.profileImage;
   if (authState.role == "associate") {
     return (
       <>
@@ -47,12 +48,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -73,7 +72,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -106,13 +105,11 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
 
-            <Link to="/settings" className="settings">
-              <AiIcons.AiFillSetting />
-            </Link>
+
+            <Link to="/profileInfor" className="edit">
+                      <FaIcons.FaUserAlt />
+                    </Link>
           </div>
         </div>
 
@@ -132,14 +129,16 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
-
                     <p>{authState.role}</p>
+                   
                   </div>
+                
                 </div>
+
               </li>
 
               {SidebarDataPro.map((item, index) => {
@@ -165,12 +164,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -191,7 +188,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImg} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -224,12 +221,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -250,7 +245,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgCha} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -283,12 +278,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -309,7 +302,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgCouncil} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
@@ -342,12 +335,10 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-            <Link to="#" className="notification">
-              <MdIcons.MdNotifications />
-            </Link>
+           
 
-            <Link to="#" className="settings">
-              <AiIcons.AiFillSetting />
+            <Link to="/profileInfor" className="settings">
+                      <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -368,7 +359,7 @@ function Navbar() {
               <li className="navbar-toggle">
                 <div className="profile">
                   <div className="profileImg">
-                    <img src={progileImgSec} className="pic"></img>
+                    {image && <img src={image} alt="Image" className="pic" />}
                   </div>
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>

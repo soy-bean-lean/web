@@ -67,7 +67,7 @@ function Home() {
     dataCPDYear.map(
       (dataCPDYear) => (
         (year = dataCPDYear.Year),
-        (type = dataCPDYear.type),
+        (type = dataCPDYear.types),
         (credit = dataCPDYear.Credits),
         (l = yearData.length),
         console.log(

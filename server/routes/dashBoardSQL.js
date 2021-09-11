@@ -7,14 +7,13 @@ const dashBoardSQL = Router();
 
 dashBoardSQL.post("/getCPDData", (req, res) => {
   const memberId =req.body.memberId;
-  console.log("member Id is - - MONTH- - -" + memberId);
   const sqlSelect =
   
-    "select extract(MONTH from AdDate) as month,sum(Credits) as credits from test group by month;"
-    //"select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords group by month where memberId = "+memberId+";"
+   // "select extract(MONTH from AdDate) as month,sum(Credits) as credits from test group by month;"
+    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = 'cssl001' group by month ;"
 
-  console.log(sqlSelect);
   connection.query(sqlSelect, (err, result) => {
+    console.log(result)
     res.send(result);
   });
 });
@@ -23,8 +22,8 @@ dashBoardSQL.post("/getMemberData", (req, res) => {
 
   const sqlSelect =
   //member knk add wechcha date eka tygnn ona
-    "select extract(YEAR from AdDate) as year,count(id) as members from test group by year;"
-    //"select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords group by month ;"
+    //"select extract(YEAR from AdDate) as year,count(id) as members from test group by year;"
+    "select extract(YEAR from registeredDate) as year,count(id) as members from user group by year ;"
 
   console.log(sqlSelect);
   connection.query(sqlSelect, (err, result) => {
@@ -37,8 +36,8 @@ dashBoardSQL.post("/getCPDDataYear", (req, res) => {
   console.log("member Id is - - YEAR- - -" + memberId);
     const sqlSelect =
   
-    "select extract(Year from AdDate) as Year,sum(Credits) aS Credits, type from TEST group by Year,type; "
-    //"select extract(Year from recordDate) as Year,sum(credit) aS Credits, recordType as type  from cpdrecords group by Year,type where memberId = "+memberId+";"
+   // "select extract(Year from AdDate) as Year,sum(Credits) aS Credits, type from TEST group by Year,type; "
+    "select extract(Year from recordDate) as Year,sum(credit) aS Credits, recordType as types from cpdrecords where memberId = 'cssl001' group by Year,types "
 
   console.log(sqlSelect);
   connection.query(sqlSelect, (err, result) => {
@@ -54,8 +53,7 @@ dashBoardSQL.post("/getWorkshops", (req, res) => {
   const sqlSelect =
   
       "select extract(MONTH from AdDate) as month,count(Credits) as workshops from test group by month;"
-   // "select extract(MONTH from fromDate) as month,count(credit) as workshops from cpdrecords group by month where memberId = "+memberId+";"
-
+   // "select extract(MONTH from fromDate) as month,count(credit) as workshops from cpdrecords where memberId = 'cssl001' group by month ;"
   console.log(sqlSelect);
   connection.query(sqlSelect, (err, result) => {
     console.log(result)
