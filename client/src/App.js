@@ -24,8 +24,8 @@ import courseReviewP from "./pages/professional/coursReviews";
 
 import workshopPro from "./pages/professional/workshops";
 import workshopViewPro from "./pages/professional/workshopsView";
-//import blogsPro from "./pages/professional/blog";
-import blogsPro from "./pages/professional/addBlog";
+import blogsPro from "./pages/professional/blog";
+import addBlogPro from "./pages/professional/addBlog";
 import forumPro from "./pages/professional/forum";
 import reportsPro from "./pages/professional/reports";
 
@@ -184,7 +184,8 @@ function App() {
               <Route path="/courseReviewP/:id" component={courseReviewP} />
               <Route path="/workshopP" component={workshopPro} />
               <Route path="/workshopViewP" component={workshopViewPro} />
-              <Route path="/blogP" component={blogsPro} />
+              <Route path="/addBlogs" component={addBlogPro} />
+              <Route path="/blogP" component={addBlogPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
               <Route path="/job" component={jobView} />
