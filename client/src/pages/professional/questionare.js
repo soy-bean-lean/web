@@ -151,7 +151,8 @@ function Questionare() {
         <label className="answer" for="html">
           {data.Answer4}
         </label>
-           <br></br> <br></br> <hr></hr>
+           <br></br> 
+            
       </>
     ));
   return (
@@ -165,6 +166,9 @@ function Questionare() {
           </a>
 
         </Link>
+        {" "}
+           <br></br> 
+<div></div>
       </div>
     </div>
   );

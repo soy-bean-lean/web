@@ -33,8 +33,8 @@ export const SidebarDataSec = [
     cName: 'nav-text'
   },
   {
-    title: 'Add Job Vacancies',
-    path: '/addJob',
+    title: 'Job Vacancies',
+    path: '/ViewCurrentJobs',
     icon: <FaIcons.FaUserAlt />,
     cName: 'nav-text'
   },

@@ -93,7 +93,7 @@ function AddCV() {
                 className="input"
                 id="course-img"
                 name="course-img"
-                accept="image/*"
+                accept="file/pdf"
                 onChange={(e) => setCVFile(e.target.files[0])}
               ></input>
             </div>

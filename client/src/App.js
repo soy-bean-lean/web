@@ -81,6 +81,9 @@ import addJob from "./pages/secretary/addJob";
 import addQuestion from "./pages/secretary/addQuestion";
 import addWorkshops from "./pages/secretary/addWorkshops";
 
+import ViewCurrentJobs from "./pages/secretary/viewCurrentJobs";
+import editDeleteJob from "./pages/secretary/editDeleteJob";
+
 import manageWorkshop from "./pages/secretary/manageWorkshop";
 import paymentsSec from "./pages/secretary/payment";
 import regApprove from "./pages/secretary/regApprove";
@@ -158,7 +161,9 @@ function App() {
             </>
           )}
 
+
           {authState.role == "associate" && (
+            
             <>
               <Navbar />
               <Route path="/dashboardA" exact component={dashboardAss} />
@@ -257,8 +262,12 @@ function App() {
             <>
               <Navbar />
               <Route path="/dashboardSec" exact component={dashboardSec} />
-              <Route path="/addJob" component={addJob} />
+              <Route path="/ViewCurrentJobs" component={ViewCurrentJobs} />
+
               <Route path="/addQuestions" component={addQuestion} />
+              
+              <Route path="/addNewJob" component={addJob} />
+              <Route path="/editDeleteJob/:id" component={editDeleteJob} />
               <Route path="/manWorkshop" component={manageWorkshop} />
               <Route path="/addWorkshops" component={addWorkshops} />
               <Route path="/regApprove" component={regApprove} />

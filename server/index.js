@@ -20,7 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-
+console.log("1111111111111")
 app.use(express.json());
 app.use(
   express.urlencoded({
