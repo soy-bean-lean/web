@@ -5,6 +5,7 @@ import { AuthContext } from "../../helpers/AuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TextEditor from "../../components/RichTextEditor";
 
 import { useHistory } from "react-router-dom";
 
@@ -58,6 +59,11 @@ alert(image)
       });
   }
 
+  const display = (val) =>{
+    console.log(val);
+  }
+
+
   return (
     <div className="write">
        {image && (
@@ -85,6 +91,8 @@ alert(image)
           />
         </div>
         <div className="writeFormGroup">
+        <TextEditor onValueChange={display} />
+
           <textarea
             placeholder="Tell your story..."
             type="text"
