@@ -188,7 +188,7 @@ function App() {
               <Route path="/workshopP" component={workshopPro} />
               <Route path="/workshopViewP" component={workshopViewPro} />
               <Route path="/addBlogs" component={addBlogPro} />
-              <Route path="/blogP" component={addBlogPro} />
+              <Route path="/blogP" component={blogsPro} />
               <Route path="/forumP" component={forumPro} />
               <Route path="/reportsP" component={reportsPro} />
               <Route path="/job" component={jobView} />
