@@ -15,7 +15,6 @@ function CourseView() {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    console.log("Run");
     const formData = {
       cId: id,
     };
@@ -41,7 +40,6 @@ function CourseView() {
           alert(response.data.error);
         } else {
           setContent(response.data);
-          console.log("Run",response.data);
         }
       })
       .catch((error) => {
