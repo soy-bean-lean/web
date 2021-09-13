@@ -33,7 +33,7 @@ export const SidebarDataStudent = [
   },
   {
     title: 'Course',
-    path: '/courseS',
+    path: '/csslcourses',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
   },

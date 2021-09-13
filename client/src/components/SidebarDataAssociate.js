@@ -27,7 +27,7 @@ export const SidebarDataAssociate = [
   },
   {
     title: 'Course',
-    path: '/courseA',
+    path: '/csslcourses',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
   },
