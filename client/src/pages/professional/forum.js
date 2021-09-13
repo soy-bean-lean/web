@@ -1,20 +1,34 @@
-//import React from 'react';
 import React, { useState, useEffect, useContext } from "react";
 import "./style/forum.css";
-//import { Badge } from "shards-react";
+import { AuthContext } from "../../helpers/AuthContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import DiscussionBoard from 'react-discussion-board';
 import 'react-discussion-board/dist/index.css'
-
+import { useHistory } from "react-router-dom";
 
 function Forum(){
+  const [ image, setImage] = useState("");
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
+  const { authState, setAuthState } = useContext(AuthContext);
+  var today = new Date(),
+  Currentdate =
+    today.getFullYear() +
+    "-" +
+    (today.getMonth() + 1) +
+    "-" +
+    today.getDate();
+    let history = useHistory();
+
   const allPosts = [
-    {
-      profileImage:
-        'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg',
-      name: 'Jane Doe',
-      content: '<p>Hello everyone!</p><p>How are you all doing?</p><p>-Jane</>',
-      date: new Date('01 Jan 2020 01:12:00 GMT')
-    },
+    // {
+    //   profileImage:
+    //     'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg',
+    //   name: 'Jane Doe',
+    //   content: '<p>Hello everyone!</p><p>How are you all doing?</p><p>-Jane</>',
+    //   date: new Date('01 Jan 2020 01:12:00 GMT')
+    // },
     {
       profileImage:
         'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
@@ -24,6 +38,40 @@ function Forum(){
       date: new Date('01 Jan 2020 09:12:00 GMT')
     }
   ]
+
+  const addForum = () => {
+    const formData = new FormData();
+    formData.append("image", authState.image);
+    formData.append("name",name);
+    formData.append("content",content);
+    formData.append("date", Currentdate);
+    alert(image);
+    fetch("http://localhost:3001/blog/addBlog", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "multipart/form-data",
+      },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        toast.success("Blog Has Successfully Added!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
+        history.push("/dashboardP");
+      })
+      .catch((error) => {
+        toast.error("Unable to Uploaded  Blog,Try Again!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
+        history.push("/addBlogs");
+
+        console.log(error);
+      });
+  };
 
   const [posts, setPosts] = useState(allPosts)
 
@@ -47,7 +95,7 @@ function Forum(){
         <h1>Forum</h1>
         <br></br>
         <div className="title2">
-        <DiscussionBoard posts={posts} onSubmit={submitPost}  />
+        <DiscussionBoard posts={posts} onSubmit={addForum}  />
         </div>
         
       </div>
