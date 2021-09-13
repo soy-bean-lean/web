@@ -344,7 +344,7 @@ function AddCPD() {
                 Submit
               </a>
             </Link>
-            <Link to={"/cpdP/"} className="review">
+            <Link to={"/csslmember/cpdrecords/"} className="review">
               <a href="#" className="review">
                 Back
               </a>

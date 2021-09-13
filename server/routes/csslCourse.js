@@ -59,6 +59,7 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
   }
 });
 
+//insert course content (courseContentInfo.js)
 Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   const courseId = req.body.courseId;
   const contentNo = req.body.contentNo;
@@ -66,6 +67,7 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   const title = req.body.title;
   const description = req.body.description;
   const type = req.body.type;
+  const note = req.body.note;
   var content;
   if(type == "File"){
     content = req.file.filename;
@@ -75,12 +77,13 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   }
 
   connection.query(
-    "INSERT INTO coursecontent (contentId, contentNo, title, description, contentType, content, courseId) VALUES (?,?,?,?,?,?,?);",
+    "INSERT INTO coursecontent (contentId, contentNo, title, description, note, contentType, content, courseId) VALUES (?, ?,?,?,?,?,?,?);",
     [
       contentId,
       contentNo,
       title,
       description,
+      note,
       type,
       content,
       courseId,
@@ -125,7 +128,7 @@ Course.post("/getContentList", (req, res) => {
   );
 });
 
-
+//get last content no of the relevant course (courseContentInfo.js)
 Course.post("/getContentNo", (req, res) => {
   const cId = req.body.id;
   connection.query(
@@ -169,6 +172,7 @@ Course.post("/getCourseInfo", (req, res) => {
     }
   );
 });
+
 
 Course.post("/getCourseImg", (req, res) => {
   const cid = req.body.cId;
