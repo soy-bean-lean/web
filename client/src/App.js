@@ -17,8 +17,6 @@ import dashboardPro from "./pages/professional/dashboard";
 import cpdPro from "./pages/professional/cpd";
 import cpdAddPro from "./pages/professional/cpdAdd";
 
-import coursePro from "./pages/professional/course";
-import coursView from "./pages/professional/coursView";
 import coursMyView from "./pages/professional/coursMyView";
 import courseEnrollP from "./pages/professional/coursEnrollment";
 import courseReviewP from "./pages/professional/coursReviews";
@@ -39,6 +37,8 @@ import createCV from "./pages/professional/genarateCV";
 
 import paymentsPro from "./pages/professional/payments";
 
+import csslCourses from "./pages/professional/course";
+import courseView from "./pages/professional/courseView";
 import courseInfo from "./pages/csslCourse/basicDetails";
 import courseContentInfo from "./pages/csslCourse/courseContentInfo";
 import lecCourseList from "./pages/csslCourse/lecturingCourseList";
@@ -161,9 +161,7 @@ function App() {
             </>
           )}
 
-
           {authState.role == "associate" && (
-            
             <>
               <Navbar />
               <Route path="/dashboardA" exact component={dashboardAss} />
@@ -185,8 +183,6 @@ function App() {
               <Route path="/dashboardP" exact component={dashboardPro} />
               <Route path="/cpdP" component={cpdPro} />
               <Route path="/addCPD" component={cpdAddPro} />
-              <Route path="/courseP" component={coursePro} />
-              <Route path="/coursViewP/:id" component={coursView} />
               <Route path="/coursMyViewP/:id" component={coursMyView} />
               <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
               <Route path="/courseReviewP/:id" component={courseReviewP} />
@@ -207,6 +203,13 @@ function App() {
               <Route path="/paymentsP" component={paymentsPro} />
               <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
+
+              {/*Course Related Routes*/}
+              <Route exact path="/csslcourses" component={csslCourses} />
+              <Route
+                path="/csslcourses/courseview/cssl00:id/:title"
+                component={courseView}
+              />
               <Route
                 path="/addCourseContent/cssl00:id/:title"
                 component={courseContentInfo}
@@ -236,7 +239,7 @@ function App() {
               <Route path="/cpdP" component={cpdPro} />
               <Route path="/addCPD" component={cpdAddPro} />
               <Route path="/courseP" component={courseCha} />
-              <Route path="/coursViewP/:id" component={coursView} />
+              <Route path="/coursViewP/:id" component={courseView} />
               <Route path="/coursMyViewP/:id" component={coursMyView} />
               <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
               <Route path="/courseReviewP/:id" component={courseReviewP} />
@@ -265,7 +268,7 @@ function App() {
               <Route path="/ViewCurrentJobs" component={ViewCurrentJobs} />
 
               <Route path="/addQuestions" component={addQuestion} />
-              
+
               <Route path="/addNewJob" component={addJob} />
               <Route path="/editDeleteJob/:id" component={editDeleteJob} />
               <Route path="/manWorkshop" component={manageWorkshop} />

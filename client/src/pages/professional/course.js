@@ -2,11 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./style/course.css";
-//import courseImg from "../../imgs/course1.jpg";
-import courseImg2 from "../../imgs/course2.jpg";
-import courseImg3 from "../../imgs/course3.jpg";
-import courseImg4 from "../../imgs/course4.jpg";
-import courseImg5 from "../../imgs/course5.jpg";
 import star1 from "../../imgs/star1.jpg";
 import star4 from "../../imgs/star4.jpg";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -20,8 +15,6 @@ function CourseListView() {
   const [enCourse, setEnCourse] = useState(null);
 
   useEffect(() => {
-
-    console.log("Id:", authState.id)
     setMemberId(authState.id);
     const formData = {
       mId: "cssl001",
@@ -40,7 +33,7 @@ function CourseListView() {
         alert(error);
       });
 
-      axios
+    axios
       .post("http://localhost:3001/csslcourse/getEnrollCourseList", formData)
 
       .then((response) => {
@@ -55,7 +48,6 @@ function CourseListView() {
       });
   }, []);
 
-
   /*const courseImages = course &&
   course.map((course, i) => (
     setCourseImg(courseImg => [...courseImg, "http://localhost:3001/uploads/" + course.image])
@@ -65,7 +57,7 @@ function CourseListView() {
     course.map((course, i) => (
       <>
         <Link
-          to={"/courseView/cssl00" + course.courseId + "/" + course.name}
+          to={"/csslcourses/courseview/cssl00" + course.courseId + "/" + course.name}
           className="lec-course-list-link"
           key={i}
         >
@@ -80,7 +72,7 @@ function CourseListView() {
             <div className="courseDes">
               <h2>{course.name}</h2>
               <p>
-                Rating: {course.avgRate}     |     {course.noOfInteraction} students
+                Rating: {course.avgRate} | {course.noOfInteraction} students
               </p>
               <img src={star4} className="rating"></img>
             </div>
@@ -90,35 +82,73 @@ function CourseListView() {
       </>
     ));
 
-    const enrollCourseList =
+  const enrollOngoingCourseList =
     enCourse &&
-    enCourse.map((enCourse, i) => (
-      <>
-        <Link
-          to={"/courseView/cssl00" + enCourse.courseId + "/" + enCourse.name}
-          className="lec-course-list-link"
-          key={i}
-        >
-          <div className="course">
-            <div className="">
-              <img
-                src={"http://localhost:3001/uploads/" + enCourse.image}
-                alt="Course Image"
-                className="courseImg"
-              ></img>
-            </div>
-            <div className="courseDes">
-              <h2>{enCourse.name}</h2>
-              <p>
-                Rating: {enCourse.avgRate}     |     {enCourse.noOfInteraction} students
-              </p>
-              <img src={star4} className="rating"></img>
-            </div>
-          </div>
-        </Link>
-        <hr className="course-view-line"></hr>
-      </>
-    ));
+    enCourse.map((enCourse, i) => {
+      if (enCourse.status == "Ongoing") {
+        return (
+          <>
+            <Link
+              to={
+                "/courseView/cssl00" + enCourse.courseId + "/" + enCourse.name
+              }
+              className="lec-course-list-link"
+              key={i}
+            >
+              <div className="course">
+                <div className="">
+                  <img
+                    src={"http://localhost:3001/uploads/" + enCourse.image}
+                    alt="Course Image"
+                    className="courseImg"
+                  ></img>
+                </div>
+                <div className="courseDes">
+                  <h2>{enCourse.name}</h2>
+                  <p>{enCourse.status}</p>
+                  {/*<img src={star4} className="rating"></img>*/}
+                </div>
+              </div>
+            </Link>
+            <hr className="course-view-line"></hr>
+          </>
+        );
+      }
+    });
+
+  const enrollCompletedCourseList =
+    enCourse &&
+    enCourse.map((enCourse, i) => {
+      if (enCourse.status == "Completed") {
+        return (
+          <>
+            <Link
+              to={
+                "/courseView/cssl00" + enCourse.courseId + "/" + enCourse.name
+              }
+              className="lec-course-list-link"
+              key={i}
+            >
+              <div className="course">
+                <div className="">
+                  <img
+                    src={"http://localhost:3001/uploads/" + enCourse.image}
+                    alt="Course Image"
+                    className="courseImg"
+                  ></img>
+                </div>
+                <div className="courseDes">
+                  <h2>{enCourse.name}</h2>
+                  <p>{enCourse.status}</p>
+                  {/*<img src={star4} className="rating"></img>*/}
+                </div>
+              </div>
+            </Link>
+            <hr className="course-view-line"></hr>
+          </>
+        );
+      }
+    });
 
   return (
     <>
@@ -169,7 +199,8 @@ function CourseListView() {
           </div>
 
           <div className="mainCourses">
-            {enrollCourseList}
+            {enrollOngoingCourseList}
+            {enrollCompletedCourseList}
             {/*<Link to={"/coursMyViewP/" + id} className="Link">
               <div className="course">
                 <div className="">

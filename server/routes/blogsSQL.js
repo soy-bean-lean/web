@@ -1,6 +1,5 @@
 import Router from "express";
 import multer from "multer";
-import blogs from "../../client/src/pages/professional/blog.js";
 import connection from "../db.js";
 
 const storage = multer.diskStorage({

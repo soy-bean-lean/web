@@ -88,7 +88,6 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-        //console.log(result);
         res.send({
           data: result,
           msg: "Successfully Saved.",
@@ -136,7 +135,6 @@ Course.post("/getContentNo", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-        console.log("Result",result);
         res.send(result);
       }
     }
@@ -161,7 +159,7 @@ Course.post("/getContentInfo", (req, res) => {
 Course.post("/getCourseInfo", (req, res) => {
   const cid = req.body.cid;
   connection.query(
-    "SELECT name, description, duration, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ?;",
+    "SELECT name, description, duration, durationType, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ?;",
     [cid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -201,5 +199,32 @@ Course.post("/getCourseList", (req, res) => {
   );
 });
 
+Course.post("/getEnrollCourseList", (req, res) => {
+  const mid = req.body.mId;
+  connection.query(
+    "SELECT csslcourse.*, courseenroll.status FROM csslcourse INNER JOIN courseenroll ON csslcourse.courseId = courseenroll.courseId WHERE courseenroll.memberId = ?;",
+    [mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 
+//get CSSL Course details to display on the courseView.js
+Course.post("/getCourse", (req, res) => {
+  const cid = req.body.cId;
+  connection.query(
+    "SELECT csslcourse.name, csslcourse.description, csslcourse.duration, csslcourse.durationType, csslcourse.language, csslcourse.skillLevel, csslcourse.image, csslcourse.mode, user.title, user.firstName, user.lastName, user.profileImage FROM ((csslcourse INNER JOIN member ON member.memberId = csslcourse.conductedBy) INNER JOIN user ON user.id = member.id) WHERE courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 export default Course;
