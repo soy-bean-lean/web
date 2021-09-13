@@ -44,7 +44,7 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
     const email = req.body.email;
     const description = req.body.description;
     const addBy = req.body.memberId;
-
+    const image = req.file.filename;
     connection.query(
       `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy,advertisment,activity) VALUES (?,?,?,?,?,?,?,?,?)`,
       [

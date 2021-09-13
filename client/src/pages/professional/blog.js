@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "./style/blog.css";
 import courseImg from "../../imgs/course1.jpg";
 import courseImg2 from "../../imgs/course2.jpg";
