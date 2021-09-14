@@ -23,7 +23,7 @@ import { useHistory } from "react-router-dom";
 function Navbar() {
   let history = useHistory();
   const { authState, setAuthState } = useContext(AuthContext);
-  const [sidebar, setSidebar] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
 
   const logout = () => {
@@ -48,10 +48,8 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-           
-
             <Link to="/profileInfor" className="settings">
-                      <FaIcons.FaUserAlt />
+              <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -105,11 +103,9 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-
-
             <Link to="/profileInfor" className="edit">
-                      <FaIcons.FaUserAlt />
-                    </Link>
+              <FaIcons.FaUserAlt />
+            </Link>
           </div>
         </div>
 
@@ -134,11 +130,8 @@ function Navbar() {
                   <div className="profileDetails">
                     <h2>{authState.fname}</h2>
                     <p>{authState.role}</p>
-                   
                   </div>
-                
                 </div>
-
               </li>
 
               {SidebarDataPro.map((item, index) => {
@@ -164,10 +157,8 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-           
-
             <Link to="/profileInfor" className="settings">
-                      <FaIcons.FaUserAlt />
+              <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -221,10 +212,8 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-           
-
             <Link to="/profileInfor" className="settings">
-                      <FaIcons.FaUserAlt />
+              <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -278,10 +267,8 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-           
-
             <Link to="/profileInfor" className="settings">
-                      <FaIcons.FaUserAlt />
+              <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>
@@ -335,10 +322,8 @@ function Navbar() {
             Logout
           </button>
           <div className="panal">
-           
-
             <Link to="/profileInfor" className="settings">
-                      <FaIcons.FaUserAlt />
+              <FaIcons.FaUserAlt />
             </Link>
           </div>
         </div>

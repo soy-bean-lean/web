@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+
 import "./style/job.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
@@ -112,7 +114,6 @@ function Job() {
           onKeyUp={getData}
           
         ></input>
-        <button className="sort"  onClick={getData}> Apply </button>
       </div>
 
       <div className="jobview">{jobview}</div>

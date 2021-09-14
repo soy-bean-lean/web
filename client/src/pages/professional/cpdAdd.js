@@ -123,6 +123,9 @@ function AddCPD() {
         } else {
           if (submitWorkshopData.type == "CSSLworkshop") {
             setInWorkshopList(response.data);
+            console.log(inWorkshopList);
+            
+            console.log(response.data[0].fromDate)
           } else if (submitWorkshopData.type == "others") {
             setOutWorkshopList(response.data);
           } else {
@@ -344,7 +347,7 @@ function AddCPD() {
                 Submit
               </a>
             </Link>
-            <Link to={"/cpdP/"} className="review">
+            <Link to={"/csslmember/cpdrecords/"} className="review">
               <a href="#" className="review">
                 Back
               </a>
@@ -461,7 +464,7 @@ function AddCPD() {
             <select name="select" id="types" onChange={getOtherCourseDetails}>
               <option value=""></option>
               <option value="Online Course">Online Course</option>
-              <option value="Offline">Offline</option>
+              <option value="Onsite Course">Onsite Course</option>
             </select>
             <hr className="line"></hr>
           </div>
@@ -527,7 +530,7 @@ function AddCPD() {
             {rederOnlineOtherCourseList(platform, partner)}
           </div>
         );
-      } else if (mode == "Offline") {
+      } else if (mode == "Onsite Course") {
         return (
           <div>
             <div className="courseD">

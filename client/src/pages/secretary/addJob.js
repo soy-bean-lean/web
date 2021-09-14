@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./style/basicDetails.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../../helpers/AuthContext";
 
 function AddJob() {
   const [companyName, setCompanyName] = useState("");
@@ -14,6 +15,7 @@ function AddJob() {
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const [imgFile, setImgFile] = useState();
+  const { authState, setAuthState } = useContext(AuthContext);
 
   //  const [image, setImage] = useState("");
 
@@ -28,7 +30,7 @@ function AddJob() {
     formData.append("contact", contact);
     formData.append("email", email);
     formData.append("description", description);
-
+    formData.append("memberId", authState.id);
 
 
     fetch("http://localhost:3001/job", {
@@ -61,20 +63,6 @@ function AddJob() {
     
   };
 
-    /*axios.post("http://localhost:3001/job", formData).then((response) => {
-      console.log("line 16");
-
-      if (response.data.error) {
-        console.log("line 19");
-
-        alert(response.data.error);
-      } else {
-        console.log("line else");
-
-        history.push("/");
-      }
-    });
-  };*/
   return (
     <>
       <div className="job-basic-info">

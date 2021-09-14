@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "./style/blog.css";
 import courseImg from "../../imgs/course1.jpg";
 import courseImg2 from "../../imgs/course2.jpg";
@@ -11,21 +11,26 @@ import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { CircularProgress } from "@material-ui/core";
 
-function blogs(){
-  const id = "1";
+function blog(){
+    const id = "1";
   return (
     <>
       <Tabs style={{ paddingTop: "65px", paddingLeft: "3px" }}>
         <TabList>
           <Tab>Blogs</Tab>
-          <Tab>My Blogs</Tab>
+          <Tab>my Blogs</Tab>
+          <Link to={"/addBlogs/"} className="add-cpd-btn">
+            
+            <Tab>Publish Blog</Tab>
+          </Link>
+          
         </TabList>
         <TabPanel>
           <div className="search">
             <input placeholder="Categories"></input>
           </div>
 
-          <div className="mainBlogs">
+          <div className="mainCourses">
             <Link to={"/coursViewP/" + id} className="Link">
               <div className="course">
                 <div className="">
@@ -130,4 +135,6 @@ function blogs(){
     </>
   );
 }
-export default blogs;
+
+export default blog;
+

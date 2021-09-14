@@ -3,6 +3,7 @@ import cors from "cors";
 import path from "path";
 import userRouter from "./routes/User.js";
 import secretaryRouter from "./routes/secretary.js";
+import blogs from "./routes/blogsSQL.js";
 import Job from "./routes/jobsSQL.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -19,7 +20,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -55,6 +55,7 @@ app.use(
 //routers
 app.use("/auth", userRouter);
 app.use("/job", Job);
+app.use("/blog", blogs);
 app.use("/Dash", dashBoardSQL);
 app.use("/cpdP", Record);
 app.use("/reports", reportSQL);

@@ -96,6 +96,8 @@ function BasicCourseInfo() {
                 onChange={(e) => setCourseDuration(e.target.value)}
               ></input>
             </div>
+
+
             <div className="course-field-block">
               <h4 className="course-info-title">Language</h4>
               <select
@@ -109,6 +111,10 @@ function BasicCourseInfo() {
                 <option value="Other">Other</option>
               </select>
             </div>
+
+
+
+
             <div className="course-field-block">
               <h4 className="course-info-title">Level</h4>
               <select
@@ -122,6 +128,11 @@ function BasicCourseInfo() {
                 <option value="Advanced">Advanced</option>
               </select>
             </div>
+
+
+
+
+
             <div className="course-field-block">
               <h4 className="course-info-title">Mode</h4>
               <select
@@ -134,6 +145,10 @@ function BasicCourseInfo() {
                 <option value="Offline">Offline</option>
               </select>
             </div>
+
+
+
+            
             <div className="course-field-block">
               <h4 className="course-info-title">Course Image</h4>
               <input

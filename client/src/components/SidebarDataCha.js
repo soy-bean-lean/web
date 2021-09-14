@@ -20,7 +20,7 @@ export const SidebarDataCha = [
       },
       {
         title: 'Course',
-        path: '/courseC',
+        path: '/csslcourses',
         icon: <FaIcons.FaGraduationCap />,
         cName: 'nav-text'
       },

@@ -3,7 +3,7 @@
     display: grid;
     background-color: rgb(255, 255, 255);
     padding-top: 65px;
-    grid-template-columns: 2fr 0.8fr;
+    grid-template-columns: 6fr 0.8fr;
     grid-template-rows: 0.1fr 1fr;
     grid-template-areas:
       "activity button "
@@ -49,8 +49,8 @@
   .lec-course-list-align {
     background-image: linear-gradient(to right, #7883e2, #9ea5e2, #ffffff);
     font-weight: 500;
-    border-radius: 0px 8px 8px 8px;
-    height: 40px;
+    border-radius: 8px 8px 8px 8px;
+    height: 30px;
     display: flex;
     align-items: center;
     padding-left: 10px;
@@ -67,7 +67,7 @@
   .lec-course-list-link{
     text-decoration: none;
     color: rgb(0, 0, 0);
-    font-weight: 600;
+    font-weight: 100;
     
   }
 

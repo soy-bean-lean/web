@@ -59,6 +59,7 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
   }
 });
 
+//insert course content (courseContentInfo.js)
 Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   const courseId = req.body.courseId;
   const contentNo = req.body.contentNo;
@@ -66,6 +67,7 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   const title = req.body.title;
   const description = req.body.description;
   const type = req.body.type;
+  const note = req.body.note;
   var content;
   if(type == "File"){
     content = req.file.filename;
@@ -75,12 +77,13 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   }
 
   connection.query(
-    "INSERT INTO coursecontent (contentId, contentNo, title, description, contentType, content, courseId) VALUES (?,?,?,?,?,?,?);",
+    "INSERT INTO coursecontent (contentId, contentNo, title, description, note, contentType, content, courseId) VALUES (?, ?,?,?,?,?,?,?);",
     [
       contentId,
       contentNo,
       title,
       description,
+      note,
       type,
       content,
       courseId,
@@ -88,7 +91,6 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-        //console.log(result);
         res.send({
           data: result,
           msg: "Successfully Saved.",
@@ -126,7 +128,7 @@ Course.post("/getContentList", (req, res) => {
   );
 });
 
-
+//get last content no of the relevant course (courseContentInfo.js)
 Course.post("/getContentNo", (req, res) => {
   const cId = req.body.id;
   connection.query(
@@ -136,7 +138,6 @@ Course.post("/getContentNo", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-        console.log("Result",result);
         res.send(result);
       }
     }
@@ -161,7 +162,7 @@ Course.post("/getContentInfo", (req, res) => {
 Course.post("/getCourseInfo", (req, res) => {
   const cid = req.body.cid;
   connection.query(
-    "SELECT name, description, duration, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ?;",
+    "SELECT name, description, duration, durationType, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ?;",
     [cid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -171,6 +172,7 @@ Course.post("/getCourseInfo", (req, res) => {
     }
   );
 });
+
 
 Course.post("/getCourseImg", (req, res) => {
   const cid = req.body.cId;
@@ -186,5 +188,47 @@ Course.post("/getCourseImg", (req, res) => {
   );
 });
 
+Course.post("/getCourseList", (req, res) => {
+  const mid = req.body.mId;
+  const status = "Approved";
+  connection.query(
+    "SELECT * FROM csslcourse WHERE status = ?;",
+    [status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 
+Course.post("/getEnrollCourseList", (req, res) => {
+  const mid = req.body.mId;
+  connection.query(
+    "SELECT csslcourse.*, courseenroll.status FROM csslcourse INNER JOIN courseenroll ON csslcourse.courseId = courseenroll.courseId WHERE courseenroll.memberId = ?;",
+    [mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get CSSL Course details to display on the courseView.js
+Course.post("/getCourse", (req, res) => {
+  const cid = req.body.cId;
+  connection.query(
+    "SELECT csslcourse.name, csslcourse.description, csslcourse.duration, csslcourse.durationType, csslcourse.language, csslcourse.skillLevel, csslcourse.image, csslcourse.mode, user.title, user.firstName, user.lastName, user.profileImage FROM ((csslcourse INNER JOIN member ON member.memberId = csslcourse.conductedBy) INNER JOIN user ON user.id = member.id) WHERE courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 export default Course;

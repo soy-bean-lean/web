@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
 });
-const storageCV= multer.diskStorage({
+const storageCV = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/jobApplicationCVs");
   },
@@ -43,11 +43,10 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
     const contact = req.body.contact;
     const email = req.body.email;
     const description = req.body.description;
-    const addBy = 1000;
+    const addBy = req.body.memberId;
     const image = req.file.filename;
-
     connection.query(
-      `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy,advertisment) VALUES (?,?,?,?,?,?,?,?)`,
+      `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy,advertisment,activity) VALUES (?,?,?,?,?,?,?,?,?)`,
       [
         companyName,
         location,
@@ -57,6 +56,7 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
         description,
         addBy,
         image,
+        "open",
       ],
       (err, result) => {
         if (err) {
@@ -64,15 +64,58 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
         } else {
           res.json("success");
         }
+        res.send(result);
+
       }
     );
   }
+});
+Job.post("/updateJob", async (req, res) => {
+  const companyName = req.body.companyName;
+  const location = req.body.location;
+  const jobRole = req.body.jobRole;
+  const contact = req.body.contact;
+  const email = req.body.email;
+  const description = req.body.description;
+  const addBy = req.body.memberId;
+  const jvId = req.body.jvId;
+  connection.query(
+    " UPDATE jobvacancy SET companyName = '" +
+      companyName +
+      " ' , location = '" +
+      location +
+      " ' ,designation = '" +
+      jobRole +
+      " ' ,email = '" +
+      email +
+      " ' ,contact = '" +
+      contact +
+      " ' ,email = '" +
+      email +
+      " ' ,description = '" +
+      description +
+      " '  WHERE jvId=" +
+      jvId +
+      ";",
+
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json("success");
+      }
+      res.send(result);
+
+    }
+  );
 });
 
 Job.route("/addJobApplicaation").post(
   uploadCV.single("image"),
   (req, res, err) => {
-    if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|pdf|PDF|png|PNG)$/)) {
+    if (
+      !req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|pdf|PDF|png|PNG)$/)
+    ) {
       res.send({ msg: "Not an Image File." });
     } else {
       const Currentdate = req.body.Currentdate;
@@ -84,7 +127,7 @@ Job.route("/addJobApplicaation").post(
       const cvFile = req.file.filename;
 
       const answerSheet = "req.file.answerSheet;";
-      console.log(""+cvFile);
+      console.log("" + cvFile);
       connection.query(
         `INSERT INTO jobapplicant (jvId ,memberId,description,cv,sheet,date,marks,status) VALUES (?,?,?,?,?,?,?,?)`,
         [
@@ -100,10 +143,11 @@ Job.route("/addJobApplicaation").post(
         (err, result) => {
           if (err) {
             console.log(err);
+            res.send(result);
           } else {
-
             res.json("success");
           }
+         
         }
       );
     }
@@ -127,9 +171,12 @@ Job.post("/addQuestion", async (req, res) => {
       } else {
         res.json("success");
       }
+      res.send(result);
+
     }
   );
 });
+
 Job.post("/getJobs", (req, res) => {
   const name = req.body.companyName;
   const location = req.body.location;
@@ -137,6 +184,7 @@ Job.post("/getJobs", (req, res) => {
   console.log(name);
   console.log(location);
   console.log(role);
+
   const sqlSelect =
     "SELECT jvId , companyName , location ,designation from jobvacancy where companyName like '" +
     name +
@@ -144,27 +192,40 @@ Job.post("/getJobs", (req, res) => {
     location +
     "%' and designation like '" +
     role +
-    "%'";
-  console.log(sqlSelect);
+    "%' and activity ='open'";
+    console.log(sqlSelect);
+
   connection.query(sqlSelect, (err, result) => {
+    console.log(sqlSelect);
     res.send(result);
   });
 });
 
-Job.get("/getJobView", (req, res) => {
-  const jid = req.query.id;
-  console.log(jid);
-  connection.query(
-    "SELECT jvId , companyName , location ,designation,description ,contact ,email,advertisment from jobvacancy where jvId = ?;",
-    [jid],
-    (error, result, feilds) => {
-      if (error) console.log(error);
-      else {
-        res.send(result);
-      }
-    }
-  );
+
+
+
+Job.post("/getApplicents", (req, res) => {
+
+  const sqlSelect =
+  "SELECT jobapplicant.jvId , COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId GROUP by jvId;"
+   
+  connection.query(sqlSelect, (err, result) => {
+    console.log(sqlSelect);
+    res.send(result);
+  });
 });
+
+Job.post("/getApplicentCount", (req, res) => {
+ 
+  const sqlSelect =
+  "SELECT jobapplicant.jvId , COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId GROUP by jvId;"
+   
+  connection.query(sqlSelect, (err, result) => {
+    console.log(sqlSelect);
+    res.send(result);
+  });
+});
+
 
 Job.post("/getQuestion", (req, res) => {
   const sqlSelect =
