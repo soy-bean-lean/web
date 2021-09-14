@@ -4,8 +4,10 @@ import Notifications from 'components/Notifications';
 import SearchInput from 'components/SearchInput';
 import { notificationsData } from 'demos/header';
 import withBadge from 'hocs/withBadge';
-import React from 'react';
+import React, { useState,useContext } from "react";
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../../helpers/AuthContext";
+import { useHistory } from "react-router-dom";
 
 import {
   MdClearAll,
@@ -47,44 +49,53 @@ const MdNotificationsActiveWithBadge = withBadge({
   children: <small>5</small>,
 })(MdNotificationsActive);
 
-class Header extends React.Component {
-  state = {
-    isOpenNotificationPopover: false,
-    isNotificationConfirmed: false,
-    isOpenUserCardPopover: false,
-  };
+function Header (props) {
 
-  toggleNotificationPopover = () => {
-    this.setState({
-      isOpenNotificationPopover: !this.state.isOpenNotificationPopover,
-    });
+  const [isOpenNotificationPopover, setisOpenNotificationPopover] = useState(false);
+  const [isNotificationConfirmed, setisNotificationConfirmed] = useState(false);
+  const [isOpenUserCardPopover, setisOpenUserCardPopover] = useState(false);
+  
+  const toggleNotificationPopover = () => {
+    setisOpenNotificationPopover(!isOpenNotificationPopover);    
 
-    if (!this.state.isNotificationConfirmed) {
-      this.setState({ isNotificationConfirmed: true });
+    if (isNotificationConfirmed) {
+      setisNotificationConfirmed(true);
     }
   };
 
-  toggleUserCardPopover = () => {
-    this.setState({
-      isOpenUserCardPopover: !this.state.isOpenUserCardPopover,
-    });
+  const toggleUserCardPopover = () => {
+    setisOpenUserCardPopover(!isOpenUserCardPopover);    
   };
 
-  handleSidebarControlButton = event => {
+  const handleSidebarControlButton = event => {
     event.preventDefault();
     event.stopPropagation();
 
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
-
-  render() {
-    const { isNotificationConfirmed } = this.state;
+  
+  
+    let history = useHistory();
+    const { setAuthState } = useContext(AuthContext);
+    const logout = () => {
+      localStorage.removeItem("accessToken");
+      setAuthState({
+        fname: "",
+        lname: "",
+        progileImg: "",
+        role: "",
+        id: 0,
+        status: false,
+      });
+      history.push("/");
+    };
 
     return (
+      <>
       <Navbar light expand >
         <Nav navbar className="collapsss">
         <div className="collaps" >
-        <MdClearAll outline size={35}   onClick={this.handleSidebarControlButton} />
+        <MdClearAll outline size={35}   onClick={handleSidebarControlButton} />
 
         </div>
 
@@ -98,20 +109,20 @@ class Header extends React.Component {
                 <MdNotificationsNone
                   size={25}
                   className="text-primary can-click"
-                  onClick={this.toggleNotificationPopover}
+                  onClick={toggleNotificationPopover}
                 />
               ) : (
                 <MdNotificationsActiveWithBadge
                   size={25}
                   className="text-primary can-click animated swing infinite"
-                  onClick={this.toggleNotificationPopover}
+                  onClick={toggleNotificationPopover}
                 />
               )}
             </NavLink>
             <Popover
               placement="bottom"
-              isOpen={this.state.isOpenNotificationPopover}
-              toggle={this.toggleNotificationPopover}
+              isOpen={isOpenNotificationPopover}
+              toggle={toggleNotificationPopover}
               target="Popover1"
             >
               <PopoverBody>
@@ -126,14 +137,14 @@ class Header extends React.Component {
 
             {/* //profile image */}
               <Avatar
-                onClick={this.toggleUserCardPopover}
+                onClick={toggleUserCardPopover}
                 className="can-click"
               />
             </NavLink>
             <Popover
               placement="bottom-end"
-              isOpen={this.state.isOpenUserCardPopover}
-              toggle={this.toggleUserCardPopover}
+              isOpen={isOpenUserCardPopover}
+              toggle={toggleUserCardPopover}
               target="Popover2"
               className="p-0 border-0"
               style={{ minWidth: 250 }}
@@ -156,8 +167,8 @@ class Header extends React.Component {
                       <MdSettingsApplications /> Settings
                     </ListGroupItem>
               
-                    <ListGroupItem tag="button" to="/login" action className="border-light">
-                      <MdExitToApp /> Signout
+                    <ListGroupItem tag="button" onClick={logout} to="/login" action className="border-light">
+                      <MdExitToApp /> Logout
                     </ListGroupItem>
                   </ListGroup>
                 </UserCard>
@@ -166,8 +177,9 @@ class Header extends React.Component {
           </NavItem>
         </Nav>
       </Navbar>
+    </>
     );
-  }
+  
 }
 
 export default Header;

@@ -20,7 +20,7 @@ import { MainLayout as MainLayoutDefault } from 'components/Layout/default';
 import PageSpinner from 'components/PageSpinner';
 
 import Login from 'pages/login/login';
-import Registration from 'pages/login/login';
+import Registration from 'pages/registration/registration';
 
 import AuthPage from 'pages/AuthPage';
 import componentQueries from 'react-component-queries';

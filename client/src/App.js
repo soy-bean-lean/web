@@ -143,7 +143,7 @@ function App() {
             <>
               <Route path="/" exact component={Login} />
               <Route path="/registration" exact component={Registration} />
-              <Route path="/payment" component={PaymentModal} />
+              
             </>
           )}
           {authState.role == "student" && (
