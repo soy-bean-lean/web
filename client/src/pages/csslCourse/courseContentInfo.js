@@ -81,8 +81,10 @@ function AddCourseContent(props) {
         setUploadStatus(res.msg);
         alert("Successfully Saved Details");
         if (action == "finish") {
+          alert("Successful");
           redirectCourse();
         } else {
+          alert("Successful");
           redirectContentAdd();
         }
         resetComponents();
