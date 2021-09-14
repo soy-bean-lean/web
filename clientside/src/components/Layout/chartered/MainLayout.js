@@ -1,4 +1,6 @@
-import { Content, Header, SidebarPro } from 'components/Layout/chartered';
+import { Content,  SidebarPro } from 'components/Layout/chartered';
+import { Header } from 'components/Layout/';
+
 import React from 'react';
 import {
   MdImportantDevices,

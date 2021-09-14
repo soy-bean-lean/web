@@ -1,4 +1,5 @@
-import { Content, Header, SidebarPro } from 'components/Layout/pro';
+import { Content,  SidebarPro } from 'components/Layout/pro';
+import { Header } from 'components/Layout/';
 import React from 'react';
 import {
   MdImportantDevices,

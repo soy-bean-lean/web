@@ -1,5 +1,8 @@
-import { Content, Header, SidebarAssosiate } from 'components/Layout/associate';
+import { Content,  SidebarAssosiate } from 'components/Layout/associate';
+import { Header } from 'components/Layout/';
+
 import React from 'react';
+
 import {
   MdImportantDevices,
   // MdCardGiftcard,

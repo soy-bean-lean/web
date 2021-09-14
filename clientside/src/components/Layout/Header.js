@@ -122,6 +122,9 @@ class Header extends React.Component {
 
           <NavItem>
             <NavLink id="Popover2">
+
+
+            {/* //profile image */}
               <Avatar
                 onClick={this.toggleUserCardPopover}
                 className="can-click"
@@ -143,12 +146,10 @@ class Header extends React.Component {
                   className="border-light"
                 >
                   <ListGroup flush>
-                  <Link  to="/login" >
-                  <ListGroupItem tag="button"action className="border-light">
-                      <MdPersonPin /> Profile
+                  <ListGroupItem  to={"/courseP"}  tag="button"action className="border-light">
+                      <MdPersonPin  /> Profhhhile
                     </ListGroupItem>
  
-                  </Link>
                    
 
                     <ListGroupItem tag="button" action className="border-light">
