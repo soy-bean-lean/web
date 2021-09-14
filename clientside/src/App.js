@@ -83,6 +83,11 @@ const JobView = React.lazy(() => import('pages/jobs/Job View'));
 const AddJobCV = React.lazy(() => import('pages/jobs/addJobCv'));
 const Questionare = React.lazy(() => import('pages/jobs/Questionare'));
 const addJobQuestions = React.lazy(() => import('pages/jobs/addJobQuestions'));
+const jobApplications = React.lazy(() => import('pages/jobs/JobApplications'));
+const sendCV = React.lazy(() => import('pages/jobs/sendCV'));
+const editJobVaccencies = React.lazy(() =>
+  import('pages/jobs/editJobVaccencies'),
+);
 
 //reports
 
@@ -267,7 +272,8 @@ function App(props) {
                     <Route path="/typography" component={TypographyPagePro} />
                     <Route path="/alerts" component={AlertPagePro} />
 
-                    <Route path="/job" component={JobsPro} />
+                    <Route path="/jobapplications" component={jobApplications} />
+                    <Route path="/sendcv/:id" component={sendCV} />
                     <Route path="/cpdAdd" component={AddCPD} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
 
@@ -301,9 +307,16 @@ function App(props) {
                     <Route path="/typography" component={TypographyPagePro} />
                     <Route path="/alerts" component={AlertPagePro} />
                     <Route path="/managejobs" component={ManageJobs} />
-                    <Route path="/addJobQuestions" component={addJobQuestions} />
+                    <Route
+                      path="/addJobQuestions"
+                      component={addJobQuestions}
+                    />
 
                     <Route path="/job" component={JobsPro} />
+                    <Route
+                      path="/editjobvaccencies/:id"
+                      component={editJobVaccencies}
+                    />
 
                     <Route
                       path="/addJobVaccencies"

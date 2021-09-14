@@ -88,6 +88,8 @@ Job.post("/updateJob", async (req, res) => {
       email +
       " ' ,contact = '" +
       contact +
+      " ' ,addBy = '" +
+      addBy +
       " ' ,email = '" +
       email +
       " ' ,description = '" +
@@ -159,6 +161,7 @@ Job.post("/addQuestion", async (req, res) => {
 
   connection.query(
     `INSERT INTO jobquestions ( Question , Answer1 ,Answer2,Answer3,Answer4,Correct) VALUES (?,?,?,?,?,?)`,
+
     [question, ans1, ans2, ans3, ans4, correct],
     (err, result) => {
       if (err) {
@@ -168,7 +171,6 @@ Job.post("/addQuestion", async (req, res) => {
       }
     }
   );
-  
 });
 
 Job.post("/getJobs", (req, res) => {
@@ -212,6 +214,48 @@ Job.post("/getApplicents", (req, res) => {
   });
 });
 
+Job.post("/getJobsApplications", (req, res) => {
+  const name = req.body.companyName;
+  const location = req.body.location;
+  const role = req.body.jobRole;
+  console.log(name);
+  console.log(location);
+  console.log(role);
+
+  const sqlSelect =
+    " SELECT jobvacancy.designation ,jobapplicant.date ,jobapplicant.marks, jobapplicant.memberId ,jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId ORDER BY `jobapplicant`.`marks` DESC ,jobapplicant.date DESC;";
+  connection.query(sqlSelect, (err, result) => {
+    console.log(sqlSelect);
+    res.send(result);
+  });
+});
+
+Job.get("/getCVtoSend", (req, res) => {
+  // const jid = req.query.id;
+  // alert(jid)
+  // connection.query(
+  //   "SELECT  * FROM `jobapplicant` WHERE jvId = ?;"
+  //   [jid],
+  //   (error, result, feilds) => {
+  //     if (error) console.log(error);
+  //     else {
+  //       res.send(result);
+  //     }
+  //   }
+  // );
+  const jid = req.query.id;
+  connection.query(
+    "SELECT jvId , companyName , location ,designation,description ,contact ,email,advertisment from jobvacancy where jvId = ?;",
+    [jid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 Job.get("/getJobView", (req, res) => {
   const jid = req.query.id;
   connection.query(
@@ -228,7 +272,7 @@ Job.get("/getJobView", (req, res) => {
 
 Job.post("/getQuestion", (req, res) => {
   const sqlSelect =
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions Limit 5";
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions ORDER by rand() Limit 5";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);

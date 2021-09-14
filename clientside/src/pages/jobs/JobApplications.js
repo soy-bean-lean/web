@@ -58,7 +58,7 @@ const CardPage = props => {
       location: '',
     };
     axios
-      .post('http://localhost:3001/job/getJobs', data)
+      .post('http://localhost:3001/job/getJobsApplications', data)
 
       .then(response => {
         if (response.data.error) {
@@ -91,26 +91,18 @@ const CardPage = props => {
       <>
         <tr>
           <td hidden> {data.jvId}</td>
+          <td>{data.date}</td>
           <td>{data.companyName}</td>
-          <td>{data.designation}</td>
+
+          <td>
+            <b>{data.marks} %</b>
+          </td>
 
           <td>
             <center>
               <Link to={''}>
                 <Button color="primary" size="sm">
                   View{' '}
-                </Button>
-              </Link>
-              {'   '}
-              <Link to={'/editJobVaccencies/' + data.jvId}>
-                <Button color="warning" size="sm">
-                  Edit{' '}
-                </Button>
-              </Link>
-              {'   '}
-              <Link to={''}>
-                <Button color="danger" size="sm">
-                  Delete{' '}
                 </Button>
               </Link>
             </center>
@@ -127,13 +119,12 @@ const CardPage = props => {
           <td hidden>{data.jvId}</td>
           <td>{data.companyName}</td>
           <td>
-            <Badge color="danger"> {data.numberOfApplicent}</Badge>
+            <Badge color="danger"> {data.numberOfApplicent} Applications </Badge>
           </td>
-          <td>{data.email}</td>
 
           <td>
             <center>
-              <Link to={''}>
+              <Link to={'/sendcv/'+data.jvId}>
                 <Button color="success" size="sm">
                   View{' '}
                 </Button>
@@ -145,21 +136,9 @@ const CardPage = props => {
     ));
 
   return (
-    <Page title="Manage Jobs">
+    <Page title="Manage Job Aplications">
       <hr></hr>
-      <Link to="/addJobVaccencies">
-        <Button color="success" to="/addJobVaccencies">
-          Add New Job
-        </Button>
-      </Link>
-      {'  '}
-      <Link to="/addJobQuestions">
-        <Button color="success" to="/addJobVaccencies">
-          Add New Job Question
-        </Button>
-      </Link>
-      <br></br>
-      <hr></hr>
+
       <Nav tabs>
         <NavItem>
           <NavLink
@@ -168,7 +147,7 @@ const CardPage = props => {
               toggle('1');
             }}
           >
-            All Job Vaccencies
+            All Job Aplications
           </NavLink>
         </NavItem>
         <NavItem>
@@ -178,7 +157,7 @@ const CardPage = props => {
               toggle('2');
             }}
           >
-            Job Applications
+            Job Applications For Advertisments
           </NavLink>
         </NavItem>
       </Nav>

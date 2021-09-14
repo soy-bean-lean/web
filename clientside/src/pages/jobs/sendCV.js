@@ -30,7 +30,7 @@ import {
   Row,
 } from 'reactstrap';
 function JobView() {
-  const [compayData, setCompayData] = useState(null);
+  const [compayData, setApplicents] = useState(null);
   const [image, setJobImage] = useState('');
   const { id } = useParams();
   useEffect(() => {
@@ -39,14 +39,13 @@ function JobView() {
       jobId: id,
     };
     axios
-      .get('http://localhost:3001/job/getJobView', { params: { id: id } })
-
+      .get('http://localhost:3001/job/getCVtoSend', { params: { id: id } })
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setCompayData(response.data);
-          console.log(compayData);
+          setApplicents(response.data);
+      
           setJobImage(
             'http://localhost:3001/uploads/jobvacancy/' +
               response.data[0].advertisment,
@@ -69,22 +68,19 @@ function JobView() {
                 <CardImg src={image} style={{ width: 'auto', height: 200 }} />
 
                 <CardBody>
-                  <h1 className="a">{compayData.companyName}</h1>
                   <CardText>
-                    <h2 className="a">{compayData.designation}</h2>
-                    <h4 className="a">{compayData.location}</h4>
+
                   </CardText>
                 </CardBody>
               </Card>
               <Card className="flex-row">
                 <CardBody>
-                  <h4 className="a">{compayData.contact}</h4>
-                  <h4 className="a">{compayData.email}</h4>
+                  
                 </CardBody>
               </Card>
               <Card className="flex-row">
                 <CardBody>
-                  <CardTitle>{compayData.description}</CardTitle>
+                  {/* <CardTitle>{compayData.description}</CardTitle> */}
                 </CardBody>
               </Card>
               <Card className="flex-row">
