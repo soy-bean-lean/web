@@ -82,6 +82,7 @@ const JobsPro = React.lazy(() => import('pages/jobs/Jobs'));
 const JobView = React.lazy(() => import('pages/jobs/Job View'));
 const AddJobCV = React.lazy(() => import('pages/jobs/addJobCv'));
 const Questionare = React.lazy(() => import('pages/jobs/Questionare'));
+const addJobQuestions = React.lazy(() => import('pages/jobs/addJobQuestions'));
 
 //reports
 
@@ -233,11 +234,6 @@ function App(props) {
                       component={AddJobCV}
                     />
 
-                    <Route
-                      path="/addJobVaccencies"
-                      component={AddJobVaccencies}
-                    />
-
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
@@ -293,7 +289,7 @@ function App(props) {
               {authState.role == 'secretariat' && (
                 <MainLayoutSec breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
-                    <Route path="/dashboards" component={DashboardPageSec} />
+                    <Route path="/dashboard" component={DashboardPageSec} />
                     <Route path="/cpdP" component={CPDPro} />
                     <Route path="/lecCourse" component={lecCoursePro} />
                     <Route path="/courseP" component={CoursePro} />
@@ -304,8 +300,16 @@ function App(props) {
                     <Route path="/widgets" component={WidgetPagePro} />
                     <Route path="/typography" component={TypographyPagePro} />
                     <Route path="/alerts" component={AlertPagePro} />
+                    <Route path="/managejobs" component={ManageJobs} />
+                    <Route path="/addJobQuestions" component={addJobQuestions} />
 
                     <Route path="/job" component={JobsPro} />
+
+                    <Route
+                      path="/addJobVaccencies"
+                      component={AddJobVaccencies}
+                    />
+
                     <Route path="/cpdAdd" component={AddCPD} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
 

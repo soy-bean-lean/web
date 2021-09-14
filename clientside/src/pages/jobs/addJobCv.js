@@ -71,7 +71,7 @@ const AddCV = () => {
     addJobData.append('marks', marks);
     addJobData.append('jobId', id);
     // addJobData.append("memberId", authState.id);
-    addJobData.append('memberId', 10);
+    addJobData.append('memberId', authState.id);
     addJobData.append('Currentdate', Currentdate);
 
     fetch('http://localhost:3001/job/addJobApplicaation', {
@@ -88,7 +88,7 @@ const AddCV = () => {
         setResult('done');
         setTimeout(
           function () {
-            history.push('/dashboardProffesional');
+            history.push('/job');
           },
 
           2000,

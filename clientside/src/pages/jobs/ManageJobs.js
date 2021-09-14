@@ -152,6 +152,12 @@ const CardPage = props => {
           Add New Job
         </Button>
       </Link>
+      {"  "}
+      <Link to="/addJobQuestions">
+        <Button color="success" to="/addJobVaccencies">
+          Add New Job Question
+        </Button>
+      </Link>
       <br></br>
       <hr></hr>
       <Nav tabs>

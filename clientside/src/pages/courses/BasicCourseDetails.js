@@ -268,7 +268,7 @@ function BasicCourseInfo() {
                   </Col>
                 </FormGroup>
               </Form>
-            </CardBody>
+              </CardBody>
           </Card>
         </center>
       </Col>
