@@ -123,6 +123,9 @@ function AddCPD() {
         } else {
           if (submitWorkshopData.type == "CSSLworkshop") {
             setInWorkshopList(response.data);
+            console.log(inWorkshopList);
+            
+            console.log(response.data[0].fromDate)
           } else if (submitWorkshopData.type == "others") {
             setOutWorkshopList(response.data);
           } else {

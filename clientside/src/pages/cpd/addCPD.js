@@ -382,6 +382,7 @@ const AddCpd = () => {
           </Card>
         </center>
       </Col>
+      <hr></hr>
     </Page>
   );
 

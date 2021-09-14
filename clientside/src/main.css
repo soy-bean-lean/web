@@ -16,8 +16,9 @@ a:not([href]):not([tabindex]):hover{
 .cr-sidebar__content {
     position: relative;
     
-   
-
+}
+.loginForm{
+    margin-top: 10%;
 }
 .buttonDIV{
     margin-top: 1%;

@@ -64,6 +64,8 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
         } else {
           res.json("success");
         }
+        res.send(result);
+
       }
     );
   }
@@ -102,6 +104,8 @@ Job.post("/updateJob", async (req, res) => {
       } else {
         res.json("success");
       }
+      res.send(result);
+
     }
   );
 });
@@ -139,9 +143,11 @@ Job.route("/addJobApplicaation").post(
         (err, result) => {
           if (err) {
             console.log(err);
+            res.send(result);
           } else {
             res.json("success");
           }
+         
         }
       );
     }
@@ -165,9 +171,12 @@ Job.post("/addQuestion", async (req, res) => {
       } else {
         res.json("success");
       }
+      res.send(result);
+
     }
   );
 });
+
 Job.post("/getJobs", (req, res) => {
   const name = req.body.companyName;
   const location = req.body.location;
@@ -192,19 +201,31 @@ Job.post("/getJobs", (req, res) => {
   });
 });
 
-Job.get("/getJobView", (req, res) => {
-  const jid = req.query.id;
-  connection.query(
-    "SELECT jvId , companyName , location ,designation,description ,contact ,email,advertisment from jobvacancy where jvId = ?;",
-    [jid],
-    (error, result, feilds) => {
-      if (error) console.log(error);
-      else {
-        res.send(result);
-      }
-    }
-  );
+
+
+
+Job.post("/getApplicents", (req, res) => {
+
+  const sqlSelect =
+  "SELECT jobapplicant.jvId , COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId GROUP by jvId;"
+   
+  connection.query(sqlSelect, (err, result) => {
+    console.log(sqlSelect);
+    res.send(result);
+  });
 });
+
+Job.post("/getApplicentCount", (req, res) => {
+ 
+  const sqlSelect =
+  "SELECT jobapplicant.jvId , COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId GROUP by jvId;"
+   
+  connection.query(sqlSelect, (err, result) => {
+    console.log(sqlSelect);
+    res.send(result);
+  });
+});
+
 
 Job.post("/getQuestion", (req, res) => {
   const sqlSelect =

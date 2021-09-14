@@ -93,7 +93,7 @@ const pageContents = [
 ];
 
 const navItemsProffesional = [
-  { to: '/', name: 'dashboard sec', exact: true, Icon: MdDashboard },
+  { to: '/dashboard', name: 'dashboard sec', exact: true, Icon: MdDashboard },
   { to: '/cpdP', name: 'CPD Reports', exact: false, Icon: HiIcons.HiDocumentReport },
   { to: '/courseP', name: 'Courses', exact: false, Icon: FaIcons.FaGraduationCap },
   // { to: '/lecCourse', name: 'Lecturing Courses', exact: false, Icon: FaIcons.FaGraduationCap },

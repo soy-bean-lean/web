@@ -333,22 +333,37 @@ const FormPage = () => {
                   </Col>
                 </FormGroup>
 
+               
                 <FormGroup row>
-                  <Label for="exampleEmail" sm={3}>
-                    Advertisement Image
+                  <Label for="exampleEmail" sm="12" md={{ size: 6, offset: 3 }}>
+                  Advertisement Image
                   </Label>
-                  <Col sm={9}>
-                    <Input
+                  <Col sm="12" md={{ size: 6, offset: 3 }}>
+                    <center>
+                      {imgFile && (
+                        <img
+                          className="writeImg"
+                          height="60%"
+                          width="60%"
+                          src={URL.createObjectURL(imgFile)}
+                          alt=""
+                        />
+                      )}
+                    </center>
+                  </Col>
+
+                  <Col sm="12" md={{ size: 6, offset: 4 }}>
+                    <input
                       type="file"
                       className="input"
                       id="course-img"
                       name="course-img"
+                      required
                       accept="image/*"
                       onChange={e => setImgFile(e.target.files[0])}
-                    />
+                    ></input>
                   </Col>
                 </FormGroup>
-
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
                     <Button onClick={addJob} color="success">

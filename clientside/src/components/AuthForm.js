@@ -51,28 +51,59 @@ class AuthForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        {showLogo && <div className="text-center pb-4"></div>}
+        {showLogo && (
+          <div className="text-center pb-4">
+            <img
+              src={logo200Image}
+              className="rounded"
+              style={{ width: 60, height: 60, cursor: 'pointer' }}
+              alt="logo"
+              onClick={onLogoClick}
+            />
+          </div>
+        )}
         <FormGroup>
-          <Label> User Name</Label>
-          <Input></Input>
+          <Label for={usernameLabel}>{usernameLabel}</Label>
+          <Input {...usernameInputProps} />
         </FormGroup>
         <FormGroup>
-          <Label> Password</Label>
-          <Input type="password"></Input>
+          <Label for={passwordLabel}>{passwordLabel}</Label>
+          <Input {...passwordInputProps} />
         </FormGroup>
-
+        {this.isSignup && (
+          <FormGroup>
+            <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
+            <Input {...confirmPasswordInputProps} />
+          </FormGroup>
+        )}
+        <FormGroup check>
+          <Label check>
+            <Input type="checkbox" />{' '}
+            {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
+          </Label>
+        </FormGroup>
         <hr />
-
-        <Button color="primary" block>
-          Login
+        <Button
+          size="lg"
+          className="bg-gradient-theme-left border-0"
+          block
+          onClick={this.handleSubmit}>
+          {this.renderButtonText()}
         </Button>
 
         <div className="text-center pt-1">
-          <hr></hr>
-
-          <Button color="link" block>
-            Register Here
-          </Button>
+          <h6>or</h6>
+          <h6>
+            {this.isSignup ? (
+              <a href="#login" onClick={this.changeAuthState(STATE_LOGIN)}>
+                Login
+              </a>
+            ) : (
+              <a href="#signup" onClick={this.changeAuthState(STATE_SIGNUP)}>
+                Signup
+              </a>
+            )}
+          </h6>
         </div>
 
         {children}
