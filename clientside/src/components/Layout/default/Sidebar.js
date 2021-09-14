@@ -71,7 +71,7 @@ const navContents = [
 ];
 
 const pageContents = [
-  { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle },
+  { to: '/', name: 'login / signup', exact: false, Icon: MdAccountCircle },
   {
     to: '/login-modal',
     name: 'login modal',
@@ -81,7 +81,7 @@ const pageContents = [
 ];
 
 const navItems = [
-  { to: '/', name: 'dashboard default', exact: true, Icon: MdDashboard },
+  { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
   { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
   { to: '/charts', name: 'charts', exact: false, Icon: MdInsertChart },
   { to: '/widgets', name: 'widgets', exact: false, Icon: MdWidgets },

@@ -1,4 +1,6 @@
-import { Content, Header, SidebarSec} from 'components/Layout/sec';
+import { Content,  SidebarSec} from 'components/Layout/sec';
+import { Header } from 'components/Layout/';
+
 import React from 'react';
 import {
   MdImportantDevices,
