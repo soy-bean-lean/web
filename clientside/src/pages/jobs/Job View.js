@@ -38,6 +38,7 @@ function JobView() {
       memberId: '1001',
       jobId: id,
     };
+
     axios
       .get('http://localhost:3001/job/getJobView', { params: { id: id } })
 

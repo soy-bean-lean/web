@@ -66,6 +66,7 @@ const lecCourseView = React.lazy(() => import('pages/courses/LecturingCourses'))
 
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
+const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
 
 //forum
 
@@ -75,6 +76,7 @@ const AddJobVaccencies = React.lazy(() =>
   import('pages/jobs/addJobVaccencies'),
 );
 const ManageJobs = React.lazy(() => import('pages/jobs/ManageJobs'));
+const editQuestions = React.lazy(() => import('pages/jobs/editJobQuestions'));
 const JobsPro = React.lazy(() => import('pages/jobs/Jobs'));
 const JobView = React.lazy(() => import('pages/jobs/Job View'));
 const AddJobCV = React.lazy(() => import('pages/jobs/addJobCv'));
@@ -335,6 +337,7 @@ function App(props) {
                     />
                     <Route exact path="/job" component={JobsPro} />
                     <Route exact path="/jobAddvertisment/:id" component={JobView} />
+                    <Route path="/editQuestions/:id" component={editQuestions} />
                     <Route
                       exact path="/addJobQuestions"
                       component={addJobQuestions}
