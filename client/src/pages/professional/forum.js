@@ -76,6 +76,7 @@ function Forum(){
   const [posts, setPosts] = useState(allPosts)
 
   const submitPost = (text) => {
+    console.log(text);
     const curDate = new Date()
 
     setPosts([
@@ -95,7 +96,7 @@ function Forum(){
         <h1>Forum</h1>
         <br></br>
         <div className="title2">
-        <DiscussionBoard posts={posts} onSubmit={addForum}  />
+        <DiscussionBoard posts={posts} onSubmit={submitPost}  />
         </div>
         
       </div>
