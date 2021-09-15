@@ -32,6 +32,7 @@ import {
   ListGroupItem,
   Row,
 } from 'reactstrap';
+
 const LecCourseList = props => {
   const [course, setCourse] = useState(null);
 
@@ -64,91 +65,78 @@ const LecCourseList = props => {
       <>
         <tr>
           <th hidden="true">{i}</th>
-          <td>{course.courseId}</td>
+          <td hidden="true">{course.courseId}</td>
           <td>{course.name}</td>
           <td>
-         { course.status === 'OnGoing' ? (
-          <Link
-              to={'/courseView/cssl00' + course.courseId + '/' + course.name}
-            >
-              <Button
-                color="warning"
-                size="sm"
+            {course.status === 'OnGoing' ? (
+              <Link
                 to={'/courseView/cssl00' + course.courseId + '/' + course.name}
               >
-                View{' '}
-              </Button>
-            </Link>
-          ) : (
-        <></>
-          )
-         }
-         { course.status === 'Rejected' ? (
-          <Link
-              to={'/courseView/cssl00' + course.courseId + '/' + course.name}
-            >
-              <Button
-                color="danger"
-                size="sm"
+                <Button
+                  color="primary"
+                  size="sm"
+                  to={
+                    '/courseView/cssl00' + course.courseId + '/' + course.name
+                  }
+                >
+                  View{' '}
+                </Button>
+              </Link>
+            ) : (
+              <></>
+            )}
+            {course.status === 'Rejected' ? (
+              <Link
                 to={'/courseView/cssl00' + course.courseId + '/' + course.name}
               >
-                View{' '}
-              </Button>
-            </Link>
-          ) : (
-        <></>
-          )
-         }
-       
-         { course.status === 'Pending' ? (
-          <Link
-              to={'/courseView/cssl00' + course.courseId + '/' + course.name}
-            >
-              <Button
-                color="warning"
-                size="sm"
+                <Button
+                  color="danger"
+                  size="sm"
+                  to={
+                    '/courseView/cssl00' + course.courseId + '/' + course.name
+                  }
+                >
+                  View{' '}
+                </Button>
+              </Link>
+            ) : (
+              <></>
+            )}
+
+            {course.status === 'Pending' ? (
+              <Link
                 to={'/courseView/cssl00' + course.courseId + '/' + course.name}
               >
-                View{' '}
-              </Button>
-            </Link>
-          ) : (
-        <></>
-          )
-         }
-         { course.status === 'Approved' ? (
-          <Link
-              to={'/courseView/cssl00' + course.courseId + '/' + course.name}
-            >
-              <Button
-                color="success"
-                size="sm"
+                <Button
+                  color="warning"
+                  size="sm"
+                  to={
+                    '/courseView/cssl00' + course.courseId + '/' + course.name
+                  }
+                >
+                  View{' '}
+                </Button>
+              </Link>
+            ) : (
+              <></>
+            )}
+            {course.status === 'Approved' ? (
+              <Link
                 to={'/courseView/cssl00' + course.courseId + '/' + course.name}
               >
-                View{' '}
-              </Button>
-            </Link>
-          ) : (
-        <></>
-          )
-         }
-         { course.status === 'Rejected' ? (
-          <Link
-              to={'/courseView/cssl00' + course.courseId + '/' + course.name}
-            >
-              <Button
-                color="danger"
-                size="sm"
-                to={'/courseView/cssl00' + course.courseId + '/' + course.name}
-              >
-                View{' '}
-              </Button>
-            </Link>
-          ) : (
-        <></>
-          )
-         }
-            
+                <Button
+                  color="success"
+                  size="sm"
+                  to={
+                    '/courseView/cssl00' + course.courseId + '/' + course.name
+                  }
+                >
+                  View{' '}
+                </Button>
+              </Link>
+            ) : (
+              <></>
+            )}
           </td>
         </tr>
       </>
@@ -159,17 +147,17 @@ const LecCourseList = props => {
     course.map((course, i) =>
       course.status === 'OnGoing' ? (
         <>
-                  <tr>
-          <th hidden="true">{i}</th>
-          <td hidden="true">{course.courseId}</td>
+          <tr>
+            <th hidden="true">{i}</th>
+            <td hidden="true">{course.courseId}</td>
 
-          <td>{course.name}</td>
-          <td>
+            <td>{course.name}</td>
+            <td>
               <Link
                 to={'/courseView/cssl00' + course.courseId + '/' + course.name}
               >
                 <Button
-                  color="warning"
+                  color="primary"
                   size="sm"
                   to={
                     '/courseView/cssl00' + course.courseId + '/' + course.name
@@ -191,11 +179,11 @@ const LecCourseList = props => {
     course.map((course, i) =>
       course.status === 'Approved' ? (
         <>
-                 <tr>
-          <th hidden="true">{i}</th>
-          <td hidden="true">{course.courseId}</td>
-          <td>{course.name}</td>
-          <td>
+          <tr>
+            <th hidden="true">{i}</th>
+            <td hidden="true">{course.courseId}</td>
+            <td>{course.name}</td>
+            <td>
               <Link
                 to={'/courseView/cssl00' + course.courseId + '/' + course.name}
               >
@@ -222,16 +210,16 @@ const LecCourseList = props => {
     course.map((course, i) =>
       course.status === 'Pending' ? (
         <>
-                 <tr>
-          <th hidden="true">{i}</th>
-          <td hidden="true">{course.courseId}</td>
-          <td>{course.name}</td>
-          <td>
+          <tr>
+            <th hidden="true">{i}</th>
+            <td hidden="true">{course.courseId}</td>
+            <td>{course.name}</td>
+            <td>
               <Link
                 to={'/courseView/cssl00' + course.courseId + '/' + course.name}
               >
                 <Button
-                  color="primary"
+                  color="warning"
                   size="sm"
                   to={
                     '/courseView/cssl00' + course.courseId + '/' + course.name
@@ -253,11 +241,11 @@ const LecCourseList = props => {
     course.map((course, i) =>
       course.status === 'Rejected' ? (
         <>
-                 <tr>
-          <th hidden="true">{i}</th>
-          <td hidden="true">{course.courseId}</td>
-          <td>{course.name}</td>
-          <td>
+          <tr>
+            <th hidden="true">{i}</th>
+            <td hidden="true">{course.courseId}</td>
+            <td>{course.name}</td>
+            <td>
               <Link
                 to={'/courseView/cssl00' + course.courseId + '/' + course.name}
               >
@@ -283,9 +271,7 @@ const LecCourseList = props => {
     <Page title="Lecturing Courses">
       <hr></hr>
       <Link to="/csslcourse/addnewcourse">
-        <Button color="success">
-          Add New Course
-        </Button>
+        <Button color="success">Add New Course</Button>
       </Link>
       <br></br>
       <hr></hr>
@@ -350,13 +336,7 @@ const LecCourseList = props => {
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
-                      <tbody>
-                      
-                      {ongoingCourses}
-                      {pendingCourses}
-                      {approvedCourses}
-                      {rejectedCourses}
-                      </tbody>
+                      <tbody>{allCourseList}</tbody>
                     </Table>
                   </Card>
                 </CardBody>
