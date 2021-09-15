@@ -226,6 +226,7 @@ function App(props) {
 
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
+                    <Route exact path="/addBlogs" component={AddBlogs} />
 
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
