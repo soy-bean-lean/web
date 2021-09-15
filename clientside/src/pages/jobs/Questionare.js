@@ -80,9 +80,7 @@ function Questionare() {
           <Card body>
             <Col md={12} sm={10} xs={10} className="mb-2">
               <Card className="flex-row">
-                <CardBody>
-                  {data.Qnumber}) {data.Question}{' '}
-                </CardBody>
+                <CardBody>{data.Question} </CardBody>
               </Card>
               <Card className="flex-row">
                 <FormGroup>
@@ -193,15 +191,14 @@ function Questionare() {
     <>
       {Questions}
       <CardBody>
-        <Link to={'/jobAddvertisment/'+id}>
+        <Link to={'/jobAddvertisment/' + id}>
           <Button color="primary" size="LG">
             Back
           </Button>
         </Link>{' '}
-       
-          <Button color="success" size="LG" onClick={next}>
-           Next
-          </Button>
+        <Button color="success" size="LG" onClick={next}>
+          Next
+        </Button>
       </CardBody>
       ;
     </>

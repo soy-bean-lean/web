@@ -62,6 +62,9 @@ const LecCourseList = props => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
+//map  here
+
+
   return (
     <Page title="Blogs">
       <hr></hr>
@@ -94,7 +97,9 @@ const LecCourseList = props => {
           </NavLink>
         </NavItem>
       </Nav>
-      <TabContent activeTab={activeTab}>
+      
+      
+            <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
@@ -123,33 +128,14 @@ const LecCourseList = props => {
                     </Col>
                   </Card>
                 </CardBody>
-                 {/* map end */}
-                 {/* map Starts */}
-                <CardBody>
-                  <Card body>
-                    <Col md={12} sm={10} xs={10} className="mb-2">
-                      <Card className="flex-row">
-                        <CardImg
-                          className="card-img-left"
-                          src={bg1Image}
-                          style={{ width: 'auto', height: 150 }}
-                        />
-                        <CardBody>
-                          <CardTitle>Horizontal Image Card(Left)</CardTitle>
-                          <CardText>
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </CardText>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Card>
-                </CardBody>
-                 {/* map end */}
+                
               </Card>
             </Col>
           </Row>
         </TabPane>
+       
+       
+       
         <TabPane tabId="2">
           <Row>
             <Col sm="12">
