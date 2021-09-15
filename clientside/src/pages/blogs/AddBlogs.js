@@ -1,11 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Page from 'components/Page';
 
 function AddBlogs(){
     return(
-        <div className='title'>
-        <h1>AddBlogs</h1>
-      </div>
+      <Page title="Add Blogs"></Page>
+        
     );
 }
 
