@@ -65,8 +65,8 @@ const LecCourseList = props => {
   return (
     <Page title="Blogs">
       <hr></hr>
-      <Link to="/login">
-        <Button color="success" to="/login">
+      <Link to="/addBlogs">
+        <Button color="success" to="/addBlogs">
           New Blog
         </Button>
       </Link>
