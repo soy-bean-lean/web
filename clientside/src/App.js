@@ -240,11 +240,8 @@ function App(props) {
                     />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
-<<<<<<< HEAD
-=======
                     <Route exact path="/addBlogs" component={AddBlogs} />
 
->>>>>>> 3a5f61ba17162418b0bb1cde4ace453747e10f5c
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
