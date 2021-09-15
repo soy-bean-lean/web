@@ -284,7 +284,7 @@ const LecCourseList = props => {
       <hr></hr>
       <Link to="/csslcourse/addnewcourse">
         <Button color="success">
-          Add New Lecturing Course
+          Add New Course
         </Button>
       </Link>
       <br></br>

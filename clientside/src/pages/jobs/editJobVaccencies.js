@@ -79,6 +79,7 @@ function UpdateJobVacancies() {
         );
       });
   };
+  
   useEffect(() => {
     const data = {
       jid: id,

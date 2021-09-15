@@ -313,10 +313,25 @@ Job.get("/getJobView", (req, res) => {
 });
 
 Job.post("/getQuestion", (req, res) => {
+
   const sqlSelect =
     "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions ORDER by rand() Limit 5";
 
   connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+Job.post("/getQuestiontoUpdate", (req, res) => {
+  console.log("455554545666666666666666666666")
+
+  const qid = req.query.id;
+  const sqlSelect =
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where Qnumber = " +
+    qid;
+
+  connection.query(sqlSelect, (err, result) => {
+    console.log(result);
     res.send(result);
   });
 });
