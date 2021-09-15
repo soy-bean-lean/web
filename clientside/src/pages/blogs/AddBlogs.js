@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import Page from 'components/Page';
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { toast } from "react-toastify";
-import { AuthContext } from "../../helpers/AuthContext";
+import { toast } from 'react-toastify';
+import { AuthContext } from '../../helpers/AuthContext';
 import classnames from 'classnames';
 import Typography from 'components/Typography';
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -23,59 +23,57 @@ import {
   Row,
 } from 'reactstrap';
 
-
-function AddBlogs(){
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+function AddBlogs() {
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
   const [image, setBlogImage] = useState(null);
   const { authState, setAuthState } = useContext(AuthContext);
   var today = new Date(),
     Currentdate =
       today.getFullYear() +
-      "-" +
+      '-' +
       (today.getMonth() + 1) +
-      "-" +
+      '-' +
       today.getDate();
   let history = useHistory();
 
   const addBlog = () => {
     const formData = new FormData();
-    formData.append("image", image);
-    formData.append("title", title);
-    formData.append("desc", desc);
-    formData.append("memberId", authState.id);
-    formData.append("date", Currentdate);
-    alert(image);
-    fetch("http://localhost:3001/blog/addBlog", {
-      method: "POST",
+    formData.append('image', image);
+    formData.append('title', title);
+    formData.append('desc', desc);
+    formData.append('memberId', authState.id);
+    formData.append('date', Currentdate);
+    //alert(image);
+    fetch('http://localhost:3001/blog/addBlog', {
+      method: 'POST',
       body: formData,
       headers: {
-        Accept: "multipart/form-data",
+        Accept: 'multipart/form-data',
       },
-      credentials: "include",
+      credentials: 'include',
     })
-      .then((res) => res.json())
-      .then((res) => {
-        toast.success("Blog Has Successfully Added!", {
+      .then(res => res.json())
+      .then(res => {
+        toast.success('Blog Has Successfully Added!', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
-        history.push("/dashboardP");
+        history.push('/blogs');
       })
-      .catch((error) => {
-        toast.error("Unable to Uploaded  Blog,Try Again!", {
+      .catch(error => {
+        toast.error('Unable to Uploaded  Blog,Try Again!', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
-        history.push("/addBlogs");
+        history.push('/addBlogs');
 
         console.log(error);
       });
   };
 
-
-     return (
-    <Page title="Add Blog" >
+  return (
+    <Page title="Add Blog">
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
@@ -83,18 +81,33 @@ function AddBlogs(){
             <CardHeader>New Blog</CardHeader>
             <CardBody>
               <Form>
-
-              <FormGroup row>
+                <FormGroup row>
                   <Label for="exampleEmail" sm={12}>
-                    Import Your Blog Image From the Chooser 
+                    Import Your Blog Image From the Chooser
                   </Label>
-                  <Col sm="12" md={{ size: 6, offset:4} }>
+                  <Col sm="12" md={{ size: 6, offset: 4 }}>
+                    <center>
+                      {image && (
+                        <img
+                          className="writeImg"
+                          height="60%"
+                          width="60%"
+                          src={URL.createObjectURL(image)}
+                          alt=""
+                        />
+                      )}
+                    </center>
+                  </Col>
+
+                  <Col sm="12" md={{ size: 6, offset: 4 }}>
                     <Input
                       type="file"
                       className="input"
                       id="avatar"
                       name="avatar"
-                      accept="image/*, application/pdf"
+                      required
+                      accept="image/*"
+                      onChange={e => setBlogImage(e.target.files[0])}
                     />
                   </Col>
                 </FormGroup>
@@ -106,15 +119,13 @@ function AddBlogs(){
                   <Col sm={9}>
                     <Input
                       type="text"
-                      name="email"
-                      onChange={event => {
-                        //  setCompanyName(event.target.value);
-                      }}
+                      name="title"
+                      placeholder="Add Title"
+                      onChange={e => setTitle(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
 
-              
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     Blog Description
@@ -124,17 +135,18 @@ function AddBlogs(){
                       type="textarea"
                       className="note"
                       placeholder="Description"
+                      onChange={e => setDesc(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
-                
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
-                    <Button color="success">Submit</Button>
+                    <Button onClick={addBlog} color="success">
+                      Publish
+                    </Button>
                   </Col>
                 </FormGroup>
-
               </Form>
             </CardBody>
           </Card>
