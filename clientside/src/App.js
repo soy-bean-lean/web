@@ -69,6 +69,7 @@ const lecCoursePro = React.lazy(() =>
 //blogs
 
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
+const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
 
 //forum
 
@@ -226,6 +227,7 @@ function App(props) {
                     <Route path="/buttons" component={ButtonPagePro} />
                     <Route path="/cards" component={CardPagePro} />
                     <Route path="/blogs" component={Blogs} />
+                    <Route path="/addBlogs" component={AddBlogs} />
                     <Route path="/widgets" component={WidgetPagePro} />
                     <Route path="/typography" component={TypographyPagePro} />
                     <Route path="/alerts" component={AlertPagePro} />
