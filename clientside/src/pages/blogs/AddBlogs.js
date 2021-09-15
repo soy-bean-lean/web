@@ -36,6 +36,7 @@ function AddBlogs() {
       '-' +
       today.getDate();
   let history = useHistory();
+  
 
   const addBlog = () => {
     const formData = new FormData();
@@ -69,6 +70,7 @@ function AddBlogs() {
         history.push('/addBlogs');
 
         console.log(error);
+
       });
   };
 
@@ -78,7 +80,8 @@ function AddBlogs() {
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
           <Card>
-            <CardHeader>New Blog</CardHeader>
+            <CardHeader>
+            New Blog</CardHeader>
             <CardBody>
               <Form>
                 <FormGroup row>

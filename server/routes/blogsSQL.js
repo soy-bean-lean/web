@@ -52,6 +52,21 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
       );
     }
   });
+
+
+  Blog.post("/", (req, res) => {
+    const mid = req.body.memberId;
+    connection.query(
+      "SELECT blogId, title, content FROM blog WHERE memberId = ?;",
+      [mid],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  });
   
   export default Blog;
 
