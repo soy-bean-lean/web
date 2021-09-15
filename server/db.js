@@ -17,32 +17,30 @@ var transporter = nodemailer.createTransport({
   },
 });
 
-var mailOptions = {
-  from: "2018cs071@stu.ucsc.cmb.ac.lk",
-  to: "2018is087@stu.ucsc.cmb.ac.lk",
-  subject: "CPDMF",
-  text: `!!!!!!!!!!!!!!!!!!!!!!!!Warning!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  payment hadpam buruwooooooooooooooo
-  `,
-  attachments: [
-    {
-      filename: "erro.png",
-      path: "http://localhost:3001/uploads/jobvacancy/erro.png",
-      contentType: "application/pdf",
-    },
-  ],
-  // html: '<h1>Hi Smartherd</h1><p>Your Messsage</p>'
-};
-/*
-transporter.sendMail(mailOptions, function (error, info) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Email sent: " + info.response);
-  }
-});
+// var mailOptions = {
+//   from: "2018cs071@stu.ucsc.cmb.ac.lk",
+//   to: "2018is087@stu.ucsc.cmb.ac.lk",
+//   subject: "CPDMF",
+//   text: `!!!!!!!!!!!!!!!!!!!!!!!!Warning!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//   payment hadpam buruwooooooooooooooo
+//   `,
+//   attachments: [
+//     {
+//       filename: "erro.png",
+//       path: "http://localhost:3001/uploads/jobvacancy/erro.png",
+//       contentType: "application/pdf",
+//     },
+//   ],
+//   // html: '<h1>Hi Smartherd</h1><p>Your Messsage</p>'
+// };
 
-*/
+// transporter.sendMail(mailOptions, function (error, info) {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log("Email sent: " + info.response);
+//   }
+// });
 
 connection.connect((error) => {
   if (error) throw error;
