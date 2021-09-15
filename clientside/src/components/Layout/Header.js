@@ -4,10 +4,10 @@ import Notifications from 'components/Notifications';
 import SearchInput from 'components/SearchInput';
 import { notificationsData } from 'demos/header';
 import withBadge from 'hocs/withBadge';
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from "../../helpers/AuthContext";
-import { useHistory } from "react-router-dom";
+import { AuthContext } from '../../helpers/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 import {
   MdClearAll,
@@ -49,14 +49,14 @@ const MdNotificationsActiveWithBadge = withBadge({
   children: <small>5</small>,
 })(MdNotificationsActive);
 
-function Header (props) {
-
-  const [isOpenNotificationPopover, setisOpenNotificationPopover] = useState(false);
+function Header(props) {
+  const [isOpenNotificationPopover, setisOpenNotificationPopover] =
+    useState(false);
   const [isNotificationConfirmed, setisNotificationConfirmed] = useState(false);
   const [isOpenUserCardPopover, setisOpenUserCardPopover] = useState(false);
-  
+
   const toggleNotificationPopover = () => {
-    setisOpenNotificationPopover(!isOpenNotificationPopover);    
+    setisOpenNotificationPopover(!isOpenNotificationPopover);
 
     if (isNotificationConfirmed) {
       setisNotificationConfirmed(true);
@@ -64,7 +64,7 @@ function Header (props) {
   };
 
   const toggleUserCardPopover = () => {
-    setisOpenUserCardPopover(!isOpenUserCardPopover);    
+    setisOpenUserCardPopover(!isOpenUserCardPopover);
   };
 
   const handleSidebarControlButton = event => {
@@ -73,34 +73,34 @@ function Header (props) {
 
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
-  
-  
-    let history = useHistory();
-    const { setAuthState } = useContext(AuthContext);
-    const logout = () => {
-      localStorage.removeItem("accessToken");
-      setAuthState({
-        fname: "",
-        lname: "",
-        progileImg: "",
-        role: "",
-        id: 0,
-        status: false,
-      });
-      history.push("/");
-    };
 
-    return (
-      <>
-      <Navbar light expand >
+  let history = useHistory();
+  const { setAuthState } = useContext(AuthContext);
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    setAuthState({
+      fname: '',
+      lname: '',
+      progileImg: '',
+      role: '',
+      id: 0,
+      status: false,
+    });
+    history.push('/');
+  };
+
+  return (
+    <>
+      <Navbar light expand>
         <Nav navbar className="collapsss">
-        <div className="collaps" >
-        <MdClearAll outline size={35}   onClick={handleSidebarControlButton} />
-
-        </div>
-
+          <div className="collaps">
+            <MdClearAll
+              outline
+              size={35}
+              onClick={handleSidebarControlButton}
+            />
+          </div>
         </Nav>
-        
 
         <Nav navbar className={bem.e('nav-right')}>
           <NavItem className="d-inline-flex">
@@ -133,13 +133,8 @@ function Header (props) {
 
           <NavItem>
             <NavLink id="Popover2">
-
-
-            {/* //profile image */}
-              <Avatar
-                onClick={toggleUserCardPopover}
-                className="can-click"
-              />
+              {/* //profile image */}
+              <Avatar onClick={toggleUserCardPopover} className="can-click" />
             </NavLink>
             <Popover
               placement="bottom-end"
@@ -157,17 +152,26 @@ function Header (props) {
                   className="border-light"
                 >
                   <ListGroup flush>
-                  <ListGroupItem  to={"/courseP"}  tag="button"action className="border-light">
-                      <MdPersonPin  /> Profhhhile
+                    <ListGroupItem
+                      to={'/courseP'}
+                      tag="button"
+                      action
+                      className="border-light"
+                    >
+                      <MdPersonPin /> Profile
                     </ListGroupItem>
- 
-                   
 
                     <ListGroupItem tag="button" action className="border-light">
                       <MdSettingsApplications /> Settings
                     </ListGroupItem>
-              
-                    <ListGroupItem tag="button" onClick={logout} to="/login" action className="border-light">
+
+                    <ListGroupItem
+                      tag="button"
+                      onClick={logout}
+                      to="/login"
+                      action
+                      className="border-light"
+                    >
                       <MdExitToApp /> Logout
                     </ListGroupItem>
                   </ListGroup>
@@ -178,8 +182,7 @@ function Header (props) {
         </Nav>
       </Navbar>
     </>
-    );
-  
+  );
 }
 
 export default Header;

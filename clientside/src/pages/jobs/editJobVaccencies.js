@@ -53,8 +53,9 @@ function UpdateJobVacancies() {
       description: description,
       imgFile: imgFile,
       jvId: id,
+      addBy: authState.id,
     };
-
+alert(imgFile)
     axios
       .post('http://localhost:3001/job/updateJob', jobData)
 
@@ -224,13 +225,13 @@ function UpdateJobVacancies() {
                   </Col>
                 </FormGroup>
 
-                <FormGroup row>
+                {/* <FormGroup row>
                   <Label for="exampleEmail" sm="12" md={{ size: 6, offset: 3 }}>
                     Advertisement Image
                   </Label>
                   <Col sm="12" md={{ size: 6, offset: 3 }}>
                     <center>
-                      {/* {imgFile && (
+                      {imgFile && (
                         <img
                           className="writeImg"
                           height="60%"
@@ -238,7 +239,7 @@ function UpdateJobVacancies() {
                           src={URL.createObjectURL(imgFile)}
                           alt=""
                         />
-                      )} */}
+                      )}
                     </center>
                   </Col>
 
@@ -249,11 +250,12 @@ function UpdateJobVacancies() {
                       id="course-img"
                       name="course-img"
                       required
+                      
                       accept="image/*"
                       onChange={e => setImgFile(e.target.files[0])}
                     ></input>
                   </Col>
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
                     <Button onClick={updateJob} color="success">

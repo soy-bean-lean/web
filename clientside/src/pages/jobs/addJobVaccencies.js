@@ -142,6 +142,7 @@ const AddJobVacancies = () => {
                     />
                   </Col>
                 </FormGroup>
+                
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     Description
