@@ -93,18 +93,61 @@ const pageContents = [
 ];
 
 const navItemsProffesional = [
-  { to: '/dashboard', name: 'dashboard sec', exact: true, Icon: MdDashboard },
-  { to: '/cpdP', name: 'CPD Reports', exact: false, Icon: HiIcons.HiDocumentReport },
-  { to: '/courseP', name: 'Courses', exact: false, Icon: FaIcons.FaGraduationCap },
+  { 
+    to: '/dashboard', 
+    name: 'Dashboard', 
+    exact: true, 
+    Icon: MdDashboard 
+  },
+  /*{
+    to: '/csslmember/cpdrecords',
+    name: 'CPD Records',
+    exact: false,
+    Icon: HiIcons.HiDocumentReport,
+  },
+
+  {
+    to: '/csslcourses',
+    name: 'Courses',
+    exact: false,
+    Icon: FaIcons.FaGraduationCap,
+  },*/
 
   // { to: '/lecCourse', name: 'Lecturing Courses', exact: false, Icon: FaIcons.FaGraduationCap },
   // { to: '/widgets', name: 'Workshops', exact: false, Icon: GIIcons.GiTeacher  },
   // { to: '/widgets', name: 'Blogs', exact: false, Icon: FaIcons.FaBloggerB },
   // { to: '/widgets', name: 'Forum', exact: false, Icon: AiIcons.AiFillFileText },
-   { to: '/managejobs', name: 'Manage Jobs', exact: false, Icon: FaIcons.FaUserAlt  },
+  {
+    to: '/verifyuser',
+    name: 'User Verification',
+    exact: false,
+    Icon: FaIcons.FaUserAlt,
+  },
+  {
+    to: '/managejobs',
+    name: 'Manage Job Vacancies',
+    exact: false,
+    Icon: FaIcons.FaUserAlt,
+  },
+  {
+    to: '/manageworkshops',
+    name: 'Manage Workshops',
+    exact: false,
+    Icon: GIIcons.GiTeacher,
+  },
+  {
+    to: '/csslmember/managepayements',
+    name: 'Memeber Payments',
+    exact: false,
+    Icon: AiIcons.AiFillDollarCircle,
+  },
   // { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
 
-  { to: '/charts', name: 'reports', exact: false, Icon: MdReport },
+  { to: '/charts', 
+    name: 'Reports', 
+    exact: false, 
+    Icon: MdReport 
+  },
 ];
 
 const bem = bn.create('sidebar');
@@ -131,7 +174,6 @@ class SidebarSec extends React.Component {
       <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} style={sidebarBackground} />
         <div className={bem.e('content')}>
-
           <Nav vertical>
             {navItemsProffesional.map(({ to, name, exact, Icon }, index) => (
               <NavItem key={index} className={bem.e('nav-item')}>
@@ -149,7 +191,6 @@ class SidebarSec extends React.Component {
               </NavItem>
             ))}
 
-            
             <Collapse isOpen={this.state.isOpenContents}>
               {navContents.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
@@ -167,7 +208,6 @@ class SidebarSec extends React.Component {
                 </NavItem>
               ))}
             </Collapse>
-
           </Nav>
         </div>
       </aside>

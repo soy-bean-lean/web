@@ -53,18 +53,18 @@ const sidebarBackground = {
 const navItemsProffesional = [
   {
     to: '/dashboard',
-    name: 'dashboard Proffesional',
+    name: 'Dashboard',
     exact: true,
     Icon: MdDashboard,
   },
   {
-    to: '/cpdP',
-    name: 'CPD Reports Proffesional',
+    to: '/csslmember/cpdrecords',
+    name: 'CPD Records',
     exact: false,
     Icon: HiIcons.HiDocumentReport,
   },
   {
-    to: '/courseP',
+    to: '/csslcourses',
     name: 'Courses',
     exact: false,
     Icon: FaIcons.FaGraduationCap,
@@ -75,11 +75,32 @@ const navItemsProffesional = [
     exact: false,
     Icon: FaIcons.FaGraduationCap,
   },
-  { to: '/widgets', name: 'Workshops', exact: false, Icon: GIIcons.GiTeacher },
-  { to: '/blogs', name: 'Blogs', exact: false, Icon: FaIcons.FaBloggerB },
-  { to: '/widgets', name: 'Forum', exact: false, Icon: AiIcons.AiFillFileText },
-  { to: '/job', name: 'Jobs', exact: false, Icon: FaIcons.FaUserAlt },
-  { to: '/charts', name: 'reports', exact: false, Icon: MdReport },
+  { 
+    to: '/blogs', 
+    name: 'Blogs', 
+    exact: false, 
+    Icon: FaIcons.FaBloggerB 
+  },
+  { 
+    to: '/jobadvertisements', 
+    name: 'Jobs', 
+    exact: false, 
+    Icon: FaIcons.FaUserAlt 
+  },
+  { 
+    to: '/csslworkshops', 
+    name: 'Workshops', 
+    exact: false, 
+    Icon: GIIcons.GiTeacher 
+  },
+  { 
+    to: '/forum', 
+    name: 'Forum', 
+    exact: false, 
+    Icon: AiIcons.AiFillFileText 
+  },
+  
+  /*{ to: '/charts', name: 'reports', exact: false, Icon: MdReport },*/
 ];
 
 const bem = bn.create('sidebar');

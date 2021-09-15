@@ -44,7 +44,7 @@ const CardPage = props => {
   return (
     <Page title="CPD Records">
       <hr></hr>
-      <Link to="/cpdAdd">
+      <Link to="/csslmember/cpdrecords/addcpdrecord">
         <Button color="success">Add New CPD Record</Button>
       </Link>
       <br></br>

@@ -93,17 +93,60 @@ const pageContents = [
 ];
 
 const navItemsProffesional = [
-  { to: '/dashboard', name: 'dashboard pro', exact: true, Icon: MdDashboard },
-  { to: '/cpdP', name: 'CPD Reports', exact: false, Icon: HiIcons.HiDocumentReport },
-  { to: '/courseP', name: 'Courses', exact: false, Icon: FaIcons.FaGraduationCap },
-  { to: '/lecCourse', name: 'Lecturing', exact: false, Icon: FaIcons.FaGraduationCap },
-  { to: '/widgets', name: 'Workshops', exact: false, Icon: GIIcons.GiTeacher  },
-  { to: '/blogs', name: 'Blogs', exact: false, Icon: FaIcons.FaBloggerB },
-  { to: '/widgets', name: 'Forum', exact: false, Icon: AiIcons.AiFillFileText },
-  { to: '/job', name: 'Jobs', exact: false, Icon: FaIcons.FaUserAlt  },
-  { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
+  { 
+    to: '/dashboard', 
+    name: 'Dashboard', 
+    exact: true, 
+    Icon: MdDashboard 
+  },
+  
+  {
+    to: '/csslcourses',
+    name: 'Courses',
+    exact: false,
+    Icon: FaIcons.FaGraduationCap,
+  },
+  { 
+    to: '/blogs', 
+    name: 'Blogs', 
+    exact: false, 
+    Icon: FaIcons.FaBloggerB 
+  },
+  { 
+    to: '/jobadvertisements', 
+    name: 'Jobs', 
+    exact: false, 
+    Icon: FaIcons.FaUserAlt 
+  },
+  { 
+    to: '/csslworkshops', 
+    name: 'Workshops', 
+    exact: false, 
+    Icon: GIIcons.GiTeacher 
+  },
+  { 
+    to: '/forum', 
+    name: 'Forum', 
+    exact: false, 
+    Icon: AiIcons.AiFillFileText 
+  },
+  
+  /*
+  {
+    to: '/csslmember/cpdrecords',
+    name: 'CPD Records',
+    exact: false,
+    Icon: HiIcons.HiDocumentReport,
+  },
+  {
+    to: '/lecCourse',
+    name: 'Lecturing',
+    exact: false,
+    Icon: FaIcons.FaGraduationCap,
+  },
 
-  { to: '/charts', name: 'reports', exact: false, Icon: MdReport },
+  { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
+  { to: '/charts', name: 'reports', exact: false, Icon: MdReport },*/
 ];
 
 const bem = bn.create('sidebar');
@@ -128,10 +171,8 @@ class Sidebar extends React.Component {
   render() {
     return (
       <aside className={bem.b()} data-image={sidebarBgImage}>
-      
         <div className={bem.e('background')} style={sidebarBackground} />
         <div className={bem.e('content')}>
-
           <Nav vertical>
             {navItemsProffesional.map(({ to, name, exact, Icon }, index) => (
               <NavItem key={index} className={bem.e('nav-item')}>
