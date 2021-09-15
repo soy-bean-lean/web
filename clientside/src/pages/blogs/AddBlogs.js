@@ -14,6 +14,7 @@ import {
   CardBody,
   CardHeader,
   Col,
+  Alert,
   Form,
   FormFeedback,
   FormGroup,
@@ -28,6 +29,8 @@ function AddBlogs() {
   const [desc, setDesc] = useState('');
   const [image, setBlogImage] = useState(null);
   const { authState, setAuthState } = useContext(AuthContext);
+  const [result, setResult] = useState();
+
   var today = new Date(),
     Currentdate =
       today.getFullYear() +
@@ -36,7 +39,22 @@ function AddBlogs() {
       '-' +
       today.getDate();
   let history = useHistory();
-  
+
+  function msg() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Greate Attempt is Succesfull</Alert>
+        </>
+      );
+    }
+  }
 
   const addBlog = () => {
     const formData = new FormData();
@@ -56,21 +74,26 @@ function AddBlogs() {
     })
       .then(res => res.json())
       .then(res => {
-        toast.success('Blog Has Successfully Added!', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-        });
-        history.push('/blogs');
+        setResult('done');
+        setTimeout(
+          function () {
+            history.push('/blogs');
+          },
+
+          2000,
+        );
       })
       .catch(error => {
-        toast.error('Unable to Uploaded  Blog,Try Again!', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-        });
-        history.push('/addBlogs');
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push('/blogs');
+            history.push('/addBlogs');
+          },
 
+          2000,
+        );
         console.log(error);
-
       });
   };
 
@@ -79,9 +102,9 @@ function AddBlogs() {
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
+          {msg()}
           <Card>
-            <CardHeader>
-            New Blog</CardHeader>
+            <CardHeader>New Blog</CardHeader>
             <CardBody>
               <Form>
                 <FormGroup row>

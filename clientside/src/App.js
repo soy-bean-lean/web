@@ -224,7 +224,8 @@ function App(props) {
                       component={AddCourse}
                     />
                     <Route
-                      exact path="/courseView/cssl00:id/:title"
+                      exact
+                      path="/courseView/cssl00:id/:title"
                       component={lecturerCourseView}
                     />
                     {/*CPD Related Routes*/}
@@ -240,11 +241,7 @@ function App(props) {
                     />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
-<<<<<<< HEAD
-=======
                     <Route exact path="/addBlogs" component={AddBlogs} />
-
->>>>>>> 3a5f61ba17162418b0bb1cde4ace453747e10f5c
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
@@ -477,6 +474,7 @@ function App(props) {
                     <Route exact path="/csslcourses" component={csslCourses} />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
+                    <Route exact path="/addBlogs" component={AddBlogs} />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}

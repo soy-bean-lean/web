@@ -44,7 +44,6 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
           if (err) {
             console.log(err);
           } else {
-            console.log("!@#$%^&*()______________________________________@#$%^&*()_+");
 
             res.json("success");
           }
