@@ -101,8 +101,8 @@ const CardPage = props => {
           <td>
             <center>
               <Link to={''}>
-                <Button color="primary" size="sm">
-                  View{' '}
+                <Button color="success" size="sm">
+                  Download CV{' '}
                 </Button>
               </Link>
             </center>

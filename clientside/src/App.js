@@ -78,6 +78,7 @@ const AddJobVaccencies = React.lazy(() =>
   import('pages/jobs/addJobVaccencies'),
 );
 const ManageJobs = React.lazy(() => import('pages/jobs/ManageJobs'));
+const editQuestions = React.lazy(() => import('pages/jobs/editJobQuestions'));
 const JobsPro = React.lazy(() => import('pages/jobs/Jobs'));
 const JobView = React.lazy(() => import('pages/jobs/Job View'));
 const AddJobCV = React.lazy(() => import('pages/jobs/addJobCv'));
@@ -325,6 +326,7 @@ function App(props) {
 
                     <Route path="/cpdAdd" component={AddCPD} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
+                    <Route path="/editQuestions/:id" component={editQuestions} />
 
                     <Route path="/badges" component={BadgePagePro} />
                     <Route

@@ -96,15 +96,11 @@ const CardPage = props => {
 
           <td>
             <center>
-              <Link to={''}>
-                <Button color="primary" size="sm">
-                  View{' '}
-                </Button>
-              </Link>
+             
               {'   '}
               <Link to={'/editJobVaccencies/' + data.jvId}>
-                <Button color="warning" size="sm">
-                  Edit{' '}
+                <Button color="primary" size="sm">
+                  View / Edit{' '}
                 </Button>
               </Link>
               {'   '}
@@ -119,7 +115,7 @@ const CardPage = props => {
       </>
     ));
 
-  const jobApplicents =
+  const jobQuestions =
     applicents &&
     applicents.map(data => (
       <>
@@ -132,10 +128,18 @@ const CardPage = props => {
           <td>{data.email}</td>
 
           <td>
-            <center>
+             <center>
+             
+              {'   '}
+              <Link to={'/editQuestions/' + data.jvId}>
+                <Button color="primary" size="sm">
+                  View / Edit{' '}
+                </Button>
+              </Link>
+              {'   '}
               <Link to={''}>
-                <Button color="success" size="sm">
-                  View{' '}
+                <Button color="danger" size="sm">
+                  Delete{' '}
                 </Button>
               </Link>
             </center>
@@ -220,7 +224,7 @@ const CardPage = props => {
                           <Col>
                             <Card body>
                               <Table {...{ ['striped']: true }}>
-                                <tbody>{jobApplicents}</tbody>
+                                <tbody>{jobQuestions}</tbody>
                               </Table>
                             </Card>
                           </Col>

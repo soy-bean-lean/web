@@ -106,7 +106,7 @@ function JobView() {
           <Card body>
             <Col md={12} sm={10} xs={10} className="mb-2">
               <Card className="flex-row">
-                <CardImg src={image} style={{ width: 'auto', height: 200 }} />
+                <CardImg src={image} style={{ width: 'auto', height: 250 }} />
 
                 <CardBody>
                   <h1 className="a">{compayData.companyName}</h1>
@@ -114,16 +114,10 @@ function JobView() {
                     <h2 className="a">{compayData.designation}</h2>
                     <h4 className="a">{compayData.location}</h4>
                   </CardText>
-                </CardBody>
-
-                <CardBody>
+            
                   <h4 className="a">{compayData.contact}</h4>
                   <h4 className="a">{compayData.email}</h4>
-                </CardBody>
-              </Card>
-
-              <Card className="flex-row">
-                <CardBody>
+            
                   <CardTitle>{compayData.description}</CardTitle>
                 </CardBody>
               </Card>
