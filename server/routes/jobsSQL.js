@@ -231,29 +231,16 @@ Job.post("/getJobsApplications", (req, res) => {
 });
 
 Job.get("/getCVtoSend", (req, res) => {
-  // const jid = req.query.id;
-  // alert(jid)
-  // connection.query(
-  //   "SELECT  * FROM `jobapplicant` WHERE jvId = ?;"
-  //   [jid],
-  //   (error, result, feilds) => {
-  //     if (error) console.log(error);
-  //     else {
-  //       res.send(result);
-  //     }
-  //   }
-  // );
   const jid = req.query.id;
-  connection.query(
-    "SELECT jvId , companyName , location ,designation,description ,contact ,email,advertisment from jobvacancy where jvId = ?;",
-    [jid],
-    (error, result, feilds) => {
-      if (error) console.log(error);
-      else {
-        res.send(result);
-      }
-    }
-  );
+
+  const sqlSelect =
+    "SELECT jvId ,memberId,description,cv,sheet,date,marks,status from jobapplicant where jvId = " +
+    jid +
+    "";
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
 });
 
 Job.get("/getJobView", (req, res) => {

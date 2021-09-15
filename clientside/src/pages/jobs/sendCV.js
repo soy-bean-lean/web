@@ -30,22 +30,18 @@ import {
   Row,
 } from 'reactstrap';
 function JobView() {
-  const [compayData, setApplicents] = useState(null);
+  const [application, setJobApplications] = useState(null);
   const [image, setJobImage] = useState('');
   const { id } = useParams();
   useEffect(() => {
-    const data = {
-      memberId: '1001',
-      jobId: id,
-    };
     axios
       .get('http://localhost:3001/job/getCVtoSend', { params: { id: id } })
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setApplicents(response.data);
-      
+          setJobApplications(response.data);
+
           setJobImage(
             'http://localhost:3001/uploads/jobvacancy/' +
               response.data[0].advertisment,
@@ -58,25 +54,21 @@ function JobView() {
   }, []);
 
   const jobview =
-    compayData &&
-    compayData.map(compayData => (
+    application &&
+    application.map(applicationData => (
       <>
         <CardBody>
           <Card body>
             <Col md={12} sm={10} xs={10} className="mb-2">
               <Card className="flex-row">
                 <CardImg src={image} style={{ width: 'auto', height: 200 }} />
-
+                {applicationData.jvId}
                 <CardBody>
-                  <CardText>
-
-                  </CardText>
+                  <CardText></CardText>
                 </CardBody>
               </Card>
               <Card className="flex-row">
-                <CardBody>
-                  
-                </CardBody>
+                <CardBody></CardBody>
               </Card>
               <Card className="flex-row">
                 <CardBody>
