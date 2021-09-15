@@ -192,7 +192,7 @@ function Records() {
      <div className="cpdAdd">
 
      <div className="add-cpd-btn">
-          <Link to={"/addCPD/"} className="add-cpd-btn">
+          <Link to={"/csslmember/cpdrecords/addcpdrecord/"} className="add-cpd-btn">
             <a href="#" className="add-cpd-btn">
               ADD
             </a>

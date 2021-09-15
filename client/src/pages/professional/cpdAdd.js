@@ -123,6 +123,9 @@ function AddCPD() {
         } else {
           if (submitWorkshopData.type == "CSSLworkshop") {
             setInWorkshopList(response.data);
+            console.log(inWorkshopList);
+            
+            console.log(response.data[0].fromDate)
           } else if (submitWorkshopData.type == "others") {
             setOutWorkshopList(response.data);
           } else {
@@ -344,7 +347,7 @@ function AddCPD() {
                 Submit
               </a>
             </Link>
-            <Link to={"/cpdP/"} className="review">
+            <Link to={"/csslmember/cpdrecords/"} className="review">
               <a href="#" className="review">
                 Back
               </a>

@@ -1,0 +1,49 @@
+.cr-sidebar::after {
+    z-index: 1;
+    background: linear-gradient(to bottom, #4f62c0, #40476b);
+   
+    opacity:0;
+}
+.nav-item .nav-link.active{
+    color: black;
+    
+}
+a:not([href]):not([tabindex]):hover{
+    color: #000000;
+    cursor:pointer;
+}
+
+.cr-sidebar__content {
+    position: relative;
+    
+}
+.loginForm{
+    margin-top: 10%;
+}
+.buttonDIV{
+    margin-top: 1%;
+    margin: 1%;
+}
+.cr-sidebar--open{
+    background: #884747;
+   
+}
+
+.DashboardPage{
+ height: auto;
+}
+
+.collaps{
+    padding: 2%;
+    
+    color: #004a99;
+    border-color:1px  #004a99;
+
+}
+.collaps :hover {
+    color: #007bff;
+    border-color: #007bff;
+}
+.bg-gradient-theme {
+    background: linear-gradient(to bottom, #6a82fb, #40476b);
+}

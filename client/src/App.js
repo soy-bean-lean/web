@@ -143,7 +143,7 @@ function App() {
             <>
               <Route path="/" exact component={Login} />
               <Route path="/registration" exact component={Registration} />
-              <Route path="/payment" component={PaymentModal} />
+              
             </>
           )}
           {authState.role == "student" && (
@@ -181,8 +181,6 @@ function App() {
               <Navbar />
 
               <Route path="/dashboardP" exact component={dashboardPro} />
-              <Route path="/cpdP" component={cpdPro} />
-              <Route path="/addCPD" component={cpdAddPro} />
               <Route path="/coursMyViewP/:id" component={coursMyView} />
               <Route path="/coursEnrollsP/:id" component={courseEnrollP} />
               <Route path="/courseReviewP/:id" component={courseReviewP} />
@@ -204,10 +202,14 @@ function App() {
               <Route path="/lecCourse" component={lecCourseList} />
               <Route path="/addCourse" component={courseInfo} />
 
+              {/*CPD Records Related Routes*/}
+              <Route exact path="/csslmember/cpdrecords" component={cpdPro} />
+              <Route exact path="/csslmember/cpdrecords/addcpdrecord" component={cpdAddPro} />
+
               {/*Course Related Routes*/}
               <Route exact path="/csslcourses" component={csslCourses} />
               <Route
-                path="/csslcourses/courseview/cssl00:id/:title"
+                exact path="/csslcourses/courseview/cssl00:id/:title"
                 component={courseView}
               />
               <Route

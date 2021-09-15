@@ -14,7 +14,7 @@ export const SidebarDataPro = [
       cName: 'nav-text'
     },{
       title: 'CPD Records',
-      path: '/cpdP',
+      path: '/csslmember/cpdrecords',
       icon: <HiIcons.HiDocumentReport />,
       cName: 'nav-text'
     },
