@@ -45,9 +45,10 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
     const email = req.body.email;
     const description = req.body.description;
     const addBy = req.body.memberId;
-    const image = req.file.filename;
+    const questionCount = req.body.questionCount;
+
     connection.query(
-      `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy,advertisment,activity) VALUES (?,?,?,?,?,?,?,?,?)`,
+      `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy,advertisment,activity,questionCount) VALUES (?,?,?,?,?,?,?,?,?,?)`,
       [
         companyName,
         location,
@@ -58,6 +59,7 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
         addBy,
         image,
         "open",
+        questionCount,
       ],
       (err, result) => {
         if (err) {
@@ -77,8 +79,9 @@ Job.post("/updateJob", async (req, res) => {
   const contact = req.body.contact;
   const email = req.body.email;
   const description = req.body.description;
-  const addBy = req.body.memberId;
+  const addBy = req.body.addBy;
   const jvId = req.body.jvId;
+  const questionCount = req.body.questionCount;
   connection.query(
     " UPDATE jobvacancy SET companyName = '" +
       companyName +
@@ -94,7 +97,9 @@ Job.post("/updateJob", async (req, res) => {
       addBy +
       " ' ,email = '" +
       email +
-      " ' ,description = '" +
+      " ' ,email = '" +
+      questionCount +
+      " ' ,questionCount = '" +
       description +
       " '  WHERE jvId=" +
       jvId +
@@ -110,15 +115,54 @@ Job.post("/updateJob", async (req, res) => {
   );
 });
 
+Job.post("/updateQuestion", async (req, res) => {
+  const question = req.body.question;
+  const ans1 = req.body.ans1;
+  const ans2 = req.body.ans2;
+  const ans3 = req.body.ans3;
+  const ans4 = req.body.ans4;
+  const correct = req.body.correct * 1;
+  const qid = req.body.qid;
+
+  const sql =
+    " UPDATE jobquestions SET Question = '" +
+    question +
+    " ' , Answer1 = '" +
+    ans1 +
+    " ' ,Answer2 = '" +
+    ans2 +
+    " ' ,Answer3 = '" +
+    ans3 +
+    " ' ,Answer4 = '" +
+    ans4 +
+    " ',Correct = " +
+    correct +
+    "   WHERE Qnumber=" +
+    qid +
+    ";";
+  connection.query(sql, (err, result) => {
+    if (err) {
+      console.log(sql);
+      res.send(result);
+    } else {
+      res.json("success");
+    }
+  });
+});
+
 Job.post("/sendEmail", async (req, res) => {
   const password = req.body.password;
   const jobId = req.body.jobId;
-  const from = "2018cs071@stu.ucsc.cmb.ac.lk";
+
+  const from = "2018cs071@stu.ucsc.cmb.ac.lk"; //system mail
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: "2018cs071@stu.ucsc.cmb.ac.lk",
       pass: "Chamika@97",
+
+      //systems.cssl
+      //cssl@admin@123
     },
   });
   const sqlSelect =
@@ -127,8 +171,6 @@ Job.post("/sendEmail", async (req, res) => {
     " ORDER BY `jobapplicant`.`marks`  DESC;";
 
   connection.query(sqlSelect, (err, result) => {
-    console.log(result.length);
-
     var i = 0;
 
     for (i = 0; i < result.length; i++) {
@@ -139,30 +181,20 @@ Job.post("/sendEmail", async (req, res) => {
       const companyemail = result[i].companyemail;
       const marks = result[i].marks;
       const cv = result[i].cv;
-
+      console.log(email + " --- " + firstName);
       var mailOptions = {
         from: { from },
         to: companyemail,
+        cc: email,
         subject: "Job Application",
-        text:
-          `Our Member ` +
-          firstName +
-          " has requested " +
-          designation +
-          " role from your company,who has scored " +
-          marks +
-          "% from the Basic Exam, so please be kind and contact " +
-          firstName +
-          "  --  " +
-          email +
-          " ",
-        // attachments: [
-        //   {
-        //     filename: cv,
-        //     path: "http://localhost:3001/uploads/jobApplicationCVs/"+cv+"",
-        //     contentType: "application/pdf",
-        //   },
-        // ],
+        text: " hi " + firstName,
+        attachments: [
+          {
+            filename: cv,
+            path: "http://localhost:3001/uploads/jobApplicationCVs/" + cv,
+            contentType: "application/pdf",
+          },
+        ],
         // html: '<h1>Hi Smartherd</h1><p>Your Messsage</p>'
       };
 
@@ -171,6 +203,7 @@ Job.post("/sendEmail", async (req, res) => {
           console.log(error);
         } else {
           console.log("Email sent: " + info.response);
+          email = "";
         }
       });
     }
@@ -227,7 +260,7 @@ Job.post("/addQuestion", async (req, res) => {
   const correct = req.body.correct;
 
   connection.query(
-    `INSERT INTO jobquestions ( Question , Answer1 ,Answer2,Answer3,Answer4,Correct) VALUES (?,?,?,?,?,?)`,
+    `INSERT INTO jobquestions (  , Answer1 ,Answer2,Answer3,Answer4,Correct) VALUES (?,?,?,?,?,?)`,
 
     [question, ans1, ans2, ans3, ans4, correct],
     (err, result) => {
@@ -295,17 +328,11 @@ Job.get("/getCVtoSend", (req, res) => {
 Job.get("/getJobView", (req, res) => {
   const jid = req.query.id;
   connection.query(
-    "SELECT jvId , companyName , location ,designation,description ,contact ,email,advertisment from jobvacancy where jvId = ?;",
+    "SELECT jvId , companyName , location ,designation,description,questionCount ,contact ,email,advertisment from jobvacancy where jvId = ?;",
     [jid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-        console.log(
-          "SELECT jvId , companyName , location ,designation,description ,contact ,email,advertisment from jobvacancy where jvId = " +
-            jid +
-            ";"
-        );
-
         res.send(result);
       }
     }
@@ -313,27 +340,35 @@ Job.get("/getJobView", (req, res) => {
 });
 
 Job.post("/getQuestion", (req, res) => {
-
   const sqlSelect =
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions ORDER by rand() Limit 5";
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions  Limit 5";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
 });
 
-Job.post("/getQuestiontoUpdate", (req, res) => {
-  console.log("455554545666666666666666666666")
-
-  const qid = req.query.id;
+Job.post("/getAllQuestion", (req, res) => {
   const sqlSelect =
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where Qnumber = " +
-    qid;
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions";
 
   connection.query(sqlSelect, (err, result) => {
-    console.log(result);
     res.send(result);
   });
+});
+
+Job.get("/aaa", (req, res) => {
+  const jid = req.query.id;
+  connection.query(
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where Qnumber = ?;",
+    [jid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
 });
 
 export default Job;

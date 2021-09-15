@@ -1,4 +1,5 @@
 import Page from 'components/Page';
+import { AuthContext } from '../../helpers/AuthContext';
 import { Link } from 'react-router-dom';
 import bg11Image from 'assets/img/bg/background_1920-11.jpg';
 import bg18Image from 'assets/img/bg/background_1920-18.jpg';
@@ -6,7 +7,7 @@ import bg1Image from 'assets/img/bg/background_640-1.jpg';
 import bg3Image from 'assets/img/bg/background_640-3.jpg';
 import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
 import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext  } from 'react';
 import axios from 'axios';
 
 import classnames from 'classnames';
@@ -35,34 +36,68 @@ import {
   ListGroupItem,
   Row,
 } from 'reactstrap';
-const LecCourseList = props => {
-  const [course, setCourse] = useState(null);
+
+
+
+const Blogs = props => {
+  
+  const tableTypes = ['striped'];
+  const [blog, setBlog] = useState(null);
+  const { authState, setAuthState } = useContext(AuthContext);
+
 
   useEffect(() => {
     const formData = {
       mId: 'cssl001',
     };
     axios
-      .post('http://localhost:3001/csslcourse/', formData)
+      .post('http://localhost:3001/blog/addBlog/', formData)
 
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setCourse(response.data);
+          setBlog(response.data);
         }
       })
       .catch(error => {
         alert(error);
       });
   }, []);
+
   const [activeTab, setActiveTab] = useState('1');
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-//map  here
+ 
+
+
+  const myBlogs =
+  blog &&
+  blog.map(( blog, i) =>
+  blog.memberId === authState.id ? (
+      <>
+         <tr>
+        <th hidden="true">{i}</th>
+        <td hidden="true">{blog.blogId}</td>
+        <td>{blog.image}</td>
+        <td>{blog.title}</td>
+        <td>{blog.content}</td>
+        <td>
+        <Link to={''}>
+                <Button color="success" size="sm">
+                 View{' '}
+                </Button>
+              </Link>
+          </td>
+        </tr>
+      </>
+    ) : (
+      <></>
+    ),
+  );
 
 
   return (
@@ -101,16 +136,22 @@ const LecCourseList = props => {
       
             <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
+        {tableTypes.map((tableType, index) => (
           <Row>
             <Col sm="12">
               <Card className="mb-3">
               <CardHeader>
                   <Typography className="text-success">All Blogs</Typography>
                 </CardHeader>
-               {/* map Starts */}
+               {myBlogs }
+              
                 <CardBody>
                   <Card body>
-                    <Col md={12} sm={10} xs={10} className="mb-2">
+                  <Table {...{ ['striped']: true }}>
+                      <tbody>{myBlogs}</tbody>
+                    </Table>
+                
+                    {/* <Col md={12} sm={10} xs={10} className="mb-2">
                       <Card className="flex-row">
                         <CardImg
                           className="card-img-left"
@@ -125,13 +166,14 @@ const LecCourseList = props => {
                           </CardText>
                         </CardBody>
                       </Card>
-                    </Col>
+                    </Col> */}
                   </Card>
                 </CardBody>
                 
               </Card>
             </Col>
           </Row>
+          ))}
         </TabPane>
        
        
@@ -211,4 +253,4 @@ const LecCourseList = props => {
   );
 };
 
-export default LecCourseList;
+export default Blogs;
