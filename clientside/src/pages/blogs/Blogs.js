@@ -51,7 +51,7 @@ const Blogs = props => {
       mId: 'cssl001',
     };
     axios
-      .post('http://localhost:3001/blog/', formData)
+      .post('http://localhost:3001/blog/addBlog/', formData)
 
       .then(response => {
         if (response.data.error) {
@@ -143,7 +143,7 @@ const Blogs = props => {
               <CardHeader>
                   <Typography className="text-success">All Blogs</Typography>
                 </CardHeader>
-               {/* {myBlogs } */}
+               {myBlogs }
               
                 <CardBody>
                   <Card body>

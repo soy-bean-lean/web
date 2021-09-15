@@ -47,3 +47,13 @@ a:not([href]):not([tabindex]):hover{
 .bg-gradient-theme {
     background: linear-gradient(to bottom, #6a82fb, #40476b);
 }
+
+.link-tag{
+    color: black;
+    text-decoration: none;
+}
+
+.link-tag:hover{
+    color: black;
+    text-decoration: none;
+}

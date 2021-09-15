@@ -66,6 +66,9 @@ const lecCourseView = React.lazy(() =>
 const lecturerCourseView = React.lazy(() =>
   import('pages/courses/LecturerCourseView'),
 );
+const courseView = React.lazy(() =>
+  import('pages/courses/CourseView'),
+);
 
 //workshops
 
@@ -218,6 +221,11 @@ function App(props) {
                     {/*Course Related Routes*/}
                     <Route exact path="/lecCourse" component={lecCourseView} />
                     <Route exact path="/csslcourses" component={csslCourses} />
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     <Route
                       exact
                       path="/csslcourse/addnewcourse"
@@ -472,6 +480,11 @@ function App(props) {
                     />
                     {/*Course Related Routes*/}
                     <Route exact path="/csslcourses" component={csslCourses} />
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
@@ -536,6 +549,11 @@ function App(props) {
                     {/*Course Related Routes*/}
                     <Route exact path="/lecCourse" component={lecCourseView} />
                     <Route exact path="/csslcourses" component={csslCourses} />
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     <Route
                       exact
                       path="/csslcourse/addnewcourse"
@@ -614,6 +632,11 @@ function App(props) {
                     />
                     {/*Course Related Routes*/}
                     <Route exact path="/csslcourses" component={csslCourses} />
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     {/*Workshop Related Routes*/}
