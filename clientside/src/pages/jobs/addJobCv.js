@@ -28,12 +28,34 @@ import {
 
 const AddCV = () => {
   // job
-  const [jobId, setJobId] = useState('');
+  const [count, setCount] = useState(null);
+  useEffect(() => {
+    const data = {
+      memberId: '1001',
+      jobId: id,
+    };
 
+    axios
+      .get('http://localhost:3001/job/getJobView', { params: { id: id } })
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log(response.data);
+          setCount(response.data[0].questionCount);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }, []);
   const { id } = useParams();
 
   const { finalMarks } = useParams(0);
-  const marks = (finalMarks * 20) / 15051;
+
+  const marks = (finalMarks / 15051) * (100/count)  ;
+
   var today = new Date(),
     Currentdate =
       today.getFullYear() +
@@ -48,6 +70,11 @@ const AddCV = () => {
   const [image, setCVFile] = useState();
   const [result, setResult] = useState();
   let history = useHistory();
+
+  console.log('marks  = ' + marks);
+  console.log('questions = ' + count);
+
+  console.log('finalMarks + ' + finalMarks);
 
   function msg() {
     if (result == 'err') {
@@ -135,7 +162,7 @@ const AddCV = () => {
 
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
-                   Add Your CV
+                    Add Your CV
                   </Label>
                   <Col sm={9}>
                     <Input

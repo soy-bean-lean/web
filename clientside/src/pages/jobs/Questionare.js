@@ -34,13 +34,13 @@ import FormGroup from 'reactstrap/lib/FormGroup';
 function Questionare() {
   const { id } = useParams();
 
-  const [answer, setAnswer] = useState([id, 0, 0, 0, 0, 0]);
+  const [answer, setAnswer] = useState([id, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [data, setData] = useState(null);
   //const [correctAnswers, setCorrectAnswers] = useState(null);
   const [correction, serCorrection] = useState(null);
+  const [count, setCount] = useState(null);
   var correctAnswers = 0;
   let history = useHistory();
-
   useEffect(() => {
     axios
       .post('http://localhost:3001/job/getQuestion', data)
@@ -50,6 +50,7 @@ function Questionare() {
           alert(response.data.error);
         } else {
           setData(response.data);
+          setCount(response.data.length);
         }
       })
       .catch(error => {
@@ -60,7 +61,6 @@ function Questionare() {
   function next() {
     console.log(data);
     var finalMarks = 0;
-
     for (let Qnumber = 1; Qnumber <= 5; Qnumber++) {
       if (answer[Qnumber] === data[Qnumber - 1].Correct) {
         console.log(answer[Qnumber] + '---' + data[Qnumber - 1].Correct);
