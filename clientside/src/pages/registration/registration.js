@@ -122,8 +122,7 @@ const Registration = props => {
       if (response.data.error) {
         setError(response.data.error);
       } else {
-        console.log("done");
-        //history.push('./');
+        history.push('./');
       }
     });
     console.log(data);
@@ -135,6 +134,7 @@ const Registration = props => {
 
   return (
     <>
+    <div className="bg-light">
       <Col sm="10" md={{ size: 10, offset: 1 }}>
         <center>
           <Formik
@@ -143,7 +143,7 @@ const Registration = props => {
             validationSchema={validationSchema}
           >
             {({ setFieldValue, errors }) => (
-              <Card className="mt-4 mb-3 shadow">
+              <Card>
                 <CardHeader tag="h1">
                   <b>Membership Registration</b>
                 </CardHeader>
@@ -169,13 +169,14 @@ const Registration = props => {
                       </Label>
                     </FormGroup>
                     <FormGroup row className="mb-1 ml-2">
-                      <Col sm={3}>
+                      <Col sm={3} >
                         <Input
                           type="select"
                           name="category"
                           onChange={e =>
                             setFieldValue('category', e.target.value, false)
-                          }                          
+                          }
+                          className="bg-light"                       
                         >
                           <option value="">Membership category</option>
                           <option value="associate">Associate</option>
@@ -213,7 +214,7 @@ const Registration = props => {
                           onChange={e =>
                             setFieldValue('title', e.target.value, false)
                           }
-
+                          className="bg-light"
                         >
                           <option value="">Title</option>
                           <option value="Prof">Prof</option>
@@ -244,6 +245,7 @@ const Registration = props => {
                           onChange={e =>
                             setFieldValue('firstName', e.target.value, false)
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="firstName"
@@ -259,6 +261,7 @@ const Registration = props => {
                           onChange={e =>
                             setFieldValue('lastName', e.target.value, false)
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="lastName"
@@ -290,6 +293,7 @@ const Registration = props => {
                               false,
                             )
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="residentialAddress"
@@ -320,6 +324,7 @@ const Registration = props => {
                               false,
                             )
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="contactNumber"
@@ -346,6 +351,7 @@ const Registration = props => {
                           onChange={e =>
                             setFieldValue('birthDate', e.target.value, false)
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="birthDate"
@@ -379,6 +385,7 @@ const Registration = props => {
                           onChange={e =>
                             setFieldValue('designation', e.target.value, false)
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="designation"
@@ -405,6 +412,7 @@ const Registration = props => {
                           onChange={e =>
                             setFieldValue('companyName', e.target.value, false)
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="companyName"
@@ -436,6 +444,7 @@ const Registration = props => {
                               false,
                             )
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="businessAddress"
@@ -472,6 +481,7 @@ const Registration = props => {
                             setFieldValue('email', e.target.value, false)
                           }
                           onKeyPress={(e) => handler(e)}
+                          className="bg-light"
                         />
                         <div className="text-md-left text-danger"><b>{error}</b></div>                        
                         <ErrorMessage
@@ -499,6 +509,7 @@ const Registration = props => {
                           onChange={e =>
                             setFieldValue('password', e.target.value, false)
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="password"
@@ -530,6 +541,7 @@ const Registration = props => {
                               false,
                             )
                           }
+                          className="bg-light"
                         />
                         <ErrorMessage
                             name="confirmPassword"
@@ -562,6 +574,7 @@ const Registration = props => {
                               'file',
                               e.target.files[0]
                             )}
+                            className="bg-light"
                         />
                         <ErrorMessage
                             name="file"
@@ -572,10 +585,10 @@ const Registration = props => {
 
                     <FormGroup check row>
                       <Col sm={{ size: 15 }}>
-                        <Button color="success" type="submit">
+                        <Button color="success" className="mr-3" type="submit">
                           Register
                         </Button>
-                        <Button color="danger"  className="pl-4" type="reset">
+                        <Button color="danger"  className="ml-4" type="reset">
                           Reset
                         </Button>
                       </Col>
@@ -587,6 +600,7 @@ const Registration = props => {
           </Formik>
         </center>
       </Col>
+      </div>
     </>
   );
 };
