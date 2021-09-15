@@ -54,21 +54,19 @@ const DashboardPageStu = React.lazy(() =>
 // const DashboardPageAdmin = React.lazy(() =>  import('pages/dashboards/DashboardPage'),);
 
 //cpd
-
+const cpdRecords = React.lazy(() => import('pages/cpd/CPD'))
 const AddCPD = React.lazy(() => import('pages/cpd/addCPD'));
 
 //courses
-const CoursePro = React.lazy(() => import('pages/courses/Courses'));
+const csslCourses = React.lazy(() => import('pages/courses/Courses'));
 const AddCourse = React.lazy(() => import('pages/courses/BasicCourseDetails'));
-const lecCoursePro = React.lazy(() =>
-  import('pages/courses/Lecturing Cources'),
-);
+const lecCourseView = React.lazy(() => import('pages/courses/LecturingCourses'));
 
 //workshops
 
 //blogs
-
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
+const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
 
 //forum
 
@@ -78,10 +76,17 @@ const AddJobVaccencies = React.lazy(() =>
   import('pages/jobs/addJobVaccencies'),
 );
 const ManageJobs = React.lazy(() => import('pages/jobs/ManageJobs'));
+const editQuestions = React.lazy(() => import('pages/jobs/editJobQuestions'));
 const JobsPro = React.lazy(() => import('pages/jobs/Jobs'));
 const JobView = React.lazy(() => import('pages/jobs/Job View'));
 const AddJobCV = React.lazy(() => import('pages/jobs/addJobCv'));
 const Questionare = React.lazy(() => import('pages/jobs/Questionare'));
+const addJobQuestions = React.lazy(() => import('pages/jobs/addJobQuestions'));
+const jobApplications = React.lazy(() => import('pages/jobs/JobApplications'));
+const sendCV = React.lazy(() => import('pages/jobs/sendCV'));
+const editJobVaccencies = React.lazy(() =>
+  import('pages/jobs/editJobVaccencies'),
+);
 
 //reports
 
@@ -99,7 +104,6 @@ const ButtonGroupPagePro = React.lazy(() =>
 const ButtonPagePro = React.lazy(() => import('pages/proffesional/ButtonPage'));
 const CardPagePro = React.lazy(() => import('pages/proffesional/CardPage'));
 
-const CPDPro = React.lazy(() => import('pages/cpd/CPD'));
 
 const ChartPagePro = React.lazy(() => import('pages/proffesional/ChartPage'));
 const DropdownPagePro = React.lazy(() =>
@@ -191,58 +195,66 @@ function App(props) {
             <Switch>
               {!authState.status && (
                 <>
-                  <Route path="/" exact component={Login} />
+                  <Route exact path="/" exact component={Login} />
                   <Route path="/registration" component={Registration} />
                 </>
               )}
 
-              {/* proffesional members data */}
+              {/*Professional Role Related Routes*/}
               {authState.role == 'professional' && (
                 <MainLayoutPro breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
+                    {/*Dashboard Route*/}
                     <Route
                       exact
                       path="/dashboard"
                       component={DashboardPagePro}
                     />
                     {/* <Route  path="/" component={DashboardPagePro} /> */}
-                    <Route path="/cpdP" component={CPDPro} />
 
-                    <Route path="/lecCourse" component={lecCoursePro} />
-                    <Route path="/courseP" component={CoursePro} />
+                    {/*Course Related Routes*/}
+                    <Route exact path="/lecCourse" component={lecCourseView} />
+                    <Route exact path="/csslcourses" component={csslCourses} />
                     <Route
-                      path="/csslcourse/addnewcourse"
+                      exact path="/csslcourse/addnewcourse"
                       component={AddCourse}
                     />
 
-                    <Route path="/login-modal" component={AuthModalPagePro} />
-                    <Route path="/buttons" component={ButtonPagePro} />
-                    <Route path="/cards" component={CardPagePro} />
-                    <Route path="/blogs" component={Blogs} />
-                    <Route path="/widgets" component={WidgetPagePro} />
-                    <Route path="/typography" component={TypographyPagePro} />
-                    <Route path="/alerts" component={AlertPagePro} />
-                    <Route path="/job" component={JobsPro} />
+                    {/*CPD Related Routes*/}
+                    <Route exact path="/csslmember/cpdrecords" component={cpdRecords} />
+                    <Route exact path="/csslmember/cpdrecords/addcpdrecord" component={AddCPD} />
 
-                    <Route path="/cpdAdd" component={AddCPD} />
+                    {/*Blog Related Routes*/}
+                    <Route exact path="/blogs" component={Blogs} />
+                    <Route exact path="/addBlogs" component={AddBlogs} />
 
-                    <Route path="/jobAddvertisment/:id" component={JobView} />
-                    <Route path="/questionare/:id" component={Questionare} />
+                    {/*Workshop Related Routes*/}
+                    <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
+
+                    {/*Forum Related Routes*/}
+                    <Route exact path="/forum" component={Login} /> {/* need to change component */}
+
+                    {/*Job Vacancies Related Routes*/}
+                    <Route exact path="/jobadvertisements" component={JobsPro} />
+                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
+                    <Route exact path="/questionare/:id" component={Questionare} />
                     <Route
-                      path="/addJobCV/:id:finalMarks"
+                      exact path="/addJobCV/:id:finalMarks"
                       component={AddJobCV}
                     />
 
-                    <Route
-                      path="/addJobVaccencies"
-                      component={AddJobVaccencies}
-                    />
 
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
                       component={ButtonGroupPagePro}
                     />
+                    <Route path="/login-modal" component={AuthModalPagePro} />
+                    <Route path="/buttons" component={ButtonPagePro} />
+                    <Route path="/cards" component={CardPagePro} />
+                    <Route path="/widgets" component={WidgetPagePro} />
+                    <Route path="/typography" component={TypographyPagePro} />
+                    <Route path="/alerts" component={AlertPagePro} />
                     <Route path="/dropdowns" component={DropdownPagePro} />
                     <Route path="/progress" component={ProgressPagePro} />
                     <Route path="/modals" component={ModalPagePro} />
@@ -252,27 +264,38 @@ function App(props) {
                   </React.Suspense>
                 </MainLayoutPro>
               )}
+
+              {/*Council Role Related Routes*/}
               {authState.role == 'council' && (
                 <MainLayoutCouncil breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
+                    {/*Dashboard Related Route*/}
                     <Route
-                      exact
-                      path="/dashboard"
+                      exact path="/dashboard"
                       component={DashboardPageCou}
                     />
-                    <Route path="/cpdP" component={CPDPro} />
-                    <Route path="/lecCourse" component={lecCoursePro} />
-                    <Route path="/courseP" component={CoursePro} />
-                    <Route path="/login-modal" component={AuthModalPagePro} />
-                    <Route path="/buttons" component={ButtonPagePro} />
-                    <Route path="/cards" component={CardPagePro} />
-                    <Route path="/blogs" component={Blogs} />
-                    <Route path="/widgets" component={WidgetPagePro} />
-                    <Route path="/typography" component={TypographyPagePro} />
-                    <Route path="/alerts" component={AlertPagePro} />
 
-                    <Route path="/job" component={JobsPro} />
-                    <Route path="/cpdAdd" component={AddCPD} />
+                    {/*User Verification Related Routes*/}
+                    <Route path="/managemembers" component={Login} /> {/* need to change component */}
+                    <Route path="/managemembers/user00:id" component={Login} /> {/* need to change component */}
+
+                    {/*Course Related Routes*/}
+                    <Route path="/courseapproval/csslcourses" component={Login} /> {/* need to change component */}
+                    <Route path="/courseapproval/csslcourses/cssl00:id/:title" component={Login} /> {/* need to change component */}
+                    <Route path="/courseapproval/csslcourses/cssl00:id/:title/:cntId/:cntTitle" component={Login} /> {/* need to change component */}
+
+                    {/*CPD Related Routes*/}
+                    <Route path="/cpdapproval/cpdrecords" component={Login} /> {/* need to change component */}
+                    <Route path="/cpdapproval/cpdrecords/record00:id/:title" component={Login} /> {/* need to change component */}
+                    
+                    {/*Blog Related Routes*/}
+                    <Route path="/reviewblogs" component={Login} /> {/* need to change component */}
+                    <Route path="/reviewblogs/blog00:id" component={Login} /> {/* need to change component */}
+
+                    {/*Blog Related Routes*/}
+                    <Route path="/jobapplications" component={jobApplications} />
+                    <Route path="/sendcv/:id" component={sendCV} />
+                    <Route path="/csslmember/cpdrecords/addcpdrecord" component={AddCPD} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
 
                     <Route path="/badges" component={BadgePagePro} />
@@ -280,6 +303,12 @@ function App(props) {
                       path="/buttongroups"
                       component={ButtonGroupPagePro}
                     />
+                    <Route path="/login-modal" component={AuthModalPagePro} />
+                    <Route path="/buttons" component={ButtonPagePro} />
+                    <Route path="/cards" component={CardPagePro} />
+                    <Route path="/widgets" component={WidgetPagePro} />
+                    <Route path="/typography" component={TypographyPagePro} />
+                    <Route path="/alerts" component={AlertPagePro} />
                     <Route path="/dropdowns" component={DropdownPagePro} />
                     <Route path="/progress" component={ProgressPagePro} />
                     <Route path="/modals" component={ModalPagePro} />
@@ -290,30 +319,52 @@ function App(props) {
                 </MainLayoutCouncil>
               )}
 
+              {/*Secretariat Role Related Routes*/}
               {authState.role == 'secretariat' && (
                 <MainLayoutSec breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
-                    <Route path="/dashboards" component={DashboardPageSec} />
-                    <Route path="/cpdP" component={CPDPro} />
-                    <Route path="/lecCourse" component={lecCoursePro} />
-                    <Route path="/courseP" component={CoursePro} />
-                    <Route path="/login-modal" component={AuthModalPagePro} />
-                    <Route path="/buttons" component={ButtonPagePro} />
-                    <Route path="/cards" component={CardPagePro} />
-                    <Route path="/blogs" component={Blogs} />
-                    <Route path="/widgets" component={WidgetPagePro} />
-                    <Route path="/typography" component={TypographyPagePro} />
-                    <Route path="/alerts" component={AlertPagePro} />
+                    {/*Dashboard Related Route*/}
+                    <Route exact path="/dashboard" component={DashboardPageSec} />
 
-                    <Route path="/job" component={JobsPro} />
-                    <Route path="/cpdAdd" component={AddCPD} />
-                    <Route path="/jobAddvertisment/:id" component={JobView} />
+                    {/*User Verification Related Routes*/}
+                    <Route path="/verifyuser" component={Login} /> {/* need to change component */}
+                    <Route path="/verifyuser/user00:id" component={Login} /> {/* need to change component */}
+
+                    {/*Job Related Routes*/}
+                    <Route exact path="/managejobs" component={ManageJobs} />
+                    <Route
+                      exact path="/addJobVaccencies"
+                      component={AddJobVaccencies}
+                    />
+                    <Route exact path="/job" component={JobsPro} />
+                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
+                    <Route path="/editQuestions/:id" component={editQuestions} />
+                    <Route
+                      exact path="/addJobQuestions"
+                      component={addJobQuestions}
+                    />
+                    <Route
+                      exact path="/editjobvaccencies/:id"
+                      component={editJobVaccencies}
+                    />
+
+                    {/*Workshop Related Routes*/}
+                    <Route exact path="/manageworksops" component={Login} /> {/* need to change component */}
+                    <Route exact path="/csslworkshops/addworkshop" component={Login} /> {/* need to change component */}
+                    <Route exact path="/csslworkshops/editworkshop/cssl:id/:name" component={Login} /> {/* need to change component */}
+
 
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
                       component={ButtonGroupPagePro}
                     />
+                    <Route path="/login-modal" component={AuthModalPagePro} />
+                    <Route path="/buttons" component={ButtonPagePro} />
+                    <Route path="/cards" component={CardPagePro} />
+                    <Route path="/widgets" component={WidgetPagePro} />
+                    <Route path="/typography" component={TypographyPagePro} />
+                    <Route path="/alerts" component={AlertPagePro} />
                     <Route path="/dropdowns" component={DropdownPagePro} />
                     <Route path="/progress" component={ProgressPagePro} />
                     <Route path="/modals" component={ModalPagePro} />
@@ -323,34 +374,51 @@ function App(props) {
                   </React.Suspense>
                 </MainLayoutSec>
               )}
+
+              {/*Associate Role Related Routes*/}
               {authState.role == 'associate' && (
                 <MainLayoutAssosiate breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
+                    {/*Dashboard Related Route*/}
                     <Route
                       exact
                       path="/dashboard"
                       component={DashboardPageAss}
                     />
-                    <Route path="/cpdP" component={CPDPro} />
-                    <Route path="/lecCourse" component={lecCoursePro} />
-                    <Route path="/courseP" component={CoursePro} />
-                    <Route path="/login-modal" component={AuthModalPagePro} />
-                    <Route path="/buttons" component={ButtonPagePro} />
-                    <Route path="/cards" component={CardPagePro} />
-                    <Route path="/blogs" component={Blogs} />
-                    <Route path="/widgets" component={WidgetPagePro} />
-                    <Route path="/typography" component={TypographyPagePro} />
-                    <Route path="/alerts" component={AlertPagePro} />
+          
+                    {/*Course Related Routes*/}
+                    <Route exact path="/csslcourses" component={csslCourses} />
 
-                    <Route path="/job" component={JobsPro} />
-                    <Route path="/cpdAdd" component={AddCPD} />
-                    <Route path="/jobAddvertisment/:id" component={JobView} />
+                    {/*Blog Related Routes*/}
+                    <Route exact path="/blogs" component={Blogs} />
 
+                    {/*Workshop Related Routes*/}
+                    <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
+
+                    {/*Forum Related Routes*/}
+                    <Route exact path="/forum" component={Login} /> {/* need to change component */}
+
+                    {/*Job Vacancies Related Routes*/}
+                    <Route exact path="/jobadvertisements" component={JobsPro} />
+                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
+                    <Route exact path="/questionare/:id" component={Questionare} />
+                    <Route
+                      exact path="/addJobCV/:id:finalMarks"
+                      component={AddJobCV}
+                    />
+
+                    
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
                       component={ButtonGroupPagePro}
                     />
+                    <Route path="/login-modal" component={AuthModalPagePro} />
+                    <Route path="/buttons" component={ButtonPagePro} />
+                    <Route path="/cards" component={CardPagePro} />
+                    <Route path="/widgets" component={WidgetPagePro} />
+                    <Route path="/typography" component={TypographyPagePro} />
+                    <Route path="/alerts" component={AlertPagePro} />
                     <Route path="/dropdowns" component={DropdownPagePro} />
                     <Route path="/progress" component={ProgressPagePro} />
                     <Route path="/modals" component={ModalPagePro} />
@@ -360,34 +428,60 @@ function App(props) {
                   </React.Suspense>
                 </MainLayoutAssosiate>
               )}
+
+              {/*Chartered Role Related Routes*/}
               {authState.role == 'chartered' && (
                 <MainLayoutChartered breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
+                    {/*Dashboard Related Route*/}
                     <Route
                       exact
                       path="/dashboard"
                       component={DashboardPageCha}
                     />
-                    <Route path="/cpdP" component={CPDPro} />
-                    <Route path="/lecCourse" component={lecCoursePro} />
-                    <Route path="/courseP" component={CoursePro} />
-                    <Route path="/login-modal" component={AuthModalPagePro} />
-                    <Route path="/buttons" component={ButtonPagePro} />
-                    <Route path="/cards" component={CardPagePro} />
-                    <Route path="/blogs" component={Blogs} />
-                    <Route path="/widgets" component={WidgetPagePro} />
-                    <Route path="/typography" component={TypographyPagePro} />
-                    <Route path="/alerts" component={AlertPagePro} />
+                    
+                    {/*Course Related Routes*/}
+                    <Route exact path="/lecCourse" component={lecCourseView} />
+                    <Route exact path="/csslcourses" component={csslCourses} />
+                    <Route
+                      exact path="/csslcourse/addnewcourse"
+                      component={AddCourse}
+                    />
 
-                    <Route path="/job" component={JobsPro} />
-                    <Route path="/cpdAdd" component={AddCPD} />
-                    <Route path="/jobAddvertisment/:id" component={JobView} />
+                    {/*CPD Related Routes*/}
+                    <Route exact path="/csslmember/cpdrecords" component={cpdRecords} />
+                    <Route exact path="/csslmember/cpdrecords/addcpdrecord" component={AddCPD} />
+
+                    {/*Blog Related Routes*/}
+                    <Route exact path="/blogs" component={Blogs} />
+
+                    {/*Workshop Related Routes*/}
+                    <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
+
+                    {/*Forum Related Routes*/}
+                    <Route exact path="/forum" component={Login} /> {/* need to change component */}
+
+                    {/*Job Vacancies Related Routes*/}
+                    <Route exact path="/jobadvertisements" component={JobsPro} />
+                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
+                    <Route exact path="/questionare/:id" component={Questionare} />
+                    <Route
+                      exact path="/addJobCV/:id:finalMarks"
+                      component={AddJobCV}
+                    />
+
 
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
                       component={ButtonGroupPagePro}
                     />
+                    <Route path="/login-modal" component={AuthModalPagePro} />
+                    <Route path="/buttons" component={ButtonPagePro} />
+                    <Route path="/cards" component={CardPagePro} />
+                    <Route path="/widgets" component={WidgetPagePro} />
+                    <Route path="/typography" component={TypographyPagePro} />
+                    <Route path="/alerts" component={AlertPagePro} />
                     <Route path="/dropdowns" component={DropdownPagePro} />
                     <Route path="/progress" component={ProgressPagePro} />
                     <Route path="/modals" component={ModalPagePro} />
@@ -398,7 +492,60 @@ function App(props) {
                 </MainLayoutChartered>
               )}
 
+              {/*Student Role Related Routes*/}
               {authState.role == 'student' && (
+                <MainLayoutStudent breakpoint={props.breakpoint}>
+                  <React.Suspense fallback={<PageSpinner />}>
+                    {/*Dashboard Related Route*/}
+                    <Route
+                      exact
+                      path="/dashboard"
+                      component={DashboardPageStu}
+                    />
+          
+                    {/*Course Related Routes*/}
+                    <Route exact path="/csslcourses" component={csslCourses} />
+
+                    {/*Blog Related Routes*/}
+                    <Route exact path="/blogs" component={Blogs} />
+
+                    {/*Workshop Related Routes*/}
+                    <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
+
+                    {/*Forum Related Routes*/}
+                    <Route exact path="/forum" component={Login} /> {/* need to change component */}
+
+                    {/*Job Vacancies Related Routes*/}
+                    <Route exact path="/jobadvertisements" component={JobsPro} />
+                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
+                    <Route exact path="/questionare/:id" component={Questionare} />
+                    <Route
+                      exact path="/addJobCV/:id:finalMarks"
+                      component={AddJobCV}
+                    />
+
+                    <Route path="/badges" component={BadgePagePro} />
+                    <Route
+                      path="/buttongroups"
+                      component={ButtonGroupPagePro}
+                    />
+                    <Route path="/login-modal" component={AuthModalPagePro} />
+                    <Route path="/buttons" component={ButtonPagePro} />
+                    <Route path="/cards" component={CardPagePro} />
+                    <Route path="/widgets" component={WidgetPagePro} />
+                    <Route path="/typography" component={TypographyPagePro} />
+                    <Route path="/alerts" component={AlertPagePro} />
+                    <Route path="/dropdowns" component={DropdownPagePro} />
+                    <Route path="/progress" component={ProgressPagePro} />
+                    <Route path="/modals" component={ModalPagePro} />
+                    <Route path="/forms" component={FormPagePro} />
+                    <Route path="/input-groups" component={InputGroupPagePro} />
+                    <Route path="/charts" component={ChartPagePro} />
+                  </React.Suspense>
+                </MainLayoutStudent>
+              )}
+
+              {/*authState.role == 'student' && (
                 <MainLayoutStudent breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route
@@ -406,9 +553,9 @@ function App(props) {
                       path="/dashboard"
                       component={DashboardPageStu}
                     />
-                    <Route path="/cpdP" component={CPDPro} />
-                    <Route path="/lecCourse" component={lecCoursePro} />
-                    <Route path="/courseP" component={CoursePro} />
+                    
+                    <Route path="/lecCourse" component={lecCourseView} />
+                    <Route path="/csslcourses" component={csslCourses} />
                     <Route path="/login-modal" component={AuthModalPagePro} />
                     <Route path="/buttons" component={ButtonPagePro} />
                     <Route path="/cards" component={CardPagePro} />
@@ -418,7 +565,7 @@ function App(props) {
                     <Route path="/alerts" component={AlertPagePro} />
 
                     <Route path="/job" component={JobsPro} />
-                    <Route path="/cpdAdd" component={AddCPD} />
+                    <Route path="/csslmember/cpdrecords/addcpdrecord" component={AddCPD} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
 
                     <Route path="/badges" component={BadgePagePro} />
@@ -434,45 +581,7 @@ function App(props) {
                     <Route path="/charts" component={ChartPagePro} />
                   </React.Suspense>
                 </MainLayoutStudent>
-              )}
-
-              {authState.role == 'student' && (
-                <MainLayoutStudent breakpoint={props.breakpoint}>
-                  <React.Suspense fallback={<PageSpinner />}>
-                    <Route
-                      exact
-                      path="/dashboard"
-                      component={DashboardPageStu}
-                    />
-                    <Route path="/cpdP" component={CPDPro} />
-                    <Route path="/lecCourse" component={lecCoursePro} />
-                    <Route path="/courseP" component={CoursePro} />
-                    <Route path="/login-modal" component={AuthModalPagePro} />
-                    <Route path="/buttons" component={ButtonPagePro} />
-                    <Route path="/cards" component={CardPagePro} />
-                    <Route path="/blogs" component={Blogs} />
-                    <Route path="/widgets" component={WidgetPagePro} />
-                    <Route path="/typography" component={TypographyPagePro} />
-                    <Route path="/alerts" component={AlertPagePro} />
-
-                    <Route path="/job" component={JobsPro} />
-                    <Route path="/cpdAdd" component={AddCPD} />
-                    <Route path="/jobAddvertisment/:id" component={JobView} />
-
-                    <Route path="/badges" component={BadgePagePro} />
-                    <Route
-                      path="/buttongroups"
-                      component={ButtonGroupPagePro}
-                    />
-                    <Route path="/dropdowns" component={DropdownPagePro} />
-                    <Route path="/progress" component={ProgressPagePro} />
-                    <Route path="/modals" component={ModalPagePro} />
-                    <Route path="/forms" component={FormPagePro} />
-                    <Route path="/input-groups" component={InputGroupPagePro} />
-                    <Route path="/charts" component={ChartPagePro} />
-                  </React.Suspense>
-                </MainLayoutStudent>
-              )}
+              )*/}
               {authState.role == 'ddd' && (
                 <MainLayoutDefault breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>

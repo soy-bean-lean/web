@@ -38,6 +38,7 @@ function JobView() {
       memberId: '1001',
       jobId: id,
     };
+
     axios
       .get('http://localhost:3001/job/getJobView', { params: { id: id } })
 
@@ -90,11 +91,10 @@ function JobView() {
               <Card className="flex-row">
                 <CardBody>
                   <Link to={'/job'}>
-                    <Button color="primary" size="LG" >
+                    <Button color="primary" size="LG">
                       Back
                     </Button>
                   </Link>{' '}
-              
                   <Link to={'/questionare/' + id}>
                     <Button color="success" size="LG" to={'/questionare/' + id}>
                       Apply{' '}
