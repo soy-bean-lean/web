@@ -17,7 +17,8 @@ import {
   Label,
   Row,
 } from 'reactstrap';
-function BasicCourseInfo() {
+const BasicCourseInfo = () => {
+
   const [courseId, setCourseId] = useState();
   const [courseTitle, setCourseTitle] = useState('');
   const [courseDes, setCourseDes] = useState('');
@@ -27,7 +28,6 @@ function BasicCourseInfo() {
   const [level, setLevel] = useState('');
   const [mode, setMode] = useState('');
   const [imgFile, setImgFile] = useState();
-
   const [uploadStatus, setUploadStatus] = useState('');
   const [page, setPage] = useState('Content');
   const [result, setResult] = useState();

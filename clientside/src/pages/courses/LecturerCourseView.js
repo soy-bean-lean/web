@@ -74,8 +74,8 @@ const LecturerCourseView = () => {
                   <h4>{content.title}</h4>
                 </CardTitle>
                 <CardText>{content.description}</CardText>
-                <Link to="/addJobQuestions">
-                  <Button color="warning" to="/addJobVaccencies">
+                <Link to={"/csslcourse/editCourseContent/cssl00" + id + "/" + title + "/" + content.cntId + "/" + content.title}>
+                  <Button color="warning">
                     Edit
                   </Button>
                 </Link>
@@ -95,7 +95,7 @@ const LecturerCourseView = () => {
         </Button>
       </Link>
       {'  '}
-      <Link to={'/editCourse/cssl00' + id + '/' + title}>
+      <Link to={'/csslcourse/editCourse/cssl00' + id + '/' + title}>
         <Button color="warning">
           Edit Course
         </Button>
@@ -113,7 +113,7 @@ const LecturerCourseView = () => {
               <h2>{title}</h2>
             </Typography>
             <hr></hr>
-            <Link to={'/addCourseContent/cssl00' + id + '/' + title}>
+            <Link to={'/csslcourse/addCourseContent/cssl00' + id + '/' + title}>
               <Button color="primary">Add Content</Button>
             </Link>
             {'  '}

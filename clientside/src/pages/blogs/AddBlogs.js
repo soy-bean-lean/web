@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import Typography from 'components/Typography';
 
 import { useHistory } from 'react-router-dom';
+
 import {
   Button,
   Card,
@@ -61,7 +62,7 @@ function AddBlogs() {
     formData.append('image', image);
     formData.append('title', title);
     formData.append('desc', desc);
-    formData.append('memberId', authState.id);
+    formData.append('memberId', 'cssl001');
     formData.append('date', Currentdate);
     //alert(image);
     fetch('http://localhost:3001/blog/addBlog', {

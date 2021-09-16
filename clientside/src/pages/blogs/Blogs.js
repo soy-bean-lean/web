@@ -45,7 +45,8 @@ const Blogs = props => {
 
   useEffect(() => {
     const formData = {
-      mId: authState.id,
+     // mId: authState.id,
+      mId: 'cssl001',
     };
     // axios
     //   .post('http://localhost:3001/blog/getAllBlogs', formData)
@@ -162,7 +163,7 @@ const Blogs = props => {
         return (
           <>
             <Link
-              to={'/courseView/cssl00' + myBlog.blogId + '/' + myBlog.title}
+              to={'/blogview/00' + myBlog.blogId + '/' + myBlog.title}
               key={i}
               className="link-tag"
             >
