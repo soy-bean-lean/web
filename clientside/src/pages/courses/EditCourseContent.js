@@ -124,7 +124,7 @@ return (
     <hr></hr>
     <Col sm="10" md={{ size: 8, offset: 2 }}>
       <Card>
-        <CardHeader>eDIT Content</CardHeader>
+        <CardHeader><center>Edit Content</center></CardHeader>
         <CardBody>
           <Form>
             <FormGroup row>
@@ -210,7 +210,7 @@ function renderContentAdd(type) {
     return (
       <FormGroup row>
         <Label for="exampleEmail" sm={3}>
-          Content File
+          File
         </Label>
         <Col sm={9}>
           <Input
@@ -228,7 +228,7 @@ function renderContentAdd(type) {
     return (
       <FormGroup row>
         <Label for="exampleEmail" sm={3}>
-          Content File
+          Video Link
         </Label>
         <Col sm={9}>
           <Input

@@ -36,45 +36,6 @@ const AddCourseContent = () => {
 
   let history = useHistory();
 
-  function renderContentAdd(type) {
-    if (type == 'File') {
-      return (
-        <FormGroup row>
-          <Label for="exampleEmail" sm={3}>
-            Content File
-          </Label>
-          <Col sm={9}>
-            <Input
-              type="file"
-              className="input"
-              id="content-file"
-              name="content-file"
-              accept=".xlsx, .xls, .doc, .docx, .ppt, .pptx, .txt, .pdf, image/*"
-              onChange={e => setContentFile(e.target.files[0])}
-            />
-          </Col>
-        </FormGroup>
-      );
-    } else if (type == 'Video') {
-      return (
-        <FormGroup row>
-          <Label for="exampleEmail" sm={3}>
-            Content File
-          </Label>
-          <Col sm={9}>
-            <Input
-              className="input"
-              value={videoLink}
-              placeholder="--Youtube Video Link--"
-              onChange={e => setVideoLink(e.target.value)}
-            />
-          </Col>
-        </FormGroup>
-      );
-    } else {
-      return <FormGroup row></FormGroup>;
-    }
-  }
   useEffect(() => {
     const sendData = {
       //id: props.cid,
@@ -214,14 +175,14 @@ const AddCourseContent = () => {
         <Button color="primary" onClick={redirectCourseList}>
           Course List
         </Button>{' '}
-        <Button color="success" onClick={redirectCourse}>
-          Course List
+        <Button color="primary" onClick={redirectCourse}>
+          Back to Course
         </Button>
       </CardBody>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <Card>
-          <CardHeader>Add Content</CardHeader>
+          <CardHeader><center>Add Content</center></CardHeader>
           <CardBody>
             <Form>
               <FormGroup row>
@@ -303,6 +264,46 @@ const AddCourseContent = () => {
       <hr></hr>
     </Page>
   );
+
+  function renderContentAdd(type) {
+    if (type == 'File') {
+      return (
+        <FormGroup row>
+          <Label for="exampleEmail" sm={3}>
+            Content File
+          </Label>
+          <Col sm={9}>
+            <Input
+              type="file"
+              className="input"
+              id="content-file"
+              name="content-file"
+              accept=".xlsx, .xls, .doc, .docx, .ppt, .pptx, .txt, .pdf, image/*"
+              onChange={e => setContentFile(e.target.files[0])}
+            />
+          </Col>
+        </FormGroup>
+      );
+    } else if (type == 'Video') {
+      return (
+        <FormGroup row>
+          <Label for="exampleEmail" sm={3}>
+            Video Link
+          </Label>
+          <Col sm={9}>
+            <Input
+              className="input"
+              value={videoLink}
+              placeholder="--Youtube Video Link--"
+              onChange={e => setVideoLink(e.target.value)}
+            />
+          </Col>
+        </FormGroup>
+      );
+    } else {
+      return <FormGroup row></FormGroup>;
+    }
+  }
 };
 
 export default AddCourseContent;
