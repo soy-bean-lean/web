@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
+import TextEditor from '../../components/TextEditor/RichTextEditor';
 
 import {
   Button,
@@ -25,6 +26,7 @@ const EditCourseContent = () => {
   const [contentType, setContentType] = useState('');
   const [contentFile, setContentFile] = useState();
   const [videoLink, setVideoLink] = useState('');
+  const [note, setNote] = useState('');
 
   const [uploadStatus, setUploadStatus] = useState('');
 
@@ -64,6 +66,7 @@ const EditCourseContent = () => {
     formData.append('title', contentTitle);
     formData.append('description', contentDes);
     formData.append('type', contentType);
+    formData.append('note', note);
 
     if (contentType == 'File') {
       formData.append('cfile', contentFile);
@@ -106,8 +109,8 @@ const EditCourseContent = () => {
     }
   };
 
-  const display = val => {
-    console.log(val);
+  const setEditorValue = (val) => {
+    setNote(val);
   };
 
 
@@ -159,12 +162,13 @@ return (
                 Note
               </Label>
               <Col sm={9}>
-                <Input
+                {/* <Input
                   type="textarea"
                   className="note"
                   placeholder="Description"
-                  onChange={e => setContentDes(e.target.value)}
-                />
+                  onChange={e => setNote(e.target.value)}
+                /> */}
+                <TextEditor onValueChange={setEditorValue} />
               </Col>
             </FormGroup>
 
@@ -191,7 +195,6 @@ return (
 
             <FormGroup check row>
               <center>
-                
                 <Button color="success" onClick={updateCourseContent}>
                 Update
                 </Button>

@@ -18,6 +18,7 @@ import {
   Label,
   Row,
 } from 'reactstrap';
+import Modal from 'reactstrap/lib/Modal';
 
 
 const EditCourseDetails = () => {
@@ -30,6 +31,7 @@ const EditCourseDetails = () => {
   const [imgFile, setImgFile] = useState();
   const [durationType, setDurationType] = useState('');
   const [result, setResult] = useState();
+  const [imgUrl, setImgUrl] = useState();
 
   const [uploadStatus, setUploadStatus] = useState('');
   const [page, setPage] = useState('Content');
@@ -65,6 +67,7 @@ const EditCourseDetails = () => {
     formData.append('title', courseTitle);
     formData.append('description', courseDes);
     formData.append('duration', courseDuration);
+    formData.append('durationType', durationType);
     formData.append('language', language);
     formData.append('level', level);
     formData.append('mode', mode);
@@ -82,7 +85,8 @@ const EditCourseDetails = () => {
       .then(res => {
         setUploadStatus(res.msg);
         console.log(res.data);
-        alert('Successful');
+        setResult('done');
+        redirectCourse();
       })
       .catch(error => {
         console.log(error);
@@ -93,10 +97,13 @@ const EditCourseDetails = () => {
     setCourseTitle(record.name);
     setCourseDes(record.description);
     setCourseDuration(record.duration);
+    setDurationType(record.durationType);
     setLanguage(record.language);
     setLevel(record.skillLevel);
     setMode(record.mode);
+    //setImgFile('http://localhost:3001/uploads/csslCourses/'+record.image);
     setImgFile(record.image);
+    setImgUrl('http://localhost:3001/uploads/csslCourses/'+record.image);
   };
 
   const redirectCourse = () => {
@@ -104,18 +111,24 @@ const EditCourseDetails = () => {
     history.push(path);
   };
 
+  const getImageUrl = (event) =>{
+    console.log(event.target.files[0]);
+    setImgFile(event.target.files[0]);
+    setImgUrl(URL.createObjectURL(event.target.files[0]));
+  }
+
 
   function msg() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Attempt Successfull</Alert>
         </>
       );
     }
@@ -139,7 +152,8 @@ return (
               </Label>
               <Col sm={9}>
                 <Input
-                  required
+                  required={true}
+                  value={courseTitle}
                   className="input"
                   onChange={e => setCourseTitle(e.target.value)}
                 />
@@ -152,6 +166,7 @@ return (
               <Col sm={9}>
                 <Input
                   required
+                  value={courseDes}
                   className="input"
                   type="textarea"
                   onChange={e => setCourseDes(e.target.value)}
@@ -166,6 +181,7 @@ return (
                 <Input
                   className="input"
                   required
+                  value={courseDuration}
                   type="number"
                   onChange={e => setCourseDuration(e.target.value)}
                 />
@@ -175,6 +191,7 @@ return (
                   type="select"
                   name="select"
                   required
+                  value={durationType}
                   onChange={e => setDurationType(e.target.value)}
                 >
                   <option value="type"></option>
@@ -194,6 +211,7 @@ return (
                 <Input
                   type="select"
                   name="select"
+                  value={language}
                   onChange={e => setLanguage(e.target.value)}
                 >
                   <option value="type"></option>
@@ -212,6 +230,7 @@ return (
                 <Input
                   type="select"
                   required
+                  value={level}
                   name="select"
                   onChange={e => setLevel(e.target.value)}
                 >
@@ -230,6 +249,7 @@ return (
               <Col sm={9}>
                 <Input
                   required
+                  value={mode}
                   type="select"
                   name="select"
                   onChange={e => setMode(e.target.value)}
@@ -251,7 +271,7 @@ return (
                       className="writeImg"
                       height="60%"
                       width="60%"
-                      src={URL.createObjectURL(imgFile)}
+                      src={imgUrl}
                       alt=""
                     />
                   )}
@@ -264,9 +284,10 @@ return (
                   className="input"
                   id="course-img"
                   name="course-img"
+                  //value={imgFile}
                   required
                   accept="image/*"
-                  onChange={e => setImgFile(e.target.files[0])}
+                  onChange={getImageUrl}
                 ></input>
               </Col>
             </FormGroup>

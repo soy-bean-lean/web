@@ -319,6 +319,7 @@ const AddCpd = () => {
                   <Col sm={9}>
                     <Input
                       name="select"
+                      type="select"
                       onChange={e => setRecType(e.target.value)}
                     >
                       <option value="type"></option>

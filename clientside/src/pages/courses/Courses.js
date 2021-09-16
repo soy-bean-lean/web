@@ -104,7 +104,7 @@ const CardPage = props => {
           <Col md={12} sm={10} xs={10} className="mb-2">
             <Card className="flex-row">
               <CardImg
-                src={'http://localhost:3001/uploads/' + course.image}
+                src={'http://localhost:3001/uploads/csslCourses/' + course.image}
                 style={{ width: 175, height: 150 }}
               />
               <CardBody>
@@ -136,7 +136,7 @@ const CardPage = props => {
               <Col md={12} sm={10} xs={10} className="mb-2">
                 <Card className="flex-row">
                   <CardImg
-                    src={'http://localhost:3001/uploads/' + enCourse.image}
+                    src={'http://localhost:3001/uploads/csslCourses/' + enCourse.image}
                     style={{ width: 175, height: 150 }}
                   />
                   <CardBody>
@@ -168,7 +168,7 @@ const CardPage = props => {
               <Col md={12} sm={10} xs={10} className="mb-2">
                 <Card className="flex-row">
                   <CardImg
-                    src={'http://localhost:3001/uploads/' + enCourse.image}
+                    src={'http://localhost:3001/uploads/csslCourses/' + enCourse.image}
                     style={{ width: 175, height: 150 }}
                   />
                   <CardBody>
