@@ -1,6 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
+import Page from 'components/Page';
+
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Alert,
+  Form,
+  FormFeedback,
+  FormGroup,
+  FormText,
+  Input,
+  Label,
+  Row,
+} from 'reactstrap';
 
 const EditCourseContent = () => {
   const [contentTitle, setContentTitle] = useState('');
@@ -92,6 +109,140 @@ const EditCourseContent = () => {
   const display = val => {
     console.log(val);
   };
-};
 
+
+return (
+  <Page title="Course Content Details">
+    <hr></hr>
+    <CardBody>
+      <h4>{title}</h4>
+      <Button color="primary" onClick={redirectCourse}>
+      Back to Course
+      </Button>{' '}
+      
+    </CardBody>
+    <hr></hr>
+    <Col sm="10" md={{ size: 8, offset: 2 }}>
+      <Card>
+        <CardHeader>eDIT Content</CardHeader>
+        <CardBody>
+          <Form>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Title{' '}
+              </Label>
+              <Col sm={9}>
+                <Input
+                  className="input"
+                  value={contentTitle}
+                  placeholder="Add Title"
+                  onChange={e => setContentTitle(e.target.value)}
+                />
+              </Col>
+            </FormGroup>
+
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Description{' '}
+              </Label>
+              <Col sm={9}>
+                <Input
+                  type="textarea"
+                  value={contentDes}
+                  onChange={e => setContentDes(e.target.value)}
+                />
+              </Col>
+            </FormGroup>
+
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Note
+              </Label>
+              <Col sm={9}>
+                <Input
+                  type="textarea"
+                  className="note"
+                  placeholder="Description"
+                  onChange={e => setContentDes(e.target.value)}
+                />
+              </Col>
+            </FormGroup>
+
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Course Type
+              </Label>
+              <Col sm={9}>
+                <Input
+                  type="select"
+                  name="select"
+                  value={contentType}
+                  id="content-type"
+                  onChange={e => setContentType(e.target.value)}
+                >
+                  <option value="">--Select Content Type--</option>
+                  <option value="File">File</option>
+                  <option value="Video">Video</option>
+                </Input>
+              </Col>
+            </FormGroup>
+
+            {renderContentAdd(contentType)}
+
+            <FormGroup check row>
+              <center>
+                
+                <Button color="success" onClick={updateCourseContent}>
+                Update
+                </Button>
+              </center>
+            </FormGroup>
+          </Form>
+        </CardBody>
+      </Card>
+    </Col>
+    <hr></hr>
+  </Page>
+);
+
+function renderContentAdd(type) {
+  if (type == 'File') {
+    return (
+      <FormGroup row>
+        <Label for="exampleEmail" sm={3}>
+          Content File
+        </Label>
+        <Col sm={9}>
+          <Input
+            type="file"
+            className="input"
+            id="content-file"
+            name="content-file"
+            accept=".xlsx, .xls, .doc, .docx, .ppt, .pptx, .txt, .pdf, image/*"
+            onChange={e => setContentFile(e.target.files[0])}
+          />
+        </Col>
+      </FormGroup>
+    );
+  } else if (type == 'Video') {
+    return (
+      <FormGroup row>
+        <Label for="exampleEmail" sm={3}>
+          Content File
+        </Label>
+        <Col sm={9}>
+          <Input
+            className="input"
+            value={videoLink}
+            placeholder="--Youtube Video Link--"
+            onChange={e => setVideoLink(e.target.value)}
+          />
+        </Col>
+      </FormGroup>
+    );
+  } else {
+    return <FormGroup row></FormGroup>;
+  }
+}
+}
 export default EditCourseContent;
