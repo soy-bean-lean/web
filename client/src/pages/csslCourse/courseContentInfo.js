@@ -183,6 +183,8 @@ function AddCourseContent(props) {
                 onChange={(e) => setContentTitle(e.target.value)}
               ></input>
             </div>
+
+
             <div className="content-field-block">
               <h4 className="content-info-title">Description</h4>
               <textarea
@@ -190,12 +192,15 @@ function AddCourseContent(props) {
                 onChange={(e) => setContentDes(e.target.value)}
               ></textarea>
             </div>
+
+
             <div className="content-field-block">
               <h4 className="content-info-title">Note</h4>
               <TextEditor onValueChange={setEditorValue} />
             </div>
+
             <div className="content-field-block">
-              <h4 className="content-info-title">Content Type</h4>
+              <h4 className="content-info-title">Cotnent Type</h4>
               <select
                 name="select"
                 value={contentType}
@@ -207,8 +212,10 @@ function AddCourseContent(props) {
                 <option value="Video">Video</option>
               </select>
             </div>
+
             {renderContentAdd(contentType)}
           </div>
+
           <div className="content-btn-block">
             <input
               type="submit"

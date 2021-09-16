@@ -318,7 +318,6 @@ const AddCpd = () => {
                   </Label>
                   <Col sm={9}>
                     <Input
-                      type="select"
                       name="select"
                       onChange={e => setRecType(e.target.value)}
                     >
