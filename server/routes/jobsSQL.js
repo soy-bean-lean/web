@@ -66,7 +66,7 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
       ],
       (err, result) => {
         if (err) {
-          console.log(err)
+          console.log(err);
           res.send(result);
         } else {
           res.json("success");
@@ -87,27 +87,13 @@ Job.post("/updateJob", async (req, res) => {
   const jvId = req.body.jvId;
   const questionCount = req.body.questionCount;
   connection.query(
-    " UPDATE jobvacancy SET companyName = '" +
-      companyName +
-      " ' , location = '" +
-      location +
-      " ' ,designation = '" +
-      jobRole +
-      " ' ,email = '" +
-      email +
-      " ' ,contact = '" +
-      contact +
-      " ' ,addBy = '" +
-      addBy +
-      " ' ,email = '" +
-      email +
-      " ' ,email = '" +
-      questionCount +
-      " ' ,questionCount = '" +
-      description +
-      " '  WHERE jvId=" +
-      jvId +
-      ";",
+    " UPDATE jobvacancy SET companyName = '" + companyName + " ' , location = '" + location +  " ' ,designation = '" + jobRole + " ' ,email = '" +     email +
+      " ' ,contact = '" +     contact +
+      " ' ,addBy = '" +     addBy +
+      " ' ,email = '" +     email +    
+       " ' ,questionCount = '" +     questionCount +    
+        " ' ,description = '" +     description +
+        " '  WHERE jvId=" +  jvId + ";",
 
     (err, result) => {
       if (err) {
@@ -146,7 +132,7 @@ Job.post("/updateQuestion", async (req, res) => {
     ";";
   connection.query(sql, (err, result) => {
     if (err) {
-      console.log(sql);
+
       res.send(result);
     } else {
       res.json("success");
@@ -267,7 +253,7 @@ Job.post("/addQuestion", async (req, res) => {
   connection.query(
     `INSERT INTO jobquestions (Question  , Answer1 ,Answer2,Answer3,Answer4,Correct,type) VALUES (?,?,?,?,?,?,?)`,
 
-    [question, ans1, ans2, ans3, ans4, correct , type],
+    [question, ans1, ans2, ans3, ans4, correct, type],
     (err, result) => {
       if (err) {
         res.send(result);
@@ -344,12 +330,24 @@ Job.get("/getJobView", (req, res) => {
   );
 });
 
-Job.post("/getQuestion", (req, res) => {
-  const sqlSelect =
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions  Limit 5";
+Job.get("/getQuestion", (req, res) => {
+  const jid = req.query.id;
 
-  connection.query(sqlSelect, (err, result) => {
-    res.send(result);
+  const numberOfQuestions =
+    "select `questionCount` ,questionType from jobvacancy WHERE jvId = " + jid;
+
+  connection.query(numberOfQuestions, (err, result3) => {
+
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      console.log(numberOfQuestions);
+
+    const sqlSelect =
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where type = '"+result3[0].questionType+"' Limit " + result3[0].questionCount;
+    console.log(sqlSelect);
+
+    connection.query(sqlSelect, (err, result) => {
+      res.send(result);
+    });
   });
 });
 
@@ -363,7 +361,7 @@ Job.post("/getQuestionType", (req, res) => {
 
 Job.post("/getMaximumQuestions", (req, res) => {
   const questionType = req.body.max;
-  console.log("------------------------" + questionType);
+
   const sqlSelect =
     "SELECT count(type) as max , type from jobquestions where type = '" +
     questionType +

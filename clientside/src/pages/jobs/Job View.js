@@ -52,7 +52,6 @@ function JobView() {
             'http://localhost:3001/uploads/jobvacancy/' +
               response.data[0].advertisment,
           );
-          
         }
       })
       .catch(error => {
@@ -110,13 +109,16 @@ function JobView() {
     ));
   return (
     <>
+     <Page>
+      <Col sm="14" md={{ size: 10, offset: 1 }}>
       <div className="headder">
         {jobview}
         <div className="mainR">
           {/* {image && <img src={image} alt="Image" className="addvertizement" />} */}
         </div>
       </div>
-      ;
+      </Col>
+    </Page>
     </>
   );
 }
