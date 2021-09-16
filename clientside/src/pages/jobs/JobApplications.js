@@ -97,6 +97,9 @@ const CardPage = props => {
           <td>
             <b>{data.marks} %</b>
           </td>
+          <td>
+            <p>{data.status}</p>
+          </td>
 
           <td>
             <center>

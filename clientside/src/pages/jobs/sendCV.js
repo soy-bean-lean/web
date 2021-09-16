@@ -12,12 +12,14 @@ import { Line } from 'react-chartjs-2';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
   Button,
   Card,
   InputGroupAddon,
   InputGroup,
+  Alert,
   CardBody,
   CardHeader,
   Typography,
@@ -40,15 +42,34 @@ const tableTypes = ['striped'];
 function JobView() {
   const [application, setJobApplications] = useState(null);
   const [compayData, setCompayData] = useState(null);
+  const [result, setResult] = useState();
+  let history = useHistory();
 
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [image, setJobImage] = useState('');
   const { id } = useParams();
 
+  function msg() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Greate Attempt is Succesfull</Alert>
+        </>
+      );
+    }
+  }
   function sendEmail() {
     const data = {
       jobId: id,
       password: password,
+      username: username,
     };
 
     axios
@@ -58,10 +79,24 @@ function JobView() {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-        }
+          setResult('done');
+          setTimeout(
+            function () {
+              history.push('/dashboard');
+            },
+  
+            2000,
+          );        }
       })
       .catch(error => {
-        alert(error);
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push('/jobAddvertisment/' + id);
+          },
+
+          2000,
+        );
       });
   }
 
@@ -106,7 +141,7 @@ function JobView() {
           <Card body>
             <Col md={12} sm={10} xs={10} className="mb-2">
               <Card className="flex-row">
-                <CardImg src={image} style={{ width: 'auto', height: 250 }} />
+                <CardImg src={image} style={{ width: 300, height: 200 }} />
 
                 <CardBody>
                   <h1 className="a">{compayData.companyName}</h1>
@@ -126,12 +161,25 @@ function JobView() {
                   <Col sm="12" md={{ size: 6, offset: 3 }}>
                     <InputGroup>
                       <Input
+                        type="email"
+                        className="note"
+                        onChange={e => setUsername(e.target.value)}
+                        required
+                        placeholder="Enter System Email "
+                      />
+                      
+                    </InputGroup>
+                    <br>
+                    </br>
+                    <InputGroup>
+                      <Input
                         type="password"
                         className="note"
                         onChange={e => setPassword(e.target.value)}
                         required
                         placeholder="Enter System Email Password"
                       />
+                      {" "}
                       <InputGroupAddon addonType="prepend">
                         <Button color="success" size="LG" onClick={sendEmail}>
                           Send CV{' '}
@@ -181,7 +229,11 @@ function JobView() {
   return (
     <>
       <Page title="Job Applications">
+      
         <hr></hr>
+        <center>
+          {msg()}
+          </center>
         {company}
         <Row>
           <Col sm="12">
@@ -206,6 +258,7 @@ function JobView() {
             ))}
           </Col>
         </Row>
+       
       </Page>
     </>
   );
