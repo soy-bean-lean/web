@@ -1,10 +1,7 @@
 import Page from 'components/Page';
 import { AuthContext } from '../../helpers/AuthContext';
 import { Link } from 'react-router-dom';
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
+
 import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
 import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
 import React, { useState, useEffect, useContext } from 'react';
@@ -14,6 +11,8 @@ import classnames from 'classnames';
 import Typography from 'components/Typography';
 
 import { Line } from 'react-chartjs-2';
+import * as AiIcons from "react-icons/ai";
+
 import {
   Button,
   Card,
@@ -37,261 +36,134 @@ import {
   Row,
 } from 'reactstrap';
 
-const Blogs = props => {
-  const [blog, setBlog] = useState(null);
-  const [blogger, setBlogger] = useState(null);
-  const [myBlog, setMyBlog] = useState(null);
-  const { authState, setAuthState } = useContext(AuthContext);
-
-  useEffect(() => {
-    const formData = {
-     // mId: authState.id,
-      mId: authState.id,
-    };
-    // axios
-    //   .post('http://localhost:3001/blog/getAllBlogs', formData)
-
-    //   .then(response => {
-    //     if (response.data.error) {
-    //       alert(response.data.error);
-    //     } else {
-    //       setBlog(response.data);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     alert(error);
-    //   });
-
-      axios
-      .post('http://localhost:3001/blog/getAllBloggers', formData)
-
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          setBlogger(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
-
-    axios
-      .post('http://localhost:3001/blog/getMyBlogs', formData)
-
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          setMyBlog(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
-
-   }, []);
-
-  const [activeTab, setActiveTab] = useState('1');
-
-  const toggle = tab => {
-    if (activeTab !== tab) setActiveTab(tab);
-  };
-
-  const allbloggers =
-  blogger &&
-  blogger.map((blogger, i) => (
-    <>
-      <Link
-        to={'/csslcourses/courseview/cssl00' + blogger.memberId }
-        key={i}
-        className="link-tag"
-      >
-        <Col md={12} sm={10} xs={10} className="mb-2">
-          <Card className="flex-row">
-            <CardImg
-              src={'http://localhost:3001/uploads/profileImages/' + blogger.profileImage}
-              style={{ width: 175, height: 150 }}
-            />
-            <CardBody>
-              <h3>{blogger.firstName} {blogger.lastName} </h3>
-              <CardText>
-                Ratings
-                {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-              </CardText>
-            </CardBody>
-          </Card>
-        </Col>
-      </Link>
-      <hr className="course-view-line"></hr>
-    </>
-  ));
-
-
-  // const allblogs =
-  //   blog &&
-  //   blog.map((blog, i) => (
-  //     <>
-  //       <Link
-  //         to={'/csslcourses/courseview/cssl00' + blog.blogId + '/' + blog.title}
-  //         key={i}
-  //         className="link-tag"
-  //       >
-  //         <Col md={12} sm={10} xs={10} className="mb-2">
-  //           <Card className="flex-row">
-  //             <CardImg
-  //               src={'http://localhost:3001/uploads/blog/' + blog.image}
-  //               style={{ width: 175, height: 150 }}
-  //             />
-  //             <CardBody>
-  //               <h3>{blog.title}</h3>
-  //               <CardText>
-  //                 Ratings
-  //                 {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-  //               </CardText>
-  //             </CardBody>
-  //           </Card>
-  //         </Col>
-  //       </Link>
-  //       <hr className="course-view-line"></hr>
-  //     </>
-  //   ));
-
-  const myblogs =
-    myBlog &&
-    myBlog.map((myBlog, i) => {
-        return (
-          <>
-            <Link
-              to={'/blogview/00' + myBlog.blogId + '/' + myBlog.title}
-              key={i}
-              className="link-tag"
-            >
-              <Col md={12} sm={10} xs={10} className="mb-2">
-                <Card className="flex-row">
-                  <CardImg
-                    src={'http://localhost:3001/uploads/blog/' + myBlog.image}
-                    style={{ width: 'auto', height: 150 }}
-                    className="card-img-left"
-                    // style={{ width: 175, height: 150 }}
-                  />
-                  <CardBody>
-                    <h3>{myBlog.title}</h3>
-                    <CardText>{myBlog.content}</CardText>
-                  </CardBody>
-                </Card>
-                <Button color="primary" className="buttonDIV">
-                        Edit
-                      </Button>
-
-                      <Button color="danger" className="buttonDIV">
-                        Delete
-                      </Button>
-              </Col>
-            </Link>
-            <hr className="course-view-line"></hr>
-          </>
-        );
-      
-    });
-
-  // const myBlogs =
-  // blog &&
-  // blog.map((blog, i) => (
-  //   <>
-  //     <tr>
-  //       <th hidden="true">{i}</th>
-  //       <td hidden="true">{blog.blogId}</td>
-  //       <td>{blog.image}</td>
-  //       <td>{blog.title}</td>
-  //       <td>{blog.content}</td>
-  //       <td>
-  //      { blog.memberId === authState.id ? (
-  //       <Link
-  //           to={''}
-  //         >
-  //           <Button
-  //             color="success"
-  //             size="sm"
-
-  //           >
-  //             View{' '}
-  //           </Button>
-  //         </Link>
-  //       ) : (
-  //     <></>
-  //       )
-  //      }
-  //       </td>
-  //     </tr>
-  //   </>
-  // ));
-
-  return (
-    <Page title="Blogs">
-      <hr></hr>
-      <Link to="/addBlogs">
-        <Button color="success" to="/addBlogs">
-          New Blog
-        </Button>
-      </Link>
-      <br></br>
-      <hr></hr>
-      <Nav tabs>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '1' })}
-            onClick={() => {
-              toggle('1');
-            }}
-          >
-            All Blogs
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '2' })}
-            onClick={() => {
-              toggle('2');
-            }}
-          >
-            My Blogs
-          </NavLink>
-        </NavItem>
-      </Nav>
-
-      <TabContent activeTab={activeTab}>
-        <TabPane tabId="1">
+function BlogView(){
+    return (
+        <Page title="Blog View">
+          <CardHeader>
+              <h3>hello</h3>
+            {/* <h3>{courseData.name}</h3> */}
+          </CardHeader>
           <Row>
-            <Col sm="12">
-              <Card className="mb-3">
-                <CardHeader>
-                  <Typography className="text-success">All Blogs</Typography>
-                </CardHeader>
-                {allbloggers}
-
-               
+            <Col lg={7} md={8} sm={8} xs={12}>
+            <br></br>
+              <Card>
+              <CardHeader>
+            <h5>About Course</h5>
+          </CardHeader>
+                <CardBody>
+                  <Typography className="text-primary">
+                  <h2>Syllabus - What you will learn from this course</h2>
+    
+                    {/* {courseData.description} */}
+                  </Typography>
+    
+                  <hr></hr>
+                  <h2>Syllabus - What you will learn from this course</h2>
+    
+                  {/* {contentList} */}
+                </CardBody>
               </Card>
             </Col>
-          </Row>
-        </TabPane>
-
-        <TabPane tabId="2">
-          <Row>
-            <Col sm="12">
-              <Card className="mb-3">
-                <CardHeader>
-                  <Typography className="text-success">My Blogs</Typography>
-                </CardHeader>
-                {myblogs}
-               
+            <Col lg={5} md={8} sm={8} xs={12}>
+            <br></br>
+              <Card>
+                <CardBody>
+                  <center>
+                    {/* <Link  to={"/csslcourses"}>
+                      <Button   color="primary">Back</Button>
+                    </Link>
+                    {'  '}
+                    <Link to={"/courseReviewP/" + id + "view"}>
+                      <Button color="primary">Reviews</Button>
+                    </Link>
+                    {'  '}
+                    <Link to={"/coursEnrollsP/" + id}>
+                      <Button color="primary">Enroll</Button>
+                    </Link> */}
+                  </center>
+                </CardBody>
               </Card>
+              <br></br>
+              <Card>
+                <CardBody>
+                  <center>
+                    {/* {courseImg && (
+                      <img
+                        src={courseImg}
+                        width="300px"
+                        height="200px"
+                        className="course-img"
+                      ></img>
+                    )} */}
+                    <br></br>
+                    <br></br>
+                    </center>
+    
+                      
+                    <Card>
+                    <CardBody>
+                    <span>
+                        <AiIcons.AiOutlineClockCircle />
+                      </span>
+                      {"  "}
+                      <span>
+                       
+                        {/* Approx. {courseData.duration} {courseData.durationType} to
+                        Complete */}
+                      </span>
+                    <br></br>
+                    <br></br>
+                      <span>
+                        <AiIcons.AiOutlineWechat />
+                      </span>
+                      {"  "}
+                      <span>hello</span>
+                      {/* <span> {courseData.language}</span> */}
+                    <br></br>
+                    <br></br>
+                      <span>
+                        <AiIcons.AiOutlineDesktop />
+                      </span>
+                      {"  "}
+                      <span>
+                        {/* {"  "} {courseData.mode} */}
+                      </span>
+                    <br></br>
+                    <br></br>
+                      <span>
+                        <AiIcons.AiOutlineBarChart />{" "}
+                      </span>
+                      <span>
+                        {/* {"  "}
+                        {courseData.skillLevel} */}
+                      </span>
+    </CardBody>
+    
+                      </Card>
+                </CardBody>
+              </Card>
+              <br></br>
+              <Card>
+                <CardBody>
+                  <center>
+                    {/* <img
+                      src={profileImg}
+                      width="100px"
+                      height="100px"
+                      className="instructor-img"
+                    ></img> */}
+                    <br></br>
+                    <hr></hr>
+                    {/* {courseData.title}. {courseData.firstName} {courseData.lastName} */}
+                  </center>
+                </CardBody>
+              </Card>
+              
             </Col>
           </Row>
-        </TabPane>
-      </TabContent>
-    </Page>
-  );
-};
+        </Page>
+      );
+}
 
-export default Blogs;
+
+export default BlogView;
