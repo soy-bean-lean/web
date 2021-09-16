@@ -504,7 +504,7 @@ const Registration = props => {
                     <FormGroup row className="mb-1 ml-2">
                       <Col sm={11} className="text-box">
                         <Input
-                          type="text"
+                          type="password"
                           name="password"
                           onChange={e =>
                             setFieldValue('password', e.target.value, false)
@@ -532,7 +532,7 @@ const Registration = props => {
                     <FormGroup row className="mb-3 ml-2">
                       <Col sm={11} className="text-box">
                         <Input
-                          type="text"
+                          type="password"
                           name="confirmPassword"
                           onChange={e =>
                             setFieldValue(

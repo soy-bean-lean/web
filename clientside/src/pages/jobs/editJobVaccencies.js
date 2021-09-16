@@ -55,7 +55,6 @@ function UpdateJobVacancies() {
       jvId: id,
       addBy: authState.id,
     };
-alert(imgFile)
     axios
       .post('http://localhost:3001/job/updateJob', jobData)
 
