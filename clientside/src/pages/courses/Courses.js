@@ -1,13 +1,10 @@
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
 import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
-import user1Image from 'assets/img/users/100_1.jpg';
-import { UserCard } from 'components/Card';
 import Page from 'components/Page';
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
-import React, { useState } from 'react';
+
 import classnames from 'classnames';
 import Typography from 'components/Typography';
 
@@ -16,6 +13,10 @@ import {
   Button,
   Card,
   CardBody,
+  InputGroupAddon,
+  InputGroup,
+  FormGroup,
+  Input,
   Badge,
   Nav,
   NavItem,
@@ -34,22 +35,156 @@ import {
   ListGroupItem,
   Row,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { AuthContext } from '../../helpers/AuthContext';
+
 const CardPage = props => {
   const [activeTab, setActiveTab] = useState('1');
+  const [activeSubTab, setActiveSubTab] = useState('3');
+  //const { authState, setAuthState } = useContext(AuthContext);
+  const [memberId, setMemberId] = useState('');
+  const [course, setCourse] = useState(null);
+  const [enCourse, setEnCourse] = useState(null);
+
+  useEffect(() => {
+    //setMemberId(authState.id);
+    const formData = {
+      mId: 'cssl001',
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/getCourseList', formData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setCourse(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+    axios
+      .post('http://localhost:3001/csslcourse/getEnrollCourseList', formData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setEnCourse(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }, []);
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  const toggleSub = tab => {
+    if (activeSubTab !== tab) setActiveSubTab(tab);
+  };
+
+  const allCourseList =
+    course &&
+    course.map((course, i) => (
+      <>
+        <Link
+          to={
+            '/csslcourses/courseview/cssl00' +
+            course.courseId +
+            '/' +
+            course.name
+          }
+          key={i}
+          className="link-tag"
+        >
+          <Col md={12} sm={10} xs={10} className="mb-2">
+            <Card className="flex-row">
+              <CardImg
+                src={'http://localhost:3001/uploads/' + course.image}
+                style={{ width: 175, height: 150 }}
+              />
+              <CardBody>
+                <h3>{course.name}</h3>
+                <CardText>
+                  Rating: {course.avgRate} | {course.noOfInteraction} students
+                </CardText>
+              </CardBody>
+            </Card>
+          </Col>
+        </Link>
+        <hr className="course-view-line"></hr>
+      </>
+    ));
+
+  const enrollOngoingCourseList =
+    enCourse &&
+    enCourse.map((enCourse, i) => {
+      if (enCourse.status == 'Ongoing') {
+        return (
+          <>
+            <Link
+              to={
+                '/courseView/cssl00' + enCourse.courseId + '/' + enCourse.name
+              }
+              key={i}
+              className="link-tag"
+            >
+              <Col md={12} sm={10} xs={10} className="mb-2">
+                <Card className="flex-row">
+                  <CardImg
+                    src={'http://localhost:3001/uploads/' + enCourse.image}
+                    style={{ width: 175, height: 150 }}
+                  />
+                  <CardBody>
+                    <h3>{enCourse.name}</h3>
+                    <CardText>{enCourse.status}</CardText>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Link>
+            <hr className="course-view-line"></hr>
+          </>
+        );
+      }
+    });
+
+  const enrollCompletedCourseList =
+    enCourse &&
+    enCourse.map((enCourse, i) => {
+      if (enCourse.status == 'Completed') {
+        return (
+          <>
+            <Link
+              to={
+                '/courseView/cssl00' + enCourse.courseId + '/' + enCourse.name
+              }
+              key={i}
+              className="link-tag"
+            >
+              <Col md={12} sm={10} xs={10} className="mb-2">
+                <Card className="flex-row">
+                  <CardImg
+                    src={'http://localhost:3001/uploads/' + enCourse.image}
+                    style={{ width: 175, height: 150 }}
+                  />
+                  <CardBody>
+                    <h3>{enCourse.name}</h3>
+                    <CardText>{enCourse.status}</CardText>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Link>
+          </>
+        );
+      }
+    });
+
   return (
-    <Page title="Courses">
-      <hr></hr>
-      <Link to="/login">
-        <Button color="success" to="/login">
-          Add New Course
-        </Button>
-      </Link>
-      <br></br>
+    <Page title="CSSL COURSES">
       <hr></hr>
       <Nav tabs>
         <NavItem>
@@ -59,7 +194,7 @@ const CardPage = props => {
               toggle('1');
             }}
           >
-            All
+            Courses
           </NavLink>
         </NavItem>
         <NavItem>
@@ -69,17 +204,7 @@ const CardPage = props => {
               toggle('2');
             }}
           >
-            Courses
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '3' })}
-            onClick={() => {
-              toggle('3');
-            }}
-          >
-            My Courses
+            Enrolled Courses
           </NavLink>
         </NavItem>
       </Nav>
@@ -87,169 +212,104 @@ const CardPage = props => {
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
-              <CardHeader>
-                <Typography className="text-success">All Courses</Typography>
-              </CardHeader>
-              <CardBody>
-                  <Card body>
-                    <Row>
-                      <Col md={12} sm={6} xs={12} className="mb-3">
-                        <Card className="flex-row">
-                          <CardImg
-                            className="card-img-left"
-                            src={bg1Image}
-                            style={{ width: 'auto', height: 150 }}
-                          />
-                          <CardBody>
-                            <CardTitle>Horizontal Image Card(Left)</CardTitle>
-                            <CardText>
-                              Some quick example text to build on the card title
-                              and make up the bulk of the card's content.
-                            </CardText>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12} sm={6} xs={12} className="mb-3">
-                        <Card className="flex-row">
-                          <CardImg
-                              className="card-img-left"
-                            src={bg18Image}
-                            style={{ width: 'auto', height: 150 }}
-                          />
-                          <CardBody>
-                            <CardTitle>Horizontal Image Card(Left)</CardTitle>
-                            <CardText>
-                              Some quick example text to build on the card title
-                              and make up the bulk of the card's content.
-                            </CardText>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                  </Card>
-                </CardBody>
+              <Card className="mb-3">
+                <CardHeader>
+                  <InputGroup>
+                    <Input
+                      type="text"
+                      className="note"
+                      placeholder="What do you want to Learn"
+                    />
+                    <InputGroupAddon addonType="prepend">
+                      <Button color="success" size="LG">
+                        Search{' '}
+                      </Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                  <br></br>
+                  <FormGroup row>
+                    <Col sm={3}>
+                      <Input type="select" className="note">
+                        <option value="">Level</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                      </Input>
+                    </Col>
+                    <Col sm={3}>
+                      <Input
+                        type="select"
+                        className="note"
+                        placeholder="Duration"
+                      />
+                    </Col>
+                    <Col sm={3}>
+                      <Input
+                        type="select"
+                        className="note"
+                        placeholder="Category"
+                      />
+                    </Col>
+                  </FormGroup>
+                </CardHeader>
+                <CardBody>{allCourseList}</CardBody>
+              </Card>
             </Col>
           </Row>
         </TabPane>
         <TabPane tabId="2">
-          <Row>
-            <Col sm="12">
-              <Card className="mb-3">
-                <CardHeader>
-                  <Typography className="text-success">Courses</Typography>
-                </CardHeader>
-                <CardBody>
-                  <Card body>
-                    <Row>
-                      <Col md={12} sm={6} xs={12} className="mb-3">
-                        <Card className="flex-row">
-                          <CardImg
-                            className="card-img-left"
-                            src={bg1Image}
-                            style={{ width: 'auto', height: 150 }}
-                          />
-                          <CardBody>
-                            <CardTitle>Horizontal Image Card(Left)</CardTitle>
-                            <CardText>
-                              Some quick example text to build on the card title
-                              and make up the bulk of the card's content.
-                            </CardText>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12} sm={6} xs={12} className="mb-3">
-                        <Card className="flex-row">
-                          <CardImg
-                            className="card-img-left"
-                            src={bg11Image}
-                            style={{ width: 'auto', height: 150 }}
-                          />
-                          <CardBody>
-                            <CardTitle>Horizontal Image Card(Left)</CardTitle>
-                            <CardText>
-                              Some quick example text to build on the card title
-                              and make up the bulk of the card's content.
-                            </CardText>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
+          {/* editing start */}
+          <Nav tabs>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: activeSubTab === '3' })}
+                onClick={() => {
+                  toggleSub('3');
+                }}
+              >
+                Ongoing Courses
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: activeSubTab === '4' })}
+                onClick={() => {
+                  toggleSub('4');
+                }}
+              >
+                Completed Courses
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <TabContent activeTab={activeSubTab}>
+            <TabPane tabId="3">
+              <Row>
+                <Col sm="12">
+                  <Card className="mb-3">
+                    <CardHeader>
+                      <Typography className="text-primary">Ongoing Courses</Typography>
+                    </CardHeader>
+                    <CardBody>{enrollOngoingCourseList}</CardBody>
                   </Card>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </TabPane>
-        <TabPane tabId="3">
-          <Row>
-            <Col sm="12">
-              <Card className="mb-3">
-                <CardHeader>
-                  <Typography className="text-success">My Courses</Typography>
-                </CardHeader>
-                {/* map Starts */}
-                <CardBody>
-                  <Card body>
-                    <Col md={12} sm={10} xs={10} className="mb-2">
-                      <Card className="flex-row">
-                        <CardImg
-                          className="card-img-left"
-                          src={bg18Image}
-                          style={{ width: 'auto', height: 150 }}
-                        />
-                        <CardBody>
-                          <CardTitle>Horizontal Image Card(Left)</CardTitle>
-                          <CardText>
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </CardText>
-                        </CardBody>
-                      </Card>
-                      <Button color="primary" className="buttonDIV">
-                        Edit
-                      </Button>
-
-                      <Button color="danger" className="buttonDIV">
-                        Delete
-                      </Button>
-                    </Col>
+                </Col>
+              </Row>
+            </TabPane>
+            <TabPane tabId="4">
+              <Row>
+                <Col sm="12">
+                  <Card className="mb-3">
+                    <CardHeader>
+                      <Typography className="text-primary">Completed Courses</Typography>
+                    </CardHeader>
+                    <CardBody>
+                      <CardBody>{enrollCompletedCourseList}</CardBody>
+                    </CardBody>
                   </Card>
-                </CardBody>
-                {/* map end                 */}
-                <CardBody>
-                  <Card body>
-                    <Col md={12} sm={10} xs={10} className="mb-2">
-                      <Card className="flex-row">
-                        <CardImg
-                          className="card-img-left"
-                          src={bg18Image}
-                          style={{ width: 'auto', height: 150 }}
-                        />
-                        <CardBody>
-                          <CardTitle>Horizontal Image Card(Left)</CardTitle>
-                          <CardText>
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </CardText>
-                        </CardBody>
-                      </Card>
-                      <Button color="primary" className="buttonDIV">
-                        Edit
-                      </Button>
-
-                      <Button color="danger" className="buttonDIV">
-                        Delete
-                      </Button>
-                    </Col>
-                  </Card>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+                </Col>
+              </Row>
+            </TabPane>
+          </TabContent>
+          {/* editing end */}
         </TabPane>
       </TabContent>
     </Page>

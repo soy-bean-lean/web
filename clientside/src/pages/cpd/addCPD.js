@@ -279,14 +279,15 @@ const AddCpd = () => {
       );
     }, this);
 
-  const getCreditValue = event => {
-    const i = event.target.value;
-    if (i != 'Other' && i != '') {
-      setCredit(outCourseList[i].credit);
-    } else {
-      setCredit('');
+    const getCreditValue = (event) =>{
+      const i = event.target.value;
+      if(i != "Other" && i != ""){
+        setCredit(outCourseList[i].credit);
+      }
+      else{
+        setCredit("");
+      }
     }
-  };
 
   return (
     <Page title="CPD Records" >
@@ -294,7 +295,7 @@ const AddCpd = () => {
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
           <Card>
-            <CardHeader>New CPD Records</CardHeader>
+            <CardHeader>New CPD Record</CardHeader>
             <CardBody>
               <Form>
                 <FormGroup row>
@@ -339,7 +340,7 @@ const AddCpd = () => {
                     Assigned Credits
                   </Label>
                   <Col sm={9}>
-                    <Input  readOnly />
+                    <Input readOnly value={credit}/>
                   </Col>
                 </FormGroup>
 
@@ -533,7 +534,7 @@ const AddCpd = () => {
                 <option value=""></option>
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>\
+                <option value="Advanced">Advanced</option>
                 <option value="Professional">Professional</option>
               </Input>
             </Col>
@@ -562,7 +563,7 @@ const AddCpd = () => {
               <Col sm={9}>
                 <Input
                   type="select"
-                name="select"
+                  name="select"
                   value={platform}
                   onChange={e => setPlatform(e.target.value)}
                 >
@@ -580,7 +581,7 @@ const AddCpd = () => {
               <Col sm={9}>
                 <Input
                   type="select"
-                name="select"
+                  name="select"
                   value={partner}
                   onChange={e => setPartner(e.target.value)}
                 >
@@ -591,7 +592,7 @@ const AddCpd = () => {
               </Col>
             </FormGroup>
 
-            {rederOnlineOtherCourseList(platform, partner)}
+            {renderOnlineOtherCourseList(platform, partner)}
           </>
         );
       } else if (mode == 'Onsite Course') {
@@ -603,8 +604,7 @@ const AddCpd = () => {
               </Label>
               <Col sm={9}>
                 <Input
-                  name="select"
-                  id="types"
+                  type="select" name="select"
                   onChange={e => setPartner(e.target.value)}
                   value={partner}
                 >
@@ -614,7 +614,7 @@ const AddCpd = () => {
                 </Input>
               </Col>
             </FormGroup>
-            {rederOfflineOtherCourseList(partner)}
+            {renderOfflineOtherCourseList(partner)}
           </>
         );
       } else {
@@ -623,7 +623,7 @@ const AddCpd = () => {
     }
   }
 
-  function rederOnlineOtherCourseList(platform, partner) {
+  function renderOnlineOtherCourseList(platform, partner) {
     if (
       platform == '' ||
       platform == 'Other' ||
@@ -640,10 +640,8 @@ const AddCpd = () => {
             </Label>
             <Col sm={9}>
               <Input
-                name="select"
-                id="types"
-                onChange={e => setPartner(e.target.value)}
-                value={partner}
+                type="select" name="select"
+                onChange={getCreditValue}
               >
                 <option value=""></option>
                 {allOnlineOutCourses}
@@ -656,7 +654,7 @@ const AddCpd = () => {
     }
   }
 
-  function rederOfflineOtherCourseList(partner) {
+  function renderOfflineOtherCourseList(partner) {
     if (partner == '' || partner == 'Other') {
       return <FormGroup row></FormGroup>;
     } else {
@@ -667,7 +665,7 @@ const AddCpd = () => {
               Course
             </Label>
             <Col sm={9}>
-              <Input name="select" id="types">
+              <Input type="select" name="select">
                 <option value=""></option>
                 {allOfflineOutCourses}
                 <option value="Other">Other</option>
@@ -692,7 +690,7 @@ const AddCpd = () => {
               CSSL Workshops
             </Label>
             <Col sm={9}>
-              <Input name="select" id="types">
+              <Input type="select" name="select">
                 <option value=""></option>
                 {allInWorkshops}
               </Input>
@@ -710,7 +708,7 @@ const AddCpd = () => {
               Workshops
             </Label>
             <Col sm={9}>
-              <Input name="select" id="types">
+              <Input type="select" name="select">
                 <option value=""></option>
                 {allOutWorkshops}
               </Input>
@@ -735,7 +733,7 @@ const AddCpd = () => {
               Guest Lecture
             </Label>
             <Col sm={9}>
-              <Input name="select" id="types">
+              <Input type="select" name="select">
                 <option value=""></option>
                 {allguestLectures}
               </Input>

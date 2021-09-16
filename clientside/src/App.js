@@ -54,13 +54,21 @@ const DashboardPageStu = React.lazy(() =>
 // const DashboardPageAdmin = React.lazy(() =>  import('pages/dashboards/DashboardPage'),);
 
 //cpd
-const cpdRecords = React.lazy(() => import('pages/cpd/CPD'))
+const cpdRecords = React.lazy(() => import('pages/cpd/CPD'));
 const AddCPD = React.lazy(() => import('pages/cpd/addCPD'));
 
 //courses
 const csslCourses = React.lazy(() => import('pages/courses/Courses'));
 const AddCourse = React.lazy(() => import('pages/courses/BasicCourseDetails'));
-const lecCourseView = React.lazy(() => import('pages/courses/LecturingCourses'));
+const lecCourseView = React.lazy(() =>
+  import('pages/courses/LecturingCourses'),
+);
+const lecturerCourseView = React.lazy(() =>
+  import('pages/courses/LecturerCourseView'),
+);
+const courseView = React.lazy(() =>
+  import('pages/courses/CourseView'),
+);
 
 //workshops
 
@@ -103,7 +111,6 @@ const ButtonGroupPagePro = React.lazy(() =>
 );
 const ButtonPagePro = React.lazy(() => import('pages/proffesional/ButtonPage'));
 const CardPagePro = React.lazy(() => import('pages/proffesional/CardPage'));
-
 
 const ChartPagePro = React.lazy(() => import('pages/proffesional/ChartPage'));
 const DropdownPagePro = React.lazy(() =>
@@ -212,39 +219,65 @@ function App(props) {
                       component={DashboardPagePro}
                     />
                     {/* <Route  path="/" component={DashboardPagePro} /> */}
-
                     {/*Course Related Routes*/}
                     <Route exact path="/lecCourse" component={lecCourseView} />
                     <Route exact path="/csslcourses" component={csslCourses} />
                     <Route
-                      exact path="/csslcourse/addnewcourse"
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/addnewcourse"
                       component={AddCourse}
                     />
-
+                    <Route
+                      exact
+                      path="/courseView/cssl00:id/:title"
+                      component={lecturerCourseView}
+                    />
                     {/*CPD Related Routes*/}
-                    <Route exact path="/csslmember/cpdrecords" component={cpdRecords} />
-                    <Route exact path="/csslmember/cpdrecords/addcpdrecord" component={AddCPD} />
-
+                    <Route
+                      exact
+                      path="/csslmember/cpdrecords"
+                      component={cpdRecords}
+                    />
+                    <Route
+                      exact
+                      path="/csslmember/cpdrecords/addcpdrecord"
+                      component={AddCPD}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
-
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
-
+                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                    {/* need to change component */}
                     {/*Forum Related Routes*/}
-                    <Route exact path="/forum" component={Login} /> {/* need to change component */}
-
+                    <Route exact path="/forum" component={Login} />{' '}
+                    {/* need to change component */}
                     {/*Job Vacancies Related Routes*/}
-                    <Route exact path="/jobadvertisements" component={JobsPro} />
-                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
-                    <Route exact path="/questionare/:id" component={Questionare} />
                     <Route
-                      exact path="/addJobCV/:id:finalMarks"
+                      exact
+                      path="/jobadvertisements"
+                      component={JobsPro}
+                    />
+                    <Route
+                      exact
+                      path="/jobAddvertisment/:id"
+                      component={JobView}
+                    />
+                    <Route
+                      exact
+                      path="/questionare/:id"
+                      component={Questionare}
+                    />
+                    <Route
+                      exact
+                      path="/addJobCV/:id:finalMarks"
                       component={AddJobCV}
                     />
-
-
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
@@ -272,33 +305,64 @@ function App(props) {
                   <React.Suspense fallback={<PageSpinner />}>
                     {/*Dashboard Related Route*/}
                     <Route
-                      exact path="/dashboard"
+                      exact
+                      path="/dashboard"
                       component={DashboardPageCou}
                     />
-
                     {/*User Verification Related Routes*/}
-                    <Route path="/managemembers" component={Login} /> {/* need to change component */}
-                    <Route path="/managemembers/user00:id" component={Login} /> {/* need to change component */}
-
+                    <Route path="/managemembers" component={Login} />{' '}
+                    {/* need to change component */}
+                    <Route
+                      path="/managemembers/user00:id"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
                     {/*Course Related Routes*/}
-                    <Route path="/courseapproval/csslcourses" component={Login} /> {/* need to change component */}
-                    <Route path="/courseapproval/csslcourses/cssl00:id/:title" component={Login} /> {/* need to change component */}
-                    <Route path="/courseapproval/csslcourses/cssl00:id/:title/:cntId/:cntTitle" component={Login} /> {/* need to change component */}
-
+                    <Route
+                      path="/courseapproval/csslcourses"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
+                    <Route
+                      path="/courseapproval/csslcourses/cssl00:id/:title"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
+                    <Route
+                      path="/courseapproval/csslcourses/cssl00:id/:title/:cntId/:cntTitle"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
                     {/*CPD Related Routes*/}
-                    <Route path="/cpdapproval/cpdrecords" component={Login} /> {/* need to change component */}
-                    <Route path="/cpdapproval/cpdrecords/record00:id/:title" component={Login} /> {/* need to change component */}
-                    
+                    <Route
+                      path="/cpdapproval/cpdrecords"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
+                    <Route
+                      path="/cpdapproval/cpdrecords/record00:id/:title"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
                     {/*Blog Related Routes*/}
-                    <Route path="/reviewblogs" component={Login} /> {/* need to change component */}
-                    <Route path="/reviewblogs/blog00:id" component={Login} /> {/* need to change component */}
-
+                    <Route path="/reviewblogs" component={Login} />{' '}
+                    {/* need to change component */}
+                    <Route
+                      path="/reviewblogs/blog00:id"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
                     {/*Blog Related Routes*/}
-                    <Route path="/jobapplications" component={jobApplications} />
+                    <Route
+                      path="/jobapplications"
+                      component={jobApplications}
+                    />
                     <Route path="/sendcv/:id" component={sendCV} />
-                    <Route path="/csslmember/cpdrecords/addcpdrecord" component={AddCPD} />
+                    <Route
+                      path="/csslmember/cpdrecords/addcpdrecord"
+                      component={AddCPD}
+                    />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
-
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
@@ -325,36 +389,65 @@ function App(props) {
                 <MainLayoutSec breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     {/*Dashboard Related Route*/}
-                    <Route exact path="/dashboard" component={DashboardPageSec} />
-
+                    <Route
+                      exact
+                      path="/dashboard"
+                      component={DashboardPageSec}
+                    />
                     {/*User Verification Related Routes*/}
-                    <Route path="/verifyuser" component={Login} /> {/* need to change component */}
-                    <Route path="/verifyuser/user00:id" component={Login} /> {/* need to change component */}
-
+                    <Route path="/verifyuser" component={Login} />{' '}
+                    {/* need to change component */}
+                    <Route
+                      path="/verifyuser/user00:id"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
                     {/*Job Related Routes*/}
                     <Route exact path="/managejobs" component={ManageJobs} />
                     <Route
-                      exact path="/addJobVaccencies"
+                      exact
+                      path="/addJobVaccencies"
                       component={AddJobVaccencies}
                     />
                     <Route exact path="/job" component={JobsPro} />
-                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
-                    <Route path="/editQuestions/:id" component={editQuestions} />
                     <Route
-                      exact path="/addJobQuestions"
+                      exact
+                      path="/jobAddvertisment/:id"
+                      component={JobView}
+                    />
+                    <Route
+                      path="/editQuestions/:id"
+                      component={editQuestions}
+                    />
+                    <Route
+                      exact
+                      path="/addJobQuestions"
                       component={addJobQuestions}
                     />
                     <Route
-                      exact path="/editjobvaccencies/:id"
+                      exact
+                      path="/editjobvaccencies/:id"
                       component={editJobVaccencies}
                     />
-
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/manageworksops" component={Login} /> {/* need to change component */}
-                    <Route exact path="/csslworkshops/addworkshop" component={Login} /> {/* need to change component */}
-                    <Route exact path="/csslworkshops/editworkshop/cssl:id/:name" component={Login} /> {/* need to change component */}
-
-
+                    <Route
+                      exact
+                      path="/manageworksops"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
+                    <Route
+                      exact
+                      path="/csslworkshops/addworkshop"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
+                    <Route
+                      exact
+                      path="/csslworkshops/editworkshop/cssl:id/:name"
+                      component={Login}
+                    />{' '}
+                    {/* need to change component */}
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
@@ -386,29 +479,43 @@ function App(props) {
                       path="/dashboard"
                       component={DashboardPageAss}
                     />
-          
                     {/*Course Related Routes*/}
                     <Route exact path="/csslcourses" component={csslCourses} />
-
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
-
+                    <Route exact path="/addBlogs" component={AddBlogs} />
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
-
+                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                    {/* need to change component */}
                     {/*Forum Related Routes*/}
-                    <Route exact path="/forum" component={Login} /> {/* need to change component */}
-
+                    <Route exact path="/forum" component={Login} />{' '}
+                    {/* need to change component */}
                     {/*Job Vacancies Related Routes*/}
-                    <Route exact path="/jobadvertisements" component={JobsPro} />
-                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
-                    <Route exact path="/questionare/:id" component={Questionare} />
                     <Route
-                      exact path="/addJobCV/:id:finalMarks"
+                      exact
+                      path="/jobadvertisements"
+                      component={JobsPro}
+                    />
+                    <Route
+                      exact
+                      path="/jobAddvertisment/:id"
+                      component={JobView}
+                    />
+                    <Route
+                      exact
+                      path="/questionare/:id"
+                      component={Questionare}
+                    />
+                    <Route
+                      exact
+                      path="/addJobCV/:id:finalMarks"
                       component={AddJobCV}
                     />
-
-                    
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
@@ -440,38 +547,59 @@ function App(props) {
                       path="/dashboard"
                       component={DashboardPageCha}
                     />
-                    
                     {/*Course Related Routes*/}
                     <Route exact path="/lecCourse" component={lecCourseView} />
                     <Route exact path="/csslcourses" component={csslCourses} />
                     <Route
-                      exact path="/csslcourse/addnewcourse"
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/addnewcourse"
                       component={AddCourse}
                     />
-
                     {/*CPD Related Routes*/}
-                    <Route exact path="/csslmember/cpdrecords" component={cpdRecords} />
-                    <Route exact path="/csslmember/cpdrecords/addcpdrecord" component={AddCPD} />
-
+                    <Route
+                      exact
+                      path="/csslmember/cpdrecords"
+                      component={cpdRecords}
+                    />
+                    <Route
+                      exact
+                      path="/csslmember/cpdrecords/addcpdrecord"
+                      component={AddCPD}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
-
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
-
+                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                    {/* need to change component */}
                     {/*Forum Related Routes*/}
-                    <Route exact path="/forum" component={Login} /> {/* need to change component */}
-
+                    <Route exact path="/forum" component={Login} />{' '}
+                    {/* need to change component */}
                     {/*Job Vacancies Related Routes*/}
-                    <Route exact path="/jobadvertisements" component={JobsPro} />
-                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
-                    <Route exact path="/questionare/:id" component={Questionare} />
                     <Route
-                      exact path="/addJobCV/:id:finalMarks"
+                      exact
+                      path="/jobadvertisements"
+                      component={JobsPro}
+                    />
+                    <Route
+                      exact
+                      path="/jobAddvertisment/:id"
+                      component={JobView}
+                    />
+                    <Route
+                      exact
+                      path="/questionare/:id"
+                      component={Questionare}
+                    />
+                    <Route
+                      exact
+                      path="/addJobCV/:id:finalMarks"
                       component={AddJobCV}
                     />
-
-
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"
@@ -503,28 +631,42 @@ function App(props) {
                       path="/dashboard"
                       component={DashboardPageStu}
                     />
-          
                     {/*Course Related Routes*/}
                     <Route exact path="/csslcourses" component={csslCourses} />
-
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
-
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} /> {/* need to change component */}
-
+                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                    {/* need to change component */}
                     {/*Forum Related Routes*/}
-                    <Route exact path="/forum" component={Login} /> {/* need to change component */}
-
+                    <Route exact path="/forum" component={Login} />{' '}
+                    {/* need to change component */}
                     {/*Job Vacancies Related Routes*/}
-                    <Route exact path="/jobadvertisements" component={JobsPro} />
-                    <Route exact path="/jobAddvertisment/:id" component={JobView} />
-                    <Route exact path="/questionare/:id" component={Questionare} />
                     <Route
-                      exact path="/addJobCV/:id:finalMarks"
+                      exact
+                      path="/jobadvertisements"
+                      component={JobsPro}
+                    />
+                    <Route
+                      exact
+                      path="/jobAddvertisment/:id"
+                      component={JobView}
+                    />
+                    <Route
+                      exact
+                      path="/questionare/:id"
+                      component={Questionare}
+                    />
+                    <Route
+                      exact
+                      path="/addJobCV/:id:finalMarks"
                       component={AddJobCV}
                     />
-
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
                       path="/buttongroups"

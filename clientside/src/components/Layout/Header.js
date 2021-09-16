@@ -157,7 +157,7 @@ function Header(props) {
                       to={'/courseP'}
                       tag="button"
                       action
-                      className="border-primary"
+                      className="border-light"
                     >
                       <MdPersonPin /> Profile
                     </ListGroupItem>

@@ -72,7 +72,7 @@ const CardPage = props => {
       });
 
     axios
-      .post('http://localhost:3001/job/getApplicents', data)
+      .post('http://localhost:3001/job/getAllQuestion', data)
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
@@ -96,7 +96,6 @@ const CardPage = props => {
 
           <td>
             <center>
-             
               {'   '}
               <Link to={'/editJobVaccencies/' + data.jvId}>
                 <Button color="primary" size="sm">
@@ -120,18 +119,13 @@ const CardPage = props => {
     applicents.map(data => (
       <>
         <tr>
-          <td hidden>{data.jvId}</td>
-          <td>{data.companyName}</td>
+          <td hidden>{data.Qnumber}</td>
+          <td>{data.Question} </td>
+      
           <td>
-            <Badge color="danger"> {data.numberOfApplicent}</Badge>
-          </td>
-          <td>{data.email}</td>
-
-          <td>
-             <center>
-             
+            <center>
               {'   '}
-              <Link to={'/editQuestions/' + data.jvId}>
+              <Link to={'/editQuestions/' + data.Qnumber}>
                 <Button color="primary" size="sm">
                   View / Edit{' '}
                 </Button>

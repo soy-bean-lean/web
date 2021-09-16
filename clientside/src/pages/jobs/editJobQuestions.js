@@ -30,31 +30,81 @@ function UpdateQuestion() {
   const [ans2, setAnswer2] = useState('');
   const [ans3, setAnswer3] = useState('');
   const [ans4, setAnswer4] = useState('');
-  const [correct, setCorrectAnswer] = useState('');
+  const [correct, setCorrectAnswer] = useState(0);
   const [result, setResult] = useState();
+  const [data, setData] = useState(null);
 
   //  const [image, setImage] = useState("");
 
   let history = useHistory();
 
   const updateQuestion = () => {
-    
+    const data = {
+      qid: id,
+      question: question,
+      ans1: ans1,
+      ans2: ans2,
+      ans3: ans3,
+      ans4: ans4,
+      correct: correct,
+    };
+    if (
+      question !== '' ||
+      ans1 !== '' ||
+      ans2 !== '' ||
+      ans3 !== '' ||
+      ans4 !== '' ||
+      correct !== ''
+    ) {
+      axios
+        .post('http://localhost:3001/job/updateQuestion', data)
+        .then(response => {
+          if (response.data.error) {
+            setResult('err');
+            setTimeout(
+              function () {
+                history.push('/managejobs');
+              },
+
+              2000,
+            );
+          } else {
+            setResult('done');
+
+            setTimeout(
+              function () {
+                history.push('/managejobs');
+                //hri giyoth yana thena
+              },
+
+              2000,
+            );
+          }
+        });
+    } else {
+      setResult('err');
+      setTimeout(
+        function () {
+          history.push('/managejobs');
+        },
+
+        2000,
+      );
+    }
   };
 
   useEffect(() => {
-    
     const data = {
       jid: id,
     };
-    alert(id)
+
     axios
-      .get('http://localhost:3001/job/getQuestion', data)
+      .get('http://localhost:3001/job/aaa', { params: { id: id } })
 
       .then(response => {
         if (response.data.error) {
-              alert(response.data.error);
+          //    alert(response.data.error);
         } else {
-          alert("awawwawa")
           console.log(response.data[0]);
           setQuestion(response.data[0].Question);
           setAnswer1(response.data[0].Answer1);
@@ -65,11 +115,9 @@ function UpdateQuestion() {
         }
       })
       .catch(error => {
-          alert(error);
+        //   alert(error);
       });
   }, []);
-
-
 
   function msg() {
     if (result == 'err') {
@@ -102,7 +150,7 @@ function UpdateQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                    required
+                      required
                       type="textarea"
                       className="note"
                       value={question}
@@ -121,7 +169,6 @@ function UpdateQuestion() {
                     <Input
                       required
                       value={ans1}
-
                       className="input"
                       onChange={event => {
                         setAnswer1(event.target.value);
@@ -135,8 +182,7 @@ function UpdateQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                                          value={ans2}
-
+                      value={ans2}
                       className="input"
                       onChange={event => {
                         setAnswer2(event.target.value);
@@ -150,8 +196,7 @@ function UpdateQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                                          value={ans3}
-
+                      value={ans3}
                       className="input"
                       onChange={event => {
                         setAnswer3(event.target.value);
@@ -165,8 +210,7 @@ function UpdateQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                                          value={ans4}
-
+                      value={ans4}
                       className="input"
                       onChange={event => {
                         setAnswer4(event.target.value);
@@ -180,17 +224,16 @@ function UpdateQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                      type="select"
+                      type="number"
+                      min="1"
+                      max="4"
                       name="select"
+                      value={correct}
                       onChange={event => {
                         setCorrectAnswer(event.target.value);
                       }}
                     >
-                      <option value={correct}>{correct}</option>
-                      <option value="1">Answer 1 - {ans1}</option>
-                      <option value="2">Answer 2 - {ans2}</option>
-                      <option value="3">Answer 3 - {ans3}</option>
-                      <option value="4">Answer 4 - {ans4}</option>
+                      
                     </Input>
                   </Col>
                 </FormGroup>
@@ -198,7 +241,7 @@ function UpdateQuestion() {
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
                     <Button onClick={updateQuestion} color="success">
-                      Update Job
+                      Update Question
                     </Button>
                   </Col>
                 </FormGroup>
@@ -209,7 +252,6 @@ function UpdateQuestion() {
       </Col>
       <hr></hr>
     </Page>
-
   );
 }
 
