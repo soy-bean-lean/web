@@ -163,7 +163,7 @@ const Blogs = props => {
         return (
           <>
             <Link
-              to={'/blogview/00' + myBlog.blogId + '/' + myBlog.title}
+              to={'/blogview/cssl00' + myBlog.blogId + '/' + myBlog.title}
               key={i}
               className="link-tag"
             >
@@ -195,37 +195,6 @@ const Blogs = props => {
       
     });
 
-  // const myBlogs =
-  // blog &&
-  // blog.map((blog, i) => (
-  //   <>
-  //     <tr>
-  //       <th hidden="true">{i}</th>
-  //       <td hidden="true">{blog.blogId}</td>
-  //       <td>{blog.image}</td>
-  //       <td>{blog.title}</td>
-  //       <td>{blog.content}</td>
-  //       <td>
-  //      { blog.memberId === authState.id ? (
-  //       <Link
-  //           to={''}
-  //         >
-  //           <Button
-  //             color="success"
-  //             size="sm"
-
-  //           >
-  //             View{' '}
-  //           </Button>
-  //         </Link>
-  //       ) : (
-  //     <></>
-  //       )
-  //      }
-  //       </td>
-  //     </tr>
-  //   </>
-  // ));
 
   return (
     <Page title="Blogs">
@@ -245,7 +214,7 @@ const Blogs = props => {
               toggle('1');
             }}
           >
-            All Blogs
+           Bloggers
           </NavLink>
         </NavItem>
         <NavItem>

@@ -232,7 +232,7 @@ function App(props) {
                     <Route exact path="/csslcourses" component={csslCourses} />
                     <Route
                       exact
-                      path="/blogview/00:id/:title"
+                      path="/blogview/cssl00:id/:title"
                       component={BlogView}
                     />
                     <Route
