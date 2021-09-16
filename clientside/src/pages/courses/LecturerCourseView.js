@@ -41,7 +41,7 @@ const LecturerCourseView = () => {
     axios
       .post('http://localhost:3001/csslcourse/getCourseImg', formData)
       .then(res => {
-        setCourseImg('http://localhost:3001/uploads/' + res.data[0].image);
+        setCourseImg('http://localhost:3001/uploads/csslCourses/' + res.data[0].image);
       })
       .catch(error => {
         console.log(error);
@@ -74,7 +74,7 @@ const LecturerCourseView = () => {
                   <h4>{content.title}</h4>
                 </CardTitle>
                 <CardText>{content.description}</CardText>
-                <Link to={"/csslcourse/editCourseContent/cssl00" + id + "/" + title + "/" + content.cntId + "/" + content.title}>
+                <Link to={"/csslcourse/editCourseContent/cssl00" + id + "/" + title + "/" + content.contentId + "/" + content.title}>
                   <Button color="warning">
                     Edit
                   </Button>

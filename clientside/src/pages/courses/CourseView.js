@@ -49,13 +49,8 @@ const CourseView = () => {
         setCourseImg(
           'http://localhost:3001/uploads/csslCourses/' + res.data[0].image,
         );
-        console.log(courseImg);
-        console.log(
-          'http://localhost:3001/uploads/csslCourses/' + res.data[0].image,
-        );
         setProfileImg(
-          'http://localhost:3001/uploads/profileImages/' +
-            res.data[0].profileImage,
+          'http://localhost:3001/uploads/profileImages/' + res.data[0].profileImage,
         );
       })
       .catch(error => {
