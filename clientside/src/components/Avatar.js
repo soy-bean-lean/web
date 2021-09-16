@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'utils/propTypes';
 
 import classNames from 'classnames';
 
 import userImage from 'assets/img/users/100_4.jpg';
+import { AuthContext } from '../helpers/AuthContext';
 
 const Avatar = ({
   rounded,
@@ -16,9 +17,13 @@ const Avatar = ({
   ...restProps
 }) => {
   const classes = classNames({ 'rounded-circle': circle, rounded }, className);
+  const { authState } = useContext(AuthContext);
+  const profilePic =
+    'http://localhost:3001/uploads/profileImages/' + authState.profileImage;
+
   return (
     <Tag
-      src={src}
+      src={profilePic}
       style={{ width: size, height: size, ...style }}
       className={classes}
       {...restProps}
@@ -40,7 +45,7 @@ Avatar.defaultProps = {
   rounded: false,
   circle: true,
   size: 40,
-  src: userImage,
+  src: '',
   style: {},
 };
 

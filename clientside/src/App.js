@@ -161,6 +161,7 @@ function App(props) {
     role: '',
     id: 0,
     profileImage: '',
+    email:'',
     status: false,
   });
 
