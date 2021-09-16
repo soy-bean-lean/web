@@ -180,6 +180,7 @@ userRouter.post("/login", async (req, res) => {
                 id: result[0].id,
                 role: result[0].userType,
                 profileImage: result[0].profileImage,
+                email: username,
               },
               "importantsecret"
             );
@@ -191,6 +192,7 @@ userRouter.post("/login", async (req, res) => {
               id: result[0].id,
               role: result[0].userType,
               profileImage: result[0].profileImage,
+              email: username,
             });
           }
         });
