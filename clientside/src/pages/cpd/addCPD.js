@@ -279,18 +279,17 @@ const AddCpd = () => {
       );
     }, this);
 
-    const getCreditValue = (event) =>{
-      const i = event.target.value;
-      if(i != "Other" && i != ""){
-        setCredit(outCourseList[i].credit);
-      }
-      else{
-        setCredit("");
-      }
+  const getCreditValue = event => {
+    const i = event.target.value;
+    if (i != 'Other' && i != '') {
+      setCredit(outCourseList[i].credit);
+    } else {
+      setCredit('');
     }
+  };
 
   return (
-    <Page title="CPD Records" >
+    <Page title="CPD Records">
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
@@ -340,11 +339,10 @@ const AddCpd = () => {
                     Assigned Credits
                   </Label>
                   <Col sm={9}>
-                    <Input readOnly value={credit}/>
+                    <Input readOnly value={credit} />
                   </Col>
                 </FormGroup>
 
-             
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     Note
@@ -362,7 +360,7 @@ const AddCpd = () => {
                     Import Your Proof File From the Chooser (Images and PDF
                     Files)
                   </Label>
-                  <Col sm="12" md={{ size: 6, offset:4} }>
+                  <Col sm="12" md={{ size: 6, offset: 4 }}>
                     <Input
                       type="file"
                       className="input"
@@ -558,7 +556,6 @@ const AddCpd = () => {
             <FormGroup row>
               <Label for="exampleEmail" sm={3}>
                 Online Platform
-      
               </Label>
               <Col sm={9}>
                 <Input
@@ -604,7 +601,8 @@ const AddCpd = () => {
               </Label>
               <Col sm={9}>
                 <Input
-                  type="select" name="select"
+                  type="select"
+                  name="select"
                   onChange={e => setPartner(e.target.value)}
                   value={partner}
                 >
@@ -639,10 +637,7 @@ const AddCpd = () => {
               Course
             </Label>
             <Col sm={9}>
-              <Input
-                type="select" name="select"
-                onChange={getCreditValue}
-              >
+              <Input type="select" name="select" onChange={getCreditValue}>
                 <option value=""></option>
                 {allOnlineOutCourses}
                 <option value="Other">Other</option>

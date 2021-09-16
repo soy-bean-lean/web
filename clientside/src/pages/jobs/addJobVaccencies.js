@@ -24,14 +24,114 @@ import Alert from 'reactstrap/lib/Alert';
 
 const AddJobVacancies = () => {
   // job
+  const [result, setResult] = useState();
+
   const [companyName, setCompanyName] = useState('');
+  const [numberOfQuestions, setNumberOfQuestions] = useState('');
   const [jobRole, setJobRole] = useState('');
   const [location, setLocation] = useState('');
   const [contact, setContact] = useState('');
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
-  const [imgFile, setImgFile] = useState('');
+  let history = useHistory();
 
+  const [imgFile, setImgFile] = useState('');
+  const [qType, getQuestionType] = useState(null);
+  const [questionType, setQuestionTypeSelected] = useState('');
+  const [maximumCount, setQuestionCount] = useState(null);
+  useEffect(() => {
+    const data = {
+      memberId: '1001',
+      jobId: '',
+    };
+
+    axios
+      .post('http://localhost:3001/job/getQuestionType', data)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          getQuestionType(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }, []);
+  function getmax(type) {}
+  const allQuestionTypes =
+    qType &&
+    qType.map((li, i) => {
+      return (
+        <option key={i} value={li.name}>
+          {li.type}
+        </option>
+      );
+    }, this);
+
+  function renderDetails(type) {
+    console.log('TYpe is ' + type);
+    console.log('qType is ' + qType);
+
+    if (questionType == '') {
+      console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+      return <FormGroup row></FormGroup>;
+    } else {
+      console.log('questionType is ' + questionType);
+      const data = {
+        max: questionType,
+      };
+      axios
+        .post('http://localhost:3001/job/getMaximumQuestions', data)
+
+        .then(response => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            setQuestionCount(response.data[0].max);
+            console.log(maximumCount);
+          }
+        })
+        .catch(error => {
+          alert(error);
+        });
+
+      return (
+        <FormGroup row>
+          <Label for="exampleEmail" sm={6}>
+            Number of Questions
+          </Label>
+          <Col sm={3}>
+            <Input
+              type="number"
+              onChange={event => {
+                setNumberOfQuestions(event.target.value);
+              }}
+              max={maximumCount}
+              name="select"
+            ></Input>
+          </Col>
+        </FormGroup>
+      );
+    }
+  }
+
+  function msg() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Greate Attempt is Succesfull</Alert>
+        </>
+      );
+    }
+  }
   const addJob = () => {
     const formData = new FormData();
     formData.append('image', imgFile);
@@ -41,6 +141,8 @@ const AddJobVacancies = () => {
     formData.append('contact', contact);
     formData.append('email', email);
     formData.append('description', description);
+    formData.append('type', questionType);
+    formData.append('count', numberOfQuestions);
     formData.append('memberId', 1);
 
     fetch('http://localhost:3001/job', {
@@ -53,12 +155,24 @@ const AddJobVacancies = () => {
     })
       .then(res => res.json())
       .then(res => {
-        // history.push('/dashboardSec');
+        setResult('done');
+        setTimeout(
+          function () {
+            history.push('/job');
+          },
+
+          2000,
+        );
       })
       .catch(error => {
-        //  history.push('/addjob');
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push('/addJobVaccencies');
+          },
 
-        console.log(error);
+          2000,
+        );
       });
   };
 
@@ -66,6 +180,8 @@ const AddJobVacancies = () => {
     <Page title="Add Jobs">
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
+          {msg()}
+
           <Card>
             <CardHeader>Add Job Vacancies</CardHeader>
             <CardBody>
@@ -142,7 +258,7 @@ const AddJobVacancies = () => {
                     />
                   </Col>
                 </FormGroup>
-                
+
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     Description
@@ -158,6 +274,24 @@ const AddJobVacancies = () => {
                     />
                   </Col>
                 </FormGroup>
+
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Question Type
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      name="select"
+                      onChange={e => setQuestionTypeSelected(e.target.value)}
+                    >
+                      <option value="default"></option>
+                      {allQuestionTypes}
+                    </Input>
+                  </Col>
+                </FormGroup>
+
+                {renderDetails(questionType)}
 
                 <FormGroup row>
                   <Label for="exampleEmail" sm="12" md={{ size: 6, offset: 3 }}>
@@ -201,9 +335,7 @@ const AddJobVacancies = () => {
           </Card>
         </center>
       </Col>
-      <hr>
-        
-      </hr>
+      <hr></hr>
     </Page>
   );
 };

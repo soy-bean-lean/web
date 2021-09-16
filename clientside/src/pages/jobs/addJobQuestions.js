@@ -116,7 +116,6 @@ function AddQuestion() {
                     required
                       type="textarea"
                       className="note"
-                      placeholder="Description"
                       onChange={event => {
                         setQuestion(event.target.value);
                       }}
@@ -126,13 +125,32 @@ function AddQuestion() {
 
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
+                    Question Type
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      name="select"
+                      // onChange={e => setJobType(e.target.value)}
+                    >
+                      <option value="type"></option>
+                      <option value="course">Courses</option>
+                      <option value="workshops">Workshops</option>
+                      <option value="guestLec">Guest Lectures</option>
+                      <option value="others">Others</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
                     Answer 1
                   </Label>
                   <Col sm={9}>
                     <Input
                       required
+                      type="textarea"
+
                       className="input"
-                      placeholder="Contact Number"
                       onChange={event => {
                         setAnswer1(event.target.value);
                       }}
@@ -145,8 +163,9 @@ function AddQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
+                                          type="textarea"
+
                       className="input"
-                      placeholder="Contact Number"
                       onChange={event => {
                         setAnswer2(event.target.value);
                       }}
@@ -159,8 +178,9 @@ function AddQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
+                                          type="textarea"
+
                       className="input"
-                      placeholder="Contact Number"
                       onChange={event => {
                         setAnswer3(event.target.value);
                       }}
@@ -173,8 +193,9 @@ function AddQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
+                                          type="textarea"
+
                       className="input"
-                      placeholder="Contact Number"
                       onChange={event => {
                         setAnswer4(event.target.value);
                       }}

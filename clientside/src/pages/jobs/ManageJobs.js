@@ -176,7 +176,7 @@ const CardPage = props => {
               toggle('2');
             }}
           >
-            Job Applications
+            Job Questions
           </NavLink>
         </NavItem>
       </Nav>

@@ -45,10 +45,12 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
     const email = req.body.email;
     const description = req.body.description;
     const addBy = req.body.memberId;
-    const questionCount = req.body.questionCount;
+    const questionCount = req.body.count;
+    const questionType = req.body.type;
+    const image = req.file.filename;
 
     connection.query(
-      `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy,advertisment,activity,questionCount) VALUES (?,?,?,?,?,?,?,?,?,?)`,
+      `INSERT INTO jobvacancy (companyName,location,designation,email,contact,description,addBy,advertisment,activity,questionCount,questionType) VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
       [
         companyName,
         location,
@@ -60,9 +62,11 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
         image,
         "open",
         questionCount,
+        questionType,
       ],
       (err, result) => {
         if (err) {
+          console.log(err)
           res.send(result);
         } else {
           res.json("success");
@@ -343,6 +347,26 @@ Job.post("/getQuestion", (req, res) => {
   const sqlSelect =
     "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions  Limit 5";
 
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+Job.post("/getQuestionType", (req, res) => {
+  const sqlSelect = "SELECT DISTINCT type fROM jobquestions";
+  console.log(sqlSelect);
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+Job.post("/getMaximumQuestions", (req, res) => {
+  const questionType = req.body.max;
+  console.log("------------------------" + questionType);
+  const sqlSelect =
+    "SELECT count(type) as max , type from jobquestions where type = '" +
+    questionType +
+    "' GROUP BY type;";
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
