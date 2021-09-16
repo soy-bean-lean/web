@@ -151,23 +151,26 @@ function Header(props) {
                   title={authState.fname + ' ' + authState.lname}
                   subtitle={authState.email}
                   className="border-light"
+                  
                 >
                   <ListGroup flush>
                     <ListGroupItem
                       to={'/courseP'}
                       tag="button"
                       action
-                      className="border-light"
+                      color="dark"
+                      className="text-dark"
                     >
                       <MdPersonPin /> Profile
                     </ListGroupItem>
 
                     <ListGroupItem
+                      color="dark"
                       tag="button"
                       onClick={logout}
                       to="/login"
                       action
-                      className="border-primary"
+                      className="text-dark"
                     >
                       <MdExitToApp /> Logout
                     </ListGroupItem>
