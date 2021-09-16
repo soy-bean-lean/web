@@ -262,11 +262,12 @@ Job.post("/addQuestion", async (req, res) => {
   const ans3 = req.body.ans3;
   const ans4 = req.body.ans4;
   const correct = req.body.correct;
+  const type = req.body.type;
 
   connection.query(
-    `INSERT INTO jobquestions (  , Answer1 ,Answer2,Answer3,Answer4,Correct) VALUES (?,?,?,?,?,?)`,
+    `INSERT INTO jobquestions (Question  , Answer1 ,Answer2,Answer3,Answer4,Correct,type) VALUES (?,?,?,?,?,?,?)`,
 
-    [question, ans1, ans2, ans3, ans4, correct],
+    [question, ans1, ans2, ans3, ans4, correct , type],
     (err, result) => {
       if (err) {
         res.send(result);
