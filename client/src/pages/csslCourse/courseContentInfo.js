@@ -48,7 +48,7 @@ function AddCourseContent(props) {
       });
   }, []);
 
-  const InsertCourseContent = (action) => {
+  const InsertCourseContentNext = () => {
     const mId = "cssl001";
     const contentId = "cssl00" + id + "-0" + contentNum;
     console.log("ID:", contentId);
@@ -79,15 +79,48 @@ function AddCourseContent(props) {
       .then((res) => res.json())
       .then((res) => {
         setUploadStatus(res.msg);
-        alert("Successfully Saved Details");
-        if (action == "finish") {
-          alert("Successful");
-          redirectCourse();
-        } else {
-          alert("Successful");
-          redirectContentAdd();
-        }
-        resetComponents();
+        alert("Successfully Saved Details and Next Content");
+        redirectCourse();
+        redirectContentAdd();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const InsertCourseContentFinish = () => {
+    const mId = "cssl001";
+    const contentId = "cssl00" + id + "-0" + contentNum;
+    console.log("ID:", contentId);
+
+    const formData = new FormData();
+    formData.append("courseId", id);
+    formData.append("contentNo", contentNum);
+    formData.append("contentId", contentId);
+    formData.append("title", contentTitle);
+    formData.append("description", contentDes);
+    formData.append("type", contentType);
+    formData.append("note", note);
+
+    if (contentType == "File") {
+      formData.append("cfile", contentFile);
+    } else {
+      formData.append("vlink", videoLink);
+    }
+
+    fetch("http://localhost:3001/csslcourse/courseContent", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "multipart/form-data",
+      },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setUploadStatus(res.msg);
+        alert("Successfully Saved Details and Finish");
+        redirectCourse();
       })
       .catch((error) => {
         console.log(error);
@@ -181,13 +214,13 @@ function AddCourseContent(props) {
               type="submit"
               className="content-btn-submit"
               value="Save & Finish"
-              onClick={InsertCourseContent("finish")}
+              onClick={InsertCourseContentFinish}
             />
             <input
               type="submit"
               className="content-btn-submit"
               value="Save & Next Content"
-              onClick={InsertCourseContent("next")}
+              onClick={InsertCourseContentNext}
             />
           </div>
         </div>

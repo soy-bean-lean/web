@@ -66,8 +66,15 @@ const lecCourseView = React.lazy(() =>
 const lecturerCourseView = React.lazy(() =>
   import('pages/courses/LecturerCourseView'),
 );
-const courseView = React.lazy(() =>
-  import('pages/courses/CourseView'),
+const courseView = React.lazy(() => import('pages/courses/CourseView'));
+const addCourseContent = React.lazy(() =>
+  import('pages/courses/AddCourseContent'),
+);
+const editCourse = React.lazy(() =>
+  import('pages/courses/EditCourseDetails'),
+);
+const editCourseContent = React.lazy(() =>
+  import('pages/courses/EditCourseContent'),
 );
 
 //workshops
@@ -235,6 +242,21 @@ function App(props) {
                       exact
                       path="/courseView/cssl00:id/:title"
                       component={lecturerCourseView}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/addCourseContent/cssl00:id/:title"
+                      component={addCourseContent}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/editCourse/cssl00:id/:title"
+                      component={editCourse}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/editCourseContent/cssl00:id/:title/:cntId/:cntTitle"
+                      component={editCourseContent}
                     />
                     {/*CPD Related Routes*/}
                     <Route
@@ -558,6 +580,21 @@ function App(props) {
                       exact
                       path="/csslcourse/addnewcourse"
                       component={AddCourse}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/addCourseContent/cssl00:id/:title"
+                      component={addCourseContent}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/editCourse/cssl00:id/:title"
+                      component={editCourse}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/editCourseContent/cssl00:id/:title/:cntId/:cntTitle"
+                      component={editCourseContent}
                     />
                     {/*CPD Related Routes*/}
                     <Route
