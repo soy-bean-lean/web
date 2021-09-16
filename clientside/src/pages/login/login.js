@@ -71,6 +71,7 @@ const Login = () => {
           role: response.data.role,
           id: response.data.id,
           profileImage: response.data.profileImage,
+          email: response.data.email,
           status: true,
         });
         if (response.data.role == 'student') {

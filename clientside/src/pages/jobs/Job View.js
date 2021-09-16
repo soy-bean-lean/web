@@ -52,6 +52,7 @@ function JobView() {
             'http://localhost:3001/uploads/jobvacancy/' +
               response.data[0].advertisment,
           );
+          
         }
       })
       .catch(error => {
