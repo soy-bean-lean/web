@@ -27,6 +27,8 @@ import Alert from 'reactstrap/lib/Alert';
 function UpdateJobVacancies() {
   const { id } = useParams();
   const add = '';
+  const [maximumCount, setQuestionCount] = useState(null);
+  const [numberOfQuestions, setNumberOfQuestions] = useState('');
 
   const [companyName, setCompanyName] = useState('');
   const [jobRole, setJobRole] = useState('');
@@ -35,12 +37,16 @@ function UpdateJobVacancies() {
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
   const [imgFile, setImgFile] = useState();
+  const [questionType, setQuestionType] = useState('Other');
+  const [qType, getQuestionType] = useState(null);
+
   const { authState, setAuthState } = useContext(AuthContext);
 
   //  const [image, setImage] = useState("");
 
   let history = useHistory();
   const [result, setResult] = useState();
+
 
   const updateJob = () => {
     const jobData = {
@@ -53,9 +59,11 @@ function UpdateJobVacancies() {
       description: description,
       imgFile: imgFile,
       jvId: id,
+      questionType: questionType,
+      numberOfQuestions: numberOfQuestions,
       addBy: authState.id,
     };
-alert(imgFile)
+    console.log(jobData);
     axios
       .post('http://localhost:3001/job/updateJob', jobData)
 
@@ -80,12 +88,18 @@ alert(imgFile)
         );
       });
   };
-  
-  useEffect(() => {
-    const data = {
-      jid: id,
-    };
 
+  const allQuestionTypes =
+    qType &&
+    qType.map((li, i) => {
+      return (
+        <option key={i} value={li.name}>
+          {li.type}
+        </option>
+      );
+    }, this);
+
+  useEffect(() => {
     axios
       .get('http://localhost:3001/job/getJobView', { params: { id: id } })
 
@@ -101,10 +115,30 @@ alert(imgFile)
           setContact(response.data[0].contact);
           setDescription(response.data[0].description);
           setImgFile(response.data[0].advertisment);
+          setNumberOfQuestions(response.data[0].questionCount);
+          setQuestionType(response.data[0].questionType);
         }
       })
       .catch(error => {
         //   alert(error);
+      });
+    const data3 = {
+      memberId: '1001',
+      jobId: '',
+    };
+
+    axios
+      .post('http://localhost:3001/job/getQuestionType', data3)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          getQuestionType(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
       });
   }, []);
   function msg() {
@@ -126,7 +160,7 @@ alert(imgFile)
     <Page title="Edit Jobs">
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
-        {msg()}
+          {msg()}
           <Card>
             <CardHeader>Edit Job Vacancies</CardHeader>
             <CardBody>
@@ -224,7 +258,38 @@ alert(imgFile)
                     />
                   </Col>
                 </FormGroup>
-
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Question Type
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      name="select"
+                      onChange={e => setQuestionType(e.target.value)}
+                     
+                    >
+                      <option value="default">{questionType}</option>
+                      {allQuestionTypes}
+                    </Input>
+                  </Col>
+                </FormGroup>
+                {/* {renderDetails(questionType)} */}
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={6}>
+                    Number of Questions
+                  </Label>
+                  <Col sm={3}>
+                    <Input
+                      type="number"
+                      onChange={event => {
+                        setNumberOfQuestions(event.target.value);
+                      }}
+                      value={numberOfQuestions}
+                      name="select"
+                    ></Input>
+                  </Col>
+                </FormGroup>
                 {/* <FormGroup row>
                   <Label for="exampleEmail" sm="12" md={{ size: 6, offset: 3 }}>
                     Advertisement Image

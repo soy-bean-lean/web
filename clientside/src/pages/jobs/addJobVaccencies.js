@@ -60,6 +60,7 @@ const AddJobVacancies = () => {
       });
   }, []);
   function getmax(type) {}
+  
   const allQuestionTypes =
     qType &&
     qType.map((li, i) => {

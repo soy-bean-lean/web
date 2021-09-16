@@ -29,12 +29,25 @@ function AddQuestion() {
   const [ans4, setAnswer4] = useState('');
   const [correct, setCorrectAnswer] = useState('');
   const [result, setResult] = useState();
+  const [qType, getQuestionType] = useState(null);
+  const [type, setType] = useState(null);
+  const [typeN, setTypeN] = useState(null);
 
   //  const [image, setImage] = useState("");
 
   let history = useHistory();
 
   const addQuestion = () => {
+    console.log(type);
+    console.log(typeN);
+    var finalType;
+    if (type == 'Other') {
+      console.log('+++++');
+      finalType = typeN;
+    } else {
+      console.log('===');
+      finalType = type;
+    }
     const data = {
       question: question,
       ans1: ans1,
@@ -42,9 +55,18 @@ function AddQuestion() {
       ans3: ans3,
       ans4: ans4,
       correct: correct,
+      type: finalType,
     };
+    console.log(data);
     //|| ans1 !== "" || ans2 !== "" || ans3 !== "" || ans4 !== "" || correct !== ""
-    if ((question !== '' ) || (ans1 !== '') || (ans2 !== '') || (ans3 !== '') || (ans4 !== '') || (correct !== '' )) {
+    if (
+      question !== '' ||
+      ans1 !== '' ||
+      ans2 !== '' ||
+      ans3 !== '' ||
+      ans4 !== '' ||
+      correct !== ''
+    ) {
       axios
         .post('http://localhost:3001/job/addQuestion', data)
         .then(response => {
@@ -63,6 +85,8 @@ function AddQuestion() {
             setTimeout(
               function () {
                 history.push('/dashboard');
+                history.push('/addJobQuestions');
+
                 //hri giyoth yana thena
               },
 
@@ -81,6 +105,36 @@ function AddQuestion() {
       );
     }
   };
+  useEffect(() => {
+    const data = {
+      memberId: '1001',
+      jobId: '',
+    };
+
+    axios
+      .post('http://localhost:3001/job/getQuestionType', data)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          getQuestionType(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }, []);
+
+  const allQuestionTypes =
+    qType &&
+    qType.map((li, i) => {
+      return (
+        <option key={i} value={li.name}>
+          {li.type}
+        </option>
+      );
+    }, this);
 
   function msg() {
     if (result == 'err') {
@@ -97,6 +151,31 @@ function AddQuestion() {
       );
     }
   }
+
+  function renderDetails(check) {
+    console.log('TYpe is ' + type);
+    console.log('qType is ' + qType);
+
+    if (check == 'Other') {
+      return (
+        <FormGroup row>
+          <Label for="exampleEmail" sm={3}>
+            Custom Type
+          </Label>
+          <Col sm={9}>
+            <Input
+              type="text"
+              name="email"
+              onChange={event => {
+                setTypeN(event.target.value);
+              }}
+            />
+          </Col>
+        </FormGroup>
+      );
+    }
+  }
+
   return (
     <Page title="Job Questions">
       <Col sm="10" md={{ size: 8, offset: 2 }}>
@@ -113,7 +192,7 @@ function AddQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                    required
+                      required
                       type="textarea"
                       className="note"
                       onChange={event => {
@@ -131,16 +210,16 @@ function AddQuestion() {
                     <Input
                       type="select"
                       name="select"
-                      // onChange={e => setJobType(e.target.value)}
+                      onChange={e => setType(e.target.value)}
                     >
                       <option value="type"></option>
-                      <option value="course">Courses</option>
-                      <option value="workshops">Workshops</option>
-                      <option value="guestLec">Guest Lectures</option>
-                      <option value="others">Others</option>
+                      {allQuestionTypes}
+                      <option value="Other">Other</option>
                     </Input>
                   </Col>
                 </FormGroup>
+                {renderDetails(type)}
+
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     Answer 1
@@ -149,7 +228,6 @@ function AddQuestion() {
                     <Input
                       required
                       type="textarea"
-
                       className="input"
                       onChange={event => {
                         setAnswer1(event.target.value);
@@ -163,8 +241,7 @@ function AddQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                                          type="textarea"
-
+                      type="textarea"
                       className="input"
                       onChange={event => {
                         setAnswer2(event.target.value);
@@ -178,8 +255,7 @@ function AddQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                                          type="textarea"
-
+                      type="textarea"
                       className="input"
                       onChange={event => {
                         setAnswer3(event.target.value);
@@ -193,8 +269,7 @@ function AddQuestion() {
                   </Label>
                   <Col sm={9}>
                     <Input
-                                          type="textarea"
-
+                      type="textarea"
                       className="input"
                       onChange={event => {
                         setAnswer4(event.target.value);
@@ -237,110 +312,6 @@ function AddQuestion() {
       </Col>
       <hr></hr>
     </Page>
-
-    // <>
-    //   <div className="jobQuestion-basic-info">
-    //     <h1 className="jobQuestion-basic-info-title">Add Job Questions</h1>
-    //     <hr></hr>
-    //     <div className="jobQuestion-basic-info-form">
-    //       <div className="jobQuestion-basic-info-block">
-    //         <div className="jobQuestion-field-block">
-    //           <textarea
-    //             className="note"
-    //             placeholder="--Enter the Question--"
-    //             onChange={(event) => {
-    //               setQuestion(event.target.value);
-    //             }}
-    //           ></textarea>
-    //         </div>
-    //         <div className="jobQuestion-field-block">
-    //           <input
-    //             className="input"
-    //             placeholder="--Answer 1--"
-    //             onChange={(event) => {
-    //               setAnswer1(event.target.value);
-    //             }}
-    //           ></input>
-    //         </div>
-    //         <div className="jobQuestion-field-block">
-    //           <input
-    //             className="input"
-    //             placeholder="--Answer 2--"
-    //             onChange={(event) => {
-    //               setAnswer2(event.target.value);
-    //             }}
-    //           ></input>
-    //         </div>
-    //         <div className="jobQuestion-field-block">
-    //           <input
-    //             className="input"
-    //             placeholder="--Answer 3--"
-    //             onChange={(event) => {
-    //               setAnswer3(event.target.value);
-    //             }}
-    //           ></input>
-    //         </div>
-    //         <div className="jobQuestion-field-block">
-    //           <input
-    //             className="input"
-    //             placeholder="--Answer 4--"
-    //             onChange={(event) => {
-    //               setAnswer4(event.target.value);
-    //             }}
-    //           ></input>
-    //         </div>
-    //         <h4 className="jobQuestion-info-title">The Correct Answer...</h4>
-
-    //         <div className="jobQuestion-answer">
-    //           <input
-    //             type="radio"
-    //             id="answer"
-    //             name="answer"
-    //             value="1"
-    //             onChange={(event) => {
-    //               setCorrectAnswer(event.target.value);
-    //             }}
-    //           ></input>
-    //           <label className="answer">Answer 1</label>
-    //           <input
-    //             type="radio"
-    //             id="answer"
-    //             name="answer"
-    //             value="2"
-    //             onChange={(event) => {
-    //               setCorrectAnswer(event.target.value);
-    //             }}
-    //           ></input>
-    //           <label className="answer">Answer 2</label>
-    //           <input
-    //             type="radio"
-    //             id="answer"
-    //             name="answer"
-    //             value="3"
-    //             onChange={(event) => {
-    //               setCorrectAnswer(event.target.value);
-    //             }}
-    //           ></input>
-    //           <label className="answer">Answer 3</label>
-    //           <input
-    //             type="radio"
-    //             id="answer"
-    //             name="answer"
-    //             value="4"
-    //             onChange={(event) => {
-    //               setCorrectAnswer(event.target.value);
-    //             }}
-    //           ></input>
-    //           <label className="answer">Answer 4</label>
-    //         </div>
-    //       </div>
-    //       <button className="jobQuestion-btn-submit" onClick={addJob}>
-    //         {" "}
-    //         Add{" "}
-    //       </button>
-    //     </div>
-    //   </div>
-    // </>
   );
 }
 

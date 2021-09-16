@@ -21,6 +21,8 @@ import PageSpinner from 'components/PageSpinner';
 
 import Login from 'pages/login/login';
 import Registration from 'pages/registration/registration';
+import ForgotPassword from 'pages/forgotPassword/forgotPassword';
+import ResetPassword from 'pages/forgotPassword/resetPassword';
 
 import AuthPage from 'pages/AuthPage';
 import componentQueries from 'react-component-queries';
@@ -82,6 +84,7 @@ const editCourseContent = React.lazy(() =>
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
 const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
+const BlogView = React.lazy(() => import('pages/blogs/BlogView'));
 
 //forum
 
@@ -196,6 +199,7 @@ function App(props) {
             role: response.data.role,
             id: response.data.id,
             profileImage: response.data.profileImage,
+            email: response.data.email,
             status: true,
           });
         }
@@ -212,6 +216,8 @@ function App(props) {
                 <>
                   <Route exact path="/" exact component={Login} />
                   <Route path="/registration" component={Registration} />
+                  <Route path="/forgotpassword" component={ForgotPassword} />
+                  <Route path="/reset/:token" component={ResetPassword} />
                 </>
               )}
 
@@ -231,8 +237,8 @@ function App(props) {
                     <Route exact path="/csslcourses" component={csslCourses} />
                     <Route
                       exact
-                      path="/csslcourses/courseview/cssl00:id/:title"
-                      component={courseView}
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
                     />
                     <Route
                       exact
@@ -273,6 +279,11 @@ function App(props) {
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
