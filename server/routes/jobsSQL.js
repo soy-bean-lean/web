@@ -85,15 +85,43 @@ Job.post("/updateJob", async (req, res) => {
   const description = req.body.description;
   const addBy = req.body.addBy;
   const jvId = req.body.jvId;
-  const questionCount = req.body.questionCount;
+  const questionType = req.body.questionType;
+  const numberOfQuestions = req.body.numberOfQuestions;
+  var i = numberOfQuestions;
+  const sqlSelect =
+    "SELECT count(type) as max , type from jobquestions where type = '" +
+    questionType +
+    "' GROUP BY type;";
+  console.log(sqlSelect);
+  connection.query(sqlSelect, (err, result1) => {
+    if (result1[0].max < numberOfQuestions) {
+      console.log("overed")
+      i = result1[0].max;
+      
   connection.query(
-    " UPDATE jobvacancy SET companyName = '" + companyName + " ' , location = '" + location +  " ' ,designation = '" + jobRole + " ' ,email = '" +     email +
-      " ' ,contact = '" +     contact +
-      " ' ,addBy = '" +     addBy +
-      " ' ,email = '" +     email +    
-       " ' ,questionCount = '" +     questionCount +    
-        " ' ,description = '" +     description +
-        " '  WHERE jvId=" +  jvId + ";",
+    " UPDATE jobvacancy SET companyName = '" +
+      companyName +
+      " ' , location = '" +
+      location +
+      " ' ,designation = '" +
+      jobRole +
+      " ' ,email = '" +
+      email +
+      " ' ,contact = '" +
+      contact +
+      " ' ,addBy = '" +
+      addBy +
+      " ' ,email = '" +
+      email +
+      " ' ,questionCount = '" +
+      i +
+      " ' ,questionType = '" +
+      questionType +
+      " ' ,description = '" +
+      description +
+      " '  WHERE jvId=" +
+      jvId +
+      ";",
 
     (err, result) => {
       if (err) {
@@ -103,6 +131,49 @@ Job.post("/updateJob", async (req, res) => {
       }
     }
   );
+    }else{
+      console.log("ok")
+      i =parseInt(numberOfQuestions);
+      console.log(i)
+      console.log(numberOfQuestions)
+
+      connection.query(
+        " UPDATE jobvacancy SET companyName = '" +
+          companyName +
+          " ' , location = '" +
+          location +
+          " ' ,designation = '" +
+          jobRole +
+          " ' ,email = '" +
+          email +
+          " ' ,contact = '" +
+          contact +
+          " ' ,addBy = '" +
+          addBy +
+          " ' ,email = '" +
+          email +
+          " ' ,questionCount = '" +
+          i +
+          " ' ,questionType = '" +
+          questionType +
+          " ' ,description = '" +
+          description +
+          " '  WHERE jvId=" +
+          jvId +
+          ";",
+    
+        (err, result) => {
+          if (err) {
+            res.send(result);
+          } else {
+            res.json("success");
+          }
+        }
+      );
+    
+    }
+  });
+
 });
 
 Job.post("/updateQuestion", async (req, res) => {
@@ -113,26 +184,24 @@ Job.post("/updateQuestion", async (req, res) => {
   const ans4 = req.body.ans4;
   const correct = req.body.correct * 1;
   const qid = req.body.qid;
+  const questionType = req.body.questionType;
 
   const sql =
     " UPDATE jobquestions SET Question = '" +
     question +
-    " ' , Answer1 = '" +
-    ans1 +
-    " ' ,Answer2 = '" +
-    ans2 +
-    " ' ,Answer3 = '" +
-    ans3 +
-    " ' ,Answer4 = '" +
-    ans4 +
-    " ',Correct = " +
-    correct +
+" ' , Answer1 = '" +    ans1 +
+ " ' ,Answer2 = '" +    ans2 +
+    " ' ,Answer3 = '" +ans3 +
+    " ' ,Answer4 = '" +   ans4 +
+    " ' ,type = '" +   questionType +
+   " ',Correct = " +  correct +
     "   WHERE Qnumber=" +
     qid +
     ";";
+
+    console.log(sql);
   connection.query(sql, (err, result) => {
     if (err) {
-
       res.send(result);
     } else {
       res.json("success");
@@ -319,7 +388,7 @@ Job.get("/getCVtoSend", (req, res) => {
 Job.get("/getJobView", (req, res) => {
   const jid = req.query.id;
   connection.query(
-    "SELECT jvId , companyName , location ,designation,description,questionCount ,contact ,email,advertisment from jobvacancy where jvId = ?;",
+    "SELECT jvId , companyName , location ,designation,description,questionCount,questionType ,contact ,email,advertisment from jobvacancy where jvId = ?;",
     [jid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -337,12 +406,14 @@ Job.get("/getQuestion", (req, res) => {
     "select `questionCount` ,questionType from jobvacancy WHERE jvId = " + jid;
 
   connection.query(numberOfQuestions, (err, result3) => {
-
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-      console.log(numberOfQuestions);
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    console.log(numberOfQuestions);
 
     const sqlSelect =
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where type = '"+result3[0].questionType+"' Limit " + result3[0].questionCount;
+      "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where type = '" +
+      result3[0].questionType +
+      "' Limit " +
+      result3[0].questionCount;
     console.log(sqlSelect);
 
     connection.query(sqlSelect, (err, result) => {
@@ -366,6 +437,7 @@ Job.post("/getMaximumQuestions", (req, res) => {
     "SELECT count(type) as max , type from jobquestions where type = '" +
     questionType +
     "' GROUP BY type;";
+  console.log(sqlSelect);
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -383,7 +455,7 @@ Job.post("/getAllQuestion", (req, res) => {
 Job.get("/aaa", (req, res) => {
   const jid = req.query.id;
   connection.query(
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where Qnumber = ?;",
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct,type from jobquestions where Qnumber = ?;",
     [jid],
     (error, result, feilds) => {
       if (error) console.log(error);
