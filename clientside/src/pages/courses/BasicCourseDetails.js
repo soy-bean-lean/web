@@ -28,7 +28,6 @@ const BasicCourseInfo = () => {
   const [level, setLevel] = useState('');
   const [mode, setMode] = useState('');
   const [imgFile, setImgFile] = useState();
-
   const [uploadStatus, setUploadStatus] = useState('');
   const [page, setPage] = useState('Content');
   const [result, setResult] = useState();
