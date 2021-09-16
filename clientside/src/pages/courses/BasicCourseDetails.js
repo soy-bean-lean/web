@@ -17,7 +17,8 @@ import {
   Label,
   Row,
 } from 'reactstrap';
-function BasicCourseInfo() {
+const BasicCourseInfo = () => {
+
   const [courseId, setCourseId] = useState();
   const [courseTitle, setCourseTitle] = useState('');
   const [courseDes, setCourseDes] = useState('');

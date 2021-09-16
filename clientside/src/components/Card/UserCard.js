@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from "react";
 import PropTypes from 'utils/propTypes';
 
 import classNames from 'classnames';
@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { Card, CardTitle, CardSubtitle, CardText, CardBody } from 'reactstrap';
 
 import Avatar from '../Avatar';
+import { AuthContext } from "../../helpers/AuthContext";
 
 const UserCard = ({
   avatar,
@@ -18,11 +19,14 @@ const UserCard = ({
   ...restProps
 }) => {
   const classes = classNames('bg-gradient-theme', className);
+  const { authState } = useContext(AuthContext); 
+  const profilePic="http://localhost:3001/uploads/profileImages/" + authState.profileImage;
+  console.log("profilePic");
 
   return (
     <Card inverse className={classes} {...restProps}>
       <CardBody className="d-flex justify-content-center align-items-center flex-column">
-        <Avatar src={avatar} size={avatarSize} className="mb-2" />
+        <Avatar src={profilePic} size={avatarSize} className="mb-2" />
         <CardTitle>{title}</CardTitle>
         <CardSubtitle>{subtitle}</CardSubtitle>
         <CardText>

@@ -54,6 +54,7 @@ function Header(props) {
     useState(false);
   const [isNotificationConfirmed, setisNotificationConfirmed] = useState(false);
   const [isOpenUserCardPopover, setisOpenUserCardPopover] = useState(false);
+  const { authState } = useContext(AuthContext);
 
   const toggleNotificationPopover = () => {
     setisOpenNotificationPopover(!isOpenNotificationPopover);
@@ -84,6 +85,7 @@ function Header(props) {
       progileImg: '',
       role: '',
       id: 0,
+      email: '',
       status: false,
     });
     history.push('/');
@@ -146,9 +148,8 @@ function Header(props) {
             >
               <PopoverBody className="p-0 border-light">
                 <UserCard
-                  title="Jane"
-                  subtitle="jane@jane.com"
-                  text="Last updated 3 mins ago"
+                  title={authState.fname + ' ' + authState.lname}
+                  subtitle={authState.email}
                   className="border-light"
                 >
                   <ListGroup flush>
@@ -161,16 +162,12 @@ function Header(props) {
                       <MdPersonPin /> Profile
                     </ListGroupItem>
 
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdSettingsApplications /> Settings
-                    </ListGroupItem>
-
                     <ListGroupItem
                       tag="button"
                       onClick={logout}
                       to="/login"
                       action
-                      className="border-light"
+                      className="border-primary"
                     >
                       <MdExitToApp /> Logout
                     </ListGroupItem>

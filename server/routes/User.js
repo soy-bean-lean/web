@@ -154,6 +154,7 @@ userRouter.post("/", async (req, res) => {
       }
     }
   );
+ 
 });
 
 //login
@@ -180,6 +181,7 @@ userRouter.post("/login", async (req, res) => {
                 id: result[0].id,
                 role: result[0].userType,
                 profileImage: result[0].profileImage,
+                email: username,
               },
               "importantsecret"
             );
@@ -191,6 +193,7 @@ userRouter.post("/login", async (req, res) => {
               id: result[0].id,
               role: result[0].userType,
               profileImage: result[0].profileImage,
+              email: username,
             });
           }
         });
@@ -199,6 +202,8 @@ userRouter.post("/login", async (req, res) => {
       }
     }
   );
+
+ // console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = "+username);
 });
 
 userRouter.post("/updatePassword", async (req, res) => {
