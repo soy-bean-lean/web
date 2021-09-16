@@ -4,7 +4,10 @@ import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import validateToken from "../middlewares/AuthMiddleware.js";
 import multer from "multer";
+import pg from "rand-token";
+import { createTransport } from "nodemailer";
 
+const { suid } = pg;
 const { sign } = pkg;
 
 const userRouter = Router();
@@ -89,7 +92,6 @@ userRouter.post("/updateBasicDetails", async (req, res) => {
       }
     }
   );
-
 });
 
 //Register
@@ -201,6 +203,209 @@ userRouter.post("/login", async (req, res) => {
       }
     }
   );
+});
+
+//forgotPassword
+userRouter.post("/forgot", async (req, res) => {
+  const username = req.body.username;
+  const token = suid(16);
+
+  connection.query(
+    //temporary sql query for testing
+    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
+
+    [username],
+    (err, row) => {
+      if (row.length > 0) {
+        const id = row[0].id;
+
+        connection.query(
+          `INSERT INTO token (userID, token) VALUES (?,?)`,
+          [id, token],
+          (err, result) => {
+            if (err) {
+              res.json({ error });
+            } else {
+              const frommail = "vegemartucsc@gmail.com";
+              const tomail = row[0].email;
+              const web = `http://localhost:3000/reset/${token}`;
+              let smtpTransport = createTransport({
+                service: "Gmail",
+                port: 465,
+
+                auth: {
+                  user: "vegemartucsc@gmail.com",
+                  pass: "vegemart 123",
+                },
+              });
+
+              var mailOptions = {
+                from: frommail,
+                to: tomail,
+                subject: "Reset Password",
+                html: `
+                <p>Hi ${row[0].firstName}, You can reset your account by clicking the link below</p>
+                ${web}                
+                `,
+              };
+
+              smtpTransport.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  res.json({
+                    msg: "fail",
+                  });
+                } else {
+                  res.json({
+                    msg: "success",
+                  });
+                }
+              });
+
+              smtpTransport.close();
+              res.json({
+                id: id,
+              });
+            }
+          }
+        );
+      } else {
+        res.json({ errorUser: "Username doesn't exists" });
+      }
+    }
+  );
+});
+
+//resetPassword
+userRouter.post("/reset", async (req, res) => {
+  const password = req.body.password;
+  const token = req.body.token;
+
+  connection.query(
+    "SELECT userID FROM `token` WHERE `token` = ?",
+    [token],
+    (err, row) => {
+      const userID = row[0].userID;
+      bcrypt.hash(password, 10).then((hash) => {
+        connection.query(
+          "UPDATE `user` SET `password` = ? WHERE `id` = ? ;",
+          [hash, userID],
+          (error, result, feilds) => {
+            if (error) {
+              res.send(error);
+            } else {
+              connection.query(
+                "SELECT * FROM `user` WHERE `id` = ?",
+                [userID],
+                (err, emailResult) => {
+                  connection.query(
+                    "DELETE FROM `token` WHERE `userID` = ?",
+                    [userID],
+                    (err, row) => {
+                      const frommail = "vegemartucsc@gmail.com";
+                      const tomail = emailResult[0].email;
+                      const web = "http://localhost:3000/";
+                      let smtpTransport = createTransport({
+                        service: "Gmail",
+                        port: 465,
+
+                        auth: {
+                          user: "vegemartucsc@gmail.com",
+                          pass: "vegemart 123",
+                        },
+                      });
+
+                      var mailOptions = {
+                        from: frommail,
+                        to: tomail,
+                        subject: "Password Reseted",
+                        html: `
+                      <p>Hi ${emailResult[0].firstName}, Your password have been reseted. You can login from the link below</p>
+                      ${web}                
+                      `,
+                      };
+
+                      smtpTransport.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                          res.json({
+                            msg: "fail",
+                          });
+                        } else {
+                          res.json({
+                            msg: "success",
+                          });
+                        }
+                      });
+
+                      smtpTransport.close();
+                      res.send(result);
+                    }
+                  );
+                }
+              );
+            }
+          }
+        );
+      });
+    }
+  );
+
+  //     if (row.length > 0) {
+  //       const id = row[0].id;
+
+  //       connection.query(
+  //         `INSERT INTO token (userID, token) VALUES (?,?)`,
+  //         [id, token],
+  //         (err, result) => {
+  //           if (err) {
+  //             res.json({ error });
+  //           } else {
+  //             const frommail = "vegemartucsc@gmail.com";
+  //             const tomail = row[0].email;
+  //             const web = `http://localhost:3000/reset/${token}`;
+  //             let smtpTransport = createTransport({
+  //               service: "Gmail",
+  //               port: 465,
+
+  //               auth: {
+  //                 user: "vegemartucsc@gmail.com",
+  //                 pass: "vegemart 123",
+  //               },
+  //             });
+
+  //             var mailOptions = {
+  //               from: frommail,
+  //               to: tomail,
+  //               subject: "Reset Password",
+  //               html: `
+  //               <p>Hi ${row[0].firstName}, You can reset your account by clicking the link below</p>
+  //               ${web}
+  //               `,
+  //             };
+
+  //             smtpTransport.sendMail(mailOptions, (error, info) => {
+  //               if (error) {
+  //                 res.json({
+  //                   msg: "fail",
+  //                 });
+  //               } else {
+  //                 res.json({
+  //                   msg: "success",
+  //                 });
+  //               }
+  //             });
+
+  //             smtpTransport.close();
+  //             res.json({
+  //               id: id
+  //             });
+  //           }
+  //         }
+  //       );
+  //     } else {
+  //       res.json({ errorUser: "Username doesn't exists" });
+  //     }
+  //   }
+  // );
 });
 
 userRouter.post("/updatePassword", async (req, res) => {

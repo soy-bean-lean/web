@@ -21,6 +21,8 @@ import PageSpinner from 'components/PageSpinner';
 
 import Login from 'pages/login/login';
 import Registration from 'pages/registration/registration';
+import ForgotPassword from 'pages/forgotPassword/forgotPassword';
+import ResetPassword from 'pages/forgotPassword/resetPassword';
 
 import AuthPage from 'pages/AuthPage';
 import componentQueries from 'react-component-queries';
@@ -189,6 +191,7 @@ function App(props) {
             role: response.data.role,
             id: response.data.id,
             profileImage: response.data.profileImage,
+            email: response.data.email,
             status: true,
           });
         }
@@ -205,6 +208,8 @@ function App(props) {
                 <>
                   <Route exact path="/" exact component={Login} />
                   <Route path="/registration" component={Registration} />
+                  <Route path="/forgotpassword" component={ForgotPassword} />
+                  <Route path="/reset/:token" component={ResetPassword} />
                 </>
               )}
 
