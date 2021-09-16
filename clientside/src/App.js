@@ -82,6 +82,7 @@ const editCourseContent = React.lazy(() =>
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
 const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
+const BlogView = React.lazy(() => import('pages/blogs/BlogView'));
 
 //forum
 
@@ -231,8 +232,8 @@ function App(props) {
                     <Route exact path="/csslcourses" component={csslCourses} />
                     <Route
                       exact
-                      path="/csslcourses/courseview/cssl00:id/:title"
-                      component={courseView}
+                      path="/blogview/00:id/:title"
+                      component={BlogView}
                     />
                     <Route
                       exact
@@ -273,6 +274,11 @@ function App(props) {
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}

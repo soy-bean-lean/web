@@ -46,7 +46,7 @@ const Blogs = props => {
   useEffect(() => {
     const formData = {
      // mId: authState.id,
-      mId: 'cssl001',
+      mId: authState.id,
     };
     // axios
     //   .post('http://localhost:3001/blog/getAllBlogs', formData)
