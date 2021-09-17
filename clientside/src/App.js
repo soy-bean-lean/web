@@ -21,6 +21,7 @@ import PageSpinner from 'components/PageSpinner';
 
 import Login from 'pages/login/login';
 import Registration from 'pages/registration/registration';
+import Profile from 'pages/profile/profile';
 import ForgotPassword from 'pages/forgotPassword/forgotPassword';
 import ResetPassword from 'pages/forgotPassword/resetPassword';
 
@@ -72,9 +73,7 @@ const courseView = React.lazy(() => import('pages/courses/CourseView'));
 const addCourseContent = React.lazy(() =>
   import('pages/courses/AddCourseContent'),
 );
-const editCourse = React.lazy(() =>
-  import('pages/courses/EditCourseDetails'),
-);
+const editCourse = React.lazy(() => import('pages/courses/EditCourseDetails'));
 const editCourseContent = React.lazy(() =>
   import('pages/courses/EditCourseContent'),
 );
@@ -178,7 +177,7 @@ function App(props) {
     role: '',
     id: 0,
     profileImage: '',
-    email:'',
+    email: '',
     status: false,
   });
 
@@ -316,6 +315,7 @@ function App(props) {
                       path="/buttongroups"
                       component={ButtonGroupPagePro}
                     />
+                    <Route path="/profile" component={Profile} />
                     <Route path="/login-modal" component={AuthModalPagePro} />
                     <Route path="/buttons" component={ButtonPagePro} />
                     <Route path="/cards" component={CardPagePro} />
@@ -336,6 +336,7 @@ function App(props) {
               {authState.role == 'council' && (
                 <MainLayoutCouncil breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
+                    <Route path="/profile" component={Profile} />
                     {/*Dashboard Related Route*/}
                     <Route
                       exact
@@ -420,6 +421,7 @@ function App(props) {
               {/*Secretariat Role Related Routes*/}
               {authState.role == 'secretariat' && (
                 <MainLayoutSec breakpoint={props.breakpoint}>
+                  <Route path="/profile" component={Profile} />
                   <React.Suspense fallback={<PageSpinner />}>
                     {/*Dashboard Related Route*/}
                     <Route
@@ -505,6 +507,7 @@ function App(props) {
               {/*Associate Role Related Routes*/}
               {authState.role == 'associate' && (
                 <MainLayoutAssosiate breakpoint={props.breakpoint}>
+                  <Route path="/profile" component={Profile} />
                   <React.Suspense fallback={<PageSpinner />}>
                     {/*Dashboard Related Route*/}
                     <Route
@@ -672,6 +675,7 @@ function App(props) {
               {/*Student Role Related Routes*/}
               {authState.role == 'student' && (
                 <MainLayoutStudent breakpoint={props.breakpoint}>
+                  <Route path="/profile" component={Profile} />
                   <React.Suspense fallback={<PageSpinner />}>
                     {/*Dashboard Related Route*/}
                     <Route

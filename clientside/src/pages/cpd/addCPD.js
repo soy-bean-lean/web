@@ -362,6 +362,7 @@ const AddCpd = () => {
                   </Label>
                   <Col sm="12" md={{ size: 6, offset: 4 }}>
                     <Input
+                     color="primary"
                       type="file"
                       className="input"
                       id="avatar"
