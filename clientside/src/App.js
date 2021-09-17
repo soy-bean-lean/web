@@ -107,6 +107,7 @@ const editJobVaccencies = React.lazy(() =>
 );
 
 //reports
+const Reports = React.lazy(() => import('pages/reports/Reports'));
 
 //profile
 
@@ -482,7 +483,13 @@ function App(props) {
                       path="/csslworkshops/addworkshop"
                       component={Login}
                     />{' '}
+                    <Route
+                      exact
+                      path="/reports"
+                      component={Reports}
+                    />{' '}
                     {/* need to change component */}
+                    
                     <Route
                       exact
                       path="/csslworkshops/editworkshop/cssl:id/:name"

@@ -57,7 +57,7 @@ const navItemsProffesional = [
   },
   // { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
 
-  { to: '/charts', name: 'Reports', exact: false, Icon: HiIcons.HiOutlineDocumentReport },
+  { to: '/reports', name: 'Reports', exact: false, Icon: HiIcons.HiOutlineDocumentReport },
 ];
 
 const bem = bn.create('sidebar');
