@@ -1,9 +1,3 @@
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
-import user1Image from 'assets/img/users/100_1.jpg';
-import { UserCard } from 'components/Card';
 import Page from 'components/Page';
 import React, { useState, useEffect } from 'react';
 
@@ -37,6 +31,7 @@ import {
   ListGroupItem,
   Row,
 } from 'reactstrap';
+import { func } from 'prop-types';
 
 const CardPage = props => {
   const [activeTab, setActiveTab] = useState('1');
@@ -99,15 +94,10 @@ const CardPage = props => {
               {'   '}
               <Link to={'/editJobVaccencies/' + data.jvId}>
                 <Button color="primary" size="sm">
-                  View / Edit{' '}
+                  View More{' '}
                 </Button>
               </Link>
-              {'   '}
-              <Link to={''}>
-                <Button color="danger" size="sm">
-                  Delete{' '}
-                </Button>
-              </Link>
+             
             </center>
           </td>
         </tr>
@@ -121,23 +111,18 @@ const CardPage = props => {
         <tr>
           <td hidden>{data.Qnumber}</td>
           <td>{data.Question} </td>
-      
+
           <td>
             <center>
               {'   '}
               <Link to={'/editQuestions/' + data.Qnumber}>
                 <Button color="primary" size="sm">
-                  View / Edit{' '}
-                </Button>
-              </Link>
-              {'   '}
-              <Link to={''}>
-                <Button color="danger" size="sm">
-                  Delete{' '}
+                  View More{' '}
                 </Button>
               </Link>
             </center>
           </td>
+         
         </tr>
       </>
     ));

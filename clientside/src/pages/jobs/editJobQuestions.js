@@ -1,11 +1,12 @@
 import Page from 'components/Page';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
-import { Link, useHistory } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../../main.css';
 import {
   Button,
   Card,
@@ -13,9 +14,7 @@ import {
   CardHeader,
   Col,
   Form,
-  FormFeedback,
   FormGroup,
-  FormText,
   Input,
   Label,
   Alert,
@@ -50,6 +49,40 @@ function UpdateQuestion() {
         </option>
       );
     }, this);
+
+  const deleteItem = () => {
+    const data = {
+      qid: id,
+      tableName : "jobquestions",
+coloum:"Qnumber",
+    };
+
+    axios
+      .post('http://localhost:3001/job/deleteItem', data)
+      .then(response => {
+        if (response.data.error) {
+          setResult('err');
+          setTimeout(
+            function () {
+              history.push('/managejobs');
+            },
+
+            2000,
+          );
+        } else {
+          setResult('done');
+
+          setTimeout(
+            function () {
+              history.push('/managejobs');
+              //hri giyoth yana thena
+            },
+
+            2000,
+          );
+        }
+      });
+  };
 
   const updateQuestion = () => {
     var finalType;
@@ -116,6 +149,25 @@ function UpdateQuestion() {
     }
   };
 
+  const submit = () => {
+    confirmAlert({
+      message: 'Are you sure to Delete ?.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            deleteItem();
+          },
+        },
+        {
+          label: 'No',
+          onClick: () => {
+            //alert('Click No')
+          },
+        },
+      ],
+    });
+  };
   useEffect(() => {
     const data3 = {
       memberId: '1001',
@@ -320,8 +372,12 @@ function UpdateQuestion() {
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
+                    <Button onClick={submit} color="danger">
+                      Delete
+                    </Button>
+                    {'  '}
                     <Button onClick={updateQuestion} color="success">
-                      Update Question
+                      Update
                     </Button>
                   </Col>
                 </FormGroup>

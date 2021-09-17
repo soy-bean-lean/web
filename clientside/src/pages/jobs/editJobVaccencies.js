@@ -3,6 +3,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../helpers/AuthContext';
 import { useParams } from 'react-router-dom';
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import '../../main.css';
+
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -47,7 +51,56 @@ function UpdateJobVacancies() {
   let history = useHistory();
   const [result, setResult] = useState();
 
+  const deleteItem = () => {
+    const data = {
+      qid: id,
+      tableName: 'jobvacancy',
+      coloum: 'jvId',
+    };
 
+    axios.post('http://localhost:3001/job/deleteItem', data).then(response => {
+      if (response.data.error) {
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push('/managejobs');
+          },
+
+          2000,
+        );
+      } else {
+        setResult('done');
+
+        setTimeout(
+          function () {
+            history.push('/managejobs');
+            //hri giyoth yana thena
+          },
+
+          2000,
+        );
+      }
+    });
+  };
+  const submit = () => {
+    confirmAlert({
+      message: 'Are you sure to Delete ?.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            deleteItem();
+          },
+        },
+        {
+          label: 'No',
+          onClick: () => {
+            //alert('Click No')
+          },
+        },
+      ],
+    });
+  };
   const updateJob = () => {
     const jobData = {
       image: imgFile,
@@ -267,7 +320,6 @@ function UpdateJobVacancies() {
                       type="select"
                       name="select"
                       onChange={e => setQuestionType(e.target.value)}
-                     
                     >
                       <option value="default">{questionType}</option>
                       {allQuestionTypes}
@@ -323,8 +375,13 @@ function UpdateJobVacancies() {
                 </FormGroup> */}
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
+                    <Button onClick={submit} color="danger">
+                      Delete
+                    </Button>
+                    {'  '}
+
                     <Button onClick={updateJob} color="success">
-                      Update Job
+                      Update
                     </Button>
                   </Col>
                 </FormGroup>

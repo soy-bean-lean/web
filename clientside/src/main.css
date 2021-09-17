@@ -3,7 +3,16 @@
     background: linear-gradient(to bottom, #4f62c0, #40476b);
     opacity: 0;
 }
+.react-confirm-alert-overlay{
+    background: rgb(88 88 88 / 90%);
+}
+.react-confirm-alert-button-group {
 
+    
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 .nav-item .nav-link.active {
     color: black;
 }
