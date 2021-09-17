@@ -9,36 +9,11 @@ import * as GIIcons from 'react-icons/gi';
 import * as HiIcons from 'react-icons/hi';
 import * as MdIcons from 'react-icons/md';
 import React from 'react';
-import {
-  MdAccountCircle,
-  MdArrowDropDownCircle,
-  MdBorderAll,
-  MdBrush,
-  MdChromeReaderMode,
-  MdDashboard,
-  MdExtension,
-  MdGroupWork,
-  MdInsertChart,
-  MdKeyboardArrowDown,
-  MdNotificationsActive,
-  MdPages,
-  MdRadioButtonChecked,
-  MdReport,
-  MdSend,
-  MdStar,
-  MdTextFields,
-  MdViewCarousel,
-  MdViewDay,
-  MdViewList,
-  MdWeb,
-  MdWidgets,
-} from 'react-icons/md';
+import { MdDashboard, MdReport } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
   // UncontrolledTooltip,
-  Collapse,
   Nav,
-  Navbar,
   NavItem,
   NavLink as BSNavLink,
 } from 'reactstrap';
@@ -59,15 +34,9 @@ const navItemsCouncil = [
   },
   {
     to: '/managemembers',
-    name: 'Member Registrations',
+    name: 'Manage Registrations',
     exact: false,
     Icon: HiIcons.HiUser,
-  },
-  {
-    to: '/courseapproval/csslcourses',
-    name: 'Manage Course',
-    exact: false,
-    Icon: FaIcons.FaGraduationCap,
   },
   {
     to: '/cpdapproval/cpdrecords',
@@ -75,21 +44,32 @@ const navItemsCouncil = [
     exact: false,
     Icon: FaIcons.FaGraduationCap,
   },
-  { to: '/widgets', name: 'Workshops', exact: false, Icon: GIIcons.GiTeacher },
+  {
+    to: '/courseapproval/csslcourses',
+    name: 'Manage Course',
+    exact: false,
+    Icon: FaIcons.FaGraduationCap,
+  },
+
+  {
+    to: '/widgets',
+    name: 'Manage Workshops',
+    exact: false,
+    Icon: GIIcons.GiTeacher,
+  },
   {
     to: '/reviewblogs',
-    name: 'Review Blogs',
+    name: 'Manage Blogs',
     exact: false,
     Icon: FaIcons.FaBloggerB,
   },
   {
     to: '/jobapplications',
-    name: 'Jobs Applications',
+    name: 'Manage Jobs',
     exact: false,
     Icon: FaIcons.FaUserAlt,
   },
 
-  { to: '/charts', name: 'reports', exact: false, Icon: MdReport },
 ];
 
 const bem = bn.create('sidebar');

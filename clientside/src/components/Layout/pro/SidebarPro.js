@@ -75,24 +75,22 @@ const navItemsProffesional = [
     exact: false,
     Icon: FaIcons.FaGraduationCap,
   },
-  { 
-    to: '/blogs', 
-    name: 'Blogs', 
-    exact: false, 
-    Icon: FaIcons.FaBloggerB 
-  },
-  { 
-    to: '/jobadvertisements', 
-    name: 'Jobs', 
-    exact: false, 
-    Icon: FaIcons.FaUserAlt 
-  },
+
   { 
     to: '/csslworkshops', 
     name: 'Workshops', 
     exact: false, 
     Icon: GIIcons.GiTeacher 
   },
+
+  { 
+    to: '/blogs', 
+    name: 'Blogs', 
+    exact: false, 
+    Icon: FaIcons.FaBloggerB 
+  },
+
+
   { 
     to: '/forum', 
     name: 'Forum', 
@@ -100,6 +98,12 @@ const navItemsProffesional = [
     Icon: AiIcons.AiFillFileText 
   },
   
+  { 
+    to: '/jobadvertisements', 
+    name: 'Jobs', 
+    exact: false, 
+    Icon: FaIcons.FaUserAlt 
+  },
   /*{ to: '/charts', name: 'reports', exact: false, Icon: MdReport },*/
 ];
 

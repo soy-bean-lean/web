@@ -56,7 +56,9 @@ Blog.post("/getAllBloggers", (req, res) => {
 Blog.post("/getAllBlogs", (req, res) => {
   console.log("get all blogs line - 58");
   const mid = req.body.memberId;
+
   const sqlSelect = "SELECT blogId, title, image, publishedDate FROM blog";
+  
   //"SELECT DISTINCT user.firstName,user.lastName FROM ((user INNER JOIN member ON user.id=member.id ) INNER JOIN blog ON member.memberId=blog.memberId )"
   connection.query(sqlSelect, (err, result) => {
     res.send(result);

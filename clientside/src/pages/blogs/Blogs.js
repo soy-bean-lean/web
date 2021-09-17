@@ -1,12 +1,7 @@
 import Page from 'components/Page';
 import { AuthContext } from '../../helpers/AuthContext';
 import { Link } from 'react-router-dom';
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
+
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
@@ -46,6 +41,8 @@ const Blogs = props => {
   const { authState, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
+
+
     const formData = {
       // mId: authState.id,
       mId: 'cssl001',

@@ -90,7 +90,7 @@ function JobView() {
               </Card>
               <Card className="flex-row">
                 <CardBody>
-                  <Link to={'/job'}>
+                  <Link to={'/jobadvertisements'}>
                     <Button color="primary" size="LG">
                       Back
                     </Button>
