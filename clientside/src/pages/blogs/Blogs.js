@@ -13,7 +13,7 @@ import {
   Button,
   Card,
   CardBody,
-  Badge,
+ 
   Nav,
   NavItem,
   InputGroup,
@@ -22,15 +22,13 @@ import {
   TabContent,
   TabPane,
   CardImg,
-  CardImgOverlay,
-  CardLink,
+  
   CardText,
-  CardTitle,
+ 
   Col,
-  ListGroup,
+  
   CardHeader,
-  Table,
-  ListGroupItem,
+  
   Row,
 } from 'reactstrap';
 
@@ -38,23 +36,47 @@ const Blogs = props => {
   const [blog, setBlog] = useState(null);
   const [blogger, setBlogger] = useState(null);
   const [myBlog, setMyBlog] = useState(null);
+  const [title, setTitle] = useState('');
+
+  const [firstName, setFirstName] = useState('');
   const { authState, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
-
-
-    const formData = {
-      // mId: authState.id,
+    const data = {
+      title:'',
+      firstName:'',
       mId: 'cssl001',
+
     };
+    // const formData = {
+    //   // mId: authState.id,
+    //   mId: 'cssl001',
+    // };
+    axios
+      .post('http://localhost:3001/blog/getAllBlogs', data)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setBlog(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+
+
+
     // axios
-    //   .post('http://localhost:3001/blog/getAllBlogs', formData)
+    //   .post('http://localhost:3001/blog/getAllBloggers', formData)
 
     //   .then(response => {
     //     if (response.data.error) {
     //       alert(response.data.error);
     //     } else {
-    //       setBlog(response.data);
+    //       setBlogger(response.data);
     //     }
     //   })
     //   .catch(error => {
@@ -62,21 +84,7 @@ const Blogs = props => {
     //   });
 
     axios
-      .post('http://localhost:3001/blog/getAllBloggers', formData)
-
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          setBlogger(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
-
-    axios
-      .post('http://localhost:3001/blog/getMyBlogs', formData)
+      .post('http://localhost:3001/blog/getMyBlogs', data)
 
       .then(response => {
         if (response.data.error) {
@@ -90,34 +98,85 @@ const Blogs = props => {
       });
   }, []);
 
+
+  const getData = () => {
+    const data = {
+      title:title,
+      firstName:firstName,
+
+    };
+    axios
+      .post('http://localhost:3001/blog/getAllBlogs', data)
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setBlog(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+
   const [activeTab, setActiveTab] = useState('1');
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  const allbloggers =
-    blogger &&
-    blogger.map((blogger, i) => (
+  // const allbloggers =
+  //   blogger &&
+  //   blogger.map((blogger, i) => (
+  //     <>
+  //       <Link
+  //         to={'/csslcourses/courseview/cssl00' + blogger.memberId}
+  //         key={i}
+  //         className="link-tag"
+  //       >
+  //         <Col md={12} sm={10} xs={10} className="mb-2">
+  //           <Card className="flex-row">
+  //             <CardImg
+  //               src={
+  //                 'http://localhost:3001/uploads/profileImages/' +
+  //                 blogger.profileImage
+  //               }
+  //               style={{ width: 175, height: 150 }}
+  //             />
+  //             <CardBody>
+  //               <h3>
+  //                 {blogger.firstName} {blogger.lastName}{' '}
+  //               </h3>
+  //               <CardText>
+  //                 Ratings
+  //                 Number of Blogs :4
+  //                 {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
+  //               </CardText>
+  //             </CardBody>
+  //           </Card>
+  //         </Col>
+  //       </Link>
+  //       <hr className="course-view-line"></hr>
+  //     </>
+  //   ));
+
+  const allblogs =
+    blog &&
+    blog.map((blog, i) => (
       <>
         <Link
-          to={'/csslcourses/courseview/cssl00' + blogger.memberId}
+          to={'/csslcourses/courseview/cssl00' + blog.blogId + '/' + blog.title}
           key={i}
           className="link-tag"
         >
           <Col md={12} sm={10} xs={10} className="mb-2">
             <Card className="flex-row">
               <CardImg
-                src={
-                  'http://localhost:3001/uploads/profileImages/' +
-                  blogger.profileImage
-                }
+                src={'http://localhost:3001/uploads/blog/' + blog.image}
                 style={{ width: 175, height: 150 }}
               />
               <CardBody>
-                <h3>
-                  {blogger.firstName} {blogger.lastName}{' '}
-                </h3>
+                <h3>{blog.title}</h3>
                 <CardText>
                   Ratings
                   {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
@@ -129,35 +188,6 @@ const Blogs = props => {
         <hr className="course-view-line"></hr>
       </>
     ));
-
-  // const allblogs =
-  //   blog &&
-  //   blog.map((blog, i) => (
-  //     <>
-  //       <Link
-  //         to={'/csslcourses/courseview/cssl00' + blog.blogId + '/' + blog.title}
-  //         key={i}
-  //         className="link-tag"
-  //       >
-  //         <Col md={12} sm={10} xs={10} className="mb-2">
-  //           <Card className="flex-row">
-  //             <CardImg
-  //               src={'http://localhost:3001/uploads/blog/' + blog.image}
-  //               style={{ width: 175, height: 150 }}
-  //             />
-  //             <CardBody>
-  //               <h3>{blog.title}</h3>
-  //               <CardText>
-  //                 Ratings
-  //                 {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-  //               </CardText>
-  //             </CardBody>
-  //           </Card>
-  //         </Col>
-  //       </Link>
-  //       <hr className="course-view-line"></hr>
-  //     </>
-  //   ));
 
   const myblogs =
     myBlog &&
@@ -243,25 +273,25 @@ const Blogs = props => {
                       type="text"
                       className="note"
                       placeholder="Search By Bloggers"
-                      // onChange={event => {
-                      //   setCompanyName(event.target.value);
-                      // }}
-                      // onKeyUp={getData}
+                      onChange={event => {
+                        setFirstName(event.target.value);
+                      }}
+                      onKeyUp={getData}
                     />{' '}
                     <Input
                       type="text"
                       className="note"
-                      // onChange={event => {
-                      //   setJobRole(event.target.value);
-                      // }}
-                      // onKeyUp={getData}
+                      onChange={event => {
+                        setTitle(event.target.value);
+                      }}
+                      onKeyUp={getData}
                       placeholder="Seach By Blog Titles"
                     />{' '}
                   </InputGroup>
                 </CardBody>
                 <Card className="mb-2"></Card>
-
-                {allbloggers}
+                {allblogs}
+                {/* {allbloggers} */}
               </Card>
             </Col>
           </Row>
