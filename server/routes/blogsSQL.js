@@ -47,7 +47,8 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
 Blog.post("/getAllBloggers", (req, res) => {
   const mid = req.body.memberId;
   const sqlSelect =
-    "SELECT blog.image, user.id , user.firstName,COUNT(user.firstName) as number, user.lastName from member Inner JOIN user on user.id = member.id INNER join blog on blog.memberId = member.memberId GROUP by(firstName)";
+  //"SELECT blog.image, user.id , user.firstName,COUNT(user.firstName) as number, user.lastName from member Inner JOIN user on user.id = member.id INNER join blog on blog.memberId = member.memberId GROUP by(firstName)"
+    "SELECT blog.image, user.id , user.firstName,COUNT(user.firstName) as number, user.lastName from member Inner JOIN user on user.id = member.id INNER join blog on blog.memberId = member.memberId GROUP by(firstName) ORDER BY number  DESC";
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -72,6 +73,7 @@ Blog.post("/getAllBlogs", (req, res) => {
 Blog.post("/getMyBlogs", (req, res) => {
   console.log("get all blogs line -700");
   const mid = req.body.mId;
+  console.log(mid);
   connection.query(
     "SELECT blogId, title,image, content FROM blog WHERE memberId = ?;",
     [mid],
