@@ -59,7 +59,7 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
   }
 });
 
-//update course details (editCourseDetails.js)
+//update course details (editCourgetContentListseDetails.js)
 Course.route("/editCourseInfo").post(
   upload.single("image"),
   (req, res, err) => {
