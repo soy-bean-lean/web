@@ -12,6 +12,7 @@ import Record from "./routes/cpdRecord.js";
 import dashBoardSQL from "./routes/dashBoardSQL.js";
 import reportSQL from "./routes/reportsSQL.js";
 import Course from "./routes/csslCourse.js";
+import Reports from "./routes/reportsSQL.js";
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -64,6 +65,7 @@ app.use("/cpd", Record);
 app.use("/csslcourse", Course);
 
 app.use("/secretary", secretaryRouter);
+app.use("/reports", Reports);
 
 app.use('/uploads', express.static(path.resolve(__dirname, './uploads')));
 

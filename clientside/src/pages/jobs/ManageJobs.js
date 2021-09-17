@@ -1,42 +1,28 @@
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
-import user1Image from 'assets/img/users/100_1.jpg';
-import { UserCard } from 'components/Card';
 import Page from 'components/Page';
 import React, { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
-import classnames from 'classnames';
-import Typography from 'components/Typography';
 
-import { Line } from 'react-chartjs-2';
+import classnames from 'classnames';
+
 import {
   Button,
   Card,
   CardBody,
-  Badge,
   Nav,
   NavItem,
   NavLink,
   TabContent,
   TabPane,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
-  CardText,
-  CardTitle,
+ 
   Col,
-  ListGroup,
-  CardHeader,
+  
   Table,
   ListGroupItem,
   Row,
 } from 'reactstrap';
+import { func } from 'prop-types';
 
 const CardPage = props => {
   const [activeTab, setActiveTab] = useState('1');
@@ -48,7 +34,6 @@ const CardPage = props => {
   const tableTypes = ['striped'];
   const [data, setData] = useState(null);
   const [applicents, setApplicents] = useState(null);
-  const [total, setCount] = useState(0);
 
   const getData = () => {};
   useEffect(() => {
@@ -99,15 +84,10 @@ const CardPage = props => {
               {'   '}
               <Link to={'/editJobVaccencies/' + data.jvId}>
                 <Button color="primary" size="sm">
-                  View / Edit{' '}
+                  View More{' '}
                 </Button>
               </Link>
-              {'   '}
-              <Link to={''}>
-                <Button color="danger" size="sm">
-                  Delete{' '}
-                </Button>
-              </Link>
+             
             </center>
           </td>
         </tr>
@@ -121,23 +101,18 @@ const CardPage = props => {
         <tr>
           <td hidden>{data.Qnumber}</td>
           <td>{data.Question} </td>
-      
+
           <td>
             <center>
               {'   '}
               <Link to={'/editQuestions/' + data.Qnumber}>
                 <Button color="primary" size="sm">
-                  View / Edit{' '}
-                </Button>
-              </Link>
-              {'   '}
-              <Link to={''}>
-                <Button color="danger" size="sm">
-                  Delete{' '}
+                  View More{' '}
                 </Button>
               </Link>
             </center>
           </td>
+         
         </tr>
       </>
     ));

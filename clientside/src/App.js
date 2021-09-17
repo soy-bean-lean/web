@@ -82,6 +82,7 @@ const enrolledCourseView = React.lazy(() =>
 );
 
 //workshops
+const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
 
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
@@ -109,6 +110,7 @@ const editJobVaccencies = React.lazy(() =>
 );
 
 //reports
+const Reports = React.lazy(() => import('pages/reports/Reports'));
 
 //profile
 
@@ -237,11 +239,7 @@ function App(props) {
                     {/*Course Related Routes*/}
                     <Route exact path="/lecCourse" component={lecCourseView} />
                     <Route exact path="/csslcourses" component={csslCourses} />
-                    <Route
-                      exact
-                      path="/blogview/cssl00:id/:title"
-                      component={BlogView}
-                    />
+                    
                     <Route
                       exact
                       path="/csslcourse/addnewcourse"
@@ -286,6 +284,13 @@ function App(props) {
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
+                    />
+
+                    
                     <Route
                       exact
                       path="/csslcourses/courseview/cssl00:id/:title"
@@ -387,7 +392,7 @@ function App(props) {
                     />{' '}
                     {/* need to change component */}
                     {/*Blog Related Routes*/}
-                    <Route path="/reviewblogs" component={Login} />{' '}
+                    <Route path="/workshop" component={Workshop} />{' '}
                     {/* need to change component */}
                     <Route
                       path="/reviewblogs/blog00:id"
@@ -404,6 +409,8 @@ function App(props) {
                       path="/csslmember/cpdrecords/addcpdrecord"
                       component={AddCPD}
                     />
+
+<Route path="/workshop" component={Workshop} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
@@ -484,7 +491,13 @@ function App(props) {
                       path="/csslworkshops/addworkshop"
                       component={Login}
                     />{' '}
+                    <Route
+                      exact
+                      path="/reports"
+                      component={Reports}
+                    />{' '}
                     {/* need to change component */}
+                    
                     <Route
                       exact
                       path="/csslworkshops/editworkshop/cssl:id/:name"
@@ -538,6 +551,11 @@ function App(props) {
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
@@ -642,6 +660,12 @@ function App(props) {
                     />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
+                    <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
@@ -714,7 +738,14 @@ function App(props) {
                       component={enrolledCourseView}
                     />
                     {/*Blog Related Routes*/}
+            
                     <Route exact path="/blogs" component={Blogs} />
+                    <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}

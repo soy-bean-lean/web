@@ -295,7 +295,6 @@ Job.post("/sendEmail", async (req, res) => {
               if (err) {
                 res.send(result);
               } else {
-
               }
             }
           );
@@ -398,6 +397,19 @@ Job.post("/getJobs", (req, res) => {
     "%' and designation like '" +
     role +
     "%' and activity ='open'";
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+Job.post("/deleteItem", (req, res) => {
+  const tableName = req.body.tableName;
+  const qid = req.body.qid;
+  const coloum = req.body.coloum;
+
+  const sqlSelect =
+    "delete from " + tableName + " where " + coloum + "  =" + qid;
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);

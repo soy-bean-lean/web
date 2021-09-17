@@ -164,7 +164,7 @@ userRouter.post("/", async (req, res) => {
 userRouter.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
+console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un="+username);
   connection.query(
     //temporary sql query for testing
     "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
