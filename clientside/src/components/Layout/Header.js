@@ -90,6 +90,10 @@ function Header(props) {
     });
     history.push('/');
   };
+  const profile = () => {
+    
+    history.push('/profile');
+  };
 
   return (
     <>
@@ -155,7 +159,7 @@ function Header(props) {
                 >
                   <ListGroup flush>
                     <ListGroupItem
-                      to={'/courseP'}
+                      onClick={profile}
                       tag="button"
                       action
                       color="dark"

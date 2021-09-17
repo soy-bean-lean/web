@@ -7,7 +7,15 @@
 .nav-item .nav-link.active {
     color: black;
 }
-
+.profileImg{
+    border-radius: 100px;
+}
+.succesfull{
+    border-radius: 50px;
+}
+.profileImgN{
+    border-radius: 100px;
+}
 a:not([href]):not([tabindex]):hover {
     color: #000000;
     cursor: pointer;
