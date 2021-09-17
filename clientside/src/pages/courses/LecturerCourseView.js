@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
 import Typography from 'components/Typography';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import {
   Button,
   Card,
@@ -26,6 +28,7 @@ import {
   ListGroupItem,
   Row,
 } from 'reactstrap';
+import Alert from 'reactstrap/lib/Alert';
 
 const LecturerCourseView = () => {
   const { id } = useParams();
@@ -33,6 +36,8 @@ const LecturerCourseView = () => {
 
   const [courseImg, setCourseImg] = useState('');
   const [content, setContent] = useState(null);
+
+  let history = useHistory();
 
   useEffect(() => {
     const formData = {
@@ -62,6 +67,90 @@ const LecturerCourseView = () => {
       });
   }, []);
 
+  const confirmDelete = () =>{
+    confirmAlert({
+      title: 'Confirm to Delete Course',
+      message: 'Are you sure do you want to Delete ' + title + "?",
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deleteCourse()
+        },
+        {
+          label: 'No',
+          onClick: () => redirectCourse()
+        }
+      ]
+    });
+  }
+
+  const confirmApproval = () =>{
+    confirmAlert({
+      title: title,
+      message: 'Confirm to Send to Approval.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => getApproval()
+        },
+        {
+          label: 'No',
+          onClick: () => redirectCourse()
+        }
+      ]
+    });
+  }
+
+  const deleteCourse = () =>{
+    const sendData = {
+      cId: id,
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/deleteCourse', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          alert("Course Deleted Successfully");
+          redirectCourseList();
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }
+
+  const getApproval = () =>{
+    const sendData = {
+      cId: id,
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/getApproval', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          alert("Course Sent to Approval");
+          redirectCourseList();
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }
+
+  const redirectCourseList = () => {
+    let path = '/lecCourse';
+    history.push(path);
+  };
+
+  const redirectCourse = () => {
+    let path = '/courseView/cssl00' + id + '/' + title;
+    history.push(path);
+  };
+
   const contentList =
     content &&
     content.map((content, i) => (
@@ -89,7 +178,7 @@ const LecturerCourseView = () => {
   return (
     <Page title="Course">
       <hr></hr>
-      <Link to="">
+      <Link onClick={confirmApproval}>
         <Button color="success">
           Get Approval
         </Button>
@@ -101,8 +190,10 @@ const LecturerCourseView = () => {
         </Button>
       </Link>
       {'  '}
-      <Link to="">
-        <Button color="danger">Delete Course</Button>
+      <Link onClick={confirmDelete}>
+        <Button color="danger">
+          Delete Course
+        </Button>
       </Link>
       <br></br>
       <hr></hr>
