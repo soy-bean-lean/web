@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
+import TextEditor from '../../components/TextEditor/RichTextEditor';
 
 import {
   Button,
@@ -217,18 +218,19 @@ const AddCourseContent = () => {
                   Note
                 </Label>
                 <Col sm={9}>
-                  <Input
+                  {/* <Input
                     type="textarea"
                     className="note"
                     placeholder="Description"
                     onChange={e => setContentDes(e.target.value)}
-                  />
+                  /> */}
+                  <TextEditor onValueChange={setEditorValue} />
                 </Col>
               </FormGroup>
 
               <FormGroup row>
                 <Label for="exampleEmail" sm={3}>
-                  Course Type
+                  Content Type
                 </Label>
                 <Col sm={9}>
                   <Input
@@ -252,7 +254,7 @@ const AddCourseContent = () => {
                   <Button color="primary" onClick={InsertCourseContentFinish}>
                     Save & Finish
                   </Button>{' '}
-                  <Button color="success" onClick={redirectCourse}>
+                  <Button color="success" onClick={InsertCourseContentNext}>
                   Save & Next Content
                   </Button>
                 </center>

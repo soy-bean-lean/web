@@ -4,7 +4,7 @@ import connection from "../db.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads");
+    cb(null, "uploads/csslCourses");
   },
   filename: function (req, file, cb) {
     const ext = file.mimetype.split("/")[1];
@@ -27,6 +27,7 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
     const title = req.body.title;
     const description = req.body.description;
     const duration = req.body.duration;
+    const durationType = req.body.durationType;
     const language = req.body.language;
     const level = req.body.level;
     const image = req.file.filename;
@@ -34,11 +35,12 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
     const status = "OnGoing";
 
     connection.query(
-      "INSERT INTO csslcourse (name, description, duration, language, skillLevel, image, mode, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?);",
+      "INSERT INTO csslcourse (name, description, duration, durationType, language, skillLevel, image, mode, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?);",
       [
         title,
         description,
         duration,
+        durationType,
         language,
         level,
         image,
@@ -70,6 +72,7 @@ Course.route("/editCourseInfo").post(
       const title = req.body.title;
       const description = req.body.description;
       const duration = req.body.duration;
+      const durationType = req.body.durationType;
       const language = req.body.language;
       const level = req.body.level;
       const image = req.file.filename;
@@ -77,11 +80,12 @@ Course.route("/editCourseInfo").post(
       const status = "OnGoing";
 
       connection.query(
-        "UPDATE csslcourse SET name = ?, description = ?, duration = ?, language = ?, skillLevel = ?, image = ?, mode = ?, status = ? WHERE courseId = ?;",
+        "UPDATE csslcourse SET name = ?, description = ?, duration = ?, durationType = ?, language = ?, skillLevel = ?, image = ?, mode = ?, status = ? WHERE courseId = ?;",
         [
           title,
           description,
           duration,
+          durationType,
           language,
           level,
           image,
@@ -174,6 +178,7 @@ Course.route("/editCourseContent").post(
     const contentId = req.body.contentId;
     const title = req.body.title;
     const description = req.body.description;
+    const note = req.body.note;
     const type = req.body.type;
     //const note = req.body.note;
     var content;

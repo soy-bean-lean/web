@@ -21,6 +21,8 @@ import {
   Badge,
   Nav,
   NavItem,
+  InputGroup,
+  Input,
   NavLink,
   TabContent,
   TabPane,
@@ -45,7 +47,7 @@ const Blogs = props => {
 
   useEffect(() => {
     const formData = {
-     // mId: authState.id,
+      // mId: authState.id,
       mId: 'cssl001',
     };
     // axios
@@ -62,7 +64,7 @@ const Blogs = props => {
     //     alert(error);
     //   });
 
-      axios
+    axios
       .post('http://localhost:3001/blog/getAllBloggers', formData)
 
       .then(response => {
@@ -89,8 +91,7 @@ const Blogs = props => {
       .catch(error => {
         alert(error);
       });
-
-   }, []);
+  }, []);
 
   const [activeTab, setActiveTab] = useState('1');
 
@@ -99,34 +100,38 @@ const Blogs = props => {
   };
 
   const allbloggers =
-  blogger &&
-  blogger.map((blogger, i) => (
-    <>
-      <Link
-        to={'/csslcourses/courseview/cssl00' + blogger.memberId }
-        key={i}
-        className="link-tag"
-      >
-        <Col md={12} sm={10} xs={10} className="mb-2">
-          <Card className="flex-row">
-            <CardImg
-              src={'http://localhost:3001/uploads/profileImages/' + blogger.profileImage}
-              style={{ width: 175, height: 150 }}
-            />
-            <CardBody>
-              <h3>{blogger.firstName} {blogger.lastName} </h3>
-              <CardText>
-                Ratings
-                {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-              </CardText>
-            </CardBody>
-          </Card>
-        </Col>
-      </Link>
-      <hr className="course-view-line"></hr>
-    </>
-  ));
-
+    blogger &&
+    blogger.map((blogger, i) => (
+      <>
+        <Link
+          to={'/csslcourses/courseview/cssl00' + blogger.memberId}
+          key={i}
+          className="link-tag"
+        >
+          <Col md={12} sm={10} xs={10} className="mb-2">
+            <Card className="flex-row">
+              <CardImg
+                src={
+                  'http://localhost:3001/uploads/profileImages/' +
+                  blogger.profileImage
+                }
+                style={{ width: 175, height: 150 }}
+              />
+              <CardBody>
+                <h3>
+                  {blogger.firstName} {blogger.lastName}{' '}
+                </h3>
+                <CardText>
+                  Ratings
+                  {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
+                </CardText>
+              </CardBody>
+            </Card>
+          </Col>
+        </Link>
+        <hr className="course-view-line"></hr>
+      </>
+    ));
 
   // const allblogs =
   //   blog &&
@@ -160,41 +165,39 @@ const Blogs = props => {
   const myblogs =
     myBlog &&
     myBlog.map((myBlog, i) => {
-        return (
-          <>
-            <Link
-              to={'/blogview/cssl00' + myBlog.blogId + '/' + myBlog.title}
-              key={i}
-              className="link-tag"
-            >
-              <Col md={12} sm={10} xs={10} className="mb-2">
-                <Card className="flex-row">
-                  <CardImg
-                    src={'http://localhost:3001/uploads/blog/' + myBlog.image}
-                    style={{ width: 'auto', height: 150 }}
-                    className="card-img-left"
-                    // style={{ width: 175, height: 150 }}
-                  />
-                  <CardBody>
-                    <h3>{myBlog.title}</h3>
-                    <CardText>{myBlog.content}</CardText>
-                  </CardBody>
-                </Card>
-                <Button color="primary" className="buttonDIV">
-                        Edit
-                      </Button>
+      return (
+        <>
+          <Link
+            to={'/blogview/cssl00' + myBlog.blogId + '/' + myBlog.title}
+            key={i}
+            className="link-tag"
+          >
+            <Col md={12} sm={10} xs={10} className="mb-2">
+              <Card className="flex-row">
+                <CardImg
+                  src={'http://localhost:3001/uploads/blog/' + myBlog.image}
+                  style={{ width: 'auto', height: 150 }}
+                  className="card-img-left"
+                  // style={{ width: 175, height: 150 }}
+                />
+                <CardBody>
+                  <h3>{myBlog.title}</h3>
+                  <CardText>{myBlog.content}</CardText>
+                </CardBody>
+              </Card>
+              <Button color="primary" className="buttonDIV">
+                Edit
+              </Button>
 
-                      <Button color="danger" className="buttonDIV">
-                        Delete
-                      </Button>
-              </Col>
-            </Link>
-            <hr className="course-view-line"></hr>
-          </>
-        );
-      
+              <Button color="danger" className="buttonDIV">
+                Delete
+              </Button>
+            </Col>
+          </Link>
+          <hr className="course-view-line"></hr>
+        </>
+      );
     });
-
 
   return (
     <Page title="Blogs">
@@ -214,7 +217,7 @@ const Blogs = props => {
               toggle('1');
             }}
           >
-           Bloggers
+            Bloggers
           </NavLink>
         </NavItem>
         <NavItem>
@@ -237,9 +240,31 @@ const Blogs = props => {
                 <CardHeader>
                   <Typography className="text-success">All Blogs</Typography>
                 </CardHeader>
-                {allbloggers}
+                <CardBody>
+                  <InputGroup>
+                    <Input
+                      type="text"
+                      className="note"
+                      placeholder="Search By Bloggers"
+                      // onChange={event => {
+                      //   setCompanyName(event.target.value);
+                      // }}
+                      // onKeyUp={getData}
+                    />{' '}
+                    <Input
+                      type="text"
+                      className="note"
+                      // onChange={event => {
+                      //   setJobRole(event.target.value);
+                      // }}
+                      // onKeyUp={getData}
+                      placeholder="Seach By Blog Titles"
+                    />{' '}
+                  </InputGroup>
+                </CardBody>
+                <Card className="mb-2"></Card>
 
-               
+                {allbloggers}
               </Card>
             </Col>
           </Row>
@@ -253,7 +278,6 @@ const Blogs = props => {
                   <Typography className="text-success">My Blogs</Typography>
                 </CardHeader>
                 {myblogs}
-               
               </Card>
             </Col>
           </Row>
