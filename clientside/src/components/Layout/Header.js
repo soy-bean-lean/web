@@ -153,6 +153,7 @@ function Header(props) {
               <PopoverBody className="p-0 border-light">
                 <UserCard
                   title={authState.fname + ' ' + authState.lname}
+                  subtitle={authState.role}
                   subtitle={authState.email}
                   className="border-light"
                   
