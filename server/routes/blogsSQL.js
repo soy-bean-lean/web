@@ -74,8 +74,26 @@ Blog.post("/getMyBlogs", (req, res) => {
       else {
         res.send(result);
       }
+      }
+    );
+  });
+
+  //get Blog details to display on the blogView.js
+Blog.post("/getBlog", (req, res) => {
+  const bid = req.body.bId;
+  connection.query(
+    " SELECT blog.title,blog.content,blog.publishedDate,blog.image,user.email, user.title, user.firstName, user.lastName, user.profileImage FROM ((blog INNER JOIN member ON member.memberId = blog.memberId) INNER JOIN user ON user.id = member.id) WHERE blogId= ?;",
+    [bid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
     }
   );
 });
+  
+ 
+  
+  export default Blog;
 
-export default Blog;
