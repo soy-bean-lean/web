@@ -3,35 +3,13 @@ import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from 'components/SourceLink';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
-import * as SiIcons from 'react-icons/si';
 import * as GIIcons from 'react-icons/gi';
 import * as HiIcons from 'react-icons/hi';
-import * as MdIcons from 'react-icons/md';
 import React from 'react';
 import {
-  MdAccountCircle,
-  MdArrowDropDownCircle,
-  MdBorderAll,
-  MdBrush,
-  MdChromeReaderMode,
+
   MdDashboard,
-  MdExtension,
-  MdGroupWork,
-  MdInsertChart,
-  MdKeyboardArrowDown,
-  MdNotificationsActive,
-  MdPages,
-  MdRadioButtonChecked,
-  MdReport,
-  MdSend,
-  MdStar,
-  MdTextFields,
-  MdViewCarousel,
-  MdViewDay,
-  MdViewList,
-  MdWeb,
-  MdWidgets,
+  
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -75,24 +53,22 @@ const navItemsProffesional = [
     exact: false,
     Icon: FaIcons.FaGraduationCap,
   },
-  { 
-    to: '/blogs', 
-    name: 'Blogs', 
-    exact: false, 
-    Icon: FaIcons.FaBloggerB 
-  },
-  { 
-    to: '/jobadvertisements', 
-    name: 'Jobs', 
-    exact: false, 
-    Icon: FaIcons.FaUserAlt 
-  },
+
   { 
     to: '/csslworkshops', 
     name: 'Workshops', 
     exact: false, 
     Icon: GIIcons.GiTeacher 
   },
+
+  { 
+    to: '/blogs', 
+    name: 'Blogs', 
+    exact: false, 
+    Icon: FaIcons.FaBloggerB 
+  },
+
+
   { 
     to: '/forum', 
     name: 'Forum', 
@@ -100,6 +76,12 @@ const navItemsProffesional = [
     Icon: AiIcons.AiFillFileText 
   },
   
+  { 
+    to: '/jobadvertisements', 
+    name: 'Jobs', 
+    exact: false, 
+    Icon: FaIcons.FaUserAlt 
+  },
   /*{ to: '/charts', name: 'reports', exact: false, Icon: MdReport },*/
 ];
 

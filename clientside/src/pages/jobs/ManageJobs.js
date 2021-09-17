@@ -3,30 +3,21 @@ import React, { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
-import classnames from 'classnames';
-import Typography from 'components/Typography';
 
-import { Line } from 'react-chartjs-2';
+import classnames from 'classnames';
+
 import {
   Button,
   Card,
   CardBody,
-  Badge,
   Nav,
   NavItem,
   NavLink,
   TabContent,
   TabPane,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
-  CardText,
-  CardTitle,
+ 
   Col,
-  ListGroup,
-  CardHeader,
+  
   Table,
   ListGroupItem,
   Row,
@@ -43,7 +34,6 @@ const CardPage = props => {
   const tableTypes = ['striped'];
   const [data, setData] = useState(null);
   const [applicents, setApplicents] = useState(null);
-  const [total, setCount] = useState(0);
 
   const getData = () => {};
   useEffect(() => {

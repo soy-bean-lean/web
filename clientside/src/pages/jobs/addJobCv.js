@@ -6,8 +6,6 @@ import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
 
 import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {
   Button,
   Card,
@@ -15,14 +13,10 @@ import {
   CardHeader,
   Col,
   Form,
-  FormFeedback,
   FormGroup,
-  FormText,
   Input,
   Alert,
   Label,
-  UncontrolledAlert,
-  Row,
 } from 'reactstrap';
 // let history = useHistory();
 
