@@ -1,15 +1,9 @@
-import logo200Image from 'assets/img/logo/logo_200.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
-import SourceLink from 'components/SourceLink';
 import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
-import * as SiIcons from 'react-icons/si';
 import * as GIIcons from 'react-icons/gi';
 import * as HiIcons from 'react-icons/hi';
-import * as MdIcons from 'react-icons/md';
 import React from 'react';
-import { MdDashboard, MdReport } from 'react-icons/md';
+import { MdDashboard } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
   // UncontrolledTooltip,

@@ -58,9 +58,6 @@ a:not([href]):not([tabindex]):hover {
   padding-left: 4px;
   transition: 0.3s;
 }
-.nav-item .nav-link.active {
-  border-left: 8px solid #ffffff;
-}
 .cr-sidebar .nav .nav-item {
   margin-left: -2px;
   margin-right: 2px;
@@ -74,7 +71,9 @@ a:not([href]):not([tabindex]):hover {
   color: #007bff;
   border-color: #323436;
 }
-
+.img-small{
+  border-radius: 50px;
+}
 .bg-gradient-theme {
   background: linear-gradient(to bottom, #6a82fb, #40476b);
 }

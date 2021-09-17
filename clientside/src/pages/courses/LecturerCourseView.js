@@ -10,25 +10,14 @@ import {
   Button,
   Card,
   CardBody,
-  Badge,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
+  
   CardText,
   CardTitle,
   Col,
-  ListGroup,
   CardHeader,
-  Table,
-  ListGroupItem,
+
   Row,
 } from 'reactstrap';
-import Alert from 'reactstrap/lib/Alert';
 
 const LecturerCourseView = () => {
   const { id } = useParams();

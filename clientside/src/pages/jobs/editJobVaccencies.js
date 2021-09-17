@@ -18,9 +18,7 @@ import {
   CardHeader,
   Col,
   Form,
-  FormFeedback,
   FormGroup,
-  FormText,
   Input,
   Label,
   Row,
@@ -31,7 +29,6 @@ import Alert from 'reactstrap/lib/Alert';
 function UpdateJobVacancies() {
   const { id } = useParams();
   const add = '';
-  const [maximumCount, setQuestionCount] = useState(null);
   const [numberOfQuestions, setNumberOfQuestions] = useState('');
 
   const [companyName, setCompanyName] = useState('');

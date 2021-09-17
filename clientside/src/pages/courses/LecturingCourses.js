@@ -1,8 +1,6 @@
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
 
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -14,22 +12,15 @@ import {
   Button,
   Card,
   CardBody,
-  Badge,
   Nav,
   NavItem,
   NavLink,
   TabContent,
   TabPane,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
-  CardText,
-  CardTitle,
+ 
   Col,
-  ListGroup,
   CardHeader,
   Table,
-  ListGroupItem,
   Row,
 } from 'reactstrap';
 

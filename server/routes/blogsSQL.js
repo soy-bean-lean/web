@@ -44,14 +44,14 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
   }
 });
 
-// Blog.post("/getAllBloggers", (req, res) => {
-//   const mid = req.body.memberId;
-//   const sqlSelect =
-//     "SELECT DISTINCT user.firstName,user.lastName, user.profileImage,member.memberId FROM ((user INNER JOIN member ON user.id=member.id ) INNER JOIN blog ON member.memberId=blog.memberId ) ORDER BY publishedDate DESC;";
-//   connection.query(sqlSelect, (err, result) => {
-//     res.send(result);
-//   });
-// });
+Blog.post("/getAllBloggers", (req, res) => {
+  const mid = req.body.memberId;
+  const sqlSelect =
+    "SELECT blog.image, user.id , user.firstName,COUNT(user.firstName) as number, user.lastName from member Inner JOIN user on user.id = member.id INNER join blog on blog.memberId = member.memberId GROUP by(firstName)";
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
 
 Blog.post("/getAllBlogs", (req, res) => {
 
@@ -60,7 +60,7 @@ Blog.post("/getAllBlogs", (req, res) => {
   const title=req.body.title;
   const firstName=req.body.firstName;
 
-  const sqlSelect = "SELECT blog.*, user.id , user.firstName , user.lastName , user.email , member.id from member Inner JOIN user on user.id = member.id RIGHT join blog on blog.memberId = member.memberId where user.firstName like '"+firstName+"%' and blog.title like '"+title+"%'";
+  const sqlSelect = "SELECT blog.*, user.id , user.profileImage, user.firstName , user.lastName , user.email , member.id from member Inner JOIN user on user.id = member.id RIGHT join blog on blog.memberId = member.memberId  where user.firstName like '"+firstName+"%' and blog.title like '"+title+"%'  ORDER BY `blog`.`publishedDate` DESC ";
    console.log(sqlSelect);
   //const sqlSelect = "SELECT blogId, title, image, publishedDate FROM blog";
   //"SELECT DISTINCT user.firstName,user.lastName FROM ((user INNER JOIN member ON user.id=member.id ) INNER JOIN blog ON member.memberId=blog.memberId )"
@@ -69,20 +69,20 @@ Blog.post("/getAllBlogs", (req, res) => {
   });
 });
 
-// Blog.post("/getMyBlogs", (req, res) => {
-//   console.log("get all blogs line -700");
-//   const mid = req.body.mId;
-//   connection.query(
-//     "SELECT blogId, title,image, content FROM blog WHERE memberId = ?;",
-//     [mid],
-//     (error, result, feilds) => {
-//       if (error) console.log(error);
-//       else {
-//         res.send(result);
-//       }
-//       }
-//     );
-//   });
+Blog.post("/getMyBlogs", (req, res) => {
+  console.log("get all blogs line -700");
+  const mid = req.body.mId;
+  connection.query(
+    "SELECT blogId, title,image, content FROM blog WHERE memberId = ?;",
+    [mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+      }
+    );
+  });
 
   //get Blog details to display on the blogView.js
 // Blog.post("/getBlog", (req, res) => {
