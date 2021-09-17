@@ -79,6 +79,7 @@ const editCourseContent = React.lazy(() =>
 );
 
 //workshops
+const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
 
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
@@ -382,7 +383,7 @@ function App(props) {
                     />{' '}
                     {/* need to change component */}
                     {/*Blog Related Routes*/}
-                    <Route path="/reviewblogs" component={Login} />{' '}
+                    <Route path="/workshop" component={Workshop} />{' '}
                     {/* need to change component */}
                     <Route
                       path="/reviewblogs/blog00:id"
@@ -399,6 +400,8 @@ function App(props) {
                       path="/csslmember/cpdrecords/addcpdrecord"
                       component={AddCPD}
                     />
+
+<Route path="/workshop" component={Workshop} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
