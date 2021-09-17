@@ -1,4 +1,4 @@
-import Router from "express";
+import Router, { query } from "express";
 import multer from "multer";
 import connection from "../db.js";
 
@@ -315,7 +315,7 @@ Course.post("/getCourseInfo", (req, res) => {
 Course.post("/getCourseImg", (req, res) => {
   const cid = req.body.cId;
   connection.query(
-    "SELECT image FROM csslcourse WHERE courseId = ?;",
+    "SELECT status,image FROM csslcourse WHERE courseId = ?;",
     [cid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -326,11 +326,45 @@ Course.post("/getCourseImg", (req, res) => {
   );
 });
 
+//get course list (Courses.js)
 Course.post("/getCourseList", (req, res) => {
   const mid = req.body.mId;
   const status = "Approved";
   connection.query(
-    "SELECT * FROM csslcourse WHERE status = ?;",
+    //need to add not equal conductedBy to memeberId and not enrolled by the memberId 
+    "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ?;",
+    [mid, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get distinct instructor list (Courses.js)
+Course.post("/getInstructorList", (req, res) => {
+  const mid = req.body.mId;
+  const status = "Approved";
+  connection.query(
+    "SELECT DISTINCT user.title, user.firstName, user.lastName, csslcourse.conductedBy FROM ((csslcourse INNER JOIN member ON member.memberId = csslcourse.conductedBy) INNER JOIN user ON user.id = member.id) WHERE csslcourse.conductedBy != ? AND csslcourse.status = ?;",
+    [mid, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get distinct category list (Courses.js)
+Course.post("/getCategoryList", (req, res) => {
+  const mid = req.body.mId;
+  const status = "Approved";
+  connection.query(
+    "SELECT DISTINCT category FROM csslcourse WHERE csslcourse.status = ?;",
     [status],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -339,6 +373,154 @@ Course.post("/getCourseList", (req, res) => {
       }
     }
   );
+});
+
+//get filtered course list (Courses.js)
+Course.post("/getFilterCourseList", (req, res) => {
+  const mid = req.body.mId;
+  const level = req.body.level;
+  const instructor = req.body.instructor;
+  const category = req.body.category;
+  const status = "Approved";
+
+  if((level == "" && instructor == "") || (level == "" && category == "") || (category == "" && instructor == "")){
+    connection.query(
+      "SELECT * FROM csslcourse WHERE (skillLevel = ? OR conductedBy = ? OR category = ?) AND conductedBy != ? AND status = ?;",
+      [level, instructor, category, mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+  else if(level != "" && instructor != "" && category != ""){
+    connection.query(
+      "SELECT * FROM csslcourse WHERE skillLevel = ? AND conductedBy = ? AND category = ? AND conductedBy != ? AND status = ?;",
+      [level, instructor, category, mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+  else if(level != "" && instructor == "" && category != ""){
+    connection.query(
+      "SELECT * FROM csslcourse WHERE skillLevel = ? AND category = ? AND conductedBy != ? AND status = ?;",
+      [level, category, mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+  else if(level == "" && instructor != "" && category != ""){
+    connection.query(
+      "SELECT * FROM csslcourse WHERE conductedBy = ? AND category = ? AND conductedBy != ? AND status = ?;",
+      [instructor, category, mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+  else if(level != "" && instructor != "" && category == ""){
+    connection.query(
+      "SELECT * FROM csslcourse WHERE skillLevel = ? AND conductedBy = ? AND conductedBy != ? AND status = ?;",
+      [level, instructor, mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+  else{
+    connection.query(
+      "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ?;",
+      [mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+});
+
+//get searched course list (Courses.js)
+Course.post("/getSearchCourseList", (req, res) => {
+  const mid = req.body.mId;
+  const sQuery = req.body.sQuery;
+  const status = "Approved";
+  connection.query(
+    "SELECT * FROM csslcourse WHERE (name LIKE ? OR category LIKE ? ) AND conductedBy != ? AND status = ?;",
+    ['%'+sQuery+'%', '%'+sQuery+'%', mid, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get sorted course list (Courses.js)
+Course.post("/getSortCourseList", (req, res) => {
+  const mid = req.body.mId;
+  const type = req.body.sortType;
+  const status = "Approved";
+  if(type == "Rating"){
+    connection.query(
+      "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ? ORDER BY avgRate DESC;",
+      [mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+
+  }
+  else if(type == "Interaction"){
+    connection.query(
+      "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ? ORDER BY noOfInteraction DESC;",
+      [mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+
+  }
+  else if(type == "Date"){
+    connection.query(
+      "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ? ORDER BY approvedDate DESC;",
+      [mid, status],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+
+  }
+  else{
+
+  }
 });
 
 Course.post("/getEnrollCourseList", (req, res) => {
@@ -369,4 +551,6 @@ Course.post("/getCourse", (req, res) => {
     }
   );
 });
+
+
 export default Course;
