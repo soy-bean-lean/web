@@ -109,8 +109,24 @@ Course.route("/editCourseInfo").post(
 
 //delete course(it's only update the status to deleted)
 Course.post("/deleteCourse", (req, res) => {
-  const courseId = req.body.courseId;
+  const courseId = req.body.cId;
   const status = "Deleted";
+  connection.query(
+    "UPDATE csslcourse SET status = ? WHERE courseId = ?;",
+    [status, courseId],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//update course status to Pending to get Approval (LecturerCourseView.js)
+Course.post("/getApproval", (req, res) => {
+  const courseId = req.body.cId;
+  const status = "Pending";
   connection.query(
     "UPDATE csslcourse SET status = ? WHERE courseId = ?;",
     [status, courseId],
@@ -196,7 +212,7 @@ Course.route("/editCourseContent").post(
         else {
           res.send({
             data: result,
-            msg: "Successfully uPDATED.",
+            msg: "Successfully Updated.",
           });
         }
       }
@@ -223,9 +239,10 @@ Course.post("/deleteCourseContent", (req, res) => {
 
 Course.post("/", (req, res) => {
   const mid = req.body.mId;
+  const status = "Deleted";
   connection.query(
-    "SELECT courseId, name, status FROM csslcourse WHERE conductedBy = ?;",
-    [mid],
+    "SELECT courseId, name, status FROM csslcourse WHERE conductedBy = ? AND status != ?;",
+    [mid, status],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
