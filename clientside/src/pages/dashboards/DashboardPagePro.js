@@ -62,6 +62,7 @@ class DashboardPage extends React.Component {
 
     return (
       <Page title="Proffessional Member - DashBoard" >
+      <hr/>
         <Row>
          
           <Col lg={6} md={6} sm={10} xs={12}>
