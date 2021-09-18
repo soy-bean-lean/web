@@ -183,8 +183,7 @@ export const supportTicketsData = [
     avatar: user1Image,
     name: 'Sim',
     date: '30 mins ago',
-    text:
-      'Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.',
+    text: 'Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.',
     status: 'pending',
   },
   {
@@ -192,8 +191,7 @@ export const supportTicketsData = [
     avatar: user2Image,
     name: 'Jane',
     date: '1 hour ago',
-    text:
-      'Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.',
+    text: 'Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.',
     status: 'open',
   },
   {
@@ -201,8 +199,7 @@ export const supportTicketsData = [
     avatar: user3Image,
     name: 'Tom',
     date: 'yesterday',
-    text:
-      'Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.',
+    text: 'Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy nibh euismod tinciduntut laoreet doloremagna aliquam erat volutpat.',
     status: 'closed',
   },
 ];
@@ -268,13 +265,7 @@ export const chartjs = {
       datasets: [
         {
           data: [20, 30, 50, 60],
-          backgroundColor: [
-            '#6a82fb',
-            '#353e82',
-  
-            '#00c9ff',
-            '#ffd700',
-          ],
+          backgroundColor: ['#1d7e61', '#ec1317', '#ffc107', '#08186e'],
           label: 'Dataset 1',
         },
       ],
@@ -284,6 +275,7 @@ export const chartjs = {
       responsive: true,
       legend: {
         display: true,
+        position:'right',
       },
       title: {
         display: false,
@@ -297,20 +289,33 @@ export const chartjs = {
   },
   line: {
     data: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'Octorber',
+        'November',
+        'December',
+      ],
       datasets: [
         {
-          label: 'Revenue for this year',
-          borderColor: '#6a82fb',
-          backgroundColor: '#6a82fb',
-          data: [0, 1300, 2200, 3400, 4600, 3500, 3000],
+          label: 'CPD Activities Completed this year',
+          borderColor: '#08186e',
+          backgroundColor: '#08186e',
+          data: [2, 5, 4, 3, 5, 7, 6, 10, 4, 3, 8, 4],
         },
 
         {
-          label: 'Revenue for last year',
-          borderColor: '#c7ccf2',
-          backgroundColor: '#c7ccf2',
-          data: [0, 1300, 2200, 3400, 4600, 3500, 3000],
+          label: 'CPD Activities Completed last year',
+          borderColor: '#7987d3',
+          backgroundColor: '#7987d3',
+          data: [0, 2, 3, 4, 5, 5, 5, 3, 4, 6, 7, 4],
         },
       ],
     },

@@ -11,7 +11,6 @@ dashBoardSQL.post("/getCPDData", (req, res) => {
   
    // "select extract(MONTH from AdDate) as month,sum(Credits) as credits from test group by month;"
     "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = 'cssl001' group by month ;"
-
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -77,6 +76,54 @@ dashBoardSQL.post("/payments", (req, res) => {
   });
 });
 
+//Professional dashboard announcement
+dashBoardSQL.post("/announcement", (req, res) => {
+  connection.query(
+    "SELECT * FROM `announcements` LIMIT 1;",
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+
+//Professional dashboard recent activities
+dashBoardSQL.post("/recent", (req, res) => {
+
+  const id = req.body.id;
+  connection.query(
+    "SELECT * FROM `recentactivities` WHERE memberID = ? LIMIT 2;",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//Professional dashboard line chart
+dashBoardSQL.post("/cpdactivities", (req, res) => {
+
+  const id = req.body.id;
+  connection.query(
+    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021 group by month ",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
 
 export default dashBoardSQL;
 

@@ -24,6 +24,7 @@ import Registration from 'pages/registration/registration';
 import Profile from 'pages/profile/profile';
 import ForgotPassword from 'pages/forgotPassword/forgotPassword';
 import ResetPassword from 'pages/forgotPassword/resetPassword';
+import TestDash from 'pages/TestDash';
 
 import AuthPage from 'pages/AuthPage';
 import componentQueries from 'react-component-queries';
@@ -833,6 +834,7 @@ function App(props) {
                       component={AuthModalPage}
                     />
                     <Route exact path="/buttons" component={ButtonPage} />
+                    <Route exact path="/testdash" component={TestDash} />
                     <Route exact path="/cards" component={CardPage} />
                     <Route exact path="/widgets" component={WidgetPage} />
                     <Route
