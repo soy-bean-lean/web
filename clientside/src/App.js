@@ -110,6 +110,7 @@ const editJobVaccencies = React.lazy(() =>
 );
 
 //reports
+const Reports = React.lazy(() => import('pages/reports/Reports'));
 
 //profile
 
@@ -238,7 +239,6 @@ function App(props) {
                     {/*Course Related Routes*/}
                     <Route exact path="/lecCourse" component={lecCourseView} />
                     <Route exact path="/csslcourses" component={csslCourses} />
-                    
                     <Route
                       exact
                       path="/csslcourse/addnewcourse"
@@ -288,8 +288,6 @@ function App(props) {
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
                     />
-
-                    
                     <Route
                       exact
                       path="/csslcourses/courseview/cssl00:id/:title"
@@ -408,8 +406,7 @@ function App(props) {
                       path="/csslmember/cpdrecords/addcpdrecord"
                       component={AddCPD}
                     />
-
-<Route path="/workshop" component={Workshop} />
+                    <Route path="/workshop" component={Workshop} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
@@ -487,8 +484,8 @@ function App(props) {
                     {/* need to change component */}
                     <Route
                       exact
-                      path="/csslworkshops/addworkshop"
-                      component={Login}
+                      path="/reports"
+                      component={Reports}
                     />{' '}
                     {/* need to change component */}
                     <Route
@@ -731,7 +728,6 @@ function App(props) {
                       component={enrolledCourseView}
                     />
                     {/*Blog Related Routes*/}
-            
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
                     <Route
