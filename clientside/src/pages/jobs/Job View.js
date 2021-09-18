@@ -96,7 +96,9 @@ function JobView() {
     ));
   return (
     <>
-     <Page>
+     <Page title={"Job"}>
+     <hr></hr>
+
       <Col sm="14" md={{ size: 10, offset: 1 }}>
       <div className="headder">
         {jobview}

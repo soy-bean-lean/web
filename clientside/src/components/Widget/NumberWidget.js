@@ -13,7 +13,7 @@ const NumberWidget = ({
   ...restProps
 }) => {
   return (
-    <Card body {...restProps}>
+    <Card body {...restProps} className="mb-3">
       <div className="d-flex justify-content-between">
         <CardText tag="div">
           <Typography className="mb-0">
