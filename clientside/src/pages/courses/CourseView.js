@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as AiIcons from "react-icons/ai";
-
 import { useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';

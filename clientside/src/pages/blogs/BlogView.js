@@ -82,14 +82,16 @@ const BlogView = () => {
               <h5>About Blog</h5>
             </CardHeader>
             <CardBody>
-              {/* <Typography className="text-primary">
-                <h2>Syllabus - What you will learn from this course</h2>
+              <Typography className="text-primary">
+               
 
-                {blogData.content}
-              </Typography> */}
+              <h6>{blogData.description}</h6>
+              </Typography>
 
-              {/* <hr></hr> */}
-              <h2>Syllabus - What you will learn from this course</h2>
+              <hr></hr>
+              <br></br>
+              
+              {/* <h2>Syllabus - What you will learn from this course</h2> */}
               
               {blogData.content}
               {/* {contentList} */}
@@ -106,11 +108,11 @@ const BlogView = () => {
                 </Link>
                 {'  '}
                 <Link to={'/courseReviewP/' + id + 'view'}>
-                  <Button color="primary">Reviews</Button>
+                  <Button color="primary">Comments</Button>
                 </Link>
                 {'  '}
                 <Link to={'/coursEnrollsP/' + id}>
-                  <Button color="primary">Like</Button>
+                  <Button color="primary">Clap</Button>
                 </Link>
               </center>
             </CardBody>
@@ -138,7 +140,7 @@ const BlogView = () => {
                   </span>
                   {'  '}
                   <span>
-                    read min
+                    Read Min : 10 minu
                     {/* Approx. {courseData.duration} {courseData.durationType} to
                     Complete */}
                   </span>
@@ -157,7 +159,7 @@ const BlogView = () => {
                   </span>
                   {'  '}
                   <span>
-                    read count
+                    read count : 10
                     {/* {"  "} {courseData.mode} */}
                   </span>
                   <br></br>
@@ -166,7 +168,7 @@ const BlogView = () => {
                     <AiIcons.AiOutlineBarChart />{' '}
                   </span>
                   <span>
-                    publish Date
+                    publish Date  {blogData.publishedDate}
                     {/* {"  "}
                     {courseData.skillLevel} */}
                   </span>
