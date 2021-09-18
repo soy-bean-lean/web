@@ -87,3 +87,6 @@ a:not([href]):not([tabindex]):hover {
   color: black;
   text-decoration: none;
 }
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  border-bottom: 3px solid #4f62c0;
+}
