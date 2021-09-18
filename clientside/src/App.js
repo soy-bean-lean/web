@@ -83,6 +83,7 @@ const enrolledCourseView = React.lazy(() =>
 
 //workshops
 const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
+const AddWorkshop = React.lazy(() => import('pages/workshop/AddWorkshop'));
 
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
@@ -410,6 +411,7 @@ function App(props) {
                     />
 
 <Route path="/workshop" component={Workshop} />
+<Route exact path="/addWorkshop" component={AddWorkshop} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
                     <Route path="/badges" component={BadgePagePro} />
                     <Route

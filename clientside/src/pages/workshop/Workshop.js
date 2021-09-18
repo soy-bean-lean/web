@@ -207,11 +207,11 @@ const Workshop = props => {
     });
 
   return (
-    <Page title="Blogs">
+    <Page title="Workshops">
       <hr></hr>
-      <Link to="/addBlogs">
-        <Button color="success" to="/addBlogs">
-          New Blog
+      <Link to="/addworkshop">
+        <Button color="success" to="/addworkshop">
+          Add Workshop
         </Button>
       </Link>
       <br></br>
@@ -224,7 +224,7 @@ const Workshop = props => {
               toggle('1');
             }}
           >
-            Bloggers
+            CSSL Workshop
           </NavLink>
         </NavItem>
         <NavItem>
@@ -234,7 +234,7 @@ const Workshop = props => {
               toggle('2');
             }}
           >
-            My Blogs
+            Other Workshop
           </NavLink>
         </NavItem>
       </Nav>
@@ -245,7 +245,7 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">All Blogs</Typography>
+                  <Typography className="text-success">CSSL rkshopWo</Typography>
                 </CardHeader>
                 {/* <CardBody>
                   <InputGroup>
@@ -282,7 +282,7 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">My Blogs</Typography>
+                  <Typography className="text-success">Other Workshop</Typography>
                 </CardHeader>
                 {myblogs}
               </Card>
