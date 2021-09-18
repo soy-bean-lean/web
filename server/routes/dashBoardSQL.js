@@ -110,8 +110,8 @@ dashBoardSQL.post("/recent", (req, res) => {
   );
 });
 
-//Professional dashboard line chart
-dashBoardSQL.post("/cpdactivities", (req, res) => {
+//Professional dashboard line chart-credits earned this year
+dashBoardSQL.post("/creditsearned", (req, res) => {
 
   const id = req.body.id;
   connection.query(
@@ -126,6 +126,40 @@ dashBoardSQL.post("/cpdactivities", (req, res) => {
     }
   );
 });
+
+//Professional dashboard donut chart-activity type this year
+dashBoardSQL.post("/activityType", (req, res) => {
+
+  const id = req.body.id;
+  connection.query(
+    "select recordType,COUNT(recordType) as count from cpdrecords where memberId = 'cssl001' group by recordType;",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+dashBoardSQL.post("/categoryType", (req, res) => {
+
+  const id = req.body.id;
+  connection.query(
+    "select recordCategory,COUNT(recordCategory) as count from cpdrecords where memberId = 'cssl001' group by recordCategory;",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 
 export default dashBoardSQL;
 
