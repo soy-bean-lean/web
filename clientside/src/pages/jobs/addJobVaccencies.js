@@ -3,8 +3,6 @@ import React, { useContext, useState, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {
   Button,
   Card,
@@ -12,9 +10,7 @@ import {
   CardHeader,
   Col,
   Form,
-  FormFeedback,
   FormGroup,
-  FormText,
   Input,
   Label,
   Row,

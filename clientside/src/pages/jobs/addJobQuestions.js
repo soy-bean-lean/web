@@ -32,7 +32,6 @@ function AddQuestion() {
   const [qType, getQuestionType] = useState(null);
   const [type, setType] = useState(null);
   const [typeN, setTypeN] = useState(null);
-  const [t, setQuestionType] = useState(null);
 
   //  const [image, setImage] = useState("");
 
@@ -49,7 +48,6 @@ function AddQuestion() {
       console.log('===');
       finalType = type;
     }
-    console.log(finalType);
     const data = {
       question: question,
       ans1: ans1,

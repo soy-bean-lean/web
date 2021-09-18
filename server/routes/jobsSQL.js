@@ -66,7 +66,7 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
       ],
       (err, result) => {
         if (err) {
-          console.log(err)
+          console.log(err);
           res.send(result);
         } else {
           res.json("success");
@@ -85,38 +85,93 @@ Job.post("/updateJob", async (req, res) => {
   const description = req.body.description;
   const addBy = req.body.addBy;
   const jvId = req.body.jvId;
-  const questionCount = req.body.questionCount;
-  connection.query(
-    " UPDATE jobvacancy SET companyName = '" +
-      companyName +
-      " ' , location = '" +
-      location +
-      " ' ,designation = '" +
-      jobRole +
-      " ' ,email = '" +
-      email +
-      " ' ,contact = '" +
-      contact +
-      " ' ,addBy = '" +
-      addBy +
-      " ' ,email = '" +
-      email +
-      " ' ,email = '" +
-      questionCount +
-      " ' ,questionCount = '" +
-      description +
-      " '  WHERE jvId=" +
-      jvId +
-      ";",
+  const questionType = req.body.questionType;
+  const numberOfQuestions = req.body.numberOfQuestions;
+  var i = numberOfQuestions;
+  const sqlSelect =
+    "SELECT count(type) as max , type from jobquestions where type = '" +
+    questionType +
+    "' GROUP BY type;";
+  console.log(sqlSelect);
+  connection.query(sqlSelect, (err, result1) => {
+    if (result1[0].max < numberOfQuestions) {
+      console.log("overed");
+      i = result1[0].max;
 
-    (err, result) => {
-      if (err) {
-        res.send(result);
-      } else {
-        res.json("success");
-      }
+      connection.query(
+        " UPDATE jobvacancy SET companyName = '" +
+          companyName +
+          " ' , location = '" +
+          location +
+          " ' ,designation = '" +
+          jobRole +
+          " ' ,email = '" +
+          email +
+          " ' ,contact = '" +
+          contact +
+          " ' ,addBy = '" +
+          addBy +
+          " ' ,email = '" +
+          email +
+          " ' ,questionCount = '" +
+          i +
+          " ' ,questionType = '" +
+          questionType +
+          " ' ,description = '" +
+          description +
+          " '  WHERE jvId=" +
+          jvId +
+          ";",
+
+        (err, result) => {
+          if (err) {
+            res.send(result);
+          } else {
+            res.json("success");
+          }
+        }
+      );
+    } else {
+      console.log("ok");
+      i = parseInt(numberOfQuestions);
+      console.log(i);
+      console.log(numberOfQuestions);
+
+      connection.query(
+        " UPDATE jobvacancy SET companyName = '" +
+          companyName +
+          " ' , location = '" +
+          location +
+          " ' ,designation = '" +
+          jobRole +
+          " ' ,email = '" +
+          email +
+          " ' ,contact = '" +
+          contact +
+          " ' ,addBy = '" +
+          addBy +
+          " ' ,email = '" +
+          email +
+          " ' ,questionCount = '" +
+          i +
+          " ' ,questionType = '" +
+          questionType +
+          " ' ,description = '" +
+          description +
+          " '  WHERE jvId=" +
+          jvId +
+          ";",
+
+        (err, result) => {
+          if (err) {
+            res.send(result);
+          } else {
+            res.json("success");
+          }
+        }
+      );
     }
-  );
+  });
 });
 
 Job.post("/updateQuestion", async (req, res) => {
@@ -127,6 +182,7 @@ Job.post("/updateQuestion", async (req, res) => {
   const ans4 = req.body.ans4;
   const correct = req.body.correct * 1;
   const qid = req.body.qid;
+  const questionType = req.body.questionType;
 
   const sql =
     " UPDATE jobquestions SET Question = '" +
@@ -139,14 +195,17 @@ Job.post("/updateQuestion", async (req, res) => {
     ans3 +
     " ' ,Answer4 = '" +
     ans4 +
+    " ' ,type = '" +
+    questionType +
     " ',Correct = " +
     correct +
     "   WHERE Qnumber=" +
     qid +
     ";";
+
+  console.log(sql);
   connection.query(sql, (err, result) => {
     if (err) {
-      console.log(sql);
       res.send(result);
     } else {
       res.json("success");
@@ -156,21 +215,21 @@ Job.post("/updateQuestion", async (req, res) => {
 
 Job.post("/sendEmail", async (req, res) => {
   const password = req.body.password;
+  const username = req.body.username;
   const jobId = req.body.jobId;
 
-  const from = "2018cs071@stu.ucsc.cmb.ac.lk"; //system mail
+  const from = username; //system mail
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "2018cs071@stu.ucsc.cmb.ac.lk",
-      pass: "Chamika@97",
+      user: from,
+      pass: password,
 
-      //systems.cssl
-      //cssl@admin@123
+      //cssl.system.info@gmail.com
     },
   });
   const sqlSelect =
-    "SELECT jobapplicant.cv , user.firstName ,jobapplicant.jvId,  user.email,jobvacancy.designation ,jobapplicant.date ,jobvacancy.email as companyemail ,jobapplicant.marks, jobapplicant.memberId FROM `jobapplicant` LEFT JOIN user ON user.id=jobapplicant.memberId LEFT JOIN jobvacancy on jobvacancy.jvId = jobapplicant.jvId WHERE jobapplicant.jvId =  " +
+    "SELECT jobapplicant.cv , user.firstName ,user.lastName ,user.title ,jobapplicant.jvId,  user.email,jobvacancy.designation ,jobapplicant.date ,jobvacancy.email as companyemail ,jobapplicant.marks, jobapplicant.memberId FROM `jobapplicant` LEFT JOIN user ON user.id=jobapplicant.memberId LEFT JOIN jobvacancy on jobvacancy.jvId = jobapplicant.jvId WHERE jobapplicant.jvId =  " +
     jobId +
     " ORDER BY `jobapplicant`.`marks`  DESC;";
 
@@ -180,18 +239,40 @@ Job.post("/sendEmail", async (req, res) => {
     for (i = 0; i < result.length; i++) {
       const email = result[i].email;
       const date = result[i].date;
+      const jvId = result[i].jvId;
       const designation = result[i].designation;
       const firstName = result[i].firstName;
+      const lastName = result[i].lastName;
+      const title = result[i].title;
       const companyemail = result[i].companyemail;
       const marks = result[i].marks;
       const cv = result[i].cv;
-      console.log(email + " --- " + firstName);
+      console.log(
+        companyemail + " --- " + email + "---" + firstName + " " + lastName
+      );
+
       var mailOptions = {
         from: { from },
         to: companyemail,
         cc: email,
-        subject: "Job Application",
-        text: " hi " + firstName,
+        subject: "Job Application for " + designation,
+        text:
+          "Dear HR Manager ,                                                                    " +
+          title +
+          " " +
+          firstName +
+          " " +
+          lastName +
+          "CV is attached with this email as " +
+          title +
+          " " +
+          firstName +
+          " has applied for a job vaccancy -" +
+          designation +
+          " on last " +
+          date +
+          " ____________________ HR Manager CSSL ____________________      ",
+
         attachments: [
           {
             filename: cv,
@@ -199,15 +280,40 @@ Job.post("/sendEmail", async (req, res) => {
             contentType: "application/pdf",
           },
         ],
-        // html: '<h1>Hi Smartherd</h1><p>Your Messsage</p>'
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log(error);
+          res.send(result);
         } else {
-          console.log("Email sent: " + info.response);
-          email = "";
+          connection.query(
+            " UPDATE jobvacancy SET activity = 'closed'  WHERE jvId=" +
+              jvId +
+              ";",
+
+            (err, result) => {
+              if (err) {
+                res.send(result);
+              } else {
+              }
+            }
+          );
+
+          connection.query(
+            " UPDATE jobapplicant SET status = 'close'  WHERE jvId=" +
+              jvId +
+              ";",
+
+            (err, result) => {
+              if (err) {
+                res.send(result);
+              } else {
+                res.json("success");
+              }
+            }
+          );
+
+          res.json("success");
         }
       });
     }
@@ -267,7 +373,7 @@ Job.post("/addQuestion", async (req, res) => {
   connection.query(
     `INSERT INTO jobquestions (Question  , Answer1 ,Answer2,Answer3,Answer4,Correct,type) VALUES (?,?,?,?,?,?,?)`,
 
-    [question, ans1, ans2, ans3, ans4, correct , type],
+    [question, ans1, ans2, ans3, ans4, correct, type],
     (err, result) => {
       if (err) {
         res.send(result);
@@ -297,9 +403,22 @@ Job.post("/getJobs", (req, res) => {
   });
 });
 
+Job.post("/deleteItem", (req, res) => {
+  const tableName = req.body.tableName;
+  const qid = req.body.qid;
+  const coloum = req.body.coloum;
+
+  const sqlSelect =
+    "delete from " + tableName + " where " + coloum + "  =" + qid;
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
 Job.post("/getApplicents", (req, res) => {
   const sqlSelect =
-    "SELECT jobapplicant.jvId , COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId GROUP by jvId; ";
+    "SELECT jobapplicant.jvId , COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId Where jobapplicant.status = 'pending'  GROUP by jvId; ";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
@@ -312,7 +431,7 @@ Job.post("/getJobsApplications", (req, res) => {
   const role = req.body.jobRole;
 
   const sqlSelect =
-    " SELECT jobvacancy.designation ,jobapplicant.date ,jobapplicant.marks, jobapplicant.memberId ,jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId ORDER BY `jobapplicant`.`marks` DESC ,jobapplicant.date DESC;";
+    " SELECT jobvacancy.designation ,jobapplicant.date ,jobapplicant.marks, jobapplicant.memberId,jobapplicant.status ,jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId ORDER BY `jobapplicant`.`marks` DESC ,jobapplicant.date DESC;";
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -333,7 +452,7 @@ Job.get("/getCVtoSend", (req, res) => {
 Job.get("/getJobView", (req, res) => {
   const jid = req.query.id;
   connection.query(
-    "SELECT jvId , companyName , location ,designation,description,questionCount ,contact ,email,advertisment from jobvacancy where jvId = ?;",
+    "SELECT jvId , companyName , location ,designation,description,questionCount,questionType ,contact ,email,advertisment from jobvacancy where jvId = ?;",
     [jid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -344,12 +463,26 @@ Job.get("/getJobView", (req, res) => {
   );
 });
 
-Job.post("/getQuestion", (req, res) => {
-  const sqlSelect =
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions  Limit 5";
+Job.get("/getQuestion", (req, res) => {
+  const jid = req.query.id;
 
-  connection.query(sqlSelect, (err, result) => {
-    res.send(result);
+  const numberOfQuestions =
+    "select `questionCount` ,questionType from jobvacancy WHERE jvId = " + jid;
+
+  connection.query(numberOfQuestions, (err, result3) => {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    console.log(numberOfQuestions);
+
+    const sqlSelect =
+      "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where type = '" +
+      result3[0].questionType +
+      "' Limit " +
+      result3[0].questionCount;
+    console.log(sqlSelect);
+
+    connection.query(sqlSelect, (err, result) => {
+      res.send(result);
+    });
   });
 });
 
@@ -363,11 +496,12 @@ Job.post("/getQuestionType", (req, res) => {
 
 Job.post("/getMaximumQuestions", (req, res) => {
   const questionType = req.body.max;
-  console.log("------------------------" + questionType);
+
   const sqlSelect =
     "SELECT count(type) as max , type from jobquestions where type = '" +
     questionType +
     "' GROUP BY type;";
+  console.log(sqlSelect);
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -385,7 +519,7 @@ Job.post("/getAllQuestion", (req, res) => {
 Job.get("/aaa", (req, res) => {
   const jid = req.query.id;
   connection.query(
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions where Qnumber = ?;",
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct,type from jobquestions where Qnumber = ?;",
     [jid],
     (error, result, feilds) => {
       if (error) console.log(error);

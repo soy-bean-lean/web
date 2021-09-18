@@ -164,7 +164,7 @@ userRouter.post("/", async (req, res) => {
 userRouter.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
+console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un="+username);
   connection.query(
     //temporary sql query for testing
     "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
@@ -461,7 +461,7 @@ userRouter.post("/getProfileData", (req, res) => {
   const memberId = req.body.memberId;
 
   const sqlSelect =
-    "select firstName ,lastName ,residentialAddress ,email,nic,contactNumber, birthDate from user where id = " +
+    "select firstName ,lastName ,residentialAddress ,email,nic,contactNumber,profileImage, birthDate from user where id = " +
     memberId +
     ";";
 

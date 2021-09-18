@@ -319,6 +319,7 @@ const AddCpd = () => {
                   <Col sm={9}>
                     <Input
                       name="select"
+                      type="select"
                       onChange={e => setRecType(e.target.value)}
                     >
                       <option value="type"></option>
@@ -361,6 +362,7 @@ const AddCpd = () => {
                   </Label>
                   <Col sm="12" md={{ size: 6, offset: 4 }}>
                     <Input
+                     color="primary"
                       type="file"
                       className="input"
                       id="avatar"

@@ -21,6 +21,7 @@ import PageSpinner from 'components/PageSpinner';
 
 import Login from 'pages/login/login';
 import Registration from 'pages/registration/registration';
+import Profile from 'pages/profile/profile';
 import ForgotPassword from 'pages/forgotPassword/forgotPassword';
 import ResetPassword from 'pages/forgotPassword/resetPassword';
 import TestDash from 'pages/TestDash';
@@ -73,14 +74,17 @@ const courseView = React.lazy(() => import('pages/courses/CourseView'));
 const addCourseContent = React.lazy(() =>
   import('pages/courses/AddCourseContent'),
 );
-const editCourse = React.lazy(() =>
-  import('pages/courses/EditCourseDetails'),
-);
+const editCourse = React.lazy(() => import('pages/courses/EditCourseDetails'));
 const editCourseContent = React.lazy(() =>
   import('pages/courses/EditCourseContent'),
 );
+const enrolledCourseView = React.lazy(() =>
+  import('pages/courses/EnrolledCourseView'),
+);
 
 //workshops
+const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
+const AddWorkshop = React.lazy(() => import('pages/workshop/AddWorkshop'));
 
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
@@ -108,6 +112,7 @@ const editJobVaccencies = React.lazy(() =>
 );
 
 //reports
+const Reports = React.lazy(() => import('pages/reports/Reports'));
 
 //profile
 
@@ -179,7 +184,7 @@ function App(props) {
     role: '',
     id: 0,
     profileImage: '',
-    email:'',
+    email: '',
     status: false,
   });
 
@@ -238,11 +243,6 @@ function App(props) {
                     <Route exact path="/csslcourses" component={csslCourses} />
                     <Route
                       exact
-                      path="/blogview/00:id/:title"
-                      component={BlogView}
-                    />
-                    <Route
-                      exact
                       path="/csslcourse/addnewcourse"
                       component={AddCourse}
                     />
@@ -266,6 +266,11 @@ function App(props) {
                       path="/csslcourse/editCourseContent/cssl00:id/:title/:cntId/:cntTitle"
                       component={editCourseContent}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title"
+                      component={enrolledCourseView}
+                    />
                     {/*CPD Related Routes*/}
                     <Route
                       exact
@@ -280,6 +285,11 @@ function App(props) {
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
+                    />
                     <Route
                       exact
                       path="/csslcourses/courseview/cssl00:id/:title"
@@ -317,6 +327,7 @@ function App(props) {
                       path="/buttongroups"
                       component={ButtonGroupPagePro}
                     />
+                    <Route path="/profile" component={Profile} />
                     <Route path="/login-modal" component={AuthModalPagePro} />
                     <Route path="/buttons" component={ButtonPagePro} />
                     <Route path="/cards" component={CardPagePro} />
@@ -337,6 +348,7 @@ function App(props) {
               {authState.role == 'council' && (
                 <MainLayoutCouncil breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
+                    <Route path="/profile" component={Profile} />
                     {/*Dashboard Related Route*/}
                     <Route
                       exact
@@ -396,6 +408,9 @@ function App(props) {
                       path="/csslmember/cpdrecords/addcpdrecord"
                       component={AddCPD}
                     />
+
+<Route path="/workshop" component={Workshop} />
+<Route exact path="/addWorkshop" component={AddWorkshop} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
@@ -421,6 +436,7 @@ function App(props) {
               {/*Secretariat Role Related Routes*/}
               {authState.role == 'secretariat' && (
                 <MainLayoutSec breakpoint={props.breakpoint}>
+                  <Route path="/profile" component={Profile} />
                   <React.Suspense fallback={<PageSpinner />}>
                     {/*Dashboard Related Route*/}
                     <Route
@@ -472,8 +488,8 @@ function App(props) {
                     {/* need to change component */}
                     <Route
                       exact
-                      path="/csslworkshops/addworkshop"
-                      component={Login}
+                      path="/reports"
+                      component={Reports}
                     />{' '}
                     {/* need to change component */}
                     <Route
@@ -506,6 +522,7 @@ function App(props) {
               {/*Associate Role Related Routes*/}
               {authState.role == 'associate' && (
                 <MainLayoutAssosiate breakpoint={props.breakpoint}>
+                  <Route path="/profile" component={Profile} />
                   <React.Suspense fallback={<PageSpinner />}>
                     {/*Dashboard Related Route*/}
                     <Route
@@ -520,9 +537,19 @@ function App(props) {
                       path="/csslcourses/courseview/cssl00:id/:title"
                       component={courseView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title"
+                      component={enrolledCourseView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
@@ -609,6 +636,11 @@ function App(props) {
                       path="/csslcourse/editCourseContent/cssl00:id/:title/:cntId/:cntTitle"
                       component={editCourseContent}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title"
+                      component={enrolledCourseView}
+                    />
                     {/*CPD Related Routes*/}
                     <Route
                       exact
@@ -622,6 +654,12 @@ function App(props) {
                     />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
+                    <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
@@ -673,6 +711,7 @@ function App(props) {
               {/*Student Role Related Routes*/}
               {authState.role == 'student' && (
                 <MainLayoutStudent breakpoint={props.breakpoint}>
+                  <Route path="/profile" component={Profile} />
                   <React.Suspense fallback={<PageSpinner />}>
                     {/*Dashboard Related Route*/}
                     <Route
@@ -687,8 +726,19 @@ function App(props) {
                       path="/csslcourses/courseview/cssl00:id/:title"
                       component={courseView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title"
+                      component={enrolledCourseView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
+                    <Route exact path="/addBlogs" component={AddBlogs} />
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={BlogView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}

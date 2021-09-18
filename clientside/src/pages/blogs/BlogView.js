@@ -1,19 +1,19 @@
 import Page from 'components/Page';
 import { AuthContext } from '../../helpers/AuthContext';
 import { Link } from 'react-router-dom';
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
+
 import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
 import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 import classnames from 'classnames';
 import Typography from 'components/Typography';
 
 import { Line } from 'react-chartjs-2';
+import * as AiIcons from 'react-icons/ai';
+
 import {
   Button,
   Card,
@@ -37,261 +37,167 @@ import {
   Row,
 } from 'reactstrap';
 
-const Blogs = props => {
-  const [blog, setBlog] = useState(null);
-  const [blogger, setBlogger] = useState(null);
-  const [myBlog, setMyBlog] = useState(null);
-  const { authState, setAuthState } = useContext(AuthContext);
+const BlogView = () => {
+  const { id } = useParams();
+  const { title } = useParams();
+
+  const [blogImg, setBlogImg] = useState('');
+  const [profileImg, setProfileImg] = useState('');
+  const [blogData, setBlogData] = useState([]);
 
   useEffect(() => {
     const formData = {
-     // mId: authState.id,
-      mId: authState.id,
+      bId: id,
     };
-    // axios
-    //   .post('http://localhost:3001/blog/getAllBlogs', formData)
-
-    //   .then(response => {
-    //     if (response.data.error) {
-    //       alert(response.data.error);
-    //     } else {
-    //       setBlog(response.data);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     alert(error);
-    //   });
-
-      axios
-      .post('http://localhost:3001/blog/getAllBloggers', formData)
-
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          setBlogger(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
-
     axios
-      .post('http://localhost:3001/blog/getMyBlogs', formData)
+      .post('http://localhost:3001/blog/getBlog', formData)
+      .then(res => {
+        setBlogData(res.data[0]);
+        setBlogImg('http://localhost:3001/uploads/blog/' + res.data[0].image);
 
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          setMyBlog(response.data);
-        }
+        // console.log(
+        //   'http://localhost:3001/uploads/csslCourses/' + res.data[0].image,
+        // );
+        setProfileImg(
+          'http://localhost:3001/uploads/profileImages/' +
+            res.data[0].profileImage,
+        );
       })
       .catch(error => {
-        alert(error);
+        console.log(error);
       });
+  }, []);
 
-   }, []);
-
-  const [activeTab, setActiveTab] = useState('1');
-
-  const toggle = tab => {
-    if (activeTab !== tab) setActiveTab(tab);
-  };
-
-  const allbloggers =
-  blogger &&
-  blogger.map((blogger, i) => (
-    <>
-      <Link
-        to={'/csslcourses/courseview/cssl00' + blogger.memberId }
-        key={i}
-        className="link-tag"
-      >
-        <Col md={12} sm={10} xs={10} className="mb-2">
-          <Card className="flex-row">
-            <CardImg
-              src={'http://localhost:3001/uploads/profileImages/' + blogger.profileImage}
-              style={{ width: 175, height: 150 }}
-            />
+  return (
+    <Page title="Blog View">
+      <CardHeader>
+        {/* <h3>hello</h3> */}
+        <h3>{blogData.title}</h3>
+      </CardHeader>
+      <Row>
+        <Col lg={7} md={8} sm={8} xs={12}>
+          <br></br>
+          <Card>
+            <CardHeader>
+              <h5>About Blog</h5>
+            </CardHeader>
             <CardBody>
-              <h3>{blogger.firstName} {blogger.lastName} </h3>
-              <CardText>
-                Ratings
-                {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-              </CardText>
+              <Typography className="text-primary">
+               
+
+              <h6>{blogData.description}</h6>
+              </Typography>
+
+              <hr></hr>
+              <br></br>
+              
+              {/* <h2>Syllabus - What you will learn from this course</h2> */}
+              
+              {blogData.content}
+              {/* {contentList} */}
             </CardBody>
           </Card>
         </Col>
-      </Link>
-      <hr className="course-view-line"></hr>
-    </>
-  ));
+        <Col lg={5} md={8} sm={8} xs={12}>
+          <br></br>
+          <Card>
+            <CardBody>
+              <center>
+                <Link to={'/blogs'}>
+                  <Button color="primary">Back</Button>
+                </Link>
+                {'  '}
+                <Link to={'/courseReviewP/' + id + 'view'}>
+                  <Button color="primary">Comments</Button>
+                </Link>
+                {'  '}
+                <Link to={'/coursEnrollsP/' + id}>
+                  <Button color="primary">Clap</Button>
+                </Link>
+              </center>
+            </CardBody>
+          </Card>
+          <br></br>
+          <Card>
+            <CardBody>
+              <center>
+                {blogImg && (
+                  <img
+                    src={blogImg}
+                    width="300px"
+                    height="200px"
+                    className="course-img"
+                  ></img>
+                )}
+                <br></br>
+                <br></br>
+              </center>
 
-
-  // const allblogs =
-  //   blog &&
-  //   blog.map((blog, i) => (
-  //     <>
-  //       <Link
-  //         to={'/csslcourses/courseview/cssl00' + blog.blogId + '/' + blog.title}
-  //         key={i}
-  //         className="link-tag"
-  //       >
-  //         <Col md={12} sm={10} xs={10} className="mb-2">
-  //           <Card className="flex-row">
-  //             <CardImg
-  //               src={'http://localhost:3001/uploads/blog/' + blog.image}
-  //               style={{ width: 175, height: 150 }}
-  //             />
-  //             <CardBody>
-  //               <h3>{blog.title}</h3>
-  //               <CardText>
-  //                 Ratings
-  //                 {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-  //               </CardText>
-  //             </CardBody>
-  //           </Card>
-  //         </Col>
-  //       </Link>
-  //       <hr className="course-view-line"></hr>
-  //     </>
-  //   ));
-
-  const myblogs =
-    myBlog &&
-    myBlog.map((myBlog, i) => {
-        return (
-          <>
-            <Link
-              to={'/blogview/00' + myBlog.blogId + '/' + myBlog.title}
-              key={i}
-              className="link-tag"
-            >
-              <Col md={12} sm={10} xs={10} className="mb-2">
-                <Card className="flex-row">
-                  <CardImg
-                    src={'http://localhost:3001/uploads/blog/' + myBlog.image}
-                    style={{ width: 'auto', height: 150 }}
-                    className="card-img-left"
-                    // style={{ width: 175, height: 150 }}
-                  />
-                  <CardBody>
-                    <h3>{myBlog.title}</h3>
-                    <CardText>{myBlog.content}</CardText>
-                  </CardBody>
-                </Card>
-                <Button color="primary" className="buttonDIV">
-                        Edit
-                      </Button>
-
-                      <Button color="danger" className="buttonDIV">
-                        Delete
-                      </Button>
-              </Col>
-            </Link>
-            <hr className="course-view-line"></hr>
-          </>
-        );
-      
-    });
-
-  // const myBlogs =
-  // blog &&
-  // blog.map((blog, i) => (
-  //   <>
-  //     <tr>
-  //       <th hidden="true">{i}</th>
-  //       <td hidden="true">{blog.blogId}</td>
-  //       <td>{blog.image}</td>
-  //       <td>{blog.title}</td>
-  //       <td>{blog.content}</td>
-  //       <td>
-  //      { blog.memberId === authState.id ? (
-  //       <Link
-  //           to={''}
-  //         >
-  //           <Button
-  //             color="success"
-  //             size="sm"
-
-  //           >
-  //             View{' '}
-  //           </Button>
-  //         </Link>
-  //       ) : (
-  //     <></>
-  //       )
-  //      }
-  //       </td>
-  //     </tr>
-  //   </>
-  // ));
-
-  return (
-    <Page title="Blogs">
-      <hr></hr>
-      <Link to="/addBlogs">
-        <Button color="success" to="/addBlogs">
-          New Blog
-        </Button>
-      </Link>
-      <br></br>
-      <hr></hr>
-      <Nav tabs>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '1' })}
-            onClick={() => {
-              toggle('1');
-            }}
-          >
-            All Blogs
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '2' })}
-            onClick={() => {
-              toggle('2');
-            }}
-          >
-            My Blogs
-          </NavLink>
-        </NavItem>
-      </Nav>
-
-      <TabContent activeTab={activeTab}>
-        <TabPane tabId="1">
-          <Row>
-            <Col sm="12">
-              <Card className="mb-3">
-                <CardHeader>
-                  <Typography className="text-success">All Blogs</Typography>
-                </CardHeader>
-                {allbloggers}
-
-               
+              <Card>
+                <CardBody>
+                  <span>
+                    <AiIcons.AiOutlineClockCircle />
+                  </span>
+                  {'  '}
+                  <span>
+                    Read Min : 10 minu
+                    {/* Approx. {courseData.duration} {courseData.durationType} to
+                    Complete */}
+                  </span>
+                  <br></br>
+                  <br></br>
+                  <span>
+                    <AiIcons.AiOutlineWechat />
+                  </span>
+                  {'  '}
+                  <span>Comment: 5</span>
+                  {/* <span> {courseData.language}</span> */}
+                  <br></br>
+                  <br></br>
+                  <span>
+                    <AiIcons.AiOutlineDesktop />
+                  </span>
+                  {'  '}
+                  <span>
+                    read count : 10
+                    {/* {"  "} {courseData.mode} */}
+                  </span>
+                  <br></br>
+                  <br></br>
+                  <span>
+                    <AiIcons.AiOutlineBarChart />{' '}
+                  </span>
+                  <span>
+                    publish Date  {blogData.publishedDate}
+                    {/* {"  "}
+                    {courseData.skillLevel} */}
+                  </span>
+                </CardBody>
               </Card>
-            </Col>
-          </Row>
-        </TabPane>
-
-        <TabPane tabId="2">
-          <Row>
-            <Col sm="12">
-              <Card className="mb-3">
-                <CardHeader>
-                  <Typography className="text-success">My Blogs</Typography>
-                </CardHeader>
-                {myblogs}
-               
-              </Card>
-            </Col>
-          </Row>
-        </TabPane>
-      </TabContent>
+            </CardBody>
+          </Card>
+          <br></br>
+          <Card>
+            <CardBody>
+              <center>
+                <img
+                  src={profileImg}
+                  width="100px"
+                  height="100px"
+                  className="instructor-img"
+                ></img>
+                <br></br>
+                <hr></hr>
+                {blogData.title}. {blogData.firstName} {blogData.lastName}
+                <br></br>
+                {blogData.email}
+              </center>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
     </Page>
   );
 };
 
-export default Blogs;
+export default BlogView;

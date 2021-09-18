@@ -1,12 +1,5 @@
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
-import user1Image from 'assets/img/users/100_1.jpg';
-import { UserCard } from 'components/Card';
 import Page from 'components/Page';
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
+
 import React, { useContext, useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { useParams } from 'react-router-dom';
@@ -17,17 +10,11 @@ import {
   Button,
   Card,
   CardBody,
-  CardHeader,
-  Typography,
   CardImg,
-  CardImgOverlay,
-  CardLink,
   CardText,
   CardTitle,
   Col,
-  ListGroup,
-  ListGroupItem,
-  Row,
+
 } from 'reactstrap';
 function JobView() {
   const [compayData, setCompayData] = useState(null);
@@ -52,7 +39,6 @@ function JobView() {
             'http://localhost:3001/uploads/jobvacancy/' +
               response.data[0].advertisment,
           );
-          
         }
       })
       .catch(error => {
@@ -91,7 +77,7 @@ function JobView() {
               </Card>
               <Card className="flex-row">
                 <CardBody>
-                  <Link to={'/job'}>
+                  <Link to={'/jobadvertisements'}>
                     <Button color="primary" size="LG">
                       Back
                     </Button>
@@ -110,13 +96,16 @@ function JobView() {
     ));
   return (
     <>
+     <Page>
+      <Col sm="14" md={{ size: 10, offset: 1 }}>
       <div className="headder">
         {jobview}
         <div className="mainR">
           {/* {image && <img src={image} alt="Image" className="addvertizement" />} */}
         </div>
       </div>
-      ;
+      </Col>
+    </Page>
     </>
   );
 }

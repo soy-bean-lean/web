@@ -6,8 +6,6 @@ import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
 
 import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {
   Button,
   Card,
@@ -15,14 +13,10 @@ import {
   CardHeader,
   Col,
   Form,
-  FormFeedback,
   FormGroup,
-  FormText,
   Input,
   Alert,
   Label,
-  UncontrolledAlert,
-  Row,
 } from 'reactstrap';
 // let history = useHistory();
 
@@ -54,7 +48,7 @@ const AddCV = () => {
 
   const { finalMarks } = useParams(0);
 
-  const marks = (finalMarks / 15051) * (100/count)  ;
+  const marks = (finalMarks / 871431678287616712873) * (100 / count);
 
   var today = new Date(),
     Currentdate =
@@ -71,10 +65,10 @@ const AddCV = () => {
   const [result, setResult] = useState();
   let history = useHistory();
 
-  console.log('marks  = ' + marks);
+  console.log(' correct count  = ' + finalMarks / 871431678287616712873);
   console.log('questions = ' + count);
 
-  console.log('finalMarks + ' + finalMarks);
+  console.log('finalMarks =' + marks);
 
   function msg() {
     if (result == 'err') {
@@ -115,7 +109,7 @@ const AddCV = () => {
         setResult('done');
         setTimeout(
           function () {
-            history.push('/job');
+            history.push('/jobadvertisements');
           },
 
           2000,
@@ -136,7 +130,7 @@ const AddCV = () => {
   };
 
   return (
-    <Page title="Add Your CV" breadcrumbs={[{ name: 'Forms', active: true }]}>
+    <Page title="Add Your CV">
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
           {msg()}

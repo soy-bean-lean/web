@@ -1,20 +1,11 @@
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
-import user1Image from 'assets/img/users/100_1.jpg';
-import { UserCard } from 'components/Card';
 import Page from 'components/Page';
 import React, { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
-import classnames from 'classnames';
-import Typography from 'components/Typography';
 
-import { Line } from 'react-chartjs-2';
+import classnames from 'classnames';
+
 import {
   Button,
   Card,
@@ -25,16 +16,8 @@ import {
   NavLink,
   TabContent,
   TabPane,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
-  CardText,
-  CardTitle,
   Col,
-  ListGroup,
-  CardHeader,
   Table,
-  ListGroupItem,
   Row,
 } from 'reactstrap';
 
@@ -97,6 +80,9 @@ const CardPage = props => {
           <td>
             <b>{data.marks} %</b>
           </td>
+          <td>
+            <p>{data.status}</p>
+          </td>
 
           <td>
             <center>
@@ -119,12 +105,15 @@ const CardPage = props => {
           <td hidden>{data.jvId}</td>
           <td>{data.companyName}</td>
           <td>
-            <Badge color="danger"> {data.numberOfApplicent} Applications </Badge>
+            <Badge color="danger">
+              {' '}
+              {data.numberOfApplicent} Applications{' '}
+            </Badge>
           </td>
 
           <td>
             <center>
-              <Link to={'/sendcv/'+data.jvId}>
+              <Link to={'/sendcv/' + data.jvId}>
                 <Button color="success" size="sm">
                   View{' '}
                 </Button>

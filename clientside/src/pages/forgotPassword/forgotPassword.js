@@ -4,6 +4,7 @@ import logo200Image from 'assets/img/logo/logo_200.png';
 
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Typography from 'components/Typography';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -64,76 +65,83 @@ const ForgotPassword = props => {
   };
 
   return (
-    <Row className="loginForm">
-      <Col sm="6" md={{ size: 4, offset: 4 }}>
-        <center>
-          <div>
-            <Modal isOpen={modal} toggle={Reset} className={className}>
-              <ModalHeader toggle={Reset}>Email Sent</ModalHeader>
-              <ModalBody>
-                Reset link has been sent your email address. Please check your
-                email.
-              </ModalBody>
-              <ModalFooter>
-                <Button color="success" onClick={Redirect}>
-                  Done
-                </Button>{' '}
-              </ModalFooter>
-            </Modal>
-          </div>
-          <Card>
-            <CardHeader>
-              {' '}
-              <img
-                src={logo200Image}
-                className="rounded"
-                style={{ width: 60, height: 60, cursor: 'pointer' }}
-                alt="logo"
-              />
-            </CardHeader>
+    <Page className="loginPage">
+      <Row className="loginForm">
+        <Col lg={7} md={8} sm={8} xs={12}>
+          <center>
+            {' '}
+            <img
+              src={logo200Image}
+              className="rounded"
+              style={{ width: 320, height: 350 }}
+              alt="logo"
+            />
+          </center>
+        </Col>
+        <Col lg={4} md={8} sm={8} xs={12}>
+          <center>
+            <Card>
+              <CardHeader>
+                <h3 color="primary">CPDMF </h3>
+              </CardHeader>
+                <CardBody>
+                  <div>
+                    <Modal isOpen={modal} toggle={Reset} className={className}>
+                      <ModalHeader toggle={Reset}>Email Sent</ModalHeader>
+                      <ModalBody>
+                        Reset link has been sent your email address. Please
+                        check your email.
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="success" onClick={Redirect}>
+                          Done
+                        </Button>{' '}
+                      </ModalFooter>
+                    </Modal>
+                  </div>
 
-            <CardBody>
-              <CardTitle tag="h6" className="mb-4 mt-1 text-left">
-                Please enter your email address
-              </CardTitle>
-              <Form>
-                <FormGroup row>
-                  <Label for="exampleEmail" sm={5}>
-                    User Name
-                  </Label>
-                  <Col sm={6}>
-                    <Input
-                      type="text"
-                      onChange={event => {
-                        setUsername(event.target.value);
-                      }}
-                      onKeyPress={e => handlerUser(e)}
-                      className="user"
-                      required
-                    />
-                  </Col>
-                </FormGroup>
-                <div className="mb-2 text-danger">
-                  <b>{errorUser}</b>
-                </div>
+                  <CardTitle tag="h6" className="mb-4 mt-1 text-left">
+                    Please enter your email address
+                  </CardTitle>
+                  <Form>
+                    <FormGroup row>
+                      <Label for="exampleEmail" sm={5}>
+                        User Name
+                      </Label>
+                      <Col sm={6}>
+                        <Input
+                          type="text"
+                          onChange={event => {
+                            setUsername(event.target.value);
+                          }}
+                          onKeyPress={e => handlerUser(e)}
+                          className="user"
+                          required
+                        />
+                      </Col>
+                    </FormGroup>
+                    <div className="mb-2 text-danger">
+                      <b>{errorUser}</b>
+                    </div>
 
-                <FormGroup check row>
-                  <Col sm={6}>
-                    <Button
-                      className="buttonDIV"
-                      onClick={Reset}
-                      color="success"
-                    >
-                      Send
-                    </Button>
-                  </Col>
-                </FormGroup>
-              </Form>
-            </CardBody>
-          </Card>
-        </center>
-      </Col>
-    </Row>
+                    <FormGroup check row>
+                      <Col sm={6}>
+                        <Button
+                          className="buttonDIV"
+                          onClick={Reset}
+                          color="success"
+                        >
+                          Send
+                        </Button>
+                      </Col>
+                    </FormGroup>
+                  </Form>
+                </CardBody>
+            </Card>
+          </center>
+        </Col>
+      </Row>
+    </Page>
   );
 };
 

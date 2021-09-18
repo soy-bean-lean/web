@@ -1,8 +1,6 @@
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
 
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -14,22 +12,15 @@ import {
   Button,
   Card,
   CardBody,
-  Badge,
   Nav,
   NavItem,
   NavLink,
   TabContent,
   TabPane,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
-  CardText,
-  CardTitle,
+ 
   Col,
-  ListGroup,
   CardHeader,
   Table,
-  ListGroupItem,
   Row,
 } from 'reactstrap';
 
@@ -332,7 +323,11 @@ const LecCourseList = props => {
           <Row>
             <Col sm="12">
               <Card className="mb-3">
-                <CardHeader>All Courses</CardHeader>
+                <CardHeader>
+                  <Typography className="text-info">
+                    All Courses
+                  </Typography>
+                </CardHeader>
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
@@ -349,8 +344,8 @@ const LecCourseList = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-warning">
-                    On Going Courses
+                  <Typography className="text-primary">
+                    OnGoing Courses
                   </Typography>
                 </CardHeader>
                 <CardBody>
@@ -391,7 +386,7 @@ const LecCourseList = props => {
               <Card className="mb-3">
                 <CardHeader>
                   {' '}
-                  <Typography className="text-primary">
+                  <Typography className="text-warning">
                     Pending Courses
                   </Typography>
                 </CardHeader>
@@ -412,8 +407,8 @@ const LecCourseList = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-warning">
-                    On Going Reports
+                  <Typography className="text-danger">
+                    Rejected Courses
                   </Typography>
                 </CardHeader>
                 <CardBody>

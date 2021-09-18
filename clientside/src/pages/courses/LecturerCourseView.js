@@ -1,38 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
 import Typography from 'components/Typography';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import {
   Button,
   Card,
   CardBody,
-  Badge,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
+  
   CardText,
   CardTitle,
   Col,
-  ListGroup,
   CardHeader,
-  Table,
-  ListGroupItem,
+
   Row,
 } from 'reactstrap';
 
 const LecturerCourseView = () => {
   const { id } = useParams();
   const { title } = useParams();
+  const { cntId } = useParams();
+  const { cntTitle } = useParams();
 
   const [courseImg, setCourseImg] = useState('');
+  const [courseStatus, setCourseStatus] = useState('');
   const [content, setContent] = useState(null);
+
+  let history = useHistory();
 
   useEffect(() => {
     const formData = {
@@ -41,7 +38,10 @@ const LecturerCourseView = () => {
     axios
       .post('http://localhost:3001/csslcourse/getCourseImg', formData)
       .then(res => {
-        setCourseImg('http://localhost:3001/uploads/' + res.data[0].image);
+        setCourseImg(
+          'http://localhost:3001/uploads/csslCourses/' + res.data[0].image,
+        );
+        setCourseStatus(res.data[0].status);
       })
       .catch(error => {
         console.log(error);
@@ -62,6 +62,107 @@ const LecturerCourseView = () => {
       });
   }, []);
 
+  const confirmDelete = () => {
+    confirmAlert({
+      title: 'Confirm to Delete Course',
+      message: 'Are you sure do you want to Delete ' + title + '?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deleteCourse(),
+        },
+        {
+          label: 'No',
+          onClick: () => redirectCourse(),
+        },
+      ],
+    });
+  };
+
+  const confirmApproval = () => {
+    confirmAlert({
+      title: title,
+      message: 'Confirm to Send to Approval.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => getApproval(),
+        },
+        {
+          label: 'No',
+          onClick: () => redirectCourse(),
+        },
+      ],
+    });
+  };
+
+  const deleteContentConfirm = () => {
+    confirmAlert({
+      title: title + ' - ' + '',
+      message: 'Confirm to Send to Approval.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => alert('confirm - ' + cntTitle),
+        },
+        {
+          label: 'No',
+          onClick: () => redirectCourse(),
+        },
+      ],
+    });
+  };
+
+  const deleteCourse = () => {
+    const sendData = {
+      cId: id,
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/deleteCourse', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          alert('Course Deleted Successfully');
+          redirectCourseList();
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+
+  const getApproval = () => {
+    const sendData = {
+      cId: id,
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/getApproval', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          alert('Course Sent to Approval');
+          redirectCourseList();
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+
+  const redirectCourseList = () => {
+    let path = '/lecCourse';
+    history.push(path);
+  };
+
+  const redirectCourse = () => {
+    let path = '/courseView/cssl00' + id + '/' + title;
+    history.push(path);
+  };
+
   const contentList =
     content &&
     content.map((content, i) => (
@@ -74,10 +175,34 @@ const LecturerCourseView = () => {
                   <h4>{content.title}</h4>
                 </CardTitle>
                 <CardText>{content.description}</CardText>
-                <Link to={"/csslcourse/editCourseContent/cssl00" + id + "/" + title + "/" + content.cntId + "/" + content.title}>
-                  <Button color="warning">
-                    Edit
-                  </Button>
+                <Link
+                  to={
+                    '/csslcourse/editCourseContent/cssl00' +
+                    id +
+                    '/' +
+                    title +
+                    '/' +
+                    content.contentId +
+                    '/' +
+                    content.title
+                  }
+                >
+                  <Button color="warning">Edit</Button>
+                </Link>{' '}
+                <Link
+                  to={
+                    '/csslcourse/deleteCourseContent/cssl00' +
+                    id +
+                    '/' +
+                    title +
+                    '/' +
+                    content.contentId +
+                    '/' +
+                    content.title
+                  }
+                  onClick={deleteContentConfirm}
+                >
+                  <Button color="danger">Delete</Button>
                 </Link>
               </CardBody>
             </Card>
@@ -89,19 +214,17 @@ const LecturerCourseView = () => {
   return (
     <Page title="Course">
       <hr></hr>
-      <Link to="">
-        <Button color="success">
-          Get Approval
-        </Button>
+      {courseStatus == "OnGoing" &&(
+      <Link onClick={confirmApproval}>
+        <Button color="success">Get Approval</Button>
       </Link>
+      )}
       {'  '}
       <Link to={'/csslcourse/editCourse/cssl00' + id + '/' + title}>
-        <Button color="warning">
-          Edit Course
-        </Button>
+        <Button color="warning">Edit Course</Button>
       </Link>
       {'  '}
-      <Link to="">
+      <Link onClick={confirmDelete}>
         <Button color="danger">Delete Course</Button>
       </Link>
       <br></br>

@@ -4,15 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { useHistory } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 
 import {
   Card,
-  Alert,
+  Input,
   CardBody,
   Button,
   CardHeader,
+  InputGroup,
+  InputGroupAddon,
   Col,
   Row,
   Table,
@@ -66,25 +66,28 @@ const TablePage = () => {
         alert(error);
       });
   }, []);
-  
+
   const jobview =
     data &&
     data.map(data => (
       <>
         <tr>
-         
-          <td>{data.jvId}</td>
+          <td hidden>{data.jvId}</td>
           <td>{data.companyName}</td>
           <td>{data.designation}</td>
+          <td>{data.location}</td>
 
           <td>
-            <Link to={"/jobAddvertisment/" + data.jvId}>
-              <Button color="success" size="sm" to={"/jobAddvertisment/" + data.jvId}>
+            <Link to={'/jobAddvertisment/' + data.jvId}>
+              <Button
+                color="success"
+                size="sm"
+                to={'/jobAddvertisment/' + data.jvId}
+              >
                 Apply{' '}
               </Button>
             </Link>
           </td>
-
         </tr>
       </>
     ));
@@ -93,16 +96,50 @@ const TablePage = () => {
       {tableTypes.map((tableType, index) => (
         <Row>
           <Col>
-            <Card className="mb-3">
+            <Card className="mb-2">
               <CardHeader>Current Job Vaccencies</CardHeader>
+            </Card>
+            <Card className="mb-2">
+              <CardBody>
+                <InputGroup>
+                  <Input
+                    type="text"
+                    className="note"
+                    placeholder="Search By Company Name"
+                    onChange={event => {
+                      setCompanyName(event.target.value);
+                    }}
+                    onKeyUp={getData}
+                  />{' '}
+                  <Input
+                    type="text"
+                    className="note"
+                    onChange={event => {
+                      setJobRole(event.target.value);
+                    }}
+                    onKeyUp={getData}
+                    placeholder="Seach By Job Role"
+                  />{' '}
+                  <Input
+                    type="text"
+                    className="note"
+                    onChange={event => {
+                      setLocation(event.target.value);
+                    }}
+                    onKeyUp={getData}
+                    placeholder="Seach By Location"
+                  />
+                </InputGroup>
+              </CardBody>
+            </Card>
+
+            <Card>
               <CardBody>
                 <Row>
                   <Col>
                     <Card body>
                       <Table {...{ ['striped']: true }}>
-                        <tbody>
-                        {jobview}
-                        </tbody>
+                        <tbody>{jobview}</tbody>
                       </Table>
                     </Card>
                   </Col>
