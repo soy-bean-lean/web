@@ -27,6 +27,7 @@ import {
 
 function AddBlogs() {
   const [title, setTitle] = useState('');
+  const [about, setAbout] = useState('');
   const [desc, setDesc] = useState('');
   const [image, setBlogImage] = useState(null);
   const { authState, setAuthState } = useContext(AuthContext);
@@ -62,6 +63,8 @@ function AddBlogs() {
     formData.append('image', image);
     formData.append('title', title);
     formData.append('desc', desc);
+    formData.append('about', about);
+  
     formData.append('memberId', 'cssl001');
     formData.append('date', Currentdate);
     //alert(image);
@@ -140,28 +143,51 @@ function AddBlogs() {
                 </FormGroup>
 
                 <FormGroup row>
-                  <Label for="exampleEmail" sm={3}>
+                  {/* <Label for="exampleEmail" sm={3}>
                     Blog Topic
-                  </Label>
+                  </Label> */}
+                  
                   <Col sm={9}>
+                    
                     <Input
                       type="text"
                       name="title"
-                      placeholder="Add Title"
+                     
+                       
+                      placeholder="Add Title . . . . . "
                       onChange={e => setTitle(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
 
                 <FormGroup row>
-                  <Label for="exampleEmail" sm={3}>
+                  {/* <Label for="exampleEmail" sm={3}>
+                    Blog Topic
+                  </Label> */}
+                  
+                  <Col sm={9}>
+                    
+                    <Input
+                      type="text"
+                      name="title"
+                     
+                       
+                      placeholder="Add Description About Your Blog . . . . ."
+                      onChange={e => setAbout(e.target.value)}
+                    />
+                  </Col>
+                </FormGroup>
+               
+
+                <FormGroup row>
+                  {/* <Label for="exampleEmail" sm={3}>
                     Blog Description
-                  </Label>
+                  </Label> */}
                   <Col sm={9}>
                     <Input
                       type="textarea"
                       className="note"
-                      placeholder="Description"
+                      placeholder="Write Your Blog . . . . . ."
                       onChange={e => setDesc(e.target.value)}
                     />
                   </Col>

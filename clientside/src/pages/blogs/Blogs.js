@@ -125,7 +125,7 @@ const Blogs = props => {
     blog.map((blog, i) => (
       <>
         <Link
-          to={'/csslcourses/courseview/cssl00' + blog.blogId + '/' + blog.title}
+          to={'/blogview/cssl00' + blog.blogId + '/' + blog.title}
           key={i}
           className="link-tag"
         >
@@ -138,14 +138,14 @@ const Blogs = props => {
 
               <CardBody>
                 <h3>{blog.title}</h3>
-                <h6>{blog.content}</h6>
-                <h8>{blog.publishedDate}</h8>
+                <h6>{blog.description}</h6>
+                {/* <h8></h8> */}
 
                 <br></br>
-                <h6>
-                  {blog.firstName} {blog.lastName}
-                </h6>
-                {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
+                <h8>
+                Author: {blog.firstName} {blog.lastName} | published Date:  {blog.publishedDate}
+                </h8>
+              
               </CardBody>
             </Card>
           </Col>
@@ -161,7 +161,7 @@ const Blogs = props => {
         <>
           <Link
             to={
-              '/csslcourses/courseview/cssl00' + blog.blogId + '/' + blog.title
+              '/blogview/cssl00' + blog.blogId + '/' + blog.title
             }
             key={i}
             className="link-tag"
@@ -175,13 +175,13 @@ const Blogs = props => {
 
                 <CardBody>
                   <h3>{blog.title}</h3>
-                  <h6>{blog.content}</h6>
+                  <h6>{blog.description}</h6>
                   <h8>{blog.publishedDate}</h8>
 
                   <br></br>
-                  <h6>
+                  {/* <h6>
                     {blog.firstName} {blog.lastName}
-                  </h6>
+                  </h6> */}
                   {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
                 </CardBody>
               </Card>
@@ -220,7 +220,7 @@ const Blogs = props => {
               toggle('1');
             }}
           >
-            Bloggers
+            All Blogs
           </NavLink>
         </NavItem>
         <NavItem>
