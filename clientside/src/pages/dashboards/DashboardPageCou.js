@@ -73,6 +73,7 @@ function DashboardPage() {
   const [lengthMember, setLengthMember] = useState(null);
   const [workshopsLength, setLengthWorkshops] = useState(null);
   const [userCount, setUserCount] = useState(null);
+  const [applications, setApplications] = useState(null);
   const [recentUsers, setRecentUsers] = useState(null);
   const [blogCount, setBlogCount] = useState(null);
   const [approveCount, setApproveCount] = useState(0);
@@ -116,6 +117,24 @@ function DashboardPage() {
         </CardText>
       </>
     ));
+
+  const applicationData =
+    applications &&
+    applications.map(applications => (
+      <>
+        <CardText>
+          <img
+            className="profileImageSmall"
+            src={
+              'http://localhost:3001/uploads/jobvacancy/' +
+              applications.advertisment
+            }
+          />
+          {applications.companyName}
+         
+        </CardText>
+      </>
+    ));
   const state2 = {
     labels: [
       'JAN',
@@ -135,9 +154,9 @@ function DashboardPage() {
     datasets: [
       {
         label: 'Revenue for this year',
-        borderColor: '#6a82fb',
-
-        backgroundColor: '#c7ccf2',
+        borderColor: '#20c997',
+        borderWidth: 3,
+        backgroundColor : '#0000',
         data: months,
       },
     ],
@@ -148,8 +167,8 @@ function DashboardPage() {
       {
         label: 'Total Members',
         fill: true,
-        lineTension: 0.5,
-        backgroundColor: ' #c5fcd4 ',
+        lineTension: 2,
+      //  backgroundColor: ' #c5fcd4 ',
         borderColor: '#187d34 ',
         borderWidth: 3,
         data: yearData,
@@ -193,7 +212,7 @@ function DashboardPage() {
         fill: false,
         height: 350,
         width: 350,
-        backgroundColor: ['#00c9ff', '#353e82', '#ffd700'],
+        backgroundColor: ['#45b649', '#007bff', '#f85032'],
         borderColor: '#fff',
         data: [approveCount, pendingCount, rejectCount],
       },
@@ -201,6 +220,19 @@ function DashboardPage() {
   };
 
   useEffect(() => {
+    axios
+      .post('http://localhost:3001/Dash/getApplications')
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setApplications(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
     const formData = {
       id: '',
       type: '',
@@ -334,7 +366,7 @@ function DashboardPage() {
     <Page title="Council Member - DashBoard">
       <CardGroup style={{ margin: '1rem' }}>
         <IconWidget
-          bgColor="light"
+          bgColor="warning"
           inverse={false}
           icon={FaUserGraduate}
           title="Members"
@@ -365,7 +397,7 @@ function DashboardPage() {
         />
         <CardGroup style={{ marginRight: '1rem' }}></CardGroup>
         <IconWidget
-          bgColor="light"
+          bgColor="danger"
           inverse={false}
           icon={MdShare}
           title="30+ Shares"
@@ -401,17 +433,13 @@ function DashboardPage() {
       <Row>
         <Col md="6" sm="12" xs="12">
           <Card>
-            <CardHeader>New Products</CardHeader>
+            <CardHeader>Latest Jon Applications</CardHeader>
             <CardBody>
-              {productsData.map(({ id, image, title, description, right }) => (
-                <ProductMedia
-                  key={id}
-                  image={image}
-                  title={title}
-                  description={description}
-                  right={right}
-                />
-              ))}
+              <Col sm="12">
+                {tableTypes.map((tableType, index) => (
+                  <tbody>{applicationData}</tbody>
+                ))}
+              </Col>
             </CardBody>
           </Card>
         </Col>
@@ -429,7 +457,7 @@ function DashboardPage() {
           </Card>
         </Col>
       </Row>
-{/* 
+      {/* 
       <CardDeck style={{ marginBottom: '1rem' }}>
         <Card
           body
@@ -462,7 +490,7 @@ function DashboardPage() {
           />
         </Card>
       </CardDeck> */}
-{/* 
+      {/* 
       <Col lg="4" md="12" sm="12" xs="12">
         <AnnouncementCard
           color="gradient-secondary"

@@ -105,10 +105,9 @@ const CardPage = props => {
           <td hidden>{data.jvId}</td>
           <td>{data.companyName}</td>
           <td>
-            <Badge color="danger">
-              {' '}
-              {data.numberOfApplicent} Applications{' '}
-            </Badge>
+            <Button color="danger" outline className="mr-1">
+              {data.numberOfApplicent}
+            </Button>
           </td>
 
           <td>
