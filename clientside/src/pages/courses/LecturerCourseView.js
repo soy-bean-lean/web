@@ -22,8 +22,11 @@ import {
 const LecturerCourseView = () => {
   const { id } = useParams();
   const { title } = useParams();
+  const { cntId } = useParams();
+  const { cntTitle } = useParams();
 
   const [courseImg, setCourseImg] = useState('');
+  const [courseStatus, setCourseStatus] = useState('');
   const [content, setContent] = useState(null);
 
   let history = useHistory();
@@ -35,7 +38,10 @@ const LecturerCourseView = () => {
     axios
       .post('http://localhost:3001/csslcourse/getCourseImg', formData)
       .then(res => {
-        setCourseImg('http://localhost:3001/uploads/csslCourses/' + res.data[0].image);
+        setCourseImg(
+          'http://localhost:3001/uploads/csslCourses/' + res.data[0].image,
+        );
+        setCourseStatus(res.data[0].status);
       })
       .catch(error => {
         console.log(error);
@@ -56,41 +62,58 @@ const LecturerCourseView = () => {
       });
   }, []);
 
-  const confirmDelete = () =>{
+  const confirmDelete = () => {
     confirmAlert({
       title: 'Confirm to Delete Course',
-      message: 'Are you sure do you want to Delete ' + title + "?",
+      message: 'Are you sure do you want to Delete ' + title + '?',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => deleteCourse()
+          onClick: () => deleteCourse(),
         },
         {
           label: 'No',
-          onClick: () => redirectCourse()
-        }
-      ]
+          onClick: () => redirectCourse(),
+        },
+      ],
     });
-  }
+  };
 
-  const confirmApproval = () =>{
+  const confirmApproval = () => {
     confirmAlert({
       title: title,
       message: 'Confirm to Send to Approval.',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => getApproval()
+          onClick: () => getApproval(),
         },
         {
           label: 'No',
-          onClick: () => redirectCourse()
-        }
-      ]
+          onClick: () => redirectCourse(),
+        },
+      ],
     });
-  }
+  };
 
-  const deleteCourse = () =>{
+  const deleteContentConfirm = () => {
+    confirmAlert({
+      title: title + ' - ' + '',
+      message: 'Confirm to Send to Approval.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => alert('confirm - ' + cntTitle),
+        },
+        {
+          label: 'No',
+          onClick: () => redirectCourse(),
+        },
+      ],
+    });
+  };
+
+  const deleteCourse = () => {
     const sendData = {
       cId: id,
     };
@@ -101,16 +124,16 @@ const LecturerCourseView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          alert("Course Deleted Successfully");
+          alert('Course Deleted Successfully');
           redirectCourseList();
         }
       })
       .catch(error => {
         alert(error);
       });
-  }
+  };
 
-  const getApproval = () =>{
+  const getApproval = () => {
     const sendData = {
       cId: id,
     };
@@ -121,14 +144,14 @@ const LecturerCourseView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          alert("Course Sent to Approval");
+          alert('Course Sent to Approval');
           redirectCourseList();
         }
       })
       .catch(error => {
         alert(error);
       });
-  }
+  };
 
   const redirectCourseList = () => {
     let path = '/lecCourse';
@@ -152,10 +175,34 @@ const LecturerCourseView = () => {
                   <h4>{content.title}</h4>
                 </CardTitle>
                 <CardText>{content.description}</CardText>
-                <Link to={"/csslcourse/editCourseContent/cssl00" + id + "/" + title + "/" + content.contentId + "/" + content.title}>
-                  <Button color="warning">
-                    Edit
-                  </Button>
+                <Link
+                  to={
+                    '/csslcourse/editCourseContent/cssl00' +
+                    id +
+                    '/' +
+                    title +
+                    '/' +
+                    content.contentId +
+                    '/' +
+                    content.title
+                  }
+                >
+                  <Button color="warning">Edit</Button>
+                </Link>{' '}
+                <Link
+                  to={
+                    '/csslcourse/deleteCourseContent/cssl00' +
+                    id +
+                    '/' +
+                    title +
+                    '/' +
+                    content.contentId +
+                    '/' +
+                    content.title
+                  }
+                  onClick={deleteContentConfirm}
+                >
+                  <Button color="danger">Delete</Button>
                 </Link>
               </CardBody>
             </Card>
@@ -167,22 +214,18 @@ const LecturerCourseView = () => {
   return (
     <Page title="Course">
       <hr></hr>
+      {courseStatus == "OnGoing" &&(
       <Link onClick={confirmApproval}>
-        <Button color="success">
-          Get Approval
-        </Button>
+        <Button color="success">Get Approval</Button>
       </Link>
+      )}
       {'  '}
       <Link to={'/csslcourse/editCourse/cssl00' + id + '/' + title}>
-        <Button color="warning">
-          Edit Course
-        </Button>
+        <Button color="warning">Edit Course</Button>
       </Link>
       {'  '}
       <Link onClick={confirmDelete}>
-        <Button color="danger">
-          Delete Course
-        </Button>
+        <Button color="danger">Delete Course</Button>
       </Link>
       <br></br>
       <hr></hr>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import * as AiIcons from "react-icons/ai";
+import * as AiIcons from 'react-icons/ai';
+
 import { useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
@@ -49,7 +50,8 @@ const CourseView = () => {
           'http://localhost:3001/uploads/csslCourses/' + res.data[0].image,
         );
         setProfileImg(
-          'http://localhost:3001/uploads/profileImages/' + res.data[0].profileImage,
+          'http://localhost:3001/uploads/profileImages/' +
+            res.data[0].profileImage,
         );
       })
       .catch(error => {
@@ -94,13 +96,13 @@ const CourseView = () => {
       </CardHeader>
       <Row>
         <Col lg={7} md={8} sm={8} xs={12}>
-        <br></br>
+          <br></br>
           <Card>
-          <CardHeader>
-        <h5>About Course</h5>
-      </CardHeader>
+            <CardHeader>
+              <h5>About Course</h5>
+            </CardHeader>
             <CardBody>
-              <Typography className="text-primary">
+              <Typography className="text-dark">
                 {courseData.description}
               </Typography>
 
@@ -112,19 +114,19 @@ const CourseView = () => {
           </Card>
         </Col>
         <Col lg={5} md={8} sm={8} xs={12}>
-        <br></br>
+          <br></br>
           <Card>
             <CardBody>
               <center>
-                <Link  to={"/csslcourses"}>
-                  <Button   color="primary">Back</Button>
+                <Link to={'/csslcourses'}>
+                  <Button color="primary">Back</Button>
                 </Link>
                 {'  '}
-                <Link to={"/courseReviewP/" + id + "view"}>
+                <Link to={'/courseReviewP/' + id + 'view'}>
                   <Button color="primary">Reviews</Button>
                 </Link>
                 {'  '}
-                <Link to={"/coursEnrollsP/" + id}>
+                <Link to={'/csslcourse/enrolledcourse/cssl00'+ id + '/' + title}>
                   <Button color="primary">Enroll</Button>
                 </Link>
               </center>
@@ -144,48 +146,45 @@ const CourseView = () => {
                 )}
                 <br></br>
                 <br></br>
-                </center>
+              </center>
 
-                  
-                <Card>
+              <Card>
                 <CardBody>
-                <span>
+                  <span>
                     <AiIcons.AiOutlineClockCircle />
                   </span>
-                  {"  "}
+                  {'  '}
                   <span>
-                   
                     Approx. {courseData.duration} {courseData.durationType} to
                     Complete
                   </span>
-                <br></br>
-                <br></br>
+                  <br></br>
+                  <br></br>
                   <span>
                     <AiIcons.AiOutlineWechat />
                   </span>
-                  {"  "}
+                  {'  '}
                   <span> {courseData.language}</span>
-                <br></br>
-                <br></br>
+                  <br></br>
+                  <br></br>
                   <span>
                     <AiIcons.AiOutlineDesktop />
                   </span>
-                  {"  "}
+                  {'  '}
                   <span>
-                    {"  "} {courseData.mode}
+                    {'  '} {courseData.mode}
                   </span>
-                <br></br>
-                <br></br>
+                  <br></br>
+                  <br></br>
                   <span>
-                    <AiIcons.AiOutlineBarChart />{" "}
+                    <AiIcons.AiOutlineBarChart />{' '}
                   </span>
                   <span>
-                    {"  "}
+                    {'  '}
                     {courseData.skillLevel}
                   </span>
-</CardBody>
-
-                  </Card>
+                </CardBody>
+              </Card>
             </CardBody>
           </Card>
           <br></br>
@@ -204,7 +203,6 @@ const CourseView = () => {
               </center>
             </CardBody>
           </Card>
-          
         </Col>
       </Row>
     </Page>
