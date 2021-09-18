@@ -73,15 +73,13 @@ function DashboardPage() {
   const [lengthMember, setLengthMember] = useState(null);
   const [workshopsLength, setLengthWorkshops] = useState(null);
   const [userCount, setUserCount] = useState(null);
+  const [userTypes, setUserTypes] = useState(null);
+
   const [applications, setApplications] = useState(null);
   const [recentUsers, setRecentUsers] = useState(null);
   const [blogCount, setBlogCount] = useState(null);
-  const [approveCount, setApproveCount] = useState(0);
-  const [pendingCount, setPendingCount] = useState(0);
-  const [rejectCount, setRejectCount] = useState(0);
-  var a = 0,
-    b = 0,
-    c = 0;
+
+  var userCouts = [0, 0, 0, 0];
 
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (var i = 0; i < length; i++) {
@@ -113,7 +111,8 @@ function DashboardPage() {
               recentUsers.profileImage
             }
           />
-          {recentUsers.title} {recentUsers.lastName}
+          {recentUsers.title} {recentUsers.firstName} {recentUsers.lastName}
+          <hr />
         </CardText>
       </>
     ));
@@ -130,12 +129,12 @@ function DashboardPage() {
               applications.advertisment
             }
           />
-          {applications.companyName}
-         
+          {applications.companyName} ({applications.numberOfApplicent})
+          <hr />
         </CardText>
       </>
     ));
-  const state2 = {
+  const barGraphData = {
     labels: [
       'JAN',
       'FEB',
@@ -153,23 +152,25 @@ function DashboardPage() {
 
     datasets: [
       {
-        label: 'Revenue for this year',
-        borderColor: '#20c997',
+        label: 'Records ',
+        borderColor: '#08186e',
         borderWidth: 3,
-        backgroundColor : '#0000',
+        backgroundColor: '#0000',
         data: months,
       },
     ],
   };
+
   const state = {
     labels: years,
     datasets: [
       {
-        label: 'Total Members',
+        label: 'Members',
         fill: true,
+        hoverBackgroundColor: '#08186e',
+
         lineTension: 2,
-      //  backgroundColor: ' #c5fcd4 ',
-        borderColor: '#187d34 ',
+        backgroundColor: ' #08186e ',
         borderWidth: 3,
         data: yearData,
       },
@@ -203,21 +204,39 @@ function DashboardPage() {
       },
     ],
   };
-
-  const cpdTypes = {
-    labels: ['Approved', 'Pending', 'Rejected'],
+  var s = userCouts[0] * 1;
+  var a = userCouts[1] * 1;
+  var p = userCouts[2] * 1;
+  var c = userCouts[3] * 1;
+  const memberTypes = {
+    labels: ['Student', 'Associate', 'Proffesional', 'Chartered'],
     datasets: [
       {
         label: 'CPD Uploads',
         fill: false,
         height: 350,
         width: 350,
-        backgroundColor: ['#45b649', '#007bff', '#f85032'],
+        backgroundColor: ['#1d7e61', '#ec1317', '#ffc107'],
         borderColor: '#fff',
-        data: [approveCount, pendingCount, rejectCount],
+        data: [2, 6, 1, 5],
       },
     ],
   };
+
+  // const userTypes = {
+  //   labels: userTypes.userType ,
+  //   datasets: [
+  //     {
+  //       label: 'CPD Uploads',
+  //       fill: false,
+  //       height: 350,
+  //       width: 350,
+  //       backgroundColor: ['#1d7e61', '#ec1317', '#ffc107'],
+  //       borderColor: '#fff',
+  //       data: userTypes.,
+  //     },
+  //   ],
+  // };
 
   useEffect(() => {
     axios
@@ -239,33 +258,34 @@ function DashboardPage() {
       status: '',
       description: '',
     };
-    axios
-      .post('http://localhost:3001/cpd/', formData)
 
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          setRecord(response.data);
-          for (var i = 0; i < Object.keys(response.data).length; i++) {
-            if (response.data[i].status == 'Approved') {
-              a++;
-              setApproveCount(a);
-            } else if (response.data[i].status == 'Pending') {
-              b++;
-              setPendingCount(b);
-            } else if (response.data[i].status == 'Rejected') {
-              c++;
-              setRejectCount(c);
-            } else {
-              console.log('Error:', i);
-            }
-          }
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
+    // axios
+    //   .post('http://localhost:3001/cpd/', formData)
+
+    //   .then(response => {
+    //     if (response.data.error) {
+    //       alert(response.data.error);
+    //     } else {
+    //       setRecord(response.data);
+    //       for (var i = 0; i < Object.keys(response.data).length; i++) {
+    //         if (response.data[i].status == 'Approved') {
+    //           a++;
+    //           setStudents(a);
+    //         } else if (response.data[i].status == 'Pending') {
+    //           b++;
+    //           setAssociates(b);
+    //         } else if (response.data[i].status == 'Rejected') {
+    //           c++;
+    //           setPro(c);
+    //         } else {
+    //           console.log('Error:', i);
+    //         }
+    //       }
+    //     }
+    //   })
+    //   .catch(error => {
+    //     alert(error);
+    //   });
 
     const data = {
       memberId: authState.id,
@@ -328,6 +348,39 @@ function DashboardPage() {
       .catch(error => {
         alert(error);
       });
+
+    axios
+      .post('http://localhost:3001/Dash/getUserCount')
+
+      .then(response => {
+        if (response.data.error) {
+          console.log('OOOOO');
+        } else {
+          console.log(response.data);
+          for (var i = 0; i < Object.keys(response.data).length; i++) {
+            console.log(response.data[i].userType);
+
+            if (response.data[i].userType == 'Student') {
+              console.log(userCouts[0]);
+              userCouts[0] = response.data[i].counts;
+              console.log(userCouts[0]);
+            } else if (response.data[i].userType == 'Associate') {
+              console.log(userCouts[1]);
+              userCouts[1] = response.data[i].counts;
+              console.log(userCouts[1]);
+            } else if (response.data[i].userType == 'Professional') {
+              console.log(userCouts[2]);
+              p = response.data[i].counts;
+              console.log(userCouts[2]);
+            } else if (response.data[i].userType == 'Chartered') {
+              userCouts[3] = response.data[i].counts;
+            }
+          }
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
     axios
       .post('http://localhost:3001/reports/getRecentUsers')
 
@@ -364,89 +417,30 @@ function DashboardPage() {
 
   return (
     <Page title="Council Member - DashBoard">
-      <CardGroup style={{ margin: '1rem' }}>
-        <IconWidget
-          bgColor="warning"
-          inverse={false}
-          icon={FaUserGraduate}
-          title="Members"
-          subtitle={
-            <CountUp
-              className="count"
-              start={0}
-              end={users}
-              duration={2}
-            ></CountUp>
-          }
-        ></IconWidget>
-        <CardGroup style={{ marginRight: '1rem' }}></CardGroup>
-
-        <IconWidget
-          bgColor="success"
-          inverse={false}
-          icon={MdRateReview}
-          title="Blogs"
-          subtitle={
-            <CountUp
-              className="count"
-              start={0}
-              end={blogsCount}
-              duration={2}
-            ></CountUp>
-          }
-        />
-        <CardGroup style={{ marginRight: '1rem' }}></CardGroup>
-        <IconWidget
-          bgColor="danger"
-          inverse={false}
-          icon={MdShare}
-          title="30+ Shares"
-          subtitle="New Shares"
-        />
-      </CardGroup>
-
+      <hr />
       <Row>
-        <Col lg={6} md={8} sm={8} xs={12}>
+        <Col sm="5" md={{ size: 6, offset: 0 }}>
           <Card>
-            <CardHeader>
-              CPD Reports{' '}
-              <small className="text-muted text-capitalize">Last year</small>
-            </CardHeader>
-            <CardBody>
-              <Line data={state2} options={chartjs.line.options} />
-            </CardBody>
-          </Card>
-        </Col>
-        <Col lg={6} md={8} sm={8} xs={12}>
-          <Card>
-            <CardHeader>
-              CPD Reports Types{' '}
-              <small className="text-muted text-capitalize">Last year</small>
-            </CardHeader>
-            <CardBody>
-              <Pie data={cpdTypes} options={chartjs.doughnut.options} />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+            <CardHeader>Member Registrations in each year</CardHeader>
 
-      <Row>
-        <Col md="6" sm="12" xs="12">
-          <Card>
-            <CardHeader>Latest Jon Applications</CardHeader>
             <CardBody>
-              <Col sm="12">
-                {tableTypes.map((tableType, index) => (
-                  <tbody>{applicationData}</tbody>
-                ))}
-              </Col>
+              <Bar data={state} options={chartjs.line.options} />
             </CardBody>
           </Card>
         </Col>
 
-        <Col md="6" sm="12" xs="12">
+        <Col sm="5" md={{ size: 6, offset: 0 }}>
           <Card>
-            <CardHeader>New Users</CardHeader>
+            <CardHeader>Registered Member Types </CardHeader>
+            <CardBody>
+              <Pie data={memberTypes} options={chartjs.doughnut.options} />
+            </CardBody>
+          </Card>
+        </Col>
+
+        <Col sm="5" md={{ size: 6, offset: 0 }}>
+          <Card>
+            <CardHeader>Recenet member Registrations</CardHeader>
             <CardBody>
               <Col sm="12">
                 {tableTypes.map((tableType, index) => (
@@ -456,73 +450,28 @@ function DashboardPage() {
             </CardBody>
           </Card>
         </Col>
+
+        <Col sm="5" md={{ size: 6, offset: 0 }}>
+          <Card>
+            <CardHeader>Recenet Job Registrations</CardHeader>
+            <CardBody>
+              <Col sm="12">
+                {tableTypes.map((tableType, index) => (
+                  <tbody>{applicationData}</tbody>
+                ))}
+              </Col>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="5" md={{ size: 6, offset: 0 }}>
+          <Card>
+            <CardHeader>CPD Reports </CardHeader>
+            <CardBody>
+              <Line data={barGraphData} options={chartjs.line.options} />
+            </CardBody>
+          </Card>
+        </Col>
       </Row>
-      {/* 
-      <CardDeck style={{ marginBottom: '1rem' }}>
-        <Card
-          body
-          style={{
-            overflowX: 'auto',
-            paddingBottom: '15px',
-            height: 'fit-content',
-            paddingTop: 'inherit',
-          }}
-        >
-          <HorizontalAvatarList
-            avatars={avatarsData}
-            avatarProps={{ size: 50 }}
-          />
-        </Card>
-
-        <Card
-          body
-          style={{
-            overflowX: 'auto',
-            paddingBottom: '15px',
-            height: 'fit-content',
-            paddingTop: 'inherit',
-          }}
-        >
-          <HorizontalAvatarList
-            avatars={avatarsData}
-            avatarProps={{ size: 50 }}
-            reversed
-          />
-        </Card>
-      </CardDeck> */}
-      {/* 
-      <Col lg="4" md="12" sm="12" xs="12">
-        <AnnouncementCard
-          color="gradient-secondary"
-          header="Announcement"
-          avatarSize={60}
-          name="Jamy"
-          date="1 hour ago"
-          text="Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy euismod tinciduntut laoreet doloremagna"
-          buttonProps={{
-            children: 'show',
-          }}
-          style={{ height: 500 }}
-        />
-      </Col>
-
-      <Col lg="4" md="12" sm="12" xs="12">
-        <Card>
-          <CardHeader>
-            <div className="d-flex justify-content-between align-items-center">
-              <span>Support Tickets</span>
-              <Button>
-                <small>View All</small>
-              </Button>
-            </div>
-          </CardHeader>
-          <CardBody>
-            {supportTicketsData.map(supportTicket => (
-              <SupportTicket key={supportTicket.id} {...supportTicket} />
-            ))}
-          </CardBody>
-        </Card>
-      </Col> */}
     </Page>
   );
 }

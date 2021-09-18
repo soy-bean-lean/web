@@ -184,7 +184,7 @@ const Registration = props => {
                           <option value="">Membership category</option>
                           <option value="associate">Associate</option>
                           <option value="professional">Professional</option>
-                          <option value="charter">Charter</option>
+                          <option value="chartered">Chartered</option>
                         </Input>
                         <ErrorMessage
                             name="category"

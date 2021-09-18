@@ -54,7 +54,6 @@ import { differenceInCalendarDays } from 'date-fns';
 import axios from 'axios';
 import { AuthContext } from '../helpers/AuthContext';
 
-
 const today = new Date();
 const lastWeek = new Date(
   today.getFullYear(),
@@ -101,7 +100,6 @@ function TestDash() {
   };
   const { authState } = useContext(AuthContext);
 
-
   const datesToAddContentTo = [5, 6];
 
   // const [day, setDay] = useState([]);
@@ -131,120 +129,92 @@ function TestDash() {
     // }
   }
 
-  const [dataDoughnut, setdataDoughnut] = useState({});
-  const [dataPie, setdataPie] = useState({});
-  const [dataLine, setdataLine] = useState({});
   const [dataAnnouncement, setdataAnnouncement] = useState([]);
   const [recentActivities, setrecentActivities] = useState([]);
-  const [retrieveLine, setretrieveLine] = useState([]);
+
+  const [retrieveLine, setretrieveLine] = useState(null);
+  const [creditEarnedLength, setcreditEarnedLength] = useState(null);
+
+  const [retrieveDonut, setretrieveDonut] = useState(null);
+
+  const [retrievePie, setretrievePie] = useState(null);
 
   
+  //this year credits earned
+  var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  for (var i = 0; i < creditEarnedLength; i++) {
+    months[retrieveLine[i].month] = retrieveLine[i].credits;
+  }
 
-  //Announcements
-  useEffect(() => {
-    axios
-      .post('http://localhost:3001/Dash/announcement')
-      .then(response => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          setdataAnnouncement(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
-  }, []);
+  var count = [];
 
-  //Recent Activities
-  useEffect(() => {
-    const data = {
-      id: authState.id,
-    };
-    axios
-      .post('http://localhost:3001/Dash/recent',data)
-      .then(response => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          console.log(response.data.title);
-          setrecentActivities(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
-  }, []);
+  retrieveDonut &&
+  retrieveDonut.map(
+    retrieveDonut => (count.push(retrieveDonut.count)),
+    );
 
-//line
-  useEffect(() => {
-    const data = {
-      id: authState.id,
-    };
-    axios
-      .post('http://localhost:3001/Dash/cpdactivities',data)
-      .then(response => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          setretrieveLine(response.data)
-          setdataLine({
-            labels: [
-              'January',
-              'February',
-              'March',
-              'April',
-              'May',
-              'June',
-              'July',
-              'August',
-              'September',
-              'Octorber',
-              'November',
-              'December',
-            ],
-            datasets: [
-              {
-                label: 'CPD Activities Completed this year',
-                borderColor: '#08186e',
-                backgroundColor: '#08186e',
-                data: data,
-              },
-            ],
-          });
-          //setrecentActivities(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
-  }, []);
+  var category = [];
+  var countType = [];
+  
+  retrievePie &&
+  retrievePie.map(
+    retrievePie => (category.push(retrievePie.recordCategory), countType.push(retrievePie.count)),
+    );
 
-  useEffect(() => {
-    setdataDoughnut({
-      labels: ['Course', 'Workshops', 'Guest Lectues', 'Others'],
+  
+  console.log(countType);
+
+
+  //credits earned line chart
+  const state = {
+    labels: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'Octorber',
+      'November',
+      'December',
+    ],
+    datasets: [
+      {
+        label: 'Credits Earned',
+        borderColor: '#08186e',
+        backgroundColor: '#ddddff',
+        data: months,
+      },
+    ],
+  };
+
+  //credits earned line chart
+  const state2 = {
+    
+      labels: ['Course', 'Guest Lectues', 'Others', 'Workshops'],
       datasets: [
         {
-          data: [20, 30, 50, 60],
+          data: count,
           backgroundColor: ['#1d7e61', '#ec1317', '#ffc107', '#08186e'],
           label: 'Dataset 1',
         },
-      ],
-    });
-  }, []);
+      ]
+  }
 
-  useEffect(() => {
-    setdataPie({
-      labels: ['SE', 'Data Analytics', 'Java', 'Python', 'C#', 'C++'],
+  const state3 ={
+    labels: category,
       datasets: [
         {
-          data: [2, 5, 7, 4, 5, 6],
+          data: countType,
           backgroundColor: [
-            '#fa5256',
+            '#D65353',
             '#f7c634',
             '#44c7a0',
             '#2138b5',
-            '#7a3738',
+            '#CA723D',
             '#5b7536',
             '#5e93ad',
             '#94529c',
@@ -260,10 +230,82 @@ function TestDash() {
           label: 'Dataset 1',
         },
       ],
-    });
-  }, []);
+  }
 
-  
+  //Announcements
+  useEffect(() => {
+    axios
+      .post('http://localhost:3001/Dash/announcement')
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setdataAnnouncement(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+  //Recent Activities
+    const data = {
+      id: authState.id,
+    };
+    axios
+      .post('http://localhost:3001/Dash/recent', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setrecentActivities(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+      
+    axios
+      .post('http://localhost:3001/Dash/creditsearned', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setretrieveLine(response.data);
+          setcreditEarnedLength(response.data.length);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+      axios
+      .post('http://localhost:3001/Dash/activityType', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setretrieveDonut(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+      axios
+      .post('http://localhost:3001/Dash/categoryType', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setretrievePie(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+
+  }, []);
 
   return (
     <>
@@ -276,7 +318,7 @@ function TestDash() {
           <Col xs="8">
             <Card className="shadow">
               <CardHeader>
-                CPD Activities{' '}
+                CPD Activity Progress{' '}
                 <small className="text-muted text-capitalize">This year</small>
               </CardHeader>
               <Row className="mt-2 ml-3">
@@ -360,14 +402,14 @@ function TestDash() {
               <Row className="ml-2">
                 <Col xs="6">
                   <CardHeader>
-                    CPD Activity Type{' '}
+                    Activity Type{' '}
                     <small className="text-muted text-capitalize">
-                      This year
+                      Credits Earned
                     </small>
                   </CardHeader>
                   <CardBody>
                     <Doughnut
-                      data={dataDoughnut}
+                      data={state2}
                       options={chartjs.doughnut.options}
                     />
                   </CardBody>
@@ -375,13 +417,13 @@ function TestDash() {
 
                 <Col xs="6">
                   <CardHeader>
-                    Activity Category{' '}
+                    Type of the category{' '}
                     <small className="text-muted text-capitalize">
-                      This year
+                      Credits Earned
                     </small>
                   </CardHeader>
                   <CardBody>
-                    <Pie data={dataPie} options={chartjs.doughnut.options} />
+                    <Pie data={state3} options={chartjs.doughnut.options} />
                   </CardBody>
                 </Col>
               </Row>
@@ -405,7 +447,7 @@ function TestDash() {
                         {index.description}
                       </CardSubtitle>
                     </>
-                  )
+                  );
                 })}
                 <hr />
                 <center>
@@ -425,7 +467,7 @@ function TestDash() {
                 <small className="text-muted text-capitalize">This year</small>
               </CardHeader>
               <CardBody>
-                <Line data={dataLine} options={chartjs.line.options} />
+                <Line data={state} options={chartjs.line.options} />
               </CardBody>
             </Card>
           </Col>
@@ -447,7 +489,7 @@ function TestDash() {
                         {index.description}
                       </CardSubtitle>
                     </>
-                  )
+                  );
                 })}
                 <hr />
                 <center>
