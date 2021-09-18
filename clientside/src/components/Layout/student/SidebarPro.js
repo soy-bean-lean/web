@@ -49,12 +49,7 @@ const navItemsProffesional = [
     exact: false, 
     Icon: FaIcons.FaBloggerB 
   },
-  { 
-    to: '/jobadvertisements', 
-    name: 'Jobs', 
-    exact: false, 
-    Icon: FaIcons.FaUserAlt 
-  },
+
   { 
     to: '/csslworkshops', 
     name: 'Workshops', 
