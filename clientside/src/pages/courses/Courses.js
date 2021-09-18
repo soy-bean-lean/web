@@ -36,6 +36,7 @@ import {
   Row,
 } from 'reactstrap';
 import { AuthContext } from '../../helpers/AuthContext';
+import Rating from '../../components/RatingStars/RatingStars';
 
 const CardPage = props => {
   const [activeTab, setActiveTab] = useState('2');
@@ -118,11 +119,6 @@ const CardPage = props => {
       });
   }, []);
 
-  const getLevel = event => {
-    setLevel(event.target.value);
-    filterResult();
-  };
-
   const filterResult = (e, val) => {
     setType('');
     setSearchCourse('');
@@ -171,7 +167,7 @@ const CardPage = props => {
       });
   };
 
-  const sortResult = (event) => {
+  const sortResult = event => {
     console.log(event.target.value);
     setLevel('');
     setInstructor('');
@@ -277,7 +273,9 @@ const CardPage = props => {
               <CardBody>
                 <h3>{course.name}</h3>
                 <CardText>
-                  Rating: {course.avgRate} | {course.noOfInteraction} students
+                  Rating: {course.avgRate}{' '}
+                  <Rating rate={course.avgRate} status={true} />
+                  Views: {course.noOfInteraction}
                 </CardText>
               </CardBody>
             </Card>
@@ -312,7 +310,9 @@ const CardPage = props => {
               <CardBody>
                 <h3>{course.name}</h3>
                 <CardText>
-                  Rating: {course.avgRate} | {course.noOfInteraction} students
+                  Rating: {course.avgRate}{' '}
+                  <Rating rate={course.avgRate} status={true} />
+                  Views: {course.noOfInteraction}
                 </CardText>
               </CardBody>
             </Card>
@@ -347,7 +347,9 @@ const CardPage = props => {
               <CardBody>
                 <h3>{course.name}</h3>
                 <CardText>
-                  Rating: {course.avgRate} | {course.noOfInteraction} students
+                  Rating: {course.avgRate}{' '}
+                  <Rating rate={course.avgRate} status={true} />
+                  Views: {course.noOfInteraction}
                 </CardText>
               </CardBody>
             </Card>
@@ -382,7 +384,9 @@ const CardPage = props => {
               <CardBody>
                 <h3>{course.name}</h3>
                 <CardText>
-                  Rating: {course.avgRate} | {course.noOfInteraction} students
+                  Rating: {course.avgRate}{' '}
+                  <Rating rate={course.avgRate} status={true} />
+                  Views: {course.noOfInteraction}
                 </CardText>
               </CardBody>
             </Card>
@@ -400,7 +404,10 @@ const CardPage = props => {
           <>
             <Link
               to={
-                '/courseView/cssl00' + enCourse.courseId + '/' + enCourse.name
+                '/csslcourse/enrolledcourse/cssl00' +
+                enCourse.courseId +
+                '/' +
+                enCourse.name
               }
               key={i}
               className="link-tag"
@@ -435,7 +442,10 @@ const CardPage = props => {
           <>
             <Link
               to={
-                '/courseView/cssl00' + enCourse.courseId + '/' + enCourse.name
+                '/csslcourse/enrolledcourse/cssl00' +
+                enCourse.courseId +
+                '/' +
+                enCourse.name
               }
               key={i}
               className="link-tag"

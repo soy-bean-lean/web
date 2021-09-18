@@ -1,13 +1,7 @@
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
-import user1Image from 'assets/img/users/100_1.jpg';
-import { UserCard } from 'components/Card';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Page from 'components/Page';
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
-import React, { useState } from 'react';
 import classnames from 'classnames';
 import Typography from 'components/Typography';
 
@@ -34,9 +28,194 @@ import {
   ListGroupItem,
   Row,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
-const CardPage = props => {
+
+const ViewCPD = props => {
+  const [record, setRecord] = useState(null);
+  const [approveCount, setApproveCount] = useState(0);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [rejectCount, setRejectCount] = useState(0);
+  var a = 0,
+    b = 0,
+    c = 0;
+
   const [activeTab, setActiveTab] = useState('1');
+
+  useEffect(() => {
+    const formData = {
+      id: '',
+      type: '',
+      status: '',
+      description: '',
+    };
+    axios
+      .post('http://localhost:3001/cpd/', formData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setRecord(response.data);
+          for (var i = 0; i < Object.keys(response.data).length; i++) {
+            if (response.data[i].status == 'Approved') {
+              a++;
+              setApproveCount(a);
+            } else if (response.data[i].status == 'Pending') {
+              b++;
+              setPendingCount(b);
+            } else if (response.data[i].status == 'Rejected') {
+              c++;
+              setRejectCount(c);
+            } else {
+              console.log('Error:', i);
+            }
+          }
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }, []);
+
+  const allRecords =
+    record &&
+    record.map((record, i) => {
+      if (record.status == 'Approved') {
+        return (
+          <>
+            <tr key={i}>
+              <td>{record.type}</td>
+              <td>{record.recTitle}</td>
+              <td>
+                <center>
+                  {' '}
+                  <h6>
+                  <Badge color="success" className="mr-1">
+                    {record.status}
+                  </Badge>
+                  </h6>
+                </center>
+              </td>
+            </tr>
+          </>
+        );
+      } else if (record.status == 'Pending') {
+        return (
+          <>
+            <tr key={i}>
+              <td>{record.type}</td>
+              <td>{record.recTitle}</td>
+              <td>
+                <center>
+                  {' '}
+                  <h6>
+                  <Badge color="warning" className="mr-1">
+                    {record.status}
+                  </Badge>
+                  </h6>
+                </center>
+              </td>
+            </tr>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <tr key={i}>
+              <td>{record.type}</td>
+              <td>{record.recTitle}</td>
+              <td>
+                <center>
+                  {' '}
+                  <h6>
+                  <Badge color="danger" className="mr-1">
+                    {record.status}
+                  </Badge>
+                  </h6>
+                </center>
+              </td>
+            </tr>
+          </>
+        );
+      }
+    });
+
+  const approvedRecords =
+    record &&
+    record.map((record, i) => {
+      if (record.status == 'Approved') {
+        return (
+          <>
+            <tr key={i}>
+              <td>{record.type}</td>
+              <td>{record.recTitle}</td>
+              <td>
+                <center>
+                  <Link to={'/csslmember/viewcpdrecord/record00' + record.recordId}>
+                    <Button color="primary" size="sm">
+                      View{' '}
+                    </Button>
+                  </Link>
+                </center>
+              </td>
+            </tr>
+          </>
+        );
+      }
+    });
+
+    const pendingRecords =
+    record &&
+    record.map((record, i) => {
+      if (record.status == 'Pending') {
+        return (
+          <>
+            <tr key={i}>
+              <td>{record.type}</td>
+              <td>{record.recTitle}</td>
+              <td>
+                <center>
+                  <Link to={'/csslmember/viewcpdrecord/record00' + record.recordId}>
+                    <Button color="primary" size="sm">
+                      View
+                    </Button>
+                  </Link>
+                  {' '}
+                  <Link to={'/csslmember/viewcpdrecord/record00' + record.recordId}>
+                    <Button color="warning" size="sm">
+                      Edit{' '}
+                    </Button>
+                  </Link>
+                </center>
+              </td>
+            </tr>
+          </>
+        );
+      }
+    });
+
+    const rejectedRecords =
+    record &&
+    record.map((record, i) => {
+      if (record.status == 'Rejected') {
+        return (
+          <>
+            <tr key={i}>
+              <td>{record.type}</td>
+              <td>{record.recTitle}</td>
+              <td>
+                <center>
+                  <Link to={'/csslmember/viewcpdrecord/record00' + record.recordId}>
+                    <Button color="primary" size="sm">
+                      View{' '}
+                    </Button>
+                  </Link>
+                </center>
+              </td>
+            </tr>
+          </>
+        );
+      }
+    });
 
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -97,26 +276,12 @@ const CardPage = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography>All CPD Records</Typography>
+                  <Typography className="text-primary">All CPD Records</Typography>
                 </CardHeader>
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>
-                            <center>
-                              {' '}
-                              <Badge color="success" pill className="mr-1">
-                                Accepted
-                              </Badge>
-                            </center>
-                          </td>
-                        </tr>
-                      </tbody>
+                      <tbody>{allRecords}</tbody>
                     </Table>
                   </Card>
                 </CardBody>
@@ -130,31 +295,14 @@ const CardPage = props => {
               <Card className="mb-3">
                 <CardHeader>
                   <Typography className="text-success">
-                    Approved CPD Reports
+                    Approved CPD Records
                   </Typography>
                 </CardHeader>
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
                       <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>
-                            <center>
-                              <Link to={'/jobAddvertisment/'}>
-                                <Button
-                                  color="success"
-                                  size="sm"
-                                  to={'/jobAddvertisment/'}
-                                >
-                                  View{' '}
-                                </Button>
-                              </Link>
-                            </center>
-                          </td>
-                        </tr>
+                        {approvedRecords}
                       </tbody>
                     </Table>
                   </Card>
@@ -169,34 +317,15 @@ const CardPage = props => {
               <Card className="mb-3">
                 <CardHeader>
                   {' '}
-                  <Typography className="text-primary">
-                    Pending CPD Reports
+                  <Typography className="text-warning">
+                    Pending CPD Records
                   </Typography>
                 </CardHeader>
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
                       <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>
-                            <center>
-                              <Link to={''}>
-                                <Button color="primary" size="sm">
-                                  View{' '}
-                                </Button>
-                              </Link>
-                              {'   '}
-                              <Link to={''}>
-                                <Button color="warning" size="sm">
-                                  Edit{' '}
-                                </Button>
-                              </Link>
-                            </center>
-                          </td>
-                        </tr>
+                        {pendingRecords}
                       </tbody>
                     </Table>
                   </Card>
@@ -211,33 +340,14 @@ const CardPage = props => {
               <Card className="mb-3">
                 <CardHeader>
                   <Typography className="text-danger">
-                    Rejected CPD Reports
+                    Rejected CPD Recoords
                   </Typography>
                 </CardHeader>
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
                       <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>
-                            <center>
-                              <Link to={''}>
-                                <Button color="primary" size="sm">
-                                  View{' '}
-                                </Button>
-                              </Link>
-                              {'   '}
-                              <Link to={''}>
-                                <Button color="warning" size="sm">
-                                  Edit{' '}
-                                </Button>
-                              </Link>
-                            </center>
-                          </td>
-                        </tr>
+                        {rejectedRecords}
                       </tbody>
                     </Table>
                   </Card>
@@ -251,4 +361,4 @@ const CardPage = props => {
   );
 };
 
-export default CardPage;
+export default ViewCPD;
