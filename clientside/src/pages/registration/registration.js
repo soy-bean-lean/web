@@ -134,8 +134,11 @@ const Registration = props => {
 
   return (
     <>
-    <div className="bg-light">
-      <Col sm="10" md={{ size: 10, offset: 1 }}>
+    <Page >
+      <br></br>
+      <br></br>
+      <br></br>
+      <Col sm="11" md={{ size: 9, offset: 2 }}>
         <center>
           <Formik
             initialValues={initialValues}
@@ -145,7 +148,7 @@ const Registration = props => {
             {({ setFieldValue, errors }) => (
               <Card>
                 <CardHeader tag="h1">
-                  <b>Membership Registration</b>
+                  Membership Registration
                 </CardHeader>
                 <CardBody>
                   <CardSubtitle
@@ -600,7 +603,9 @@ const Registration = props => {
           </Formik>
         </center>
       </Col>
-      </div>
+      <br></br>
+      <br></br><br></br>
+      </Page>
     </>
   );
 };

@@ -208,7 +208,7 @@ const Login = () => {
                       />
                     </Col>
                     <Col className='forget' sm={12}>
-                    <Label className='forget' to="/registration" tag="a" href="/registration">
+                    <Label className='forget' to="/forgotpassword" tag="a" href="/forgotpassword">
                     forget password?{' '}
                   </Label>
                   </Col>
