@@ -73,6 +73,7 @@ const CardPage = props => {
     data.map(data => (
       <>
         <tr>
+      
           <td hidden> {data.jvId}</td>
           <td>{data.date}</td>
           <td>{data.companyName}</td>
@@ -86,11 +87,18 @@ const CardPage = props => {
 
           <td>
             <center>
-              <Link to={''}>
+           
                 <Button color="success" size="sm">
-                  Download CV{' '}
+                  <a color="success" className='ancorTag'
+                    href={
+                      'http://localhost:3001/uploads/jobApplicationCVs/' +
+                      data.cv
+                    }
+                    download
+                  >
+                    Download CV{' '}
+                  </a>
                 </Button>
-              </Link>
             </center>
           </td>
         </tr>

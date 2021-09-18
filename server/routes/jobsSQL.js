@@ -418,7 +418,7 @@ Job.post("/deleteItem", (req, res) => {
 
 Job.post("/getApplicents", (req, res) => {
   const sqlSelect =
-    "SELECT jobapplicant.jvId , COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId Where jobapplicant.status = 'pending'  GROUP by jvId; ";
+    "SELECT jobapplicant.jvId , jobapplicant.cv,COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId Where jobapplicant.status = 'pending'  GROUP by jvId; ";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
@@ -431,7 +431,7 @@ Job.post("/getJobsApplications", (req, res) => {
   const role = req.body.jobRole;
 
   const sqlSelect =
-    " SELECT jobvacancy.designation ,jobapplicant.date ,jobapplicant.marks, jobapplicant.memberId,jobapplicant.status ,jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId ORDER BY `jobapplicant`.`marks` DESC ,jobapplicant.date DESC;";
+    " SELECT jobvacancy.designation,jobapplicant.cv ,jobapplicant.date ,jobapplicant.marks, jobapplicant.memberId,jobapplicant.status ,jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId ORDER BY `jobapplicant`.`marks` DESC ,jobapplicant.date DESC;";
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -440,7 +440,7 @@ Job.post("/getJobsApplications", (req, res) => {
 Job.get("/getCVtoSend", (req, res) => {
   const jid = req.query.id;
   const sqlSelect =
-    "SELECT user.firstName ,user.lastName,user.email ,jobapplicant.date ,jobapplicant.marks, jobapplicant.memberId FROM `jobapplicant` LEFT JOIN user ON user.id=jobapplicant.memberId  WHERE jobapplicant.jvId =  " +
+    "SELECT user.firstName ,user.lastName,user.email,jobapplicant.cv ,jobapplicant.date ,jobapplicant.marks, jobapplicant.memberId FROM `jobapplicant` LEFT JOIN user ON user.id=jobapplicant.memberId  WHERE jobapplicant.jvId =  " +
     jid +
     "   ORDER BY `jobapplicant`.`marks`  DESC;";
 

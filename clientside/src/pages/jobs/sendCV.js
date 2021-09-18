@@ -216,11 +216,18 @@ function JobView() {
 
           <td>
             <center>
-              <Link to={''}>
-                <Button color="primary" size="sm">
-                  View{' '}
+           
+                <Button color="success" size="sm">
+                  <a color="success" className='ancorTag'
+                    href={
+                      'http://localhost:3001/uploads/jobApplicationCVs/' +
+                      applicationData.cv
+                    }
+                    download
+                  >
+                    Download CV{' '}
+                  </a>
                 </Button>
-              </Link>
             </center>
           </td>
         </tr>

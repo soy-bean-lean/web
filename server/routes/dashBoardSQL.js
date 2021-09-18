@@ -28,7 +28,7 @@ dashBoardSQL.post("/getMemberData", (req, res) => {
 
 dashBoardSQL.post("/getApplications", (req, res) => {
   const sqlSelect =
-    "SELECT jobapplicant.jvId , COUNT(jobapplicant.jvId) as numberOfApplicent,jobvacancy.advertisment, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId   GROUP by jvId;";
+    "SELECT jobapplicant.jvId , jobapplicant.date ,COUNT(jobapplicant.jvId) as numberOfApplicent,jobvacancy.advertisment, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId  GROUP by jvId    ORDER BY `jobapplicant`.`date`  DESC limit 3";
 
   console.log(sqlSelect);
   connection.query(sqlSelect, (err, result) => {

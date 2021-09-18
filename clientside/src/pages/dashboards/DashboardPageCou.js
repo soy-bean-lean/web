@@ -218,7 +218,7 @@ function DashboardPage() {
         width: 350,
         backgroundColor: ['#1d7e61', '#ec1317', '#ffc107'],
         borderColor: '#fff',
-        data: [2,6,1,5],
+        data: [2, 6, 1, 5],
       },
     ],
   };
@@ -419,23 +419,19 @@ function DashboardPage() {
     <Page title="Council Member - DashBoard">
       <hr />
       <Row>
-        <Col md={{ size: 7, offset: 0 }}>
+        <Col sm="5" md={{ size: 6, offset: 0 }}>
           <Card>
-            <CardHeader>Recent Activities</CardHeader>
-            <CardBody></CardBody>
-          </Card>
-        </Col>
+            <CardHeader>Member Registrations in each year</CardHeader>
 
-        <Col sm="5" md={{ size: 5, offset: 0 }}>
-          <Card>
-            <CardHeader>Upcoming Activities Users</CardHeader>
-            <CardBody></CardBody>
+            <CardBody>
+              <Bar data={state} options={chartjs.line.options} />
+            </CardBody>
           </Card>
         </Col>
 
         <Col sm="5" md={{ size: 6, offset: 0 }}>
           <Card>
-            <CardHeader>CPD Reports Types </CardHeader>
+            <CardHeader>Registered Member Types </CardHeader>
             <CardBody>
               <Pie data={memberTypes} options={chartjs.doughnut.options} />
             </CardBody>
@@ -444,25 +440,6 @@ function DashboardPage() {
 
         <Col sm="5" md={{ size: 6, offset: 0 }}>
           <Card>
-            <CardHeader>CPD Reports </CardHeader>
-            <CardBody>
-              <Line data={barGraphData} options={chartjs.line.options} />
-            </CardBody>
-          </Card>
-        </Col>
-
-        <Col sm="5" md={{ size: 7, offset: 0 }}>
-          <Card>
-            <CardHeader>Member Registrations</CardHeader>
-
-            <CardBody>
-              <Bar data={state} options={chartjs.line.options} />
-            </CardBody>
-          </Card>
-        </Col>
-
-        <Col sm="5" md={{ size: 5, offset: 0 }}>
-          <Card>
             <CardHeader>Recenet member Registrations</CardHeader>
             <CardBody>
               <Col sm="12">
@@ -470,6 +447,27 @@ function DashboardPage() {
                   <tbody>{recenrUsersofCSSL}</tbody>
                 ))}
               </Col>
+            </CardBody>
+          </Card>
+        </Col>
+
+        <Col sm="5" md={{ size: 6, offset: 0 }}>
+          <Card>
+            <CardHeader>Recenet Job Registrations</CardHeader>
+            <CardBody>
+              <Col sm="12">
+                {tableTypes.map((tableType, index) => (
+                  <tbody>{applicationData}</tbody>
+                ))}
+              </Col>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="5" md={{ size: 6, offset: 0 }}>
+          <Card>
+            <CardHeader>CPD Reports </CardHeader>
+            <CardBody>
+              <Line data={barGraphData} options={chartjs.line.options} />
             </CardBody>
           </Card>
         </Col>
