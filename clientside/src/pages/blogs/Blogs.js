@@ -187,7 +187,9 @@ const Blogs = props => {
               </Card>
               <Row className="buttonDIV">
                 <Col sm="12">
-                  <Link to={'/csslcourse/addCourseContent'}>
+                  <Link to={
+                     '/blogview/cssl00' + blog.blogId + '/' + blog.title
+                  }>
                     <Button color="primary">Edit</Button>
                   </Link>
                   {'  '}
