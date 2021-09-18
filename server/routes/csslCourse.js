@@ -155,7 +155,7 @@ Course.post("/changeCourseStatus", (req, res) => {
   );
 });
 
-//insert course content (courseContentInfo.js)
+//insert course content (AddCourseContent.js)
 Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   const courseId = req.body.courseId;
   const contentNo = req.body.contentNo;
@@ -164,6 +164,8 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   const description = req.body.description;
   const type = req.body.type;
   const note = req.body.note;
+  const order = req.body.order;
+  const status = "Pending";
   var content;
   if (type == "File") {
     content = req.file.filename;
@@ -172,8 +174,8 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   }
 
   connection.query(
-    "INSERT INTO coursecontent (contentId, contentNo, title, description, note, contentType, content, courseId) VALUES (?, ?,?,?,?,?,?,?);",
-    [contentId, contentNo, title, description, note, type, content, courseId],
+    "INSERT INTO coursecontent (contentId, contentNo, title, description, note, contentType, content, contentOrder, status, courseId) VALUES (?,?,?,?,?,?,?,?,?,?);",
+    [contentId, contentNo, title, description, note, type, content, order, status, courseId],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -186,7 +188,7 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
   );
 });
 
-//update course content details (editCourseContentInfo.js)
+//update course content details (EditCourseContent.js)
 Course.route("/editCourseContent").post(
   upload.single("cfile"),
   (req, res, err) => {
@@ -196,7 +198,8 @@ Course.route("/editCourseContent").post(
     const description = req.body.description;
     const note = req.body.note;
     const type = req.body.type;
-    //const note = req.body.note;
+    const order = req.body.order;
+    const status = "Pending";
     var content;
     if (type == "File") {
       content = req.file.filename;
@@ -205,8 +208,8 @@ Course.route("/editCourseContent").post(
     }
 
     connection.query(
-      "UPDATE coursecontent SET title = ?, description = ?, note = ?, contentType = ?, content = ? WHERE contentId = ? AND courseId = ?;",
-      [title, description, note, type, content, contentId, courseId],
+      "UPDATE coursecontent SET title = ?, description = ?, note = ?, contentType = ?, content = ?, contentOrder = ?, status = ? WHERE contentId = ? AND courseId = ?;",
+      [title, description, note, type, content, order, status, contentId, courseId],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -219,6 +222,56 @@ Course.route("/editCourseContent").post(
     );
   }
 );
+
+//update course content order (AddCourseContent.js)
+Course.post("/changeContentOrder", (req, res) => {
+  const courseId = req.body.courseId;
+  const order = req.body.order;
+  connection.query(
+    "UPDATE coursecontent SET contentOrder = contentOrder + 1 WHERE courseId = ? AND contentOrder >= ?;",
+    [courseId, order],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//update course content order (EdotCourseContent.js)
+Course.post("/updateContentOrder", (req, res) => {
+  const courseId = req.body.courseId;
+  const current = req.body.current;
+  const order = req.body.order;
+
+  if(current < order){
+    connection.query(
+      "UPDATE coursecontent SET contentOrder = contentOrder - 1 WHERE courseId = ? AND contentOrder > ? AND contentOrder <= ?;",
+      [courseId,current, order],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+  else if(current > order){
+    connection.query(
+      "UPDATE coursecontent SET contentOrder = contentOrder + 1 WHERE courseId = ? AND contentOrder < ? AND contentOrder >= ?;",
+      [courseId, current, order],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+      }
+    );
+  }
+  
+});
+
 
 //delete coursecontent(it's only update the status to deleted)
 Course.post("/deleteCourseContent", (req, res) => {
@@ -252,11 +305,13 @@ Course.post("/", (req, res) => {
   );
 });
 
+
 Course.post("/getContentList", (req, res) => {
   const cid = req.body.cId;
+  const stDel = "Deleted";
   connection.query(
-    "SELECT contentId, title, description FROM coursecontent WHERE courseId = ?;",
-    [cid],
+    "SELECT contentId, title, description FROM coursecontent WHERE courseId = ? AND status != ? ORDER BY contentOrder;",
+    [cid, stDel],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -266,7 +321,7 @@ Course.post("/getContentList", (req, res) => {
   );
 });
 
-//get last content no of the relevant course (courseContentInfo.js)
+//get last content no of the relevant course (AddCourseContent.js)
 Course.post("/getContentNo", (req, res) => {
   const cId = req.body.id;
   connection.query(
@@ -276,18 +331,54 @@ Course.post("/getContentNo", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
-        console.log(result);
         res.send(result);
       }
     }
   );
 });
 
+
+//get last content order list of the relevant course (AddCourseContent.js)
+Course.post("/getContentOrderList", (req, res) => {
+  const cId = req.body.id;
+  const stDel = "Deleted";
+  //const stRej = "Rejected";
+  connection.query(
+    "SELECT title, contentOrder FROM coursecontent WHERE courseId = ? AND status != ? ORDER BY contentOrder;",
+    [cId, stDel],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get last content order list of the relevant course (AddCourseContent.js)
+Course.post("/getContentOrder", (req, res) => {
+  const cId = req.body.cId;
+  const cntId = req.body.cntId;
+  const stDel = "Deleted";
+  //const stRej = "Rejected";
+  connection.query(
+    "SELECT title, contentOrder FROM coursecontent WHERE courseId = ? AND contentId != ? AND status != ? ORDER BY contentOrder;",
+    [cId, cntId, stDel],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get content info (EditCourseContent.js)
 Course.post("/getContentInfo", (req, res) => {
   const cid = req.body.cId;
   const cntid = req.body.cntId;
   connection.query(
-    "SELECT title, description, contentType, content FROM coursecontent WHERE contentId = ? AND courseId = ?;",
+    "SELECT title, description, contentType, content, contentOrder FROM coursecontent WHERE contentId = ? AND courseId = ?;",
     [cntid, cid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -300,9 +391,10 @@ Course.post("/getContentInfo", (req, res) => {
 
 Course.post("/getCourseInfo", (req, res) => {
   const cid = req.body.cid;
+  const status = "Deleted";
   connection.query(
-    "SELECT name, description, duration, durationType, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ?;",
-    [cid],
+    "SELECT name, description, duration, durationType, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ? AND status != ?;",
+    [cid,status],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {

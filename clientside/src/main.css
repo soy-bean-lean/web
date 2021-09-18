@@ -27,7 +27,12 @@ a:not([href]):not([tabindex]):hover {
   color: #000000;
   cursor: pointer;
 }
-
+.ancorTag{
+  color: white;
+}
+.ancorTag :hover{
+  color: white;
+}
 .cr-sidebar__content {
   position: relative;
 }
