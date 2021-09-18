@@ -81,6 +81,9 @@ const editCourseContent = React.lazy(() =>
 const enrolledCourseView = React.lazy(() =>
   import('pages/courses/EnrolledCourseView'),
 );
+const courseContentView = React.lazy(() =>
+  import('pages/courses/CourseContentView'),
+);
 
 //workshops
 const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
@@ -270,6 +273,11 @@ function App(props) {
                       exact
                       path="/csslcourse/enrolledcourse/cssl00:id/:title"
                       component={enrolledCourseView}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title/accesscontent/:cntId/:title"
+                      component={courseContentView}
                     />
                     {/*CPD Related Routes*/}
                     <Route

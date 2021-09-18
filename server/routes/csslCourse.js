@@ -644,5 +644,21 @@ Course.post("/getCourse", (req, res) => {
   );
 });
 
+//get content for view (CourseContentView.js)
+Course.post("/getContent", (req, res) => {
+  const cid = req.body.cId;
+  const cntid = req.body.cntId;
+  connection.query(
+    "SELECT title, contentType, content, note FROM coursecontent WHERE contentId = ? AND courseId = ?;",
+    [cntid,cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 
 export default Course;
