@@ -901,8 +901,8 @@ function App(props) {
                     <Route path="/charts" component={ChartPagePro} />
                   </React.Suspense>
                 </MainLayoutStudent>
-              )}
-              {authState.role == 'ddd' && (
+             )}
+              {/* {authState.role == 'ddd' && (
                 <MainLayoutDefault breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route exact path="/" component={DashboardPage} />
@@ -940,7 +940,7 @@ function App(props) {
                     <Route exact path="/charts" component={ChartPage} />
                   </React.Suspense>
                 </MainLayoutDefault>
-              )}
+              )} */}
 
               {/* proffesional members data */}
               {/* chartered members data */}

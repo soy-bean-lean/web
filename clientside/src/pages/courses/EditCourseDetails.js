@@ -63,7 +63,7 @@ const EditCourseDetails = () => {
   }, []);
 
   const UpdateCourseInfo = () => {
-    const mId = 'cssl001';
+    const mId = authState.memberId;
     const formData = new FormData();
     formData.append('id', id);
     formData.append('title', courseTitle);
