@@ -87,7 +87,7 @@ const CardPage = props => {
                   View More{' '}
                 </Button>
               </Link>
-              
+             
             </center>
           </td>
         </tr>
