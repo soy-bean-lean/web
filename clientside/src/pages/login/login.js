@@ -71,7 +71,6 @@ const Login = () => {
           localStorage.setItem('accessToken', response.data.token);
           setResult('done');
 
-          console.log(response.data);
           setAuthState({
             fname: response.data.firstName,
             lname: response.data.lastName,
@@ -79,7 +78,7 @@ const Login = () => {
             id: response.data.id,
             profileImage: response.data.profileImage,
             email: response.data.email,
-            memberID: response.data.memberId,
+            memberId: response.data.memberId,
             status: true,
           });
           if (response.data.role == 'student') {

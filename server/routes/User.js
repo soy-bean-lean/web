@@ -176,12 +176,12 @@ userRouter.post("/login", async (req, res) => {
             res.json({ errorPass: "Incorrect password" });
           } else {
 
+            const id = result[0].id; 
             connection.query(
               //temporary sql query for testing
-              "SELECT memberId FROM member WHERE id=?",          
-              [result[0].id],
+              "SELECT * FROM member WHERE id=?",  
+              [id],        
               (err, row) => {
-
             const accessToken = sign(
               {
                 firstName: result[0].firstName,

@@ -195,7 +195,7 @@ function App(props) {
     profileImage: '',
     email: '',
     status: false,
-    memberID: '',
+    memberId: '',
   });
 
   useEffect(() => {
@@ -209,6 +209,7 @@ function App(props) {
         if (response.data.error) {
           setAuthState({ ...authState, status: false });
         } else {
+          console.log(response.data);
           setAuthState({
             fname: response.data.firstName,
             lname: response.data.lastName,
@@ -216,7 +217,7 @@ function App(props) {
             id: response.data.id,
             profileImage: response.data.profileImage,
             email: response.data.email,
-            memberID: response.data.memberId,
+            memberId: response.data.memberId,
             status: true,
           });
         }
