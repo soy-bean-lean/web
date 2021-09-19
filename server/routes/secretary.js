@@ -4,6 +4,19 @@ import { createTransport } from "nodemailer";
 
 const secretaryRouter = Router();
 
+secretaryRouter.post("/all", async (req, res) => {
+  connection.query(
+    "SELECT * FROM `user` WHERE  (`userType` = 'student' OR `userType` = 'associate' OR `userType` = 'professional' OR `userType` = 'chartered') ORDER BY `user`.`registeredDate` DESC;",
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 secretaryRouter.post("/regPending", async (req, res) => {
   connection.query(
     "SELECT * FROM `user` WHERE `status` = ? AND (`userType` = ? OR `userType` = ? OR `userType` = ? OR `userType` = ?);",

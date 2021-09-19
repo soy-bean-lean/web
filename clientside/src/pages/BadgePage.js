@@ -130,7 +130,7 @@ const BadgePage = () => {
               <Badge color="light" pill className="mr-1">
                 Light
               </Badge>
-              <Badge color="dark" pill className="mr-1">
+              <Badge >
                 Dark
               </Badge>
             </CardBody>

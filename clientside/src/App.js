@@ -117,6 +117,9 @@ const editJobVaccencies = React.lazy(() =>
 //reports
 const Reports = React.lazy(() => import('pages/reports/Reports'));
 
+//reports
+const MemberVerification = React.lazy(() => import('pages/registration/registrationVerification'));
+
 //profile
 
 //pro
@@ -453,7 +456,7 @@ function App(props) {
                       component={DashboardPageSec}
                     />
                     {/*User Verification Related Routes*/}
-                    <Route path="/verifyuser" component={Login} />{' '}
+                    <Route path="/verifyuser" component={MemberVerification} />
                     {/* need to change component */}
                     <Route
                       path="/verifyuser/user00:id"
