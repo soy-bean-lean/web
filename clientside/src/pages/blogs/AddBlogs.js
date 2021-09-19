@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../helpers/AuthContext';
 import classnames from 'classnames';
 import Typography from 'components/Typography';
+import TextEditor from '../../components/TextEditor/RichTextEditor';
 
 import { useHistory } from 'react-router-dom';
 
@@ -32,6 +33,7 @@ function AddBlogs() {
   const [image, setBlogImage] = useState(null);
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
+  const [note, setNote] = useState('');
 
   var today = new Date(),
     Currentdate =
@@ -41,6 +43,9 @@ function AddBlogs() {
       '-' +
       today.getDate();
   let history = useHistory();
+  const setEditorValue = val => {
+    setDesc(val);
+  };
 
   function msg() {
     if (result == 'err') {
@@ -64,8 +69,8 @@ function AddBlogs() {
     formData.append('title', title);
     formData.append('desc', desc);
     formData.append('about', about);
-  
-    formData.append('memberId', 'cssl001');
+
+    formData.append('memberId', authState.memberId);
     formData.append('date', Currentdate);
     //alert(image);
     fetch('http://localhost:3001/blog/addBlog', {
@@ -115,7 +120,7 @@ function AddBlogs() {
                   <Label for="exampleEmail" sm={12}>
                     Import Your Blog Image From the Chooser
                   </Label>
-                  <Col sm="12" md={{ size: 6, offset: 4 }}>
+                  <Col sm="12" md={{ size:12, offset: 0 }}>
                     <center>
                       {image && (
                         <img
@@ -143,17 +148,10 @@ function AddBlogs() {
                 </FormGroup>
 
                 <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Topic
-                  </Label> */}
-                  
-                  <Col sm={9}>
-                    
+                  <Col>
                     <Input
                       type="text"
                       name="title"
-                     
-                       
                       placeholder="Add Title . . . . . "
                       onChange={e => setTitle(e.target.value)}
                     />
@@ -161,35 +159,19 @@ function AddBlogs() {
                 </FormGroup>
 
                 <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Topic
-                  </Label> */}
-                  
-                  <Col sm={9}>
-                    
+                  <Col>
                     <Input
-                      type="text"
+                      type="textarea"
                       name="title"
-                     
-                       
                       placeholder="Add Description About Your Blog . . . . ."
                       onChange={e => setAbout(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
-               
 
                 <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Description
-                  </Label> */}
-                  <Col sm={9}>
-                    <Input
-                      type="textarea"
-                      className="note"
-                      placeholder="Write Your Blog . . . . . ."
-                      onChange={e => setDesc(e.target.value)}
-                    />
+                  <Col>
+                    <TextEditor onValueChange={setEditorValue} />
                   </Col>
                 </FormGroup>
 
