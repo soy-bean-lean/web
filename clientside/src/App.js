@@ -186,6 +186,7 @@ function App(props) {
     profileImage: '',
     email: '',
     status: false,
+    memberID: '',
   });
 
   useEffect(() => {
@@ -206,6 +207,7 @@ function App(props) {
             id: response.data.id,
             profileImage: response.data.profileImage,
             email: response.data.email,
+            memberID: response.data.memberId,
             status: true,
           });
         }

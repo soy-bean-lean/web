@@ -164,7 +164,6 @@ userRouter.post("/", async (req, res) => {
 userRouter.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un="+username);
   connection.query(
     //temporary sql query for testing
     "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
@@ -176,6 +175,13 @@ console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.e
           if (!match) {
             res.json({ errorPass: "Incorrect password" });
           } else {
+
+            connection.query(
+              //temporary sql query for testing
+              "SELECT memberId FROM member WHERE id=?",          
+              [result[0].id],
+              (err, row) => {
+
             const accessToken = sign(
               {
                 firstName: result[0].firstName,
@@ -184,6 +190,7 @@ console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.e
                 role: result[0].userType,
                 profileImage: result[0].profileImage,
                 email: username,
+                memberId: row[0].memberId,
               },
               "importantsecret"
             );
@@ -196,7 +203,12 @@ console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.e
               role: result[0].userType,
               profileImage: result[0].profileImage,
               email: username,
+              memberId: row[0].memberId,
             });
+
+          })
+
+            
           }
         });
       } else {

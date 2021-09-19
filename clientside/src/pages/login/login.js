@@ -80,6 +80,7 @@ const Login = () => {
             id: response.data.id,
             profileImage: response.data.profileImage,
             email: response.data.email,
+            memberID: response.data.memberId,
             status: true,
           });
           if (response.data.role == 'student') {
