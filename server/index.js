@@ -4,6 +4,7 @@ import path from "path";
 import userRouter from "./routes/User.js";
 import secretaryRouter from "./routes/secretary.js";
 import blogs from "./routes/blogsSQL.js";
+import workshop from "./routes/workshopSQL.js";
 import Job from "./routes/jobsSQL.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -57,6 +58,7 @@ app.use(
 app.use("/auth", userRouter);
 app.use("/job", Job);
 app.use("/blog", blogs);
+app.use("/workshop", workshop);
 app.use("/Dash", dashBoardSQL);
 app.use("/cpdP", Record);
 app.use("/reports", reportSQL);

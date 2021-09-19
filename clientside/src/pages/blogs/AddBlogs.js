@@ -172,7 +172,7 @@ function AddBlogs() {
                       name="title"
                      
                        
-                      placeholder="Add Description About Your Blog . . . . ."
+                      placeholder="Add Short Description About Your Blog . . . . ."
                       onChange={e => setAbout(e.target.value)}
                     />
                   </Col>
