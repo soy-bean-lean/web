@@ -95,6 +95,7 @@ const AddWorkshop = React.lazy(() => import('pages/workshop/AddWorkshop'));
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
 const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
 const BlogView = React.lazy(() => import('pages/blogs/BlogView'));
+const EditView = React.lazy(() => import('pages/blogs/EditBlog'));
 
 //forum
 
@@ -306,6 +307,11 @@ function App(props) {
                       exact
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
+                    />
+                     <Route
+                      exact
+                      path="/editview/cssl00:id/:title"
+                      component={EditView}
                     />
                     <Route
                       exact
@@ -570,6 +576,11 @@ function App(props) {
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
                     />
+                    <Route
+                      exact
+                      path="/editview/cssl00:id/:title"
+                      component={EditView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
@@ -680,6 +691,11 @@ function App(props) {
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
                     />
+                    <Route
+                      exact
+                      path="/editview/cssl00:id/:title"
+                      component={EditView}
+                    />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
                     {/* need to change component */}
@@ -758,6 +774,11 @@ function App(props) {
                       exact
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
+                    />
+                    <Route
+                      exact
+                      path="/editview/cssl00:id/:title"
+                      component={EditView}
                     />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}

@@ -103,6 +103,9 @@ function EditBlog() {
 
   return (
     <Page title="Add Blog">
+       <Link to="/blogs">
+        <Button color="primary">Back</Button>
+      </Link>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
@@ -195,7 +198,7 @@ function EditBlog() {
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
-                    <Button onClick={addBlog} color="success">
+                    <Button color="success">
                       Publish
                     </Button>
                   </Col>
