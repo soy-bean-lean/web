@@ -3,6 +3,7 @@ import cors from "cors";
 import path from "path";
 import userRouter from "./routes/User.js";
 import secretaryRouter from "./routes/secretary.js";
+import councilRouter from "./routes/councilSQL.js";
 import blogs from "./routes/blogsSQL.js";
 import workshop from "./routes/workshopSQL.js";
 import Job from "./routes/jobsSQL.js";
@@ -67,6 +68,7 @@ app.use("/cpd", Record);
 app.use("/csslcourse", Course);
 
 app.use("/secretary", secretaryRouter);
+app.use("/council", councilRouter);
 app.use("/reports", Reports);
 
 app.use('/uploads', express.static(path.resolve(__dirname, './uploads')));

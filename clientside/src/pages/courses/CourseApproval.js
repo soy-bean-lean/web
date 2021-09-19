@@ -30,32 +30,31 @@ import {
 } from 'reactstrap';
 const tableTypes = ['striped'];
 
-
 const CourseApproval = props => {
-const courseTitle = 'Machine Learning';
+  const courseTitle = 'Machine Learning';
 
   const [activeTab, setActiveTab] = useState('1');
 
   const [data, setData] = useState([]);
   //const [user, setUser] = useState(userDetails);
-  const [noApprovedUsers, setnoApprovedUsers] = useState(null);
-  const [noRejectedUsers, setnoRejecteddUsers] = useState(null);
-  const [noPendingUsers, setnoPendingUsers] = useState(null);
-  const [count, setnoPendingUserCount] = useState(null);
-  const [all, setAll] = useState(null);
+  const [noApprovedUsers, setApprovedCourses] = useState(null);
+  const [noRejectedUsers, setRejecteddCourses] = useState(null);
+  const [noPendingUsers, setPendingCourses] = useState(null);
+  const [count, setDeletedCourses] = useState(null);
+  const [pendingCount, setPending] = useState(null);
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
   };
   useEffect(() => {
     axios
-      .post('http://localhost:3001/secretary/regApproved', data)
+      .post('http://localhost:3001/council/CourseApproved', data)
 
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setnoApprovedUsers(response.data);
-          //setnoApprovedUsers(response.data.length);
+          setApprovedCourses(response.data);
+          //setApprovedCourses(response.data.length);
         }
       })
       .catch(error => {
@@ -65,13 +64,14 @@ const courseTitle = 'Machine Learning';
 
   useEffect(() => {
     axios
-      .post('http://localhost:3001/secretary/regRejected', data)
+      .post('http://localhost:3001/council/CoursePending', data)
 
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setnoRejecteddUsers(response.data);
+          setPendingCourses(response.data);
+          setPending(response.data.length);
         }
       })
       .catch(error => {
@@ -81,14 +81,13 @@ const courseTitle = 'Machine Learning';
 
   useEffect(() => {
     axios
-      .post('http://localhost:3001/secretary/regVerified', data)
+      .post('http://localhost:3001/council/CourseDeleted', data)
 
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setnoPendingUsers(response.data);
-          setnoPendingUserCount(response.data.length);
+          setDeletedCourses(response.data);
         }
       })
       .catch(error => {
@@ -98,167 +97,36 @@ const courseTitle = 'Machine Learning';
 
   useEffect(() => {
     axios
-      .post('http://localhost:3001/secretary/all', data)
+      .post('http://localhost:3001/council/CoursesRejected', data)
 
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setAll(response.data);
+          setRejecteddCourses(response.data);
         }
       })
       .catch(error => {
         alert(error);
       });
   }, []);
-  const users =
-  all &&
-  all.map((data, i) => {
-    if (data.status == 0) {
-      return (
-        <>
-          <tr>
-            <td>
-              {data.title} {data.firstName} {data.lastName}
-            </td>
-            <td>
-              <center>
-                <Badge color="warning" pill className="mr-1">
-                  {data.userType.toUpperCase()}{' '}
-                </Badge>
-              </center>
-            </td>
-            <td>{data.contactNumber}</td>
-            <td>{data.email}</td>
-            <td>{data.registeredDate}</td>
-            <td>
-              <Badge pill color="primary" className="mr-1">
-                Pending
-              </Badge>
-            </td>
-          </tr>
-        </>
-      );
-    } else if (data.status == 1) {
-      return (
-        <>
-          <tr>
-            <td>
-              {data.title} {data.firstName} {data.lastName}
-            </td>
-            <td>
-              <center>
-                <Badge color="warning" pill className="mr-1">
-                  {data.userType.toUpperCase()}{' '}
-                </Badge>
-              </center>
-            </td>{' '}
-            <td>{data.contactNumber}</td>
-            <td>{data.email}</td>
-            <td>{data.registeredDate}</td>
-            <td>
-              <Badge pill color="success" className="mr-1">
-                Approved
-              </Badge>
-            </td>
-          </tr>
-        </>
-      );
-    } else if (data.status == 2) {
-      return (
-        <>
-          <tr>
-            <td>
-              {data.title} {data.firstName} {data.lastName}
-            </td>
-            <td>
-              <center>
-                <center>
-                  <Badge color="warning" pill className="mr-1">
-                    {data.userType.toUpperCase()}{' '}
-                  </Badge>
-                </center>
-              </center>
-            </td>{' '}
-            <td>{data.contactNumber}</td>
-            <td>{data.email}</td>
-            <td>{data.registeredDate}</td>
-            <td>
-              <Badge pill color="danger" className="mr-1">
-                Rejected
-              </Badge>
-            </td>
-          </tr>
-        </>
-      );
-    
-    } else if (data.status == 3) {
-      return (
-        <>
-          <tr>
-            <td>
-              {data.title} {data.firstName} {data.lastName}
-            </td>
-            <td>
-              <center>
-                <center>
-                  <Badge color="warning" pill className="mr-1">
-                    {data.userType.toUpperCase()}{' '}
-                  </Badge>
-                </center>
-              </center>
-            </td>{' '}
-            <td>{data.contactNumber}</td>
-            <td>{data.email}</td>
-            <td>{data.registeredDate}</td>
-            <td>
-              <Badge pill color="info" className="mr-1">
-                Verified
-              </Badge>
-            </td>
-          </tr>
-        </>
-      );
-    }
-  });
-
-  const approved =
-    noApprovedUsers &&
-    noApprovedUsers.map(data => (
-      <>
-        <tr>
-          <td>
-            {data.title} {data.firstName} {data.lastName}
-          </td>
-          <td>
-            <Badge pill color="warning" className="mr-1">
-              {data.userType.toUpperCase()}{' '}
-            </Badge>
-          </td>{' '}
-          <td>{data.contactNumber}</td>
-          <td>{data.email}</td>
-          <td>{data.registeredDate}</td>
-        </tr>
-      </>
-    ));
-
   const pending =
-    noPendingUsers &&
-    noPendingUsers.map(data => (
-      <>
-        <tr>
-          <td>
-            {data.title} {data.firstName} {data.lastName}
-          </td>
-          <td>
-            <Badge pill color="warning" className="mr-1">
-              {data.userType.toUpperCase()}{' '}
-            </Badge>
-          </td>{' '}
-          <td>{data.contactNumber}</td>
-          <td>{data.email}</td>
-          <td>{data.registeredDate}</td>
-          <td>
+  noPendingUsers &&
+    noPendingUsers.map((data, i) => {
+      return (
+        <>
+          <tr>
+            <td>{data.name}</td>
+            <td>{data.title} .{data.firstName} {data.lastName}</td>
+            <td>
+              <center>
+                <Badge color="warning" pill className="mr-1">
+                  {data.skillLevel.toUpperCase()}{' '}
+                </Badge>
+              </center>
+            </td>
+           
+            <td>
             <Link to={'/courseapproval/csslcourses/cssl008/'+courseTitle}>
               <Button
                 pill
@@ -270,28 +138,79 @@ const courseTitle = 'Machine Learning';
               </Button>
             </Link>
           </td>
-        </tr>
-      </>
+          </tr>
+        </>
+      );
+    });
+
+  const approved =
+    noApprovedUsers &&
+    noApprovedUsers.map(data => (
+      <>
+      <tr>
+        <td>{data.name}</td>
+        <td>{data.title} .{data.firstName} {data.lastName}</td>
+        <td>
+          <center>
+            <Badge color="warning" pill className="mr-1">
+              {data.skillLevel.toUpperCase()}{' '}
+            </Badge>
+          </center>
+        </td>
+        <td>
+          <Badge pill color="success" className="mr-1">
+            Approved
+          </Badge>
+        </td>
+      </tr>
+    </>
+    ));
+
+  const deleted =
+    noPendingUsers &&
+    noPendingUsers.map(data => (
+      <>
+      <tr>
+        <td>{data.name}</td>
+        <td>{data.title} .{data.firstName} {data.lastName}</td>
+        <td>
+          <center>
+            <Badge color="warning" pill className="mr-1">
+              {data.skillLevel.toUpperCase()}{' '}
+            </Badge>
+          </center>
+        </td>
+
+        <td>
+          <Badge pill color="danger" className="mr-1">
+            Deleted
+          </Badge>
+        </td>
+      </tr>
+    </>
     ));
 
   const rejected =
     noRejectedUsers &&
     noRejectedUsers.map(data => (
       <>
-        <tr>
-          <td>
-            {data.title} {data.firstName} {data.lastName}
-          </td>
-          <td>
-            <Badge pill color="warning" className="mr-1">
-              {data.userType.toUpperCase()}{' '}
+      <tr>
+        <td>{data.name}</td>
+        <td>{data.title} .{data.firstName} {data.lastName}</td>
+        <td>
+          <center>
+            <Badge color="warning" pill className="mr-1">
+              {data.skillLevel.toUpperCase()}{' '}
             </Badge>
-          </td>{' '}
-          <td>{data.contactNumber}</td>
-          <td>{data.email}</td>
-          <td>{data.registeredDate}</td>
-        </tr>
-      </>
+          </center>
+        </td>
+        <td>
+          <Badge pill color="danger" className="mr-1">
+            Rejected
+          </Badge>
+        </td>
+      </tr>
+    </>
     ));
 
   return (
@@ -306,7 +225,7 @@ const courseTitle = 'Machine Learning';
               toggle('1');
             }}
           >
-            Pending User Approvals <Badge color="info"> {count}</Badge>
+            Pending Course Approvals <Badge color="info"> {pendingCount}</Badge>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -316,7 +235,7 @@ const courseTitle = 'Machine Learning';
               toggle('2');
             }}
           >
-            All Users
+            Approved Courses
           </NavLink>
         </NavItem>
 
@@ -327,7 +246,7 @@ const courseTitle = 'Machine Learning';
               toggle('3');
             }}
           >
-            Approved Users
+            Rejected Courses
           </NavLink>
         </NavItem>
         <NavItem>
@@ -337,26 +256,11 @@ const courseTitle = 'Machine Learning';
               toggle('4');
             }}
           >
-            Rejected Users
+            Deleted Courses{' '}
           </NavLink>
         </NavItem>
       </Nav>
       <TabContent activeTab={activeTab}>
-        <TabPane tabId="2">
-          <Row>
-            <Col sm="12">
-              <Card className="mb-3">
-                <CardBody>
-                  <Card body>
-                    <Table {...{ ['striped']: true }}>
-                      <tbody>{users}</tbody>
-                    </Table>
-                  </Card>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </TabPane>
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
@@ -372,7 +276,7 @@ const courseTitle = 'Machine Learning';
             </Col>
           </Row>
         </TabPane>
-        <TabPane tabId="3">
+        <TabPane tabId="2">
           <Row>
             <Col sm="12">
               <Card className="mb-3">
@@ -387,7 +291,7 @@ const courseTitle = 'Machine Learning';
             </Col>
           </Row>
         </TabPane>
-        <TabPane tabId="4">
+        <TabPane tabId="3">
           <Row>
             <Col sm="12">
               <Card className="mb-3">
@@ -395,6 +299,21 @@ const courseTitle = 'Machine Learning';
                   <Card body>
                     <Table {...{ ['striped']: true }}>
                       <tbody>{rejected}</tbody>
+                    </Table>
+                  </Card>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </TabPane>
+        <TabPane tabId="4">
+          <Row>
+            <Col sm="12">
+              <Card className="mb-3">
+                <CardBody>
+                  <Card body>
+                    <Table {...{ ['striped']: true }}>
+                      <tbody>{deleted}</tbody>
                     </Table>
                   </Card>
                 </CardBody>
