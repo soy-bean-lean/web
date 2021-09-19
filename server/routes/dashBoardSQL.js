@@ -128,13 +128,50 @@ dashBoardSQL.post("/activityType", (req, res) => {
 
   const id = req.body.id;
   connection.query(
-    "select recordType,COUNT(recordType) as count from cpdrecords where memberId = 'cssl001' group by recordType;",
+    "select recordType,sum(credit) as count from cpdrecords where memberId = 'cssl001' group by recordType;",
     [id],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
       } else {
         res.send(result);
+      }
+    }
+  );
+});
+
+
+//Professional dashboard pie chart-credits earned according to type this year
+dashBoardSQL.post("/activityTypeCredits", (req, res) => {
+
+  const id = req.body.id;
+  connection.query(
+    "select recordCategory,sum(credit) as credits from cpdrecords where memberId = 'cssl001' group by recordCategory;",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//Professional dashboard cpd progress percentage
+dashBoardSQL.post("/progressPercentage", (req, res) => {
+
+  const id = req.body.id;
+  const earnedCredits = 
+  connection.query(
+    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        console.log(result[0].credits);
+        //res.send(result);
       }
     }
   );
@@ -145,22 +182,6 @@ dashBoardSQL.post("/getUserCount", (req, res) => {
   const id = req.body.id;
   connection.query(
     "SELECT COUNT(user.id) as counts, userType FROM `user` GROUP by user.userType; ",
-    [id],
-    (error, result, feilds) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-
-dashBoardSQL.post("/categoryType", (req, res) => {
-
-  const id = req.body.id;
-  connection.query(
-    "select recordCategory,COUNT(recordCategory) as count from cpdrecords where memberId = 'cssl001' group by recordCategory;",
     [id],
     (error, result, feilds) => {
       if (error) {
