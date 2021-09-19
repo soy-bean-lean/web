@@ -135,7 +135,7 @@ const AddCourseContent = () => {
   };
 
   const InsertCourseContentNext = () => {
-    const mId = 'cssl001';
+    const mId = authState.memberId;
     const contentId = 'cssl00' + id + '-0' + contentNum;
 
     const formData = new FormData();
@@ -175,7 +175,7 @@ const AddCourseContent = () => {
   };
 
   const InsertCourseContentFinish = () => {
-    const mId = 'cssl001';
+    const mId = authState.memberId;
     const contentId = 'cssl00' + id + '-0' + contentNum;
 
     const formData = new FormData();

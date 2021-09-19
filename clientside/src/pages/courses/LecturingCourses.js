@@ -30,7 +30,7 @@ const LecCourseList = props => {
 
   useEffect(() => {
     const formData = {
-      mId: 'cssl001',
+      mId: authState.memberId,
     };
     axios
       .post('http://localhost:3001/csslcourse/', formData)

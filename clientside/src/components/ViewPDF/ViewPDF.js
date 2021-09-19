@@ -35,14 +35,13 @@ const ViewPDF = props => {
 
   return (
     <>
-    <div>
       <Document
         file={pdf}
         //options={{ workerSrc: "/pdf.worker.js" }}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={pdfViewError}
       >
-        <Page pageNumber={pageNumber} wrap={false} />
+        <Page pageNumber={pageNumber} wrap={false} style={{border:'none'}}/>
       </Document>
       <div>
         <p>
@@ -58,7 +57,6 @@ const ViewPDF = props => {
         >
           Next
         </button>
-      </div>
       </div>
     </>
   );

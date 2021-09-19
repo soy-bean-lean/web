@@ -37,8 +37,7 @@ const BasicCourseInfo = () => {
   let history = useHistory();
 
   const InsertCourseInfo = () => {
-    //const file = event.target.files[0];
-    const mId = 'cssl001';
+    const mId = authState.memberId;
     const formData = new FormData();
     formData.append('image', imgFile);
     formData.append('title', courseTitle);
