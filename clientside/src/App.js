@@ -22,6 +22,8 @@ import PageSpinner from 'components/PageSpinner';
 import Login from 'pages/login/login';
 import Registration from 'pages/registration/registration';
 import Profile from 'pages/profile/profile';
+import memberView from 'pages/registration/profile';
+import approveMemberView from 'pages/registration/profileApproval';
 import ForgotPassword from 'pages/forgotPassword/forgotPassword';
 import ResetPassword from 'pages/forgotPassword/resetPassword';
 import TestDash from 'pages/TestDash';
@@ -117,8 +119,9 @@ const editJobVaccencies = React.lazy(() =>
 //reports
 const Reports = React.lazy(() => import('pages/reports/Reports'));
 
-//reports
+//registration
 const MemberVerification = React.lazy(() => import('pages/registration/registrationVerification'));
+const MemberApproval = React.lazy(() => import('pages/registration/registrationApproval'));
 
 //profile
 
@@ -367,7 +370,8 @@ function App(props) {
                       component={DashboardPageCou}
                     />
                     {/*User Verification Related Routes*/}
-                    <Route path="/managemembers" component={Login} />{' '}
+                    <Route path="/managemembers" component={MemberApproval} />{' '}
+                    <Route path="/memberView/:id" component={approveMemberView} />{' '}
                     {/* need to change component */}
                     <Route
                       path="/managemembers/user00:id"
@@ -457,6 +461,8 @@ function App(props) {
                     />
                     {/*User Verification Related Routes*/}
                     <Route path="/verifyuser" component={MemberVerification} />
+                    <Route path="/memberView/:id" component={memberView} />{' '}
+
                     {/* need to change component */}
                     <Route
                       path="/verifyuser/user00:id"
@@ -798,7 +804,7 @@ function App(props) {
                 </MainLayoutStudent>
               )}
 
-              {/*authState.role == 'student' && (
+             { authState.role == 'student' && (
                 <MainLayoutStudent breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route
@@ -834,8 +840,8 @@ function App(props) {
                     <Route path="/charts" component={ChartPagePro} />
                   </React.Suspense>
                 </MainLayoutStudent>
-              )*/}
-              {authState.role == 'ddd' && (
+             )}
+              {/* {authState.role == 'ddd' && (
                 <MainLayoutDefault breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route exact path="/" component={DashboardPage} />
@@ -873,7 +879,7 @@ function App(props) {
                     <Route exact path="/charts" component={ChartPage} />
                   </React.Suspense>
                 </MainLayoutDefault>
-              )}
+              )} */}
 
               {/* proffesional members data */}
               {/* chartered members data */}
