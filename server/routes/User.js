@@ -182,29 +182,58 @@ userRouter.post("/login", async (req, res) => {
               "SELECT * FROM member WHERE id=?",  
               [id],        
               (err, row) => {
-            const accessToken = sign(
-              {
-                firstName: result[0].firstName,
-                lastName: result[0].lastName,
-                id: result[0].id,
-                role: result[0].userType,
-                profileImage: result[0].profileImage,
-                email: username,
-                memberId: row[0].memberId,
-              },
-              "importantsecret"
-            );
-            console.log("_____" + result[0].profileImage);
-            res.json({
-              token: accessToken,
-              firstName: result[0].firstName,
-              lastName: result[0].lastName,
-              id: result[0].id,
-              role: result[0].userType,
-              profileImage: result[0].profileImage,
-              email: username,
-              memberId: row[0].memberId,
-            });
+                
+                if(row.length > 0){
+                  const accessToken = sign(
+                      {
+                        firstName: result[0].firstName,
+                        lastName: result[0].lastName,
+                        id: result[0].id,
+                        role: result[0].userType,
+                        profileImage: result[0].profileImage,
+                        email: username,
+                        memberId: row[0].memberId,
+                      },
+                      "importantsecret"
+                    );
+                    console.log("_____" + result[0].profileImage);
+                    res.json({
+                      token: accessToken,
+                      firstName: result[0].firstName,
+                      lastName: result[0].lastName,
+                      id: result[0].id,
+                      role: result[0].userType,
+                      profileImage: result[0].profileImage,
+                      email: username,
+                      memberId: row[0].memberId,
+                    });
+
+                }
+                else{
+                  const accessToken = sign(
+                      {
+                        firstName: result[0].firstName,
+                        lastName: result[0].lastName,
+                        id: result[0].id,
+                        role: result[0].userType,
+                        profileImage: result[0].profileImage,
+                        email: username,
+                        memberId: "",
+                      },
+                      "importantsecret"
+                    );
+                    console.log("_____" + result[0].profileImage);
+                    res.json({
+                      token: accessToken,
+                      firstName: result[0].firstName,
+                      lastName: result[0].lastName,
+                      id: result[0].id,
+                      role: result[0].userType,
+                      profileImage: result[0].profileImage,
+                      email: username,
+                      memberId: "",
+                    });
+                }
 
           })
 
