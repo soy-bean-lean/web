@@ -26,7 +26,22 @@ import {
 } from 'reactstrap';
 
 function AddWorkshop() {
-  const [title, setTitle] = useState('');
+
+    // const [workshopId, setWorkshopId] = useState();
+    // const [title, setWorkshopTitle] = useState('');
+    // const [description,setWorkshopDes] = useState('');
+    // const [fromDate, setFromDate] = useState('');
+    // const [toDate, setToDate] = useState('');
+    // const [duration, setDuration] = useState('');
+    // const [credit, setCredit] = useState('');
+   
+    // const [subject, setSubject] = useState('');
+    // const [image, setImage] = useState();
+    // const [credit, setCredit] = useState('');
+    // const [result, setResult] = useState();
+  
+    // let history = useHistory();
+    const [title, setTitle] = useState('');
   const [about, setAbout] = useState('');
   const [desc, setDesc] = useState('');
   const [image, setBlogImage] = useState(null);
@@ -41,6 +56,9 @@ function AddWorkshop() {
       '-' +
       today.getDate();
   let history = useHistory();
+
+
+  
 
   function msg() {
     if (result == 'err') {
