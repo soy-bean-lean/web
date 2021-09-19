@@ -175,27 +175,69 @@ userRouter.post("/login", async (req, res) => {
           if (!match) {
             res.json({ errorPass: "Incorrect password" });
           } else {
-            const accessToken = sign(
-              {
-                firstName: result[0].firstName,
-                lastName: result[0].lastName,
-                id: result[0].id,
-                role: result[0].userType,
-                profileImage: result[0].profileImage,
-                email: username,
-              },
-              "importantsecret"
-            );
-            console.log("_____" + result[0].profileImage);
-            res.json({
-              token: accessToken,
-              firstName: result[0].firstName,
-              lastName: result[0].lastName,
-              id: result[0].id,
-              role: result[0].userType,
-              profileImage: result[0].profileImage,
-              email: username,
-            });
+
+            const id = result[0].id; 
+            connection.query(
+              //temporary sql query for testing
+              "SELECT * FROM member WHERE id=?",  
+              [id],        
+              (err, row) => {
+                
+                if(row.length > 0){
+                  const accessToken = sign(
+                      {
+                        firstName: result[0].firstName,
+                        lastName: result[0].lastName,
+                        id: result[0].id,
+                        role: result[0].userType,
+                        profileImage: result[0].profileImage,
+                        email: username,
+                        memberId: row[0].memberId,
+                      },
+                      "importantsecret"
+                    );
+                    console.log("_____" + result[0].profileImage);
+                    res.json({
+                      token: accessToken,
+                      firstName: result[0].firstName,
+                      lastName: result[0].lastName,
+                      id: result[0].id,
+                      role: result[0].userType,
+                      profileImage: result[0].profileImage,
+                      email: username,
+                      memberId: row[0].memberId,
+                    });
+
+                }
+                else{
+                  const accessToken = sign(
+                      {
+                        firstName: result[0].firstName,
+                        lastName: result[0].lastName,
+                        id: result[0].id,
+                        role: result[0].userType,
+                        profileImage: result[0].profileImage,
+                        email: username,
+                        memberId: "",
+                      },
+                      "importantsecret"
+                    );
+                    console.log("_____" + result[0].profileImage);
+                    res.json({
+                      token: accessToken,
+                      firstName: result[0].firstName,
+                      lastName: result[0].lastName,
+                      id: result[0].id,
+                      role: result[0].userType,
+                      profileImage: result[0].profileImage,
+                      email: username,
+                      memberId: "",
+                    });
+                }
+
+          })
+
+            
           }
         });
       } else {
@@ -460,7 +502,7 @@ userRouter.post("/getProfileData", (req, res) => {
   const memberId = req.body.memberId;
 
   const sqlSelect =
-    "select firstName ,lastName ,residentialAddress ,email,nic,contactNumber,profileImage, birthDate from user where id = " +
+    "select  * from user where id = " +
     memberId +
     ";";
 

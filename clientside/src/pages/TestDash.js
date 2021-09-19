@@ -93,7 +93,6 @@ const lastWeek = new Date(
 function TestDash() {
   const primaryColor = getColor('primary');
   const secondaryColor = getColor('secondary');
-  const percentage = 66;
   const [value, setValue] = useState(new Date());
   const changeDate = e => {
     setValue(value);
@@ -139,6 +138,8 @@ function TestDash() {
 
   const [retrievePie, setretrievePie] = useState(null);
 
+  const [progressPercentage,setprogressPercentage] = useState(76);
+
   
   //this year credits earned
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -158,11 +159,8 @@ function TestDash() {
   
   retrievePie &&
   retrievePie.map(
-    retrievePie => (category.push(retrievePie.recordCategory), countType.push(retrievePie.count)),
+    retrievePie => (category.push(retrievePie.recordCategory), countType.push(retrievePie.credits)),
     );
-
-  
-  console.log(countType);
 
 
   //credits earned line chart
@@ -292,12 +290,25 @@ function TestDash() {
       });
 
       axios
-      .post('http://localhost:3001/Dash/categoryType', data)
+      .post('http://localhost:3001/Dash/activityTypeCredits', data)
       .then(response => {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
           setretrievePie(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+      axios
+      .post('http://localhost:3001/Dash/progressPercentage', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+         // setprogressPercentage(response.data);
         }
       })
       .catch(error => {
@@ -326,8 +337,8 @@ function TestDash() {
                   <CardBody>
                     <div style={{ width: 200, height: 240 }}>
                       <CircularProgressbar
-                        value={percentage}
-                        text={`${percentage}%`}
+                        value={progressPercentage}
+                        text={`${progressPercentage}%`}
                         styles={buildStyles({
                           // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                           strokeLinecap: 'butt',

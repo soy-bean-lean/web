@@ -193,9 +193,9 @@ const Blogs = props => {
                     <Button color="primary">Edit</Button>
                   </Link>
                   {'  '}
-                  <Link to="">
+                  {/* <Link to="">
                     <Button color="danger">Delete</Button>
-                  </Link>
+                  </Link> */}
                 </Col>
               </Row>
             </Col>

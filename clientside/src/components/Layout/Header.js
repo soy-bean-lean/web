@@ -163,14 +163,14 @@ function Header(props) {
                       onClick={profile}
                       tag="button"
                       action
-                      color="dark"
+                      color="light"
                       className="text-dark"
                     >
                       <MdPersonPin /> Profile
                     </ListGroupItem>
 
                     <ListGroupItem
-                      color="dark"
+                      color="light"
                       tag="button"
                       onClick={logout}
                       to="/login"

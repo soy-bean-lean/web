@@ -77,7 +77,7 @@ const RegistrationVerification = props => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:3001/secretary/regPending', data)
+      .post('http://localhost:3001/secretary/regVerified', data)
 
       .then(response => {
         if (response.data.error) {
@@ -108,115 +108,115 @@ const RegistrationVerification = props => {
       });
   }, []);
   const users =
-    all &&
-    all.map((data, i) => {
-      if (data.status == 0) {
-        return (
-          <>
-            <tr>
-              <td>
-                {data.title} {data.firstName} {data.lastName}
-              </td>
-              <td>
+  all &&
+  all.map((data, i) => {
+    if (data.status == 0) {
+      return (
+        <>
+          <tr>
+            <td>
+              {data.title} {data.firstName} {data.lastName}
+            </td>
+            <td>
+              <center>
+                <Badge color="warning" pill className="mr-1">
+                  {data.userType.toUpperCase()}{' '}
+                </Badge>
+              </center>
+            </td>
+            <td>{data.contactNumber}</td>
+            <td>{data.email}</td>
+            <td>{data.registeredDate}</td>
+            <td>
+              <Badge pill color="primary" className="mr-1">
+                Pending
+              </Badge>
+            </td>
+          </tr>
+        </>
+      );
+    } else if (data.status == 1) {
+      return (
+        <>
+          <tr>
+            <td>
+              {data.title} {data.firstName} {data.lastName}
+            </td>
+            <td>
+              <center>
+                <Badge color="warning" pill className="mr-1">
+                  {data.userType.toUpperCase()}{' '}
+                </Badge>
+              </center>
+            </td>{' '}
+            <td>{data.contactNumber}</td>
+            <td>{data.email}</td>
+            <td>{data.registeredDate}</td>
+            <td>
+              <Badge pill color="success" className="mr-1">
+                Approved
+              </Badge>
+            </td>
+          </tr>
+        </>
+      );
+    } else if (data.status == 2) {
+      return (
+        <>
+          <tr>
+            <td>
+              {data.title} {data.firstName} {data.lastName}
+            </td>
+            <td>
+              <center>
                 <center>
                   <Badge color="warning" pill className="mr-1">
                     {data.userType.toUpperCase()}{' '}
                   </Badge>
                 </center>
-              </td>
-              <td>{data.contactNumber}</td>
-              <td>{data.email}</td>
-              <td>{data.registeredDate}</td>
-              <td>
-                <Badge pill color="primary" className="mr-1">
-                  Pending
-                </Badge>
-              </td>
-            </tr>
-          </>
-        );
-      } else if (data.status == 1) {
-        return (
-          <>
-            <tr>
-              <td>
-                {data.title} {data.firstName} {data.lastName}
-              </td>
-              <td>
+              </center>
+            </td>{' '}
+            <td>{data.contactNumber}</td>
+            <td>{data.email}</td>
+            <td>{data.registeredDate}</td>
+            <td>
+              <Badge pill color="danger" className="mr-1">
+                Rejected
+              </Badge>
+            </td>
+          </tr>
+        </>
+      );
+    
+    } else if (data.status == 3) {
+      return (
+        <>
+          <tr>
+            <td>
+              {data.title} {data.firstName} {data.lastName}
+            </td>
+            <td>
+              <center>
                 <center>
                   <Badge color="warning" pill className="mr-1">
                     {data.userType.toUpperCase()}{' '}
                   </Badge>
                 </center>
-              </td>{' '}
-              <td>{data.contactNumber}</td>
-              <td>{data.email}</td>
-              <td>{data.registeredDate}</td>
-              <td>
-                <Badge pill color="success" className="mr-1">
-                  Approved
-                </Badge>
-              </td>
-            </tr>
-          </>
-        );
-      } else if (data.status == 2) {
-        return (
-          <>
-            <tr>
-              <td>
-                {data.title} {data.firstName} {data.lastName}
-              </td>
-              <td>
-                <center>
-                  <center>
-                    <Badge color="warning" pill className="mr-1">
-                      {data.userType.toUpperCase()}{' '}
-                    </Badge>
-                  </center>
-                </center>
-              </td>{' '}
-              <td>{data.contactNumber}</td>
-              <td>{data.email}</td>
-              <td>{data.registeredDate}</td>
-              <td>
-                <Badge pill color="danger" className="mr-1">
-                  Rejected
-                </Badge>
-              </td>
-            </tr>
-          </>
-        );
-      
-      } else if (data.status == 3) {
-        return (
-          <>
-            <tr>
-              <td>
-                {data.title} {data.firstName} {data.lastName}
-              </td>
-              <td>
-                <center>
-                  <center>
-                    <Badge color="warning" pill className="mr-1">
-                      {data.userType.toUpperCase()}{' '}
-                    </Badge>
-                  </center>
-                </center>
-              </td>{' '}
-              <td>{data.contactNumber}</td>
-              <td>{data.email}</td>
-              <td>{data.registeredDate}</td>
-              <td>
-                <Badge pill color="info" className="mr-1">
-                  Verified
-                </Badge>
-              </td>
-            </tr>
-          </>
-        );
-      }
-    });
+              </center>
+            </td>{' '}
+            <td>{data.contactNumber}</td>
+            <td>{data.email}</td>
+            <td>{data.registeredDate}</td>
+            <td>
+              <Badge pill color="info" className="mr-1">
+                Verified
+              </Badge>
+            </td>
+          </tr>
+        </>
+      );
+    }
+  });
 
   const approved =
     noApprovedUsers &&
@@ -234,8 +234,6 @@ const RegistrationVerification = props => {
           <td>{data.contactNumber}</td>
           <td>{data.email}</td>
           <td>{data.registeredDate}</td>
-     
-     
         </tr>
       </>
     ));
@@ -288,24 +286,23 @@ const RegistrationVerification = props => {
           <td>{data.contactNumber}</td>
           <td>{data.email}</td>
           <td>{data.registeredDate}</td>
-        
-        
         </tr>
       </>
     ));
+
   return (
-    <Page title="User Verification">
+    <Page title="User Approval">
       <hr></hr>
 
       <Nav tabs>
-      <NavItem>
+        <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '1' })}
             onClick={() => {
               toggle('1');
             }}
           >
-            Pending Users{" "}<Badge color="info">   {count}</Badge>
+            Pending User Approvals <Badge color="info"> {count}</Badge>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -318,7 +315,7 @@ const RegistrationVerification = props => {
             All Users
           </NavLink>
         </NavItem>
-      
+
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '3' })}
@@ -360,7 +357,6 @@ const RegistrationVerification = props => {
           <Row>
             <Col sm="12">
               <Card className="mb-3">
-              
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
@@ -376,7 +372,6 @@ const RegistrationVerification = props => {
           <Row>
             <Col sm="12">
               <Card className="mb-3">
-             
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
@@ -392,7 +387,6 @@ const RegistrationVerification = props => {
           <Row>
             <Col sm="12">
               <Card className="mb-3">
-                
                 <CardBody>
                   <Card body>
                     <Table {...{ ['striped']: true }}>
