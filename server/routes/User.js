@@ -137,7 +137,7 @@ userRouter.post("/", async (req, res) => {
                 res.json({ error });
               } else {
                 connection.query(
-                  `INSERT INTO employmentdetails (memberID, designation, companyName, businessAddress) VALUES (?,?,?,?)`,
+                  `INSERT INTO employmentdetails (userID, designation, companyName, businessAddress) VALUES (?,?,?,?)`,
                   [row.insertId, designation, companyName, businessAddress],
                   (err, result) => {
                     if (err) {
