@@ -102,7 +102,10 @@ function EditBlog() {
 //   };
 
   return (
-    <Page title="Add Blog">
+    <Page title="Edit Blog">
+       <Link to="/blogs">
+        <Button color="primary">Back</Button>
+      </Link>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
@@ -149,14 +152,14 @@ function EditBlog() {
                   
                   <Col sm={9}>
                     
-                    {/* <Input
+                    <Input
                       type="text"
                       name="title"
                      
                        
                       placeholder="Add Title . . . . . "
-                      onChange={e => setTitle(e.target.value)}
-                    /> */}
+                      //onChange={e => setTitle(e.target.value)}
+                    />
                   </Col>
                 </FormGroup>
 
@@ -166,15 +169,15 @@ function EditBlog() {
                   </Label> */}
                   
                   <Col sm={9}>
-{/*                     
+                    
                     <Input
                       type="text"
                       name="title"
                      
                        
                       placeholder="Add Description About Your Blog . . . . ."
-                      onChange={e => setAbout(e.target.value)}
-                    /> */}
+                     // onChange={e => setAbout(e.target.value)}
+                    />
                   </Col>
                 </FormGroup>
                
@@ -188,15 +191,21 @@ function EditBlog() {
                       type="textarea"
                       className="note"
                       placeholder="Write Your Blog . . . . . ."
-                      onChange={e => setDesc(e.target.value)}
+                      //onChange={e => setDesc(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
-                    <Button onClick={addBlog} color="success">
-                      Publish
+                    <Button color="success">
+                      Update
+                    </Button>
+
+                    {'  '}
+
+                    <Button  color="danger">
+                      Delete
                     </Button>
                   </Col>
                 </FormGroup>
