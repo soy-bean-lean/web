@@ -188,7 +188,7 @@ const Workshop = props => {
                   // style={{ width: 175, height: 150 }}
                 />
                 <CardBody>
-                  <h3>{myBlog.title}</h3>
+                  {/* <h3>{myBlog.title}</h3> */}
                   <CardText>{myBlog.content}</CardText>
                 </CardBody>
               </Card>
@@ -224,7 +224,7 @@ const Workshop = props => {
               toggle('1');
             }}
           >
-            CSSL Workshop
+            All Workshop
           </NavLink>
         </NavItem>
         <NavItem>
@@ -234,7 +234,7 @@ const Workshop = props => {
               toggle('2');
             }}
           >
-            Other Workshop
+            Sending Workshop
           </NavLink>
         </NavItem>
       </Nav>
@@ -245,7 +245,7 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">CSSL rkshopWo</Typography>
+                  <Typography className="text-success">All rkshopWo</Typography>
                 </CardHeader>
                 {/* <CardBody>
                   <InputGroup>
@@ -282,9 +282,9 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">Other Workshop</Typography>
+                  <Typography className="text-success">Sending Workshop</Typography>
                 </CardHeader>
-                {myblogs}
+                {/* {myblogs} */}
               </Card>
             </Col>
           </Row>
