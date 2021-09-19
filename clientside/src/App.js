@@ -553,6 +553,11 @@ function App(props) {
                       path="/csslcourse/enrolledcourse/cssl00:id/:title"
                       component={enrolledCourseView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title/accesscontent/:cntId/:title"
+                      component={courseContentView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
@@ -652,6 +657,11 @@ function App(props) {
                       path="/csslcourse/enrolledcourse/cssl00:id/:title"
                       component={enrolledCourseView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title/accesscontent/:cntId/:title"
+                      component={courseContentView}
+                    />
                     {/*CPD Related Routes*/}
                     <Route
                       exact
@@ -741,6 +751,11 @@ function App(props) {
                       exact
                       path="/csslcourse/enrolledcourse/cssl00:id/:title"
                       component={enrolledCourseView}
+                    />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title/accesscontent/:cntId/:title"
+                      component={courseContentView}
                     />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />

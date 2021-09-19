@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import TextEditor from '../../components/TextEditor/RichTextEditor';
-
+import { AuthContext } from '../../helpers/AuthContext';
 import {
   Button,
   Card,
@@ -21,6 +21,9 @@ import {
 } from 'reactstrap';
 
 const AddCourseContent = () => {
+
+  const { authState, setAuthState } = useContext(AuthContext);
+  
   const [contentTitle, setContentTitle] = useState('');
   const [contentDes, setContentDes] = useState('');
   const [contentType, setContentType] = useState('');

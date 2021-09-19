@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import * as AiIcons from 'react-icons/ai';
-
+import { AuthContext } from '../../helpers/AuthContext';
 import { useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
@@ -38,6 +38,7 @@ const CourseView = () => {
   const [profileImg, setProfileImg] = useState('');
   const [courseData, setCourseData] = useState([]);
   const [content, setContent] = useState(null);
+  const { authState, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
     const formData = {
