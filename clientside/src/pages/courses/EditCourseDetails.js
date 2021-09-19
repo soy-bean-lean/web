@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
+import { AuthContext } from '../../helpers/AuthContext';
 
 import {
   Button,
@@ -32,6 +33,7 @@ const EditCourseDetails = () => {
   const [durationType, setDurationType] = useState('');
   const [result, setResult] = useState();
   const [imgUrl, setImgUrl] = useState();
+  const { authState, setAuthState } = useContext(AuthContext);
 
   const [uploadStatus, setUploadStatus] = useState('');
   const [page, setPage] = useState('Content');

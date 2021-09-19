@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import TextEditor from '../../components/TextEditor/RichTextEditor';
-
+import { AuthContext } from '../../helpers/AuthContext';
 import {
   Button,
   Card,
@@ -30,6 +30,8 @@ const EditCourseContent = () => {
   const [contentOrder, setContentOrder] = useState(0);
   const [currentOrder, setCurrentOrder] = useState(0);
   const [contentOrderList, setContentOrderList] = useState(null);
+
+  const { authState, setAuthState } = useContext(AuthContext);
 
   const [uploadStatus, setUploadStatus] = useState('');
 

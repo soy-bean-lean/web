@@ -26,36 +26,37 @@ import {
 } from 'reactstrap';
 
 function AddWorkshop() {
-
-    // const [workshopId, setWorkshopId] = useState();
-    // const [title, setWorkshopTitle] = useState('');
-    // const [description,setWorkshopDes] = useState('');
-    // const [fromDate, setFromDate] = useState('');
-    // const [toDate, setToDate] = useState('');
-    // const [duration, setDuration] = useState('');
-    // const [credit, setCredit] = useState('');
-   
-    // const [subject, setSubject] = useState('');
-    // const [image, setImage] = useState();
-    // const [credit, setCredit] = useState('');
-    // const [result, setResult] = useState();
-  
-    // let history = useHistory();
-    const [title, setTitle] = useState('');
-  const [about, setAbout] = useState('');
-  const [desc, setDesc] = useState('');
-  const [image, setBlogImage] = useState(null);
   const { authState, setAuthState } = useContext(AuthContext);
-  const [result, setResult] = useState();
 
-  var today = new Date(),
-    Currentdate =
-      today.getFullYear() +
-      '-' +
-      (today.getMonth() + 1) +
-      '-' +
-      today.getDate();
-  let history = useHistory();
+    const [workshopId, setWorkshopId] = useState();
+    const [title, setWorkshopTitle] = useState('');
+    const [description,setWorkshopDes] = useState('');
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+    const [duration, setDuration] = useState('');
+    const [credit, setCredit] = useState('');
+   
+    const [subject, setSubject] = useState('');
+    const [image, setImage] = useState(null);
+    
+    const [result, setResult] = useState();
+  
+    let history = useHistory();
+  //   const [title, setTitle] = useState('');
+  // const [about, setAbout] = useState('');
+  // const [desc, setDesc] = useState('');
+  // const [image, setBlogImage] = useState(null);
+  // const { authState, setAuthState } = useContext(AuthContext);
+  // const [result, setResult] = useState();
+
+  // var today = new Date(),
+  //   Currentdate =
+  //     today.getFullYear() +
+  //     '-' +
+  //     (today.getMonth() + 1) +
+  //     '-' +
+  //     today.getDate();
+  // let history = useHistory();
 
 
   
@@ -76,17 +77,30 @@ function AddWorkshop() {
     }
   }
 
-  const addBlog = () => {
-    const formData = new FormData();
-    formData.append('image', image);
-    formData.append('title', title);
-    formData.append('desc', desc);
-    formData.append('about', about);
+  const addWorkshop = () => {
+     const formData = new FormData();
+    // formData.append('image', image);
+    // formData.append('title', title);
+    // formData.append('desc', desc);
+    // formData.append('about', about);
   
-    formData.append('memberId', 'cssl001');
-    formData.append('date', Currentdate);
+    // formData.append('memberId', 'cssl001');
+    // formData.append('date', Currentdate);
+
+    formData.append('workshopId', workshopId);
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('fromDate', fromDate);
+    formData.append('toDate', toDate);
+    formData.append('duration', duration);
+    formData.append('credit', credit);
+    formData.append('memberId', authState.id);
+
+  
+    formData.append('image', image);
+    formData.append('subject', subject);
     //alert(image);
-    fetch('http://localhost:3001/blog/addBlog', {
+    fetch('http://localhost:3001/workshop/addWorkshop', {
       method: 'POST',
       body: formData,
       headers: {
@@ -99,7 +113,7 @@ function AddWorkshop() {
         setResult('done');
         setTimeout(
           function () {
-            history.push('/blogs');
+            history.push('/workshop');
           },
 
           2000,
@@ -109,8 +123,8 @@ function AddWorkshop() {
         setResult('err');
         setTimeout(
           function () {
-            history.push('/blogs');
-            history.push('/addBlogs');
+            history.push('/workshop');
+            history.push('/addWorkshop');
           },
 
           2000,
@@ -120,18 +134,22 @@ function AddWorkshop() {
   };
 
   return (
-    <Page title="Add Blog">
+    <Page title="Add Workshop">
+      <Link to="/workshop">
+        <Button color="primary">Workshop List</Button>
+      </Link>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
           {msg()}
           <Card>
-            <CardHeader>New Blog</CardHeader>
+            <CardHeader>New Workshop</CardHeader>
             <CardBody>
               <Form>
-                <FormGroup row>
+
+              <FormGroup row>
                   <Label for="exampleEmail" sm={12}>
-                    Import Your Blog Image From the Chooser
+                    Import Your Workshop Image From the Chooser
                   </Label>
                   <Col sm="12" md={{ size: 6, offset: 4 }}>
                     <center>
@@ -155,66 +173,142 @@ function AddWorkshop() {
                       name="avatar"
                       required
                       accept="image/*"
-                      onChange={e => setBlogImage(e.target.files[0])}
+                      onChange={e => setImage(e.target.files[0])}
+                    />
+                  </Col>
+                </FormGroup>
+
+
+              <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Workshop Title
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="text"
+                      name="email"
+                      onChange={event => {
+                        setWorkshopTitle(event.target.value);
+                      }}
                     />
                   </Col>
                 </FormGroup>
 
                 <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Topic
-                  </Label> */}
+                  <Label for="exampleEmail" sm={3}>
+                    Subject 
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="text"
+                      name="email"
+                      onChange={event => {
+                        setSubject(event.target.value);
+                      }}
+                    />
+                  </Col>
+                </FormGroup>
+
+
+               
+
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                  Description
+                  </Label>
                   
                   <Col sm={9}>
                     
                     <Input
-                      type="text"
+                      type="textarea"
                       name="title"
                      
                        
-                      placeholder="Add Title . . . . . "
-                      onChange={e => setTitle(e.target.value)}
+                     
+                      onChange={e => setWorkshopDes(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
 
                 <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Topic
-                  </Label> */}
-                  
-                  <Col sm={9}>
-                    
+                  <Label for="exampleEmail" sm={3}>
+                    From Date
+                  </Label>
+                  <Col sm={3}>
                     <Input
-                      type="text"
-                      name="title"
+                      className="input"
+                      required
+                      type="date"
+                      onChange={e => setFromDate(e.target.value)}
+                    />
+                  </Col>
+
+                  <Label for="exampleEmail" sm={3}>
+                    To Date
+                  </Label>
+                  
+                  <Col sm={3}>
+                 
+                    <Input
+                      type="date"
+                      name="select"
+                      required
+                      onChange={e => setToDate(e.target.value)}
+                    />
                      
-                       
-                      placeholder="Add Description About Your Blog . . . . ."
-                      onChange={e => setAbout(e.target.value)}
+                   
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Duration
+                  </Label>
+                  <Col sm={4}>
+                    <Input
+                      className="input"
+                      required
+                      type="number"
+                      onChange={e => setDuration(e.target.value)}
+                    />
+                  </Col>
+                  {/* <Col sm={6}>
+                    <Input
+                      type="select"
+                      name="select"
+                      required
+                      onChange={e => setDurationType(e.target.value)}
+                    >
+                      <option value="type"></option>
+                      <option value="Hours">Hours</option>
+                      <option value="Days">Days</option>
+                      <option value="Weeks">Weeks</option>
+                      <option value="Months">Months</option>
+                    </Input>
+                  </Col> */}
+                </FormGroup>
+
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Credit
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      required
+                      className="input"
+                      type="number"
+                     onChange={e => setCredit(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
                
 
-                <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Description
-                  </Label> */}
-                  <Col sm={9}>
-                    <Input
-                      type="textarea"
-                      className="note"
-                      placeholder="Write Your Blog . . . . . ."
-                      onChange={e => setDesc(e.target.value)}
-                    />
-                  </Col>
-                </FormGroup>
+                
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
-                    <Button onClick={addBlog} color="success">
-                      Publish
+                    <Button onClick={addWorkshop} color="success">
+                      Add
                     </Button>
                   </Col>
                 </FormGroup>
