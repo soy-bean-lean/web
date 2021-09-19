@@ -22,6 +22,8 @@ import PageSpinner from 'components/PageSpinner';
 import Login from 'pages/login/login';
 import Registration from 'pages/registration/registration';
 import Profile from 'pages/profile/profile';
+import memberView from 'pages/registration/profile';
+import approveMemberView from 'pages/registration/profileApproval';
 import ForgotPassword from 'pages/forgotPassword/forgotPassword';
 import ResetPassword from 'pages/forgotPassword/resetPassword';
 import TestDash from 'pages/TestDash';
@@ -81,6 +83,9 @@ const editCourseContent = React.lazy(() =>
 const enrolledCourseView = React.lazy(() =>
   import('pages/courses/EnrolledCourseView'),
 );
+const courseContentView = React.lazy(() =>
+  import('pages/courses/CourseContentView'),
+);
 
 //workshops
 const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
@@ -113,6 +118,10 @@ const editJobVaccencies = React.lazy(() =>
 
 //reports
 const Reports = React.lazy(() => import('pages/reports/Reports'));
+
+//registration
+const MemberVerification = React.lazy(() => import('pages/registration/registrationVerification'));
+const MemberApproval = React.lazy(() => import('pages/registration/registrationApproval'));
 
 //profile
 
@@ -273,6 +282,11 @@ function App(props) {
                       path="/csslcourse/enrolledcourse/cssl00:id/:title"
                       component={enrolledCourseView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title/accesscontent/:cntId/:title"
+                      component={courseContentView}
+                    />
                     {/*CPD Related Routes*/}
                     <Route
                       exact
@@ -358,7 +372,8 @@ function App(props) {
                       component={DashboardPageCou}
                     />
                     {/*User Verification Related Routes*/}
-                    <Route path="/managemembers" component={Login} />{' '}
+                    <Route path="/managemembers" component={MemberApproval} />{' '}
+                    <Route path="/memberView/:id" component={approveMemberView} />{' '}
                     {/* need to change component */}
                     <Route
                       path="/managemembers/user00:id"
@@ -447,7 +462,9 @@ function App(props) {
                       component={DashboardPageSec}
                     />
                     {/*User Verification Related Routes*/}
-                    <Route path="/verifyuser" component={Login} />{' '}
+                    <Route path="/verifyuser" component={MemberVerification} />
+                    <Route path="/memberView/:id" component={memberView} />{' '}
+
                     {/* need to change component */}
                     <Route
                       path="/verifyuser/user00:id"
@@ -789,7 +806,7 @@ function App(props) {
                 </MainLayoutStudent>
               )}
 
-              {/*authState.role == 'student' && (
+             { authState.role == 'student' && (
                 <MainLayoutStudent breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route
@@ -825,8 +842,8 @@ function App(props) {
                     <Route path="/charts" component={ChartPagePro} />
                   </React.Suspense>
                 </MainLayoutStudent>
-              )*/}
-              {authState.role == 'ddd' && (
+             )}
+              {/* {authState.role == 'ddd' && (
                 <MainLayoutDefault breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route exact path="/" component={DashboardPage} />
@@ -864,7 +881,7 @@ function App(props) {
                     <Route exact path="/charts" component={ChartPage} />
                   </React.Suspense>
                 </MainLayoutDefault>
-              )}
+              )} */}
 
               {/* proffesional members data */}
               {/* chartered members data */}

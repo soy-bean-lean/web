@@ -473,7 +473,7 @@ userRouter.post("/getProfileData", (req, res) => {
   const memberId = req.body.memberId;
 
   const sqlSelect =
-    "select firstName ,lastName ,residentialAddress ,email,nic,contactNumber,profileImage, birthDate from user where id = " +
+    "select  * from user where id = " +
     memberId +
     ";";
 

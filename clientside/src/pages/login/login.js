@@ -19,7 +19,6 @@ import {
   Col,
   CardLink,
   Form,
-  
   FormFeedback,
   FormGroup,
   FormText,
@@ -208,29 +207,27 @@ const Login = () => {
                         required
                       />
                     </Col>
-                    <Col className='forget' sm={12}>
-                    <Label className='forget' to="/forgotpassword" tag="a" href="/forgotpassword">
-                    forget password?{' '}
-                  </Label>
-                  </Col>
+                    <Col className="forget" sm={12}>
+                      <Label
+                        className="forget"
+                        to="/forgotpassword"
+                        tag="a"
+                        href="/forgotpassword"
+                      >
+                        forget password?{' '}
+                      </Label>
+                    </Col>
                   </FormGroup>
                   {msg()}
-                 
 
                   <FormGroup check row>
-
                     <Col>
-                    <Link to='/registration'>
-                    <Button
-                        className="buttonDIV"
-                       
-                        color="primary"
-                      >
-                        Sign Up
-                      </Button>
+                      <Link to="/registration">
+                        <Button className="buttonDIV" color="primary">
+                          Sign Up
+                        </Button>
+                      </Link>
 
-                    </Link>
-                     
                       <Button
                         className="buttonDIV"
                         onClick={login}
@@ -241,10 +238,10 @@ const Login = () => {
                     </Col>
                   </FormGroup>
                 </Form>
-                <hr/>
-                <p className="text-muted">Continuous Professional Development Management Framework</p>
-
-              
+                <hr />
+                <p className="text-muted">
+                  Continuous Professional Development Management Framework
+                </p>
               </CardBody>
             </Card>
 
@@ -256,14 +253,13 @@ const Login = () => {
                   onChange={e => setUsername(e.target.value)}
                 >
                   <option value="type"></option>
-                  <option value="jihani">pro</option>
-                  {/* <option value="cha">cha</option> */}
-                  <option value="chamika">ass</option>
-                  <option value="sudeshi">coun</option>
-                  <option value="supun">sec</option>
-                  {/* <option value="ass">ass</option>
-                  <option value="std">std</option> */}
-                  <option value="anushka">All DAta</option>
+                  <option value="jihaninanayakkara@gmail.com">pro</option>
+                  <option value="cha">cha</option>
+                  <option value="chamikadeshan1997@gmail.com">ass</option>
+                  <option value="uthpalasudeshi@gmail.com">coun</option>
+                  <option value="supunnanayakkara11@gmail.com">sec</option>
+                  <option value="anushka.darshana01@gmail.com">ass</option>
+                  <option value="anushka.darshana01@gmail.com">std</option>
                 </Input>
               </Col>
             </FormGroup>
