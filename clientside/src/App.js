@@ -95,6 +95,7 @@ const AddWorkshop = React.lazy(() => import('pages/workshop/AddWorkshop'));
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
 const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
 const BlogView = React.lazy(() => import('pages/blogs/BlogView'));
+const EditView = React.lazy(() => import('pages/blogs/EditBlog'));
 
 //forum
 
@@ -306,6 +307,11 @@ function App(props) {
                       exact
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
+                    />
+                     <Route
+                      exact
+                      path="/editview/cssl00:id/:title"
+                      component={EditView}
                     />
                     <Route
                       exact
@@ -562,6 +568,11 @@ function App(props) {
                       path="/csslcourse/enrolledcourse/cssl00:id/:title"
                       component={enrolledCourseView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title/accesscontent/:cntId/:title"
+                      component={courseContentView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
@@ -569,6 +580,11 @@ function App(props) {
                       exact
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
+                    />
+                    <Route
+                      exact
+                      path="/editview/cssl00:id/:title"
+                      component={EditView}
                     />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
@@ -661,6 +677,11 @@ function App(props) {
                       path="/csslcourse/enrolledcourse/cssl00:id/:title"
                       component={enrolledCourseView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title/accesscontent/:cntId/:title"
+                      component={courseContentView}
+                    />
                     {/*CPD Related Routes*/}
                     <Route
                       exact
@@ -679,6 +700,11 @@ function App(props) {
                       exact
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
+                    />
+                    <Route
+                      exact
+                      path="/editview/cssl00:id/:title"
+                      component={EditView}
                     />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}
@@ -751,6 +777,11 @@ function App(props) {
                       path="/csslcourse/enrolledcourse/cssl00:id/:title"
                       component={enrolledCourseView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourse/enrolledcourse/cssl00:id/:title/accesscontent/:cntId/:title"
+                      component={courseContentView}
+                    />
                     {/*Blog Related Routes*/}
                     <Route exact path="/blogs" component={Blogs} />
                     <Route exact path="/addBlogs" component={AddBlogs} />
@@ -758,6 +789,11 @@ function App(props) {
                       exact
                       path="/blogview/cssl00:id/:title"
                       component={BlogView}
+                    />
+                    <Route
+                      exact
+                      path="/editview/cssl00:id/:title"
+                      component={EditView}
                     />
                     {/*Workshop Related Routes*/}
                     <Route exact path="/csslworkshops" component={Login} />{' '}

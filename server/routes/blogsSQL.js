@@ -117,7 +117,78 @@ Blog.post("/getBloggerBlogs", (req, res) => {
     }
   );
 });
-  
+
+Blog.post("/deleteItem", (req, res) => {
+  const tableName = req.body.tableName;
+  const qid = req.body.qid;
+  const coloum = req.body.coloum;
+console.log(qid);
+  const sqlSelect =
+    "delete from " + tableName + " where " + coloum + "  =" + qid;
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+Blog.route("/updateBlog").post(
+  upload.single("image"),
+  (req, res, err) => {
+    // if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
+    //   res.send({ msg: "Not an Image File." });
+    // } else {
+      const bId = req.body.blogId;
+      
+
+      const title = req.body.title;
+      const about = req.body.description;
+
+      const desc = req.body.content;
+      // const memberID = req.body.memberId;
+      const image = req.file.filename;
+
+     console.log(image);
+      
+      
+
+      connection.query(
+        "UPDATE blog SET title = ?, description = ? ,image = ?, content = ? WHERE blogId = ?;",
+        [
+          title,
+          about,
+          image,
+          desc,
+          bId,
+        ],
+        (error, result, feilds) => {
+          if (error) console.log(error);
+          else {
+            res.send({
+              data: result,
+              msg: "Successfully Updated.",
+            });
+          }
+        }
+      );
+    
+  }
+);
+
+//to update
+
+Blog.post("/getBlogView", (req, res) => {
+  const bid = req.body.id;
+  connection.query(
+    "SELECT blog.* from blog where blogId = ?;",
+    [bid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+})
  
   
   export default Blog;

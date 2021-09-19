@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Page from 'components/Page';
-
+import { AuthContext } from '../../helpers/AuthContext';
 import {
   Button,
   Card,
@@ -19,6 +19,8 @@ import {
 } from 'reactstrap';
 const BasicCourseInfo = () => {
 
+  const { authState, setAuthState } = useContext(AuthContext);
+
   const [courseId, setCourseId] = useState();
   const [courseTitle, setCourseTitle] = useState('');
   const [courseDes, setCourseDes] = useState('');
@@ -26,7 +28,7 @@ const BasicCourseInfo = () => {
   const [durationType, setDurationType] = useState('');
   const [language, setLanguage] = useState('');
   const [level, setLevel] = useState('');
-  const [mode, setMode] = useState('');
+  const [mode, setMode] = useState(''); 
   const [imgFile, setImgFile] = useState();
   const [uploadStatus, setUploadStatus] = useState('');
   const [page, setPage] = useState('Content');
@@ -35,8 +37,7 @@ const BasicCourseInfo = () => {
   let history = useHistory();
 
   const InsertCourseInfo = () => {
-    //const file = event.target.files[0];
-    const mId = 'cssl001';
+    const mId = authState.memberId;
     const formData = new FormData();
     formData.append('image', imgFile);
     formData.append('title', courseTitle);

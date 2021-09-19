@@ -39,9 +39,11 @@ import { AuthContext } from '../../helpers/AuthContext';
 import Rating from '../../components/RatingStars/RatingStars';
 
 const CardPage = props => {
+
+  const { authState, setAuthState } = useContext(AuthContext);
+  
   const [activeTab, setActiveTab] = useState('2');
   const [activeSubTab, setActiveSubTab] = useState('3');
-  //const { authState, setAuthState } = useContext(AuthContext);
   const [memberId, setMemberId] = useState('');
   const [course, setCourse] = useState(null);
   const [enCourse, setEnCourse] = useState(null);
@@ -60,7 +62,7 @@ const CardPage = props => {
   useEffect(() => {
     //setMemberId(authState.id);
     const formData = {
-      mId: 'cssl001',
+      mId: authState.memberId
     };
     axios
       .post('http://localhost:3001/csslcourse/getCourseList', formData)
@@ -69,6 +71,7 @@ const CardPage = props => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
+          console.log();
           setCourse(response.data);
         }
       })
@@ -125,28 +128,28 @@ const CardPage = props => {
     var searchData = {};
     if (val == 'instructor') {
       searchData = {
-        mId: 'cssl001',
+        mId: authState.memberId,
         level: level,
         instructor: e.target.value,
         category: category,
       };
     } else if (val == 'level') {
       searchData = {
-        mId: 'cssl001',
+        mId: authState.memberId,
         level: e.target.value,
         instructor: instructor,
         category: category,
       };
     } else if (val == 'category') {
       searchData = {
-        mId: 'cssl001',
+        mId: authState.memberId,
         level: level,
         instructor: instructor,
         category: e.target.value,
       };
     } else {
       searchData = {
-        mId: 'cssl001',
+        mId: authState.memberId,
         level: level,
         instructor: instructor,
         category: category,
@@ -176,7 +179,7 @@ const CardPage = props => {
     setType(event.target.value);
 
     const searchData = {
-      mId: 'cssl001',
+      mId: authState.memberId,
       sortType: event.target.value,
     };
     axios
@@ -202,7 +205,7 @@ const CardPage = props => {
     setType('');
 
     const searchData = {
-      mId: 'cssl001',
+      mId: authState.memberId,
       sQuery: searchCourse,
     };
     axios

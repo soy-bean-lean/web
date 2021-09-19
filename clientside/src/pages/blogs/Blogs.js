@@ -188,14 +188,14 @@ const Blogs = props => {
               <Row className="buttonDIV">
                 <Col sm="12">
                   <Link to={
-                     '/blogview/cssl00' + blog.blogId + '/' + blog.title
+                     '/editview/cssl00' + blog.blogId + '/' + blog.title
                   }>
-                    <Button color="primary">Edit</Button>
+                    <Button color="primary">Edit Your Blog</Button>
                   </Link>
                   {'  '}
-                  <Link to="">
+                  {/* <Link to="">
                     <Button color="danger">Delete</Button>
-                  </Link>
+                  </Link> */}
                 </Col>
               </Row>
             </Col>

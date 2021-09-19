@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import * as AiIcons from 'react-icons/ai';
 
 import { useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../helpers/AuthContext';
 import Typography from 'components/Typography';
 import {
   Button,
@@ -32,6 +33,8 @@ import {
 const CourseView = () => {
   const { id } = useParams();
   const { title } = useParams();
+
+  const { authState, setAuthState } = useContext(AuthContext);
 
   const [courseImg, setCourseImg] = useState('');
   const [profileImg, setProfileImg] = useState('');

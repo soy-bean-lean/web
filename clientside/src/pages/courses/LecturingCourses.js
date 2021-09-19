@@ -1,12 +1,12 @@
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 import classnames from 'classnames';
 import Typography from 'components/Typography';
-
+import { AuthContext } from '../../helpers/AuthContext';
 import { Line } from 'react-chartjs-2';
 import {
   Button,
@@ -26,10 +26,11 @@ import {
 
 const LecCourseList = props => {
   const [course, setCourse] = useState(null);
+  const { authState, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
     const formData = {
-      mId: 'cssl001',
+      mId: authState.memberId,
     };
     axios
       .post('http://localhost:3001/csslcourse/', formData)

@@ -42,7 +42,6 @@ const Rating = props => {
             activeColor="gold"
             color="gray"
           />
-          ,
         </>
       );
   }

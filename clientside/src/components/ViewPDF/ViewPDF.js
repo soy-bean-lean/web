@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
+import './ViewPDF.css'
 
 
 const ViewPDF = props => {
@@ -34,14 +35,13 @@ const ViewPDF = props => {
 
   return (
     <>
-    <div>
       <Document
         file={pdf}
         //options={{ workerSrc: "/pdf.worker.js" }}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={pdfViewError}
       >
-        <Page pageNumber={pageNumber} wrap={false} />
+        <Page pageNumber={pageNumber} wrap={false} style={{border:'none'}}/>
       </Document>
       <div>
         <p>
@@ -57,7 +57,6 @@ const ViewPDF = props => {
         >
           Next
         </button>
-      </div>
       </div>
     </>
   );

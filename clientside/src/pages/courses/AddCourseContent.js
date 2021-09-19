@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import TextEditor from '../../components/TextEditor/RichTextEditor';
-
+import { AuthContext } from '../../helpers/AuthContext';
 import {
   Button,
   Card,
@@ -21,6 +21,9 @@ import {
 } from 'reactstrap';
 
 const AddCourseContent = () => {
+
+  const { authState, setAuthState } = useContext(AuthContext);
+  
   const [contentTitle, setContentTitle] = useState('');
   const [contentDes, setContentDes] = useState('');
   const [contentType, setContentType] = useState('');
@@ -132,7 +135,7 @@ const AddCourseContent = () => {
   };
 
   const InsertCourseContentNext = () => {
-    const mId = 'cssl001';
+    const mId = authState.memberId;
     const contentId = 'cssl00' + id + '-0' + contentNum;
 
     const formData = new FormData();
@@ -172,7 +175,7 @@ const AddCourseContent = () => {
   };
 
   const InsertCourseContentFinish = () => {
-    const mId = 'cssl001';
+    const mId = authState.memberId;
     const contentId = 'cssl00' + id + '-0' + contentNum;
 
     const formData = new FormData();

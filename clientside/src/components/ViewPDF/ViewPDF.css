@@ -5,6 +5,8 @@
     border: 1px solid darkgrey;
     box-shadow: 5px 5px 5px 1px #ccc;
     border-radius: 5px;
+    width: fit-content !important;
+    height: 0% !important;
   }
   
   .react-pdf__Page__annotations.annotationLayer {
@@ -13,4 +15,7 @@
   
   .react-pdf__Page__canvas {
     margin: 0 auto;
+    height: fit-content!important;
+    width: 100%!important;
+    overflow-y: scroll;
   }

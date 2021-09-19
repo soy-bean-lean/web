@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../helpers/AuthContext';
 import classnames from 'classnames';
 import Typography from 'components/Typography';
+import { confirmAlert } from 'react-confirm-alert';
+import { useParams } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
 
@@ -26,21 +28,25 @@ import {
 } from 'reactstrap';
 
 function EditBlog() {
+  const { id } = useParams();
+  const add = '';
   const [title, setTitle] = useState('');
   const [about, setAbout] = useState('');
   const [desc, setDesc] = useState('');
-  const [image, setBlogImage] = useState(null);
+  const [image, setBlogImage] = useState();
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
 
-  var today = new Date(),
-    Currentdate =
-      today.getFullYear() +
-      '-' +
-      (today.getMonth() + 1) +
-      '-' +
-      today.getDate();
+  // var today = new Date(),
+  //   Currentdate =
+  //     today.getFullYear() +
+  //     '-' +
+  //     (today.getMonth() + 1) +
+  //     '-' +
+  //     today.getDate();
   let history = useHistory();
+
+  
 
   function msg() {
     if (result == 'err') {
@@ -58,51 +64,138 @@ function EditBlog() {
     }
   }
 
-//   const addBlog = () => {
-//     const formData = new FormData();
-//     formData.append('image', image);
-//     formData.append('title', title);
-//     formData.append('desc', desc);
-//     formData.append('about', about);
+  const deleteItem = () => {
+    const data = {
+      qid: id,
+      tableName: 'blog',
+      coloum: 'blogId',
+    };
+console.log(id);
+    axios.post('http://localhost:3001/blog/deleteItem', data).then(response => {
+      if (response.data.error) {
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push('/blogs');
+          },
+
+          2000,
+        );
+      } else {
+        setResult('done');
+
+        setTimeout(
+          function () {
+            history.push('/blogs');
+            //hri giyoth yana thena
+          },
+
+          2000,
+        );
+      }
+    });
+  };
+
+  const submit = () => {
+    confirmAlert({
+      message: 'Are you sure to Delete ?.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            deleteItem();
+          },
+        },
+        {
+          label: 'No',
+          onClick: () => {
+            //alert('Click No')
+          },
+        },
+      ],
+    });
+  };
+
+
+  const updateBlog = () => {
+    const blogData = new FormData();
+    blogData.append('image', image);
+    blogData.append('title', title);
+    blogData.append('description', about);
+    blogData.append('content', desc);
+    blogData.append('blogId', id);
+
+    console.log("data;",blogData);
+    fetch('http://localhost:3001/blog/updateBlog', {
+      method: 'POST',
+      body:blogData,
+      headers: {
+        Accept: 'multipart/form-data',
+      },
+      credentials: 'include',
+    })
+    .then(res => res.json())
+      .then(res => {
+        setResult('done');
+        setTimeout(
+          function () {
+            history.push('/blogs');
+          },
+
+          2000,
+        );
+      })
+      .catch(error => {
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push('/editview/cssl00' + blogData.blogId + '/' + blogData.title);
+          },
+
+          2000,
+        );
+      });
+  };
+
   
-//     formData.append('memberId', 'cssl001');
-//     formData.append('date', Currentdate);
-//     //alert(image);
-//     fetch('http://localhost:3001/blog/addBlog', {
-//       method: 'POST',
-//       body: formData,
-//       headers: {
-//         Accept: 'multipart/form-data',
-//       },
-//       credentials: 'include',
-//     })
-//       .then(res => res.json())
-//       .then(res => {
-//         setResult('done');
-//         setTimeout(
-//           function () {
-//             history.push('/blogs');
-//           },
 
-//           2000,
-//         );
-//       })
-//       .catch(error => {
-//         setResult('err');
-//         setTimeout(
-//           function () {
-//             history.push('/blogs');
-//             history.push('/addBlogs');
-//           },
 
-//           2000,
-//         );
-//         console.log(error);
-//       });
-//   };
+  useEffect(() => {
+    const sendData={
+      id:id,
+    }
+    axios
+      .post('http://localhost:3001/blog/getBlogView', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          //    alert(response.data.error);
+        } else {
+          console.log(response.data[0]);
+          setTitle(response.data[0].title);
+          setAbout(response.data[0].description);
+          setDesc(response.data[0].content);
+          //setBlogImage(response.data[0].image);
+          
+          
+        }
+      })
+      .catch(error => {
+        //   alert(error);
+      });
+    
+
+   
+
+     
+      
+  }, []);
 
   return (
-    <Page title="Add Blog">
+    <Page title="Edit Blog">
+       <Link to="/blogs">
+        <Button color="primary">Back</Button>
+      </Link>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
@@ -130,15 +223,15 @@ function EditBlog() {
                   </Col>
 
                   <Col sm="12" md={{ size: 6, offset: 4 }}>
-                    {/* <Input
+                    <Input
                       type="file"
                       className="input"
                       id="avatar"
                       name="avatar"
-                      required
+                      // value={image}
                       accept="image/*"
                       onChange={e => setBlogImage(e.target.files[0])}
-                    /> */}
+                    />
                   </Col>
                 </FormGroup>
 
@@ -149,14 +242,14 @@ function EditBlog() {
                   
                   <Col sm={9}>
                     
-                    {/* <Input
+                    <Input
                       type="text"
                       name="title"
-                     
+                     value={title}
                        
                       placeholder="Add Title . . . . . "
                       onChange={e => setTitle(e.target.value)}
-                    /> */}
+                    />
                   </Col>
                 </FormGroup>
 
@@ -166,15 +259,15 @@ function EditBlog() {
                   </Label> */}
                   
                   <Col sm={9}>
-{/*                     
+                    
                     <Input
                       type="text"
                       name="title"
-                     
+                     value={about}
                        
-                      placeholder="Add Description About Your Blog . . . . ."
-                      onChange={e => setAbout(e.target.value)}
-                    /> */}
+                     
+                     onChange={e => setAbout(e.target.value)}
+                    />
                   </Col>
                 </FormGroup>
                
@@ -187,7 +280,7 @@ function EditBlog() {
                     <Input
                       type="textarea"
                       className="note"
-                      placeholder="Write Your Blog . . . . . ."
+                      value={desc}
                       onChange={e => setDesc(e.target.value)}
                     />
                   </Col>
@@ -195,8 +288,14 @@ function EditBlog() {
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
-                    <Button onClick={addBlog} color="success">
-                      Publish
+                    <Button onClick={updateBlog} color="success">
+                      Update
+                    </Button>
+
+                    {'  '}
+
+                    <Button onClick={submit} color="danger">
+                      Delete
                     </Button>
                   </Col>
                 </FormGroup>
