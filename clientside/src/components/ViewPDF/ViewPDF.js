@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
+import './ViewPDF.css'
 
 
 const ViewPDF = props => {
