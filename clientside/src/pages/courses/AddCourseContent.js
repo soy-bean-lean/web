@@ -29,6 +29,8 @@ const AddCourseContent = () => {
   const [videoLink, setVideoLink] = useState('');
   const [contentNum, setContentNum] = useState(0);
   const [uploadStatus, setUploadStatus] = useState('');
+  const [contentOrder, setContentOrder] = useState(0);
+  const [contentOrderList, setContentOrderList] = useState(null);
 
   //const cId = props.cid;
   const { id } = useParams();
@@ -48,8 +50,6 @@ const AddCourseContent = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          console.log('response:', response.data[0].contentNo);
-
           if (response.data[0].contentNo != null) {
             setContentNum(response.data[0].contentNo + 1);
           } else {
@@ -60,12 +60,80 @@ const AddCourseContent = () => {
       .catch(error => {
         alert(error);
       });
+
+    axios
+      .post('http://localhost:3001/csslcourse/getContentOrderList', sendData)
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setContentOrderList(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
   }, []);
+
+  const orderList =
+    contentOrderList &&
+    contentOrderList.map((li, i) => {
+      return (
+        <option key={i} value={li.contentOrder + 1}>
+          After {li.title}
+        </option>
+      );
+    }, this);
+
+  const UpdateContentOrderNext = () => {
+    const sendData = {
+      //id: props.cid,
+      courseId: id,
+      order: contentOrder,
+    };
+
+    axios
+      .post('http://localhost:3001/csslcourse/changeContentOrder', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          //insert course content if update order is success
+          InsertCourseContentNext();
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+
+  const UpdateContentOrderFinish = () => {
+    const sendData = {
+      //id: props.cid,
+      courseId: id,
+      order: contentOrder,
+    };
+
+    axios
+      .post('http://localhost:3001/csslcourse/changeContentOrder', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          //insert course content if update order is success
+          InsertCourseContentFinish();
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
 
   const InsertCourseContentNext = () => {
     const mId = 'cssl001';
     const contentId = 'cssl00' + id + '-0' + contentNum;
-    console.log('ID:', contentId);
 
     const formData = new FormData();
     formData.append('courseId', id);
@@ -75,6 +143,7 @@ const AddCourseContent = () => {
     formData.append('description', contentDes);
     formData.append('type', contentType);
     formData.append('note', note);
+    formData.append('order', contentOrder);
 
     if (contentType == 'File') {
       formData.append('cfile', contentFile);
@@ -105,7 +174,6 @@ const AddCourseContent = () => {
   const InsertCourseContentFinish = () => {
     const mId = 'cssl001';
     const contentId = 'cssl00' + id + '-0' + contentNum;
-    console.log('ID:', contentId);
 
     const formData = new FormData();
     formData.append('courseId', id);
@@ -115,6 +183,7 @@ const AddCourseContent = () => {
     formData.append('description', contentDes);
     formData.append('type', contentType);
     formData.append('note', note);
+    formData.append('order', contentOrder);
 
     if (contentType == 'File') {
       formData.append('cfile', contentFile);
@@ -183,7 +252,9 @@ const AddCourseContent = () => {
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <Card>
-          <CardHeader><center>Add Content</center></CardHeader>
+          <CardHeader>
+            <center>Add Content</center>
+          </CardHeader>
           <CardBody>
             <Form>
               <FormGroup row>
@@ -210,6 +281,23 @@ const AddCourseContent = () => {
                     value={contentDes}
                     onChange={e => setContentDes(e.target.value)}
                   />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="exampleEmail" sm={3}>
+                  Content Order{' '}
+                </Label>
+                <Col sm={9}>
+                  <Input
+                    type="select"
+                    value={contentOrder}
+                    onChange={e => setContentOrder(e.target.value)}
+                  >
+                    <option value="0"></option>
+                    <option value="1">First Content</option>
+                    {orderList}
+                  </Input>
                 </Col>
               </FormGroup>
 
@@ -251,11 +339,11 @@ const AddCourseContent = () => {
 
               <FormGroup check row>
                 <center>
-                  <Button color="primary" onClick={InsertCourseContentFinish}>
+                  <Button color="primary" onClick={UpdateContentOrderFinish}>
                     Save & Finish
                   </Button>{' '}
-                  <Button color="success" onClick={InsertCourseContentNext}>
-                  Save & Next Content
+                  <Button color="success" onClick={UpdateContentOrderNext}>
+                    Save & Next Content
                   </Button>
                 </center>
               </FormGroup>

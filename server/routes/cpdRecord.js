@@ -7,7 +7,7 @@ const Record = Router();
 Record.post("/", (req, res) => {
   const mid = "cssl001";
   connection.query(
-    "SELECT recordId, type, status FROM cpdrecords WHERE memberId = ?;",
+    "SELECT recordId, recTitle, type, status FROM cpdrecords WHERE memberId = ? ORDER BY approvedDate DESC;",
     [mid],
     (error, result, feilds) => {
       if (error) console.log(error);

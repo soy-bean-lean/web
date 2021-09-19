@@ -18,11 +18,31 @@ reportsSQL.post("/getCounts", (req, res) => {
 });
 
 reportsSQL.post("/getBlogCount", (req, res) => {
-  const memberId = req.body.memberId;
-  console.log("member Id is - - getBlogCount- - -" + memberId);
   const sqlSelect =
-    //"SELECT COUNT(`blogId`) As blogs  FROM blog where memberId = "+memberId+"; "
-    "SELECT COUNT(id) As blogs  from test  ;    ";
+    "SELECT COUNT(`blogId`) As blogs  FROM blog ; "
+    //"SELECT COUNT(id) As blogs  from test  ;    ";
+
+  console.log(sqlSelect);
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+reportsSQL.post("/getUsers", (req, res) => {
+  const sqlSelect =
+    "SELECT COUNT(USER.firstName) As users  FROM user; "
+    //"SELECT COUNT(id) As blogs  from test  ;    ";
+
+  console.log(sqlSelect);
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+reportsSQL.post("/getRecentUsers", (req, res) => {
+  const sqlSelect =
+    "SELECT * FROM `user` ORDER BY `user`.`registeredDate` ASC limit 3"
+    //"SELECT COUNT(id) As blogs  from test  ;    ";
 
   console.log(sqlSelect);
   connection.query(sqlSelect, (err, result) => {
