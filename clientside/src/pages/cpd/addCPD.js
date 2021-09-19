@@ -24,15 +24,22 @@ import Alert from 'reactstrap/lib/Alert';
 
 const AddCpd = () => {
   //cpd
+  const [recordName, setRecordName] = useState('');
   const [recType, setRecType] = useState('type');
 
   const [courseId, setCourseId] = useState('');
+
   const [courseName, setCourseName] = useState('');
   const [courseType, setCourseType] = useState('');
   const [mode, setMode] = useState('');
   const [level, setLevel] = useState('');
   const [platform, setPlatform] = useState('');
   const [partner, setPartner] = useState('');
+
+  const [typeCourseName, setTypeCourseName] = useState('');
+  const [platformOther, setPlatformOther] = useState('');
+  const [partnerOther, setPartnerOther] = useState('');
+  
   const [credit, setCredit] = useState('');
 
   const [workshopId, setWorkshopId] = useState('');
@@ -257,9 +264,10 @@ const AddCpd = () => {
   const allOutWorkshops =
     outWorkshopList &&
     outWorkshopList.map((li, i) => {
-      const fromDate = li.fromDate.substring(0, 10);
-      const toDate = li.toDate.substring(0, 10);
-      if (workshopDate >= fromDate && workshopDate <= toDate) {
+      //const fromDate = li.fromDate.substring(0, 10);
+      //const toDate = li.toDate.substring(0, 10);
+      //if (workshopDate >= fromDate && workshopDate <= toDate) {
+      if (workshopDate >= li.fromDate && workshopDate <= li.toDate) {
         return (
           <option key={i} value={li.title}>
             {li.title}
@@ -280,6 +288,7 @@ const AddCpd = () => {
     }, this);
 
   const getCreditValue = event => {
+    setCourseName(event.target.value);
     const i = event.target.value;
     if (i != 'Other' && i != '') {
       setCredit(outCourseList[i].credit);
@@ -305,9 +314,7 @@ const AddCpd = () => {
                     <Input
                       type="text"
                       name="email"
-                      onChange={event => {
-                        //  setCompanyName(event.target.value);
-                      }}
+                      onChange={event => setRecordName(event.target.value)}
                     />
                   </Col>
                 </FormGroup>
@@ -362,7 +369,7 @@ const AddCpd = () => {
                   </Label>
                   <Col sm="12" md={{ size: 6, offset: 4 }}>
                     <Input
-                     color="primary"
+                      color="primary"
                       type="file"
                       className="input"
                       id="avatar"
@@ -570,6 +577,8 @@ const AddCpd = () => {
                   <option value="Other">Other</option>
                 </Input>
               </Col>
+              <Label for="exampleEmail" sm={3}></Label>
+              <Col sm={9}>{renderTypePlatformFields(platform)}</Col>
             </FormGroup>
 
             <FormGroup row>
@@ -588,8 +597,9 @@ const AddCpd = () => {
                   <option value="Other">Other</option>
                 </Input>
               </Col>
+              <Label for="exampleEmail" sm={3}></Label>
+              <Col sm={9}>{renderTypePartnerFields(partner)}</Col>
             </FormGroup>
-
             {renderOnlineOtherCourseList(platform, partner)}
           </>
         );
@@ -612,6 +622,8 @@ const AddCpd = () => {
                   <option value="Other">Other</option>
                 </Input>
               </Col>
+              <Label for="exampleEmail" sm={3}></Label>
+              <Col sm={9}>{renderTypePartnerFields(partner)}</Col>
             </FormGroup>
             {renderOfflineOtherCourseList(partner)}
           </>
@@ -622,14 +634,58 @@ const AddCpd = () => {
     }
   }
 
+  function renderTypePlatformFields(platform) {
+    if (platform == 'Other') {
+      return (
+        <>
+          <Input
+            type="text"
+            name="select"
+            placeholder="Type Platform"
+            onChange={e => setPlatformOther(e.target.value)}
+            value={platformOther}
+          ></Input>
+        </>
+      );
+    }
+  }
+
+  function renderTypePartnerFields(partner) {
+    if (partner == 'Other') {
+      return (
+        <>
+          <Input
+            type="text"
+            name="select"
+            placeholder="Type Platform"
+            onChange={e => setPartnerOther(e.target.value)}
+            value={partnerOther}
+          ></Input>
+        </>
+      );
+    }
+  }
+
   function renderOnlineOtherCourseList(platform, partner) {
-    if (
-      platform == '' ||
-      platform == 'Other' ||
-      partner == '' ||
-      partner == 'Other'
-    ) {
+    if (platform == '' || partner == '') {
       return <FormGroup row></FormGroup>;
+    } else if (platform == 'Other' || partner == 'Other') {
+      return (
+        <>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={3}>
+              Course
+            </Label>
+            <Col sm={9}>
+              <Input
+                type="text"
+                onChange={e => setCourseName(e.target.value)}
+                placeholder="Type Course Name"
+              ></Input>
+            </Col>
+          </FormGroup>
+        </>
+      );
     } else {
       return (
         <>
@@ -644,16 +700,35 @@ const AddCpd = () => {
                 <option value="Other">Other</option>
               </Input>
             </Col>
+            <Label for="exampleEmail" sm={3}></Label>
+            <Col sm={9}>{renderTypeCourseFields(courseName)}</Col>
           </FormGroup>
+        </>
+      );
+    }
+  }
+  
+  function renderTypeCourseFields(course) {
+    if (course == 'Other') {
+      return (
+        <>
+          <Input
+            type="text"
+            name="select"
+            placeholder="Type Course Name"
+            onChange={e => setTypeCourseName(e.target.value)}
+            value={typeCourseName}
+          ></Input>
         </>
       );
     }
   }
 
   function renderOfflineOtherCourseList(partner) {
-    if (partner == '' || partner == 'Other') {
+    if (partner == '') {
       return <FormGroup row></FormGroup>;
-    } else {
+    }
+    else if (partner == 'Other') {
       return (
         <>
           <FormGroup row>
@@ -661,12 +736,32 @@ const AddCpd = () => {
               Course
             </Label>
             <Col sm={9}>
-              <Input type="select" name="select">
+              <Input
+                type="text"
+                onChange={e => setCourseName(e.target.value)}
+                placeholder="Type Course Name"
+              ></Input>
+            </Col>
+          </FormGroup>
+        </>
+      );
+    }
+     else {
+      return (
+        <>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={3}>
+              Course
+            </Label>
+            <Col sm={9}>
+              <Input type="select" name="select" onChange={e => setCourseName(e.target.value)}>
                 <option value=""></option>
                 {allOfflineOutCourses}
                 <option value="Other">Other</option>
               </Input>
             </Col>
+            <Label for="exampleEmail" sm={3}></Label>
+            <Col sm={9}>{renderTypeCourseFields(courseName)}</Col>
           </FormGroup>
         </>
       );
@@ -734,6 +829,8 @@ const AddCpd = () => {
                 {allguestLectures}
               </Input>
             </Col>
+            <Label for="exampleEmail" sm={3}></Label>
+            <Col sm={9}>{renderTypeCourseFields(courseName)}</Col>
           </FormGroup>
         </>
       );
