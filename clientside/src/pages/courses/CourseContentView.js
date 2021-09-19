@@ -85,6 +85,7 @@ const CourseView = () => {
       if (li.contentType == 'File') {
         return (
           <>
+          <Col sm="10" md={{ size: 12, offset: 0 }}>
             <Card>
               <CardBody>
                 <ViewPDF pdf={fileContent} />
@@ -98,6 +99,7 @@ const CourseView = () => {
                 </a>
               </CardBody>
             </Card>
+            </Col>
             <br></br>
           </>
         );

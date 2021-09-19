@@ -63,7 +63,7 @@ Record.post("/getCourse", (req, res) => {
       }
     });
   } else if (courseType == "others") {
-    connection.query("SELECT * FROM othercourse;", (error, result) => {
+    connection.query("SELECT * FROM othercourse WHERE status = ? AND mode = ?;", (error, result) => {
       if (error) console.log(error);
       else {
         res.send(result);
@@ -78,9 +78,10 @@ Record.post("/getCourse", (req, res) => {
 //get distinct platforms in othercourse table 
 Record.post("/getPlatform", (req, res) => {
   const mode = req.body.mode;
+  const status = 'Approved';
   connection.query(
-    "SELECT DISTINCT platform FROM othercourse WHERE mode = ?;",
-    [mode],
+    "SELECT DISTINCT platform FROM othercourse WHERE mode = ? AND status = ?;",
+    [mode, status],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -93,9 +94,10 @@ Record.post("/getPlatform", (req, res) => {
 //get distinct partners in othercourse table according to the course mode
 Record.post("/getPartner", (req, res) => {
   const mode = req.body.mode;
+  const status = 'Approved';
   connection.query(
-    "SELECT DISTINCT partner FROM othercourse WHERE mode = ?;",
-    [mode],
+    "SELECT DISTINCT partner FROM othercourse WHERE mode = ? AND status = ?;",
+    [mode, status],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -109,9 +111,13 @@ Record.post("/getPartner", (req, res) => {
 Record.post("/getWorkshop", (req, res) => {
   const mid = req.body.mId;
   const workshopType = req.body.type;
+  const status = 'Approved';
+  const verifyType1 = null;
+  const verifyType2 = '';
   if (workshopType == "CSSLworkshop") {
     connection.query(
-      "SELECT title, fromDate, toDate FROM csslworkshop;",
+      "SELECT title, fromDate, toDate FROM csslworkshop WHERE verifiedBy != ? AND verifiedBy != ?;",
+      [verifyType1, verifyType2],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -121,7 +127,8 @@ Record.post("/getWorkshop", (req, res) => {
     );
   } else if (workshopType == "others") {
     connection.query(
-      "SELECT title, fromDate, toDate FROM csslworkshop;",
+      "SELECT title, fromDate, toDate, conductedBy FROM otherworkshop WHERE status = ?;",
+      [status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
