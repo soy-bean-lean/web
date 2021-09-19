@@ -126,7 +126,7 @@ const LecturerCourseView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          alert('Course Deleted Successfully');
+       //   alert('Course Deleted Successfully');
           redirectCourseList();
         }
       })
@@ -146,7 +146,7 @@ const LecturerCourseView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          alert('Course Sent to Approval');
+          alert('Course Sent to Approval');//**************************************************** */
           redirectCourseList();
         }
       })

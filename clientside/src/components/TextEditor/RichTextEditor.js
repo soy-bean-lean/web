@@ -105,7 +105,7 @@ const TextEditor = props => {
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
       />
-      <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div>
+      {/* <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div> */}
     </div>
   );
 };

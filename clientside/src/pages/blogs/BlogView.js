@@ -173,8 +173,6 @@ const BlogView = () => {
                 className="preview"
                 dangerouslySetInnerHTML={createMarkup(blogData.content)}
               ></CardBody>
-              {blogData.content}
-              {/* {contentList} */}
             </CardBody>
           </Card>
         </Col>

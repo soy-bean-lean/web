@@ -10,8 +10,6 @@ approved 1
 rejected 2
 verified 3
 
-
-
 */
 
 secretaryRouter.post("/all", async (req, res) => {

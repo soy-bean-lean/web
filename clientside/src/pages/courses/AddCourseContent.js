@@ -35,12 +35,33 @@ const AddCourseContent = () => {
   const [contentOrder, setContentOrder] = useState(0);
   const [contentOrderList, setContentOrderList] = useState(null);
 
+
+  const [result, setResult] = useState();
+
   //const cId = props.cid;
   const { id } = useParams();
   const { title } = useParams();
   //setCourseTitle(props.location.state);
 
   let history = useHistory();
+
+
+  
+  function msg() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Greate Attempt is Succesfull</Alert>
+        </>
+      );
+    }
+  }
 
   useEffect(() => {
     const sendData = {
@@ -165,13 +186,27 @@ const AddCourseContent = () => {
       .then(res => res.json())
       .then(res => {
         setUploadStatus(res.msg);
-        alert('Successfully Saved Details and Next Content');
-        redirectCourse();
-        redirectContentAdd();
+        setResult('done');
+
+        setTimeout(
+          function () {
+            redirectCourse();
+            redirectContentAdd();
+          },
+
+          2000,
+        );        
+    
       })
       .catch(error => {
-        console.log(error);
-      });
+        setResult('err');
+        setTimeout(
+          function () {
+
+          },
+
+          2000,
+        );      });
   };
 
   const InsertCourseContentFinish = () => {
@@ -205,12 +240,26 @@ const AddCourseContent = () => {
       .then(res => res.json())
       .then(res => {
         setUploadStatus(res.msg);
-        alert('Successfully Saved Details and Finish');
-        redirectCourse();
+        setResult('done');
+
+        setTimeout(
+          function () {
+            redirectCourse();
+
+          },
+
+          2000,
+        );
       })
       .catch(error => {
-        console.log(error);
-      });
+        setResult('err');
+        setTimeout(
+          function () {
+
+          },
+
+          2000,
+        );      });
   };
 
   const redirectContentAdd = () => {
@@ -254,7 +303,10 @@ const AddCourseContent = () => {
       </CardBody>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
+      <center>
+        {msg()}
         <Card>
+    
           <CardHeader>
             <center>Add Content</center>
           </CardHeader>
@@ -353,6 +405,7 @@ const AddCourseContent = () => {
             </Form>
           </CardBody>
         </Card>
+        </center>
       </Col>
       <hr></hr>
     </Page>

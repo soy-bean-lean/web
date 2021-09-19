@@ -86,6 +86,17 @@ const enrolledCourseView = React.lazy(() =>
 const courseContentView = React.lazy(() =>
   import('pages/courses/CourseContentView'),
 );
+const CourseApproval = React.lazy(() =>
+  import('pages/courses/CourseApproval'),
+);
+
+const CourseApprovalView = React.lazy(() =>
+  import('pages/courses/CourseApprovalView'),
+);
+
+const CourseContentApprovalView = React.lazy(() =>
+  import('pages/courses/CourseContentApprovalView'),
+);
 
 //workshops
 const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
@@ -120,8 +131,12 @@ const editJobVaccencies = React.lazy(() =>
 const Reports = React.lazy(() => import('pages/reports/Reports'));
 
 //registration
-const MemberVerification = React.lazy(() => import('pages/registration/registrationVerification'));
-const MemberApproval = React.lazy(() => import('pages/registration/registrationApproval'));
+const MemberVerification = React.lazy(() =>
+  import('pages/registration/registrationVerification'),
+);
+const MemberApproval = React.lazy(() =>
+  import('pages/registration/registrationApproval'),
+);
 
 //profile
 
@@ -373,28 +388,38 @@ function App(props) {
                       component={DashboardPageCou}
                     />
                     {/*User Verification Related Routes*/}
-                    <Route path="/managemembers" component={MemberApproval} />{' '}
-                    <Route path="/memberView/:id" component={approveMemberView} />{' '}
+                    <Route
+                      path="/managemembers"
+                      component={MemberApproval}
+                    />{' '}
+                    <Route
+                      path="/memberView/:id"
+                      component={approveMemberView}
+                    />{' '}
                     {/* need to change component */}
                     <Route
                       path="/managemembers/user00:id"
                       component={Login}
                     />{' '}
                     {/* need to change component */}
+
+
                     {/*Course Related Routes*/}
                     <Route
+                    exact
                       path="/courseapproval/csslcourses"
-                      component={Login}
+                      component={CourseApproval}
                     />{' '}
                     {/* need to change component */}
                     <Route
+                      exact
                       path="/courseapproval/csslcourses/cssl00:id/:title"
-                      component={Login}
+                      component={CourseApprovalView}
                     />{' '}
                     {/* need to change component */}
                     <Route
                       path="/courseapproval/csslcourses/cssl00:id/:title/:cntId/:cntTitle"
-                      component={Login}
+                      component={CourseContentApprovalView}
                     />{' '}
                     {/* need to change component */}
                     {/*CPD Related Routes*/}
@@ -426,9 +451,8 @@ function App(props) {
                       path="/csslmember/cpdrecords/addcpdrecord"
                       component={AddCPD}
                     />
-
-<Route path="/workshop" component={Workshop} />
-<Route exact path="/addWorkshop" component={AddWorkshop} />
+                    <Route path="/workshop" component={Workshop} />
+                    <Route exact path="/addWorkshop" component={AddWorkshop} />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
                     <Route path="/badges" component={BadgePagePro} />
                     <Route
@@ -465,7 +489,6 @@ function App(props) {
                     {/*User Verification Related Routes*/}
                     <Route path="/verifyuser" component={MemberVerification} />
                     <Route path="/memberView/:id" component={memberView} />{' '}
-
                     {/* need to change component */}
                     <Route
                       path="/verifyuser/user00:id"
@@ -506,11 +529,7 @@ function App(props) {
                       component={Login}
                     />{' '}
                     {/* need to change component */}
-                    <Route
-                      exact
-                      path="/reports"
-                      component={Reports}
-                    />{' '}
+                    <Route exact path="/reports" component={Reports} />{' '}
                     {/* need to change component */}
                     <Route
                       exact
@@ -822,7 +841,7 @@ function App(props) {
                 </MainLayoutStudent>
               )}
 
-             { authState.role == 'student' && (
+              {authState.role == 'student' && (
                 <MainLayoutStudent breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route
@@ -830,7 +849,7 @@ function App(props) {
                       path="/dashboard"
                       component={DashboardPageStu}
                     />
-                    
+
                     <Route path="/lecCourse" component={lecCourseView} />
                     <Route path="/csslcourses" component={csslCourses} />
                     <Route path="/login-modal" component={AuthModalPagePro} />
@@ -842,7 +861,10 @@ function App(props) {
                     <Route path="/alerts" component={AlertPagePro} />
 
                     <Route path="/job" component={JobsPro} />
-                    <Route path="/csslmember/cpdrecords/addcpdrecord" component={AddCPD} />
+                    <Route
+                      path="/csslmember/cpdrecords/addcpdrecord"
+                      component={AddCPD}
+                    />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
 
                     <Route path="/badges" component={BadgePagePro} />
@@ -858,7 +880,7 @@ function App(props) {
                     <Route path="/charts" component={ChartPagePro} />
                   </React.Suspense>
                 </MainLayoutStudent>
-             )}
+              )}
               {authState.role == 'ddd' && (
                 <MainLayoutDefault breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
