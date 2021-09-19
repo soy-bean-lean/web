@@ -39,9 +39,11 @@ import { AuthContext } from '../../helpers/AuthContext';
 import Rating from '../../components/RatingStars/RatingStars';
 
 const CardPage = props => {
+
+  const { authState, setAuthState } = useContext(AuthContext);
+  
   const [activeTab, setActiveTab] = useState('2');
   const [activeSubTab, setActiveSubTab] = useState('3');
-  //const { authState, setAuthState } = useContext(AuthContext);
   const [memberId, setMemberId] = useState('');
   const [course, setCourse] = useState(null);
   const [enCourse, setEnCourse] = useState(null);

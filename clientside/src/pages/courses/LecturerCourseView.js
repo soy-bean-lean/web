@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
 import Typography from 'components/Typography';
 import { confirmAlert } from 'react-confirm-alert';
+import { AuthContext } from '../../helpers/AuthContext';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import {
   Button,
@@ -28,6 +29,7 @@ const LecturerCourseView = () => {
   const [courseImg, setCourseImg] = useState('');
   const [courseStatus, setCourseStatus] = useState('');
   const [content, setContent] = useState(null);
+  const { authState, setAuthState } = useContext(AuthContext);
 
   let history = useHistory();
 
