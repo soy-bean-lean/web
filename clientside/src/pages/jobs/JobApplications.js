@@ -70,41 +70,93 @@ const CardPage = props => {
 
   const jobview =
     data &&
-    data.map(data => (
-      <>
-        <tr>
-      
-          <td hidden> {data.jvId}</td>
-          <td>{data.date}</td>
-          <td>{data.companyName}</td>
+    data.map((data, i) => {
+      if (data.status == 'closed') {
+        return (
+          <>
+            <tr>
+              <td hidden> {data.jvId}</td>
+              <td>{data.date}</td>
+              <td>{data.companyName}</td>
 
-          <td>
-            <b>{data.marks} %</b>
-          </td>
-          <td>
-            <p>{data.status}</p>
-          </td>
+              <td>
+                <Badge color="warning" pill className="mr-1">
+                  {data.marks}%{' '}
+                </Badge>
+              </td>
 
-          <td>
-            <center>
-           
-                <Button color="success" size="sm">
-                  <a color="success" className='ancorTag'
-                    href={
-                      'http://localhost:3001/uploads/jobApplicationCVs/' +
-                      data.cv
-                    }
-                    download
-                  >
-                    Download CV{' '}
-                  </a>
-                </Button>
-            </center>
-          </td>
-        </tr>
-      </>
-    ));
+              <td>
+                <center>
+                  <Badge color="danger" pill className="mr-1">
+                    {data.status.toUpperCase()}{' '}
+                  </Badge>
+                </center>
+              </td>
 
+              <td>
+                <center>
+                  <Button color="success" size="sm">
+                    <a
+                      color="success"
+                      className="ancorTag"
+                      href={
+                        'http://localhost:3001/uploads/jobApplicationCVs/' +
+                        data.cv
+                      }
+                      download
+                    >
+                      Download CV{' '}
+                    </a>
+                  </Button>
+                </center>
+              </td>
+            </tr>
+          </>
+        );
+      } else if (data.status == 'pending') {
+        return (
+          <>
+            <tr>
+              <td hidden> {data.jvId}</td>
+              <td>{data.date}</td>
+              <td>{data.companyName}</td>
+
+              <td>
+                <Badge color="warning" pill className="mr-1">
+                  {data.marks}%{' '}
+                </Badge>
+              </td>
+
+              <td>
+                <center>
+                  <Badge color="primary" pill className="mr-1">
+                    {data.status.toUpperCase()}{' '}
+                  </Badge>
+                </center>
+              </td>
+
+              <td>
+                <center>
+                  <Button color="success" size="sm">
+                    <a
+                      color="success"
+                      className="ancorTag"
+                      href={
+                        'http://localhost:3001/uploads/jobApplicationCVs/' +
+                        data.cv
+                      }
+                      download
+                    >
+                      Download CV{' '}
+                    </a>
+                  </Button>
+                </center>
+              </td>
+            </tr>
+          </>
+        );
+      }
+    });
   const jobApplicents =
     applicents &&
     applicents.map(data => (
@@ -113,11 +165,12 @@ const CardPage = props => {
           <td hidden>{data.jvId}</td>
           <td>{data.companyName}</td>
           <td>
-            <Button color="danger" outline className="mr-1">
-              {data.numberOfApplicent}
-            </Button>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {data.numberOfApplicent} Applications
+              </Badge>
+            </center>
           </td>
-
           <td>
             <center>
               <Link to={'/sendcv/' + data.jvId}>
@@ -136,6 +189,7 @@ const CardPage = props => {
       <hr></hr>
 
       <Nav tabs>
+        
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '1' })}
@@ -143,7 +197,7 @@ const CardPage = props => {
               toggle('1');
             }}
           >
-            All Job Aplications
+            Job Applications For Advertisments
           </NavLink>
         </NavItem>
         <NavItem>
@@ -153,12 +207,12 @@ const CardPage = props => {
               toggle('2');
             }}
           >
-            Job Applications For Advertisments
+            All Job Aplications
           </NavLink>
         </NavItem>
       </Nav>
       <TabContent activeTab={activeTab}>
-        <TabPane tabId="1">
+        <TabPane tabId="2">
           <Row>
             <Col sm="12">
               {tableTypes.map((tableType, index) => (
@@ -183,7 +237,7 @@ const CardPage = props => {
             </Col>
           </Row>
         </TabPane>
-        <TabPane tabId="2">
+        <TabPane tabId="1">
           <Row>
             <Col sm="12">
               {tableTypes.map((tableType, index) => (

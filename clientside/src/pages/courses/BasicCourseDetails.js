@@ -37,14 +37,14 @@ const BasicCourseInfo = () => {
   let history = useHistory();
 
   const InsertCourseInfo = () => {
-    //const file = event.target.files[0];
-    const mId = 'cssl001';
+    const mId = authState.memberId;
     const formData = new FormData();
     formData.append('image', imgFile);
     formData.append('title', courseTitle);
     formData.append('description', courseDes);
     formData.append('duration', courseDuration);
     formData.append('language', language);
+    formData.append('durationType', durationType);
     formData.append('level', level);
     formData.append('mode', mode);
     formData.append('lecturer', mId);
@@ -67,7 +67,7 @@ const BasicCourseInfo = () => {
 
         setTimeout(
           function () {
-            history.push('/lecCourse');
+            history.push("/csslcourse/addCourseContent/cssl00"+res.data.insertId+"/"+courseTitle);
             //hri giyoth yana thena
           },
 

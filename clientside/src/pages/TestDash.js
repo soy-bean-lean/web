@@ -99,8 +99,6 @@ function TestDash() {
   };
   const { authState } = useContext(AuthContext);
 
-  const datesToAddContentTo = [5, 6];
-
   // const [day, setDay] = useState([]);
   // const da=5;
   var i = 0;
@@ -109,22 +107,15 @@ function TestDash() {
     // Add class to tiles in month view only
     //datesToAddContentTo&&datesToAddContentTo.map((datesToAddContentTo) =>{
     //     setDay(datesToAddContentTo);
-    for (i = 0; i < datesToAddContentTo.length; i++) {
-      if (view === 'month' && date.getDay() === datesToAddContentTo[i]) {
-        return 'activityColor';
-      }
-    }
     //});
     // if (view === 'month' && date.getDay() === aaa) {
     //     console.log(date.getDay());
     //     console.log(aaa);
-
     // // Check if a date React-Calendar wants to check is on the list of dates to add class to
     // //   if (datesToAddContentTo.find(dDate => isSameDay(dDate, date))) {
     // //     return 'navigationLabel';
     // //   }
     //     return 'activityColor';
-
     // }
   }
 
@@ -138,30 +129,56 @@ function TestDash() {
 
   const [retrievePie, setretrievePie] = useState(null);
 
-  const [progressPercentage,setprogressPercentage] = useState(76);
+  const [progressPercentage, setprogressPercentage] = useState(0);
 
-  
+  const [upcomingDate, setupcomingDate] = useState(null);
+  const [upcomingDateLength, setupcomingDateLength] = useState(null);
+
+  const [creditsEarned, setcreditsEarned] = useState("");
+  const [remainingCredits, setremainingCredits] = useState("");
+  const [remainingCreditsPercentage, setremainingCreditsPercentage] = useState("");
+
+
   //this year credits earned
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (var i = 0; i < creditEarnedLength; i++) {
     months[retrieveLine[i].month] = retrieveLine[i].credits;
   }
 
+  var day = [];
+  upcomingDate && upcomingDate.map(upcomingDate => day.push(upcomingDate.day));
+
+  function tileClassName({ date, view }) {
+    for (i = 0; i < upcomingDateLength; i++) {
+      if (view === 'month' && date.getDate() === day[i]) {
+        // //console.log();
+        // //console.log();
+        // const x = day[i];
+        // const y = date.getDate();
+        // if(x<y){
+        //   return 'activityColor';
+        // }else if(day[i]>date.getDate()){
+        return 'activityOverColor';
+        // }
+      }
+    }
+  }
+
   var count = [];
 
   retrieveDonut &&
-  retrieveDonut.map(
-    retrieveDonut => (count.push(retrieveDonut.count)),
-    );
+    retrieveDonut.map(retrieveDonut => count.push(retrieveDonut.count));
 
   var category = [];
   var countType = [];
-  
-  retrievePie &&
-  retrievePie.map(
-    retrievePie => (category.push(retrievePie.recordCategory), countType.push(retrievePie.credits)),
-    );
 
+  retrievePie &&
+    retrievePie.map(
+      retrievePie => (
+        category.push(retrievePie.recordCategory),
+        countType.push(retrievePie.credits)
+      ),
+    );
 
   //credits earned line chart
   const state = {
@@ -191,44 +208,43 @@ function TestDash() {
 
   //credits earned line chart
   const state2 = {
-    
-      labels: ['Course', 'Guest Lectues', 'Others', 'Workshops'],
-      datasets: [
-        {
-          data: count,
-          backgroundColor: ['#1d7e61', '#ec1317', '#ffc107', '#08186e'],
-          label: 'Dataset 1',
-        },
-      ]
-  }
+    labels: ['Course', 'Guest Lectues', 'Others', 'Workshops'],
+    datasets: [
+      {
+        data: count,
+        backgroundColor: ['#1d7e61', '#ec1317', '#ffc107', '#08186e'],
+        label: 'Dataset 1',
+      },
+    ],
+  };
 
-  const state3 ={
+  const state3 = {
     labels: category,
-      datasets: [
-        {
-          data: countType,
-          backgroundColor: [
-            '#D65353',
-            '#f7c634',
-            '#44c7a0',
-            '#2138b5',
-            '#CA723D',
-            '#5b7536',
-            '#5e93ad',
-            '#94529c',
-            '#b08093',
-            '#a3e6a5',
-            '#91aebd',
-            '#bca3d6',
-            '#debdca',
-            '#91a19b',
-            '#4c87fc',
-            '#ed9b68',
-          ],
-          label: 'Dataset 1',
-        },
-      ],
-  }
+    datasets: [
+      {
+        data: countType,
+        backgroundColor: [
+          '#D65353',
+          '#f7c634',
+          '#44c7a0',
+          '#2138b5',
+          '#CA723D',
+          '#5b7536',
+          '#5e93ad',
+          '#94529c',
+          '#b08093',
+          '#a3e6a5',
+          '#91aebd',
+          '#bca3d6',
+          '#debdca',
+          '#91a19b',
+          '#4c87fc',
+          '#ed9b68',
+        ],
+        label: 'Dataset 1',
+      },
+    ],
+  };
 
   //Announcements
   useEffect(() => {
@@ -245,7 +261,7 @@ function TestDash() {
         alert(error);
       });
 
-  //Recent Activities
+    //Recent Activities
     const data = {
       id: authState.id,
     };
@@ -261,7 +277,7 @@ function TestDash() {
       .catch(error => {
         alert(error);
       });
-      
+
     axios
       .post('http://localhost:3001/Dash/creditsearned', data)
       .then(response => {
@@ -276,7 +292,7 @@ function TestDash() {
         alert(error);
       });
 
-      axios
+    axios
       .post('http://localhost:3001/Dash/activityType', data)
       .then(response => {
         if (response.data.error) {
@@ -289,7 +305,7 @@ function TestDash() {
         alert(error);
       });
 
-      axios
+    axios
       .post('http://localhost:3001/Dash/activityTypeCredits', data)
       .then(response => {
         if (response.data.error) {
@@ -302,19 +318,72 @@ function TestDash() {
         alert(error);
       });
 
-      axios
+    axios
       .post('http://localhost:3001/Dash/progressPercentage', data)
       .then(response => {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-         // setprogressPercentage(response.data);
+          setprogressPercentage(response.data);
         }
       })
       .catch(error => {
         alert(error);
       });
 
+    axios
+      .post('http://localhost:3001/Dash/upcoming', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          console.log(response.data);
+          setupcomingDate(response.data);
+          setupcomingDateLength(response.data.length);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+      axios
+      .post('http://localhost:3001/Dash/earned', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setcreditsEarned(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+      axios
+      .post('http://localhost:3001/Dash/remaining', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setremainingCredits(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+      axios
+      .post('http://localhost:3001/Dash/remainingPercentage', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setremainingCreditsPercentage(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
 
   }, []);
 
@@ -360,7 +429,7 @@ function TestDash() {
                         })}
                       />
                       <div className="mt-2 text-md-center text-dark">
-                        <b>CPD Activity progress</b>
+                        <b>CPD Activity Progress</b>
                       </div>
                     </div>
                   </CardBody>
@@ -368,21 +437,21 @@ function TestDash() {
                 <Col xs="8" className="mt-2">
                   <CardBody>
                     <NumberWidget
-                      title="CPD Progress of In-Progress Activities"
-                      number="12"
-                      color="danger"
+                      title="Earned Credits"
+                      number={creditsEarned}
+                      color="success"
                       progress={{
-                        value: 25,
-                        label: 'This year',
+                        value: progressPercentage,
+                        label: 'In This Year',
                       }}
                     />
                     <NumberWidget
-                      title="CPD Progress of Completed Activities"
-                      number="12"
-                      color="success"
+                      title="Credits Remaining"
+                      number={remainingCredits}
+                      color="danger"
                       progress={{
-                        value: 70,
-                        label: 'This year',
+                        value: remainingCreditsPercentage,
+                        label: 'For This Year',
                       }}
                     />
                   </CardBody>

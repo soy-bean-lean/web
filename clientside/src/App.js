@@ -86,6 +86,17 @@ const enrolledCourseView = React.lazy(() =>
 const courseContentView = React.lazy(() =>
   import('pages/courses/CourseContentView'),
 );
+const CourseApproval = React.lazy(() =>
+  import('pages/courses/CourseApproval'),
+);
+
+const CourseApprovalView = React.lazy(() =>
+  import('pages/courses/CourseApprovalView'),
+);
+
+const CourseContentApprovalView = React.lazy(() =>
+  import('pages/courses/CourseContentApprovalView'),
+);
 
 //workshops
 const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
@@ -397,20 +408,24 @@ function App(props) {
                       component={Login}
                     />{' '}
                     {/* need to change component */}
+
+
                     {/*Course Related Routes*/}
                     <Route
+                    exact
                       path="/courseapproval/csslcourses"
-                      component={Login}
+                      component={CourseApproval}
                     />{' '}
                     {/* need to change component */}
                     <Route
+                      exact
                       path="/courseapproval/csslcourses/cssl00:id/:title"
-                      component={Login}
+                      component={CourseApprovalView}
                     />{' '}
                     {/* need to change component */}
                     <Route
                       path="/courseapproval/csslcourses/cssl00:id/:title/:cntId/:cntTitle"
-                      component={Login}
+                      component={CourseContentApprovalView}
                     />{' '}
                     {/* need to change component */}
                     {/*CPD Related Routes*/}
@@ -888,8 +903,8 @@ function App(props) {
                     <Route path="/charts" component={ChartPagePro} />
                   </React.Suspense>
                 </MainLayoutStudent>
-              )}
-              {authState.role == 'ddd' && (
+             )}
+              {/* {authState.role == 'ddd' && (
                 <MainLayoutDefault breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route exact path="/" component={DashboardPage} />
@@ -927,7 +942,7 @@ function App(props) {
                     <Route exact path="/charts" component={ChartPage} />
                   </React.Suspense>
                 </MainLayoutDefault>
-              )}
+              )} */}
 
               {/* proffesional members data */}
               {/* chartered members data */}

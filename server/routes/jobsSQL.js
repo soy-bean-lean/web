@@ -218,13 +218,14 @@ Job.post("/sendEmail", async (req, res) => {
   const username = req.body.username;
   const jobId = req.body.jobId;
 
-  const from = username; //system mail
+  const from = "cssl.system.info@gmail.com"; //system mail
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: from,
-      pass: password,
-
+      user: "cssl.system.info@gmail.com",
+      pass: "cssl@123",
+      // user: "cssl.system.info@gmail.com",
+      // pass: "cssl@123",
       //cssl.system.info@gmail.com
     },
   });
@@ -252,7 +253,7 @@ Job.post("/sendEmail", async (req, res) => {
       );
 
       var mailOptions = {
-        from: { from },
+        from: "cssl.system.info@gmail.com" ,
         to: companyemail,
         cc: email,
         subject: "Job Application for " + designation,
@@ -273,13 +274,13 @@ Job.post("/sendEmail", async (req, res) => {
           date +
           " ____________________ HR Manager CSSL ____________________      ",
 
-        attachments: [
-          {
-            filename: cv,
-            path: "http://localhost:3001/uploads/jobApplicationCVs/" + cv,
-            contentType: "application/pdf",
-          },
-        ],
+        // attachments: [
+        //   {
+        //     filename: cv,
+        //     path: "http://localhost:3001/uploads/jobApplicationCVs/" + cv,
+        //     contentType: "application/pdf",
+        //   },
+        // ],
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
@@ -300,7 +301,7 @@ Job.post("/sendEmail", async (req, res) => {
           );
 
           connection.query(
-            " UPDATE jobapplicant SET status = 'close'  WHERE jvId=" +
+            " UPDATE jobapplicant SET status = 'closed'  WHERE jvId=" +
               jvId +
               ";",
 

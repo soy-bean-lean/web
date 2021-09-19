@@ -301,7 +301,7 @@ function AddQuestion() {
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
                     <Button onClick={addQuestion} color="success">
-                      Add Job
+                      Add Question
                     </Button>
                   </Col>
                 </FormGroup>

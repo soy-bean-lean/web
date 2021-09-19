@@ -35,7 +35,7 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
     const status = "OnGoing";
 
     connection.query(
-      "INSERT INTO csslcourse (name, description, duration, durationType, language, skillLevel, image, mode, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?);",
+      "INSERT INTO csslcourse (name, description, duration, durationType, language, skillLevel, image, mode, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?,?);",
       [
         title,
         description,
@@ -424,8 +424,8 @@ Course.post("/getCourseList", (req, res) => {
   const status = "Approved";
   connection.query(
     //need to add not equal conductedBy to memeberId and not enrolled by the memberId 
-    "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ?;",
-    [mid, status],
+    "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ? ORDER BY approvedDate DESC;",
+    [mid, mid, status],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -477,8 +477,8 @@ Course.post("/getFilterCourseList", (req, res) => {
 
   if((level == "" && instructor == "") || (level == "" && category == "") || (category == "" && instructor == "")){
     connection.query(
-      "SELECT * FROM csslcourse WHERE (skillLevel = ? OR conductedBy = ? OR category = ?) AND conductedBy != ? AND status = ?;",
-      [level, instructor, category, mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND (skillLevel = ? OR conductedBy = ? OR category = ?) AND conductedBy != ? AND status = ?;",
+      [mid, level, instructor, category, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -489,8 +489,8 @@ Course.post("/getFilterCourseList", (req, res) => {
   }
   else if(level != "" && instructor != "" && category != ""){
     connection.query(
-      "SELECT * FROM csslcourse WHERE skillLevel = ? AND conductedBy = ? AND category = ? AND conductedBy != ? AND status = ?;",
-      [level, instructor, category, mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND skillLevel = ? AND conductedBy = ? AND category = ? AND conductedBy != ? AND status = ?;",
+      [mid, level, instructor, category, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -501,8 +501,8 @@ Course.post("/getFilterCourseList", (req, res) => {
   }
   else if(level != "" && instructor == "" && category != ""){
     connection.query(
-      "SELECT * FROM csslcourse WHERE skillLevel = ? AND category = ? AND conductedBy != ? AND status = ?;",
-      [level, category, mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND skillLevel = ? AND category = ? AND conductedBy != ? AND status = ?;",
+      [mid, level, category, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -513,8 +513,8 @@ Course.post("/getFilterCourseList", (req, res) => {
   }
   else if(level == "" && instructor != "" && category != ""){
     connection.query(
-      "SELECT * FROM csslcourse WHERE conductedBy = ? AND category = ? AND conductedBy != ? AND status = ?;",
-      [instructor, category, mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy = ? AND category = ? AND conductedBy != ? AND status = ?;",
+      [mid, instructor, category, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -525,8 +525,8 @@ Course.post("/getFilterCourseList", (req, res) => {
   }
   else if(level != "" && instructor != "" && category == ""){
     connection.query(
-      "SELECT * FROM csslcourse WHERE skillLevel = ? AND conductedBy = ? AND conductedBy != ? AND status = ?;",
-      [level, instructor, mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND skillLevel = ? AND conductedBy = ? AND conductedBy != ? AND status = ?;",
+      [mid, level, instructor, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -537,8 +537,8 @@ Course.post("/getFilterCourseList", (req, res) => {
   }
   else{
     connection.query(
-      "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ?;",
-      [mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ?;",
+      [mid, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -555,8 +555,8 @@ Course.post("/getSearchCourseList", (req, res) => {
   const sQuery = req.body.sQuery;
   const status = "Approved";
   connection.query(
-    "SELECT * FROM csslcourse WHERE (name LIKE ? OR category LIKE ? ) AND conductedBy != ? AND status = ?;",
-    ['%'+sQuery+'%', '%'+sQuery+'%', mid, status],
+    "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND (name LIKE ? OR category LIKE ? ) AND conductedBy != ? AND status = ?;",
+    [mid, '%'+sQuery+'%', '%'+sQuery+'%', mid, status],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -573,8 +573,8 @@ Course.post("/getSortCourseList", (req, res) => {
   const status = "Approved";
   if(type == "Rating"){
     connection.query(
-      "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ? ORDER BY avgRate DESC;",
-      [mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ? ORDER BY avgRate DESC;",
+      [mid, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -586,8 +586,8 @@ Course.post("/getSortCourseList", (req, res) => {
   }
   else if(type == "Interaction"){
     connection.query(
-      "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ? ORDER BY noOfInteraction DESC;",
-      [mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ? ORDER BY noOfInteraction DESC;",
+      [mid, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -599,8 +599,8 @@ Course.post("/getSortCourseList", (req, res) => {
   }
   else if(type == "Date"){
     connection.query(
-      "SELECT * FROM csslcourse WHERE conductedBy != ? AND status = ? ORDER BY approvedDate DESC;",
-      [mid, status],
+      "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ? ORDER BY approvedDate DESC;",
+      [mid, mid, status],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
