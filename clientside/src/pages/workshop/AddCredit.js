@@ -4,14 +4,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../helpers/AuthContext';
-import classnames from 'classnames';
-import Typography from 'components/Typography';
+
 import { confirmAlert } from 'react-confirm-alert';
 import { useParams } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
 
 import {
+    Badge,
   Button,
   Card,
   CardBody,
@@ -30,13 +30,21 @@ import {
 function AddCredit() {
   const { id } = useParams();
   const add = '';
+  const [image, setImage] = useState('');
   const [title, setTitle] = useState('');
-  const [about, setAbout] = useState('');
   const [desc, setDesc] = useState('');
-  const [image, setBlogImage] = useState();
+  const [subject, setSubject] = useState('');
+ const [fromDate, setFromDate] = useState('');
+ const [toDate, setToDate] = useState('');
+  const [duration, setDuration] = useState('');
+  const [credit, setCredit] = useState('');
+
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
 
+  
+  //const [image, setBlogImage] = useState();
+ 
   // var today = new Date(),
   //   Currentdate =
   //     today.getFullYear() +
@@ -117,16 +125,22 @@ console.log(id);
   };
 
 
-  const updateBlog = () => {
+  const approve = () => {
     const blogData = new FormData();
-    blogData.append('image', image);
+    //blogData.append('image', image);
     blogData.append('title', title);
-    blogData.append('description', about);
-    blogData.append('content', desc);
-    blogData.append('blogId', id);
+    blogData.append('description', desc);
+    blogData.append('subject', subject);
+    blogData.append('fromDate', fromDate);
+    blogData.append('toDate', toDate);
+    blogData.append('duration', duration);
+    blogData.append('credit', credit);
+    blogData.append('wId', id);
+
+    blogData.append('verifiedBy', authState.memberId);
 
     console.log("data;",blogData);
-    fetch('http://localhost:3001/blog/updateBlog', {
+    fetch('http://localhost:3001/workshop/addCredit', {
       method: 'POST',
       body:blogData,
       headers: {
@@ -139,7 +153,7 @@ console.log(id);
         setResult('done');
         setTimeout(
           function () {
-            history.push('/blogs');
+            history.push('/manageworksops');
           },
 
           2000,
@@ -149,7 +163,7 @@ console.log(id);
         setResult('err');
         setTimeout(
           function () {
-            history.push('/editview/cssl00' + blogData.blogId + '/' + blogData.title);
+            history.push('/addCredit/cssl00' + blogData.wId + '/' + blogData.title);
           },
 
           2000,
@@ -165,7 +179,7 @@ console.log(id);
       id:id,
     }
     axios
-      .post('http://localhost:3001/blog/getBlogView', sendData)
+      .post('http://localhost:3001/workshop/getWorkshopView', sendData)
 
       .then(response => {
         if (response.data.error) {
@@ -173,9 +187,13 @@ console.log(id);
         } else {
           console.log(response.data[0]);
           setTitle(response.data[0].title);
-          setAbout(response.data[0].description);
-          setDesc(response.data[0].content);
-          //setBlogImage(response.data[0].image);
+          setDesc(response.data[0].description);
+          setSubject(response.data[0].subject);
+          setFromDate(response.data[0].fromDate);
+          setToDate(response.data[0].toDate );
+          setDuration(response.data[0].duration);
+          setCredit(response.data[0].credit);
+          setImage(response.data[0].image);
           
           
         }
@@ -191,120 +209,89 @@ console.log(id);
       
   }, []);
 
-  return (
-    <Page title="Assign Credit/Deny Request">
-       <Link to="/manageworksops">
-        <Button color="primary">Back</Button>
+//   return (
+//     <Page title="Assign Credit/Deny Request">
+//        <Link to="/manageworksops">
+//         <Button color="primary">Back</Button>
+//       </Link>
+      
+//     </Page>
+//   );
+
+return (
+    <Page title="Requested Workshop">
+         <Link to="/manageworksops">
+        <Button color="primary">Workshop List</Button>
       </Link>
-      <hr></hr>
-      <Col sm="10" md={{ size: 8, offset: 2 }}>
-        <center>
-          {msg()}
-          <Card>
-            <CardHeader>Workshop Details</CardHeader>
+      <Row>
+        <Col sm="5" md={{ size: 6, offset: 3 }}>
+          <br></br>
+          <Card className="profileInfo">
             <CardBody>
-              <Form>
-                {/* <FormGroup row>
-                  <Label for="exampleEmail" sm={12}>
-                    Import Your Blog Image From the Chooser
-                  </Label>
-                  <Col sm="12" md={{ size: 6, offset: 4 }}>
-                    <center>
-                      {image && (
-                        <img
-                          className="writeImg"
-                          height="60%"
+              <center>
+                {msg()}{' '}
+                <Badge pill color="warning" className="mr-1">
+                  Requested Workshop
+                </Badge>
+                <br />
+                {/* <br /> */}
+                <img
+                  src={'http://localhost:3001/uploads/workshop/' + image}
+                  height="60%"
                           width="60%"
-                          src={URL.createObjectURL(image)}
-                          alt=""
-                        />
-                      )}
-                    </center>
-                  </Col>
-
-                  <Col sm="12" md={{ size: 6, offset: 4 }}>
-                    <Input
-                      type="file"
-                      className="input"
-                      id="avatar"
-                      name="avatar"
-                      // value={image}
-                      accept="image/*"
-                      onChange={e => setBlogImage(e.target.files[0])}
-                    />
-                  </Col>
-                </FormGroup> */}
-
-                <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Topic
-                  </Label> */}
-                  
-                  <Col sm={9}>
+                  className="writeImg"
+                />
+                <br></br>
+                <br></br>
+                <h4>
+                  {title} 
+                </h4>{' '}
+                {/* <Badge pill color="warning" className="mr-1">
+                  {type.toUpperCase()}
+                </Badge> */}
+                <br />
+                <br />
+                <p>{desc}</p>
+                <p>{subject}</p>
+               <p> { 'From' +'  '+ fromDate + '  To ' + toDate}</p>
+                <p>{duration + '  hours per Day'}</p>
+             
+                
+              </center>
+              <FormGroup row>
+            
+                  <Col sm={4}>
                     
                     <Input
-                      type="text"
+                      type="number"
                       name="title"
-                     value={title}
-                       
-                      placeholder="Add Title . . . . . "
-                      onChange={e => setTitle(e.target.value)}
-                    />
-                  </Col>
-                </FormGroup>
-
-                <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Topic
-                  </Label> */}
-                  
-                  <Col sm={9}>
-                    
-                    <Input
-                      type="text"
-                      name="title"
-                     value={about}
+                      placeholder="Assign  Credit"
                        
                      
-                     onChange={e => setAbout(e.target.value)}
-                    />
-                  </Col>
-                </FormGroup>
-               
-
-                <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
-                    Blog Description
-                  </Label> */}
-                  <Col sm={9}>
-                    <Input
-                      type="textarea"
-                      className="note"
-                      value={desc}
-                      onChange={e => setDesc(e.target.value)}
+                      //onChange={e => setWorkshopDes(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
 
+              <CardBody>
                 <FormGroup check row>
-                  <Col sm={{ size: 15 }}>
-                    <Button onClick={updateBlog} color="success">
-                      Update
-                    </Button>
-
-                    {'  '}
-
-                    <Button onClick={submit} color="danger">
-                      Delete
-                    </Button>
-                  </Col>
-                </FormGroup>
-              </Form>
+                  <center>
+                    <Col sm={{ size: 15 }}>
+                      
+                      <Button onClick={submit} color="danger">
+                        Reject
+                      </Button>{' '}
+                      <Button color="success">
+                        Approve
+                      </Button>
+                    </Col>
+                  </center>
+                </FormGroup>{' '}
+              </CardBody>
             </CardBody>
           </Card>
-        </center>
-      </Col>
-      <hr></hr>
+        </Col>
+      </Row>
     </Page>
   );
 }

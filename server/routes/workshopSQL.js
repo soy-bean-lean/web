@@ -96,6 +96,65 @@ Workshop.post("/getSendWorkshop", (req, res) => {
       });
     });
 
+//to update show workshop details
+
+Workshop.post("/getWorkshopView", (req, res) => {
+  const wid = req.body.id;
+  console.log(wid);
+  connection.query(
+    "SELECT csslworkshop.* from csslworkshop where wId= ?;",
+    [wid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+
+Workshop.route("/addCredit").post(
+  upload.single("image"),
+  (req, res, err) => {
+    // if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
+    //   res.send({ msg: "Not an Image File." });
+    // } else {
+      const wid = req.body.wId;
+      const mid=req.body.verifiedBy;
+
+      const credit = req.body.credit;
+      //const about = req.body.description;
+
+     // const desc = req.body.content;
+      // const memberID = req.body.memberId;
+     // const image = req.file.filename;
+
+     console.log(image);
+      
+      
+
+      connection.query(
+        "UPDATE csslworkshop SET credit = ?, verifiedBy = ?  WHERE wId = ?;",
+        [
+          credit,
+          mid,
+          wid
+        ],
+        (error, result, feilds) => {
+          if (error) console.log(error);
+          else {
+            res.send({
+              data: result,
+              msg: "Successfully Updated.",
+            });
+          }
+        }
+      );
+    
+  }
+);
+
 
 
 

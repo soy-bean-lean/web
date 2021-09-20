@@ -1,5 +1,20 @@
-import Router from "express";
+import Router, { query } from "express";
+import multer from "multer";
 import connection from "../db.js";
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/cpdRecords");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
 
 const Record = Router();
 
@@ -166,5 +181,45 @@ Record.post("/getGuestLecture", (req, res) => {
     }
   );
 });
+
+//insert course details (basicCourseDetails.js)
+Record.route("/submitCsslCourse").post(upload.single("proof"), (req, res, err) => {
+    const mId = req.body.mId;
+    const recTitle = req.body.recTitle;
+    const recordType = req.body.recordType;
+    const type = req.body.type;
+    const note = req.body.note;
+    const credit = req.body.credit;
+    const refId = req.body.refId;
+    const proof = req.file.filename;
+    const recDate = req.body.recDate;
+    const status = "Pending";
+    //console.log(mId);
+    connection.query(
+      "INSERT INTO cpdrecords (memberId, recTitle, recordType, type, proof, note, credit, recordDate, status, refId) VALUES (?,?,?,?,?,?,?,?,?,?);",
+      [
+        mId,
+        recTitle,
+        recordType,
+        type,
+        proof,
+        note,
+        credit,
+        recDate,
+        status,
+        refId,
+      ],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          //console.log(res);
+          res.send({
+            data: result,
+            msg: "Successfully Saved.",
+          });
+        }
+      }
+    );
+  });
 
 export default Record;

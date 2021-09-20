@@ -112,7 +112,7 @@ Blog.post("/getBlogComments", (req, res) => {
     bid +
     " ORDER BY `blogcomment`.`commentId` DESC";
   console.log(sql);
-    connection.query(sql, (error, result, feilds) => {
+  connection.query(sql, (error, result, feilds) => {
     if (error) console.log(error);
     else {
       res.send(result);
@@ -149,21 +149,23 @@ Blog.post("/deleteItem", (req, res) => {
 
 Blog.post("/addComment", (req, res) => {
   const memberId = req.body.memberId;
-  const blogId = req.body.bId*1;
+  const blogId = req.body.bId * 1;
   const c = req.body.comment;
   const commentDate = req.body.date;
-  console.log(memberId)
-  console.log(blogId)
-  console.log(c)
-  console.log(commentDate)
-  // const sqlSelect =    "insert into blogcomment (blogId ,memberId,description,date,replyFor) values (?,?,?,?,?)",[bId, title, about, desc, date, image];          
-  
+  console.log(memberId);
+  console.log(blogId);
+  console.log(c);
+  console.log(commentDate);
+  // const sqlSelect =    "insert into blogcomment (blogId ,memberId,description,date,replyFor) values (?,?,?,?,?)",[bId, title, about, desc, date, image];
 
-  connection.query("insert into blogcomment (memberId,blogId ,description,date) values (?,?,?,?)",
-  [memberId,blogId, c,commentDate], (err, result) => {
-    console.log(err);
-    res.send(result);
-  });
+  connection.query(
+    "insert into blogcomment (memberId,blogId ,description,date) values (?,?,?,?)",
+    [memberId, blogId, c, commentDate],
+    (err, result) => {
+      console.log(err);
+      res.send(result);
+    }
+  );
 });
 
 Blog.route("/updateBlog").post(upload.single("image"), (req, res, err) => {
@@ -196,7 +198,7 @@ Blog.route("/updateBlog").post(upload.single("image"), (req, res, err) => {
   );
 });
 
-//to update
+//to update show blog details
 
 Blog.post("/getBlogView", (req, res) => {
   const bid = req.body.id;
