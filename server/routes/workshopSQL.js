@@ -83,6 +83,20 @@ Workshop.post("/getSendWorkshop", (req, res) => {
     });
 
 
+    Workshop.post("/deleteItem", (req, res) => {
+      const tableName = req.body.tableName;
+      const wid = req.body.wid;
+      const coloum = req.body.coloum;
+    console.log(wid);
+      const sqlSelect =
+        "delete from " + tableName + " where " + coloum + "  =" + wid;
+    
+      connection.query(sqlSelect, (err, result) => {
+        res.send(result);
+      });
+    });
+
+
 
 
 
