@@ -174,7 +174,7 @@ Blog.route("/updateBlog").post(
   }
 );
 
-//to update
+//to update show blog details
 
 Blog.post("/getBlogView", (req, res) => {
   const bid = req.body.id;
@@ -188,7 +188,7 @@ Blog.post("/getBlogView", (req, res) => {
       }
     }
   );
-})
+});
  
   
   export default Blog;

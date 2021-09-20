@@ -5,61 +5,32 @@ import { AuthContext } from '../../helpers/AuthContext';
 import Page from 'components/Page';
 import CountUp from 'react-countup';
 
-import ProductMedia from 'components/ProductMedia';
-import SupportTicket from 'components/SupportTicket';
-import { IconWidget, NumberWidget } from 'components/Widget';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
-import {
-  avatarsData,
-  chartjs,
-  productsData,
-  supportTicketsData,
-  todosData,
-  userProgressTableData,
-} from 'demos/dashboardPage';
+import { chartjs } from 'demos/dashboardPage';
 import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
-import {
-  MdBubbleChart,
-  MdInsertChart,
-  MdPersonPin,
-  MdCardMembership,
-  MdPieChart,
-  MdRateReview,
-  MdShare,
-  MdShowChart,
-  MdThumbUp,
-} from 'react-icons/md';
-import { FaUserGraduate } from 'react-icons/fa';
-import InfiniteCalendar from 'react-infinite-calendar';
-import {
-  Badge,
-  Button,
-  Table,
-  Card,
-  CardBody,
-  CardDeck,
-  CardGroup,
-  CardHeader,
-  CardTitle,
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Row,
-} from 'reactstrap';
-import { getColor } from 'utils/colors';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+
+import Calendar from 'react-calendar';
+import { Card, CardBody,Badge, CardLink, CardHeader, Col, Row } from 'reactstrap';
 import CardText from 'reactstrap/lib/CardText';
 
 const today = new Date();
+
 const lastWeek = new Date(
   today.getFullYear(),
   today.getMonth(),
   today.getDate() - 7,
 );
+
+const date2 = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate() - 3,
+);
 const tableTypes = ['striped'];
 
 function DashboardPage() {
-  const primaryColor = '#6a82fb';
-  const secondaryColor = '#a5aacf';
+  const primaryColor = '#EC6150';
+  const secondaryColor = '#123123';
   const { authState, setAuthState } = useContext(AuthContext);
   const [record, setRecord] = useState(null);
 
@@ -68,16 +39,25 @@ function DashboardPage() {
   const [workshops, setWorkshops] = useState(null);
   const [length, setLength] = useState(null);
   const [lengthMember, setLengthMember] = useState(null);
+  const [paidPersentage, setPaidCount] = useState(null);
   const [workshopsLength, setLengthWorkshops] = useState(null);
-  const [userCount, setUserCount] = useState(null);
-  const [types, setUserTypes] = useState('');
+
+  const [user, setUserTypes] = useState('');
 
   const [applications, setApplications] = useState(null);
+  const [status, setUserStatus] = useState(null);
   const [recentUsers, setRecentUsers] = useState(null);
   const [blogCount, setBlogCount] = useState(null);
+  const [totalusers, setUserCount] = useState(null);
 
-  var userCouts = [5, 0, 7, 0];
-  console.log(userCount);
+  const [value, setValue] = useState(new Date());
+  const changeDate = e => {
+    setValue(value);
+  };
+
+  var userCouts = [];
+  var userType = [];
+
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (var i = 0; i < length; i++) {
     months[dataCPD[i].month] = dataCPD[i].credits;
@@ -105,17 +85,20 @@ function DashboardPage() {
     recentUsers &&
     recentUsers.map(recentUsers => (
       <>
-        <CardText>
-          <img
-            className="profileImageSmall"
-            src={
-              'http://localhost:3001/uploads/profileImages/' +
-              recentUsers.profileImage
-            }
-          />
-          {recentUsers.title} {recentUsers.firstName} {recentUsers.lastName}
-          <hr />
-        </CardText>
+        <img
+          className="newUsers"
+          title={
+            recentUsers.title +
+            '.' +
+            recentUsers.firstName +
+            '' +
+            recentUsers.lastName
+          }
+          src={
+            'http://localhost:3001/uploads/profileImages/' +
+            recentUsers.profileImage
+          }
+        />
       </>
     ));
 
@@ -132,7 +115,6 @@ function DashboardPage() {
             }
           />
           {applications.companyName} ({applications.numberOfApplicent})
-          <hr />
         </CardText>
       </>
     ));
@@ -167,12 +149,18 @@ function DashboardPage() {
     labels: years,
     datasets: [
       {
-        label: 'Members',
         fill: true,
-        hoverBackgroundColor: '#08186e',
+        width: '200px',
+        height: '150px',
 
         lineTension: 2,
-        backgroundColor: ' #08186e ',
+        backgroundColor: [
+          '#1d7e61',
+          '#fd7e14',
+          '#ec1317',
+          '#ffc107',
+          '#6a82fb',
+        ],
         borderWidth: 3,
         data: yearData,
       },
@@ -198,7 +186,13 @@ function DashboardPage() {
         label: 'Toatal Workshop',
         fill: true,
         backgroundColor: '#defff9',
-        borderColor: '#8ee6d6',
+        backgroundColor: [
+          '#1d7e61',
+          '#fd7e14',
+          '#ec1317',
+          '#ffc107',
+          '#6a82fb',
+        ],
         hoverBackgroundColor: '#9ff5e5',
         borderWidth: 2,
 
@@ -208,16 +202,57 @@ function DashboardPage() {
   };
 
   const memberTypes = {
-    labels: ['Student', 'Associate', 'Proffesional', 'Chartered'],
+    labels: userType,
     datasets: [
       {
         label: 'CPD Uploads',
         fill: false,
         height: 350,
+        lineTension: 1,
+
         width: 350,
-        backgroundColor: ['#1d7e61', '#ec1317', '#ffc107'],
+        backgroundColor: [
+          '#1d7e61',
+          '#fd7e14',
+          '#ec1317',
+          '#ffc107',
+          '#6a82fb',
+        ],
         borderColor: '#fff',
         data: userCouts,
+      },
+    ],
+  };
+  var userStatus = [];
+  var users = [];
+  status &&
+    status.map(index => {
+      if (index.status == 0) {
+        userStatus.push('PENDING');
+        users.push(index.bbb);
+      } else if (index.status == 1) {
+        userStatus.push('APPROVED');
+        users.push(index.bbb);
+      } else if (index.status == 2) {
+        userStatus.push('REJECTED');
+        users.push(index.bbb);
+      } else if (index.status == 3) {
+        userStatus.push('VERIFIED');
+        users.push(index.bbb);
+      }
+    });
+
+  const memberStatus = {
+    labels: userStatus,
+    datasets: [
+      {
+        label: 'User Status',
+        fill: false,
+        height: 350,
+        width: 350,
+        backgroundColor: ['#6a82fb', '#1d7e61', '#ec1317', '#ffc107'],
+        borderColor: '#fff',
+        data: users,
       },
     ],
   };
@@ -236,8 +271,21 @@ function DashboardPage() {
   //     },
   //   ],
   // };
-
+  var y = 0;
   useEffect(() => {
+    axios
+      .post('http://localhost:3001/Dash/getUserStatus')
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setUserStatus(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
     axios
       .post('http://localhost:3001/Dash/getApplications')
 
@@ -288,6 +336,7 @@ function DashboardPage() {
 
     const data = {
       memberId: authState.id,
+      year: '2021',
     };
     axios
       .post('http://localhost:3001/Dash/getCPDData', data)
@@ -325,7 +374,7 @@ function DashboardPage() {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setBlogCount(response.data);
+          setBlogCount(response.data[0].blogs);
         }
       })
       .catch(error => {
@@ -339,7 +388,7 @@ function DashboardPage() {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setUserCount(response.data);
+          setUserCount(response.data[0].users);
         }
       })
       .catch(error => {
@@ -353,11 +402,9 @@ function DashboardPage() {
         if (response.data.error) {
           // console.log('OOOOO');
         } else {
-          console.log(response.data);
-          setUserTypes(response.data)
-          console.log(types);
-
-          
+          setUserTypes(response.data);
+          console.log(response.data[0].aaa + '====');
+          console.log(response.data[0].type + '++++');
         }
       })
       .catch(error => {
@@ -376,6 +423,7 @@ function DashboardPage() {
       .catch(error => {
         alert(error);
       });
+
     axios
       .post('http://localhost:3001/Dash/getMemberData', data)
 
@@ -390,64 +438,180 @@ function DashboardPage() {
       .catch(error => {
         alert(error);
       });
+
+    axios
+      .post('http://localhost:3001/reports/getPaidCount', data)
+
+      .then(res => {
+        if (res.data.error) {
+          alert(res.data.error);
+        } else {
+          axios
+            .post('http://localhost:3001/reports/getUsers')
+
+            .then(response => {
+              if (response.data.error) {
+                alert(response.data.error);
+              } else {
+                y = response.data[0].users;
+                var x = res.data[0].paid;
+                setPaidCount((x / y) * 100);
+              }
+            });
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
   }, []);
 
-  var blogsCount;
-  blogCount && blogCount.map(blogCount => (blogsCount = blogCount.blogs * 1));
-  var users;
-  userCount && userCount.map(userCount => (users = userCount.users * 1));
+  user &&
+    user.map(index => {
+      console.log(index.type);
+      userType.push(index.type.toUpperCase());
+      userCouts.push(index.aaa);
+    });
 
   return (
-    <Page title="Council Member - DashBoard">
+    <Page title="DashBoard">
+      <Badge color="warning" pill className="mr-1">
+                 Council Member
+                </Badge>
       <hr />
       <Row>
-        <Col sm="5" md={{ size: 6, offset: 0 }}>
-          <Card>
-            <CardHeader>Member Registrations in each year</CardHeader>
+        <Col xs="8">
+          {' '}
+          <Card className="shadow">
+            <center>
+              <CardHeader>CSSL Member Informations </CardHeader>{' '}
+            </center>
+
+            <Row className="mt-2 ml-3">
+              <Col xs="6">
+                <CardBody>
+                  <Pie data={memberTypes} options={chartjs.doughnut.options} />
+                </CardBody>
+              </Col>
+              <Col xs="6">
+                <CardBody>
+                  <Doughnut
+                    data={memberStatus}
+                    options={chartjs.doughnut.options}
+                  />
+                </CardBody>
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+
+        <Col xs="4">
+          <Card className="shadow">
+            <Calendar
+              //onChange={onChange}
+              value={lastWeek}
+              className="calender"
+              onChange={changeDate}
+              //tileClassName={tileContent}
+            />
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs="4">
+          <Card className="shadow">
+            <center>
+              <CardHeader>Member Registrations in each year</CardHeader>{' '}
+            </center>
 
             <CardBody>
               <Bar data={state} options={chartjs.line.options} />
             </CardBody>
           </Card>
         </Col>
+        <Col xs="4">
+          <Card className="shadow">
+            <center>
+              <CardHeader>Member Payment Completion</CardHeader>{' '}
+            </center>
+            <center>
+              <CardBody style={{ width: 150, height: 190 }}>
+                <br />
+                <CircularProgressbar
+                  value={paidPersentage}
+                  text={`${paidPersentage}%`}
+                  styles={buildStyles({
+                    // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                    strokeLinecap: 'round',
+                    lineTension: 3,
+                    // Text size
+                    textSize: '28px',
+                    backgroundPadding: 5,
+                    // How long animation takes to go from one percentage to another, in seconds
+                    pathTransitionDuration: 1,
 
-        <Col sm="5" md={{ size: 6, offset: 0 }}>
-          <Card>
-            <CardHeader>Registered Member Types </CardHeader>
-            <CardBody>
-              <Pie data={memberTypes} options={chartjs.doughnut.options} />
-            </CardBody>
+                    // Can specify path transition in more detail, or remove it entirely
+                    // pathTransition: 'none',
+
+                    // Colors
+                    background: true,
+                    pathColor: '#1d7e61',
+                    textColor: '#1d7e61',
+                    trailColor: '#fff',
+                    borderColor: '#1d7e61',
+                    backgroundColor: '#08186e',
+                  })}
+                />{' '}
+              </CardBody>
+            </center>
           </Card>
         </Col>
 
-        <Col sm="5" md={{ size: 6, offset: 0 }}>
-          <Card>
-            <CardHeader>Recenet member Registrations</CardHeader>
-            <CardBody>
-              <Col sm="12">
-                {tableTypes.map((tableType, index) => (
-                  <tbody>{recenrUsersofCSSL}</tbody>
-                ))}
-              </Col>
-            </CardBody>
+        <Col sm="4" md={{ size: 4, offset: 0 }}>
+          <Card className="shadow">
+            <center>
+              {' '}
+              <CardHeader>New Members</CardHeader>{' '}
+            </center>
+            <center>
+            
+              <CardBody className="userCards">
+                {recenrUsersofCSSL}
+                
+                
+              </CardBody>
+            </center>
           </Card>
         </Col>
-
+      </Row>
+      <Row>
         <Col sm="5" md={{ size: 6, offset: 0 }}>
-          <Card>
-            <CardHeader>Recenet Job Registrations</CardHeader>
+          <Card className="shadow">
+            <center>
+              {' '}
+              <CardHeader>Recenet Job Applications</CardHeader>{' '}
+            </center>
             <CardBody>
               <Col sm="12">
                 {tableTypes.map((tableType, index) => (
                   <tbody>{applicationData}</tbody>
                 ))}
               </Col>
+
+              <hr />
+              <center>
+                <CardLink href="/jobapplications" className="text-center">
+                  View More
+                </CardLink>
+              </center>
             </CardBody>
           </Card>
         </Col>
         <Col sm="5" md={{ size: 6, offset: 0 }}>
-          <Card>
-            <CardHeader>CPD Reports </CardHeader>
+          <Card className="shadow">
+            <center>
+              {' '}
+              <CardHeader>CPD Reports </CardHeader>{' '}
+            </center>
             <CardBody>
               <Line data={barGraphData} options={chartjs.line.options} />
             </CardBody>

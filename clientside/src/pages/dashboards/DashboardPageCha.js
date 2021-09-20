@@ -394,6 +394,11 @@ function DashboardPage() {
         title="Dashboard"
         breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
+        <Badge color="warning" pill className="mr-1">
+        Chartered  Member
+                </Badge>
+        
+         <hr/>
         <Row>
           <Col xs="8">
             <Card className="shadow">
