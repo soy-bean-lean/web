@@ -142,7 +142,14 @@ const BlogView = () => {
         );
       })
       .catch(error => {
-        console.log(error);
+        setResult('err');
+        setTimeout(
+          function () {
+            reload();
+          },
+
+          2000,
+        );
       });
 
     axios
@@ -150,10 +157,16 @@ const BlogView = () => {
       .then(res => {
         setComments(res.data);
         setCommentsCount(res.data.length);
-        alert(res.data.length);
       })
       .catch(error => {
-        console.log(error);
+        setResult('err');
+        setTimeout(
+          function () {
+            reload();
+          },
+
+          2000,
+        );
       });
   };
 
