@@ -45,7 +45,6 @@ const BasicCourseInfo = () => {
     formData.append('duration', courseDuration);
     formData.append('durationType', durationType);
     formData.append('language', language);
-    formData.append('durationType', durationType);
     formData.append('level', level);
     formData.append('mode', mode);
     formData.append('lecturer', mId);
@@ -63,7 +62,7 @@ const BasicCourseInfo = () => {
         setUploadStatus(res.msg);
         console.log(res.data);
         setCourseId(res.data.insertId);
-        alert(res.data.insertId);
+        //alert(res.data.insertId);
         const next = 'Content';
         setResult('done');
 

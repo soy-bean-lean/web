@@ -25,7 +25,7 @@ function FileUpload(props) {
 
   const removeFile = (acceptedFiles) =>{
     acceptedFiles = [];
-    props.onUploadFile(acceptedFiles);
+    props.onUploadFile(acceptedFiles[0]);
     setFileSt(0);
   }
   return (

@@ -35,7 +35,7 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
     const status = "OnGoing";
 
     connection.query(
-      "INSERT INTO csslcourse (name, description, duration, durationType, language, skillLevel, image, mode, conductedBy, status) VALUES (?, ?,?,?,?,?,?,?,?,?);",
+      "INSERT INTO csslcourse (name, description, duration, durationType, language, skillLevel, image, mode, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?);",
       [
         title,
         description,

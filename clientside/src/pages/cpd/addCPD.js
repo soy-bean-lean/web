@@ -1,6 +1,7 @@
 import Page from 'components/Page';
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../helpers/AuthContext';
+import { Link, useHistory } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 // import { toast } from 'react-toastify';
@@ -25,11 +26,16 @@ import FileUpload from '../../components/FileUpload/FileUploader';
 
 const AddCpd = () => {
 
+  let history = useHistory();
+
   const { authState, setAuthState } = useContext(AuthContext);
 
   //cpd
   const [recordName, setRecordName] = useState('');
   const [recType, setRecType] = useState('type');
+  const [credit, setCredit] = useState('');
+  const [note, setNote] = useState('');
+  const [proofFile, setProofFile] = useState();
 
   const [courseId, setCourseId] = useState('');
 
@@ -43,8 +49,6 @@ const AddCpd = () => {
   const [typeCourseName, setTypeCourseName] = useState('');
   const [platformOther, setPlatformOther] = useState('');
   const [partnerOther, setPartnerOther] = useState('');
-
-  const [credit, setCredit] = useState('');
 
   const [workshopId, setWorkshopId] = useState('');
   const [workshopName, setWorkshopName] = useState('');
@@ -62,6 +66,65 @@ const AddCpd = () => {
   const [inWorkshopList, setInWorkshopList] = useState(null);
   const [outWorkshopList, setOutWorkshopList] = useState(null);
   const [guestLectureList, setGuestLectureList] = useState(null);
+
+  const[result, setResult] = useState('');
+
+  //SUBMIT CPD RECORD
+  const submitRecord = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+    const mId = authState.memberId;
+    const formData = new FormData();
+    if (
+      recordName != '' &&
+      recType != ''
+    ) {
+      if (recType == 'course') {
+        if (courseType == 'CSSLcourse' && courseName != '' && credit != '') {
+          formData.append('mId', authState.memberId);
+          formData.append('recTitle', recordName);
+          formData.append('recordType', recType);
+          formData.append('type', courseType);
+          formData.append('proof', proofFile);
+          formData.append('note', note);
+          formData.append('credit', credit);
+          formData.append('refId', courseName);
+          formData.append('recDate', today);
+          console.log(mId);
+          fetch('http://localhost:3001/cpd/submitCsslCourse', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              Accept: 'multipart/form-data',
+            },
+            credentials: 'include',
+          })
+            .then(res => res.json())
+            .then(res => {
+              console.log(res.data);
+              alert(res.data.insertId);
+              setResult('done');
+              setTimeout(
+                function () {
+                  history.push(
+                    '/csslmember/cpdrecords'
+                  );
+                },
+                2000,
+              );
+            })
+            .catch(error => {
+              setResult('err');
+              console.log(error);
+            });
+        }
+        console.log();
+      }
+    }
+  };
 
   //retireve course details from database (cssl courses and other courses - depending on the selection)
   const getCourses = event => {
@@ -190,9 +253,10 @@ const AddCpd = () => {
   };
 
   //get file details
-  const getFileData = (val) =>{
+  const getFileData = val => {
     console.log(val);
-  }
+    setProofFile(val);
+  };
 
   //load data to CSSL Course dropdown list
   const allInCourses =
@@ -346,7 +410,10 @@ const AddCpd = () => {
                     <Input
                       name="select"
                       type="select"
-                      onChange={(e) => {setRecType(e.target.value); setCredit('');}}
+                      onChange={e => {
+                        setRecType(e.target.value);
+                        setCredit('');
+                      }}
                     >
                       <option value="type"></option>
                       <option value="course">Courses</option>
@@ -378,6 +445,7 @@ const AddCpd = () => {
                       type="textarea"
                       className="note"
                       placeholder="Description"
+                      onChange={e => setNote(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
@@ -386,21 +454,24 @@ const AddCpd = () => {
                     Import Your Proof File(Images, PDF and Zip Files Accepted)
                   </Label>
                   <Col sm="12" md={{ size: 6, offset: 3 }}>
-                    {/* <Input
+                   <Input
                       color="primary"
                       type="file"
                       className="input"
                       id="avatar"
                       name="avatar"
                       accept="image/*, application/pdf"
-                    /> */}
-                    <FileUpload onUploadFile = {getFileData} />
+                      onChange={e => setProofFile(e.target.files[0])}
+                    />
+                    {/* <FileUpload onUploadFile={getFileData} /> */}
                   </Col>
                 </FormGroup>
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
-                    <Button color="success">Submit</Button>
+                    <Button color="success" onClick={submitRecord}>
+                      Submit
+                    </Button>
                   </Col>
                 </FormGroup>
               </Form>
