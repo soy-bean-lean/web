@@ -174,12 +174,12 @@ const Workshop = props => {
 
               <CardBody>
                 <h3>{workshop.title}</h3>
-                {/* <h6>{blog.description}</h6> */}
+                <h6>{workshop.description}</h6>
                 {/* <h8></h8> */}
 
                 <br></br>
                 <h8>
-                  {/* Author: {blog.firstName} {blog.lastName} | published Date:  {blog.publishedDate} */}
+                  From Date: {workshop.fromDate} |  To Date:  {workshop.toDate}
                 </h8>
               </CardBody>
             </Card>
@@ -217,7 +217,10 @@ const Workshop = props => {
                 />
                 <CardBody>
                   {/* <h3>{myBlog.title}</h3> */}
-                  <CardText>{sendWorkshop.title}</CardText>
+                  <CardText>
+                  <h3>{sendWorkshop.title}</h3>
+                    <h6>{sendWorkshop.description}</h6>
+                    </CardText>
                 </CardBody>
               </Card>
               <Button color="primary" className="buttonDIV">

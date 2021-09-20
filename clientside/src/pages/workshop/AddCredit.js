@@ -10,6 +10,8 @@ import { useParams } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
 
+import QRCode from 'react-qr-code';
+
 import {
     Badge,
   Button,
@@ -38,6 +40,7 @@ function AddCredit() {
  const [toDate, setToDate] = useState('');
   const [duration, setDuration] = useState('');
   const [credit, setCredit] = useState('');
+  const [wId, setWid] = useState(0);
 
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
@@ -194,7 +197,7 @@ console.log(id);
           setDuration(response.data[0].duration);
           setCredit(response.data[0].credit);
           setImage(response.data[0].image);
-          
+          setWid(response.data[0].wId);
           
         }
       })
@@ -272,7 +275,15 @@ return (
                     />
                   </Col>
                 </FormGroup>
-
+                
+                <FormGroup row>
+            
+                  <Col sm={4}>
+                    
+                  <QRCode value={id} />
+                  <p>{id}</p>
+                  </Col>
+                </FormGroup>
               <CardBody>
                 <FormGroup check row>
                   <center>
@@ -281,7 +292,7 @@ return (
                       <Button onClick={submit} color="danger">
                         Reject
                       </Button>{' '}
-                      <Button color="success">
+                      <Button  color="success">
                         Approve
                       </Button>
                     </Col>
