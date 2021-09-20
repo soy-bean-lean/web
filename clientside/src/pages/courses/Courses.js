@@ -39,9 +39,8 @@ import { AuthContext } from '../../helpers/AuthContext';
 import Rating from '../../components/RatingStars/RatingStars';
 
 const CardPage = props => {
-
   const { authState, setAuthState } = useContext(AuthContext);
-  
+
   const [activeTab, setActiveTab] = useState('2');
   const [activeSubTab, setActiveSubTab] = useState('3');
   const [memberId, setMemberId] = useState('');
@@ -53,6 +52,7 @@ const CardPage = props => {
   const [type, setType] = useState('');
   const [searchCourse, setSearchCourse] = useState('');
 
+  const [courseRecommend, setCourseRecommend] = useState(null);
   const [filterCourse, setFilterCourse] = useState(null);
   const [sortCourse, setSortCourse] = useState(null);
   const [selectCourse, setSelectCourse] = useState(null);
@@ -60,9 +60,13 @@ const CardPage = props => {
   const [categoryList, setCategoryList] = useState(null);
 
   useEffect(() => {
+    var date = new Date();
+    console.log(date);
+    /*var datetime=getservertime(false,"");
+    datetime.getfieldbyname(1,"servertime")*/
     //setMemberId(authState.id);
     const formData = {
-      mId: authState.memberId
+      mId: authState.memberId,
     };
     axios
       .post('http://localhost:3001/csslcourse/getCourseList', formData)
@@ -71,8 +75,9 @@ const CardPage = props => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          console.log();
-          setCourse(response.data);
+          //setCourse(response.data);
+          //setCourseRecommend(response.data);
+          recommendationAlgorithm(response.data);
         }
       })
       .catch(error => {
@@ -229,6 +234,55 @@ const CardPage = props => {
 
   const toggleSub = tab => {
     if (activeSubTab !== tab) setActiveSubTab(tab);
+  };
+
+  const recommendationAlgorithm = dataList => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
+    console.log('Res:', dataList);
+    for (var i = 0; i < Object.keys(dataList).length; i++) {
+      for (var j = 0; j < Object.keys(dataList).length - i - 1; j++) {
+        if (dataList[j].noOfInteraction < dataList[j + 1].noOfInteraction) {
+          // If the condition is true then swap them
+          var temp = dataList[j];
+          dataList[j] = dataList[j + 1];
+          dataList[j + 1] = temp;
+        }
+      }
+    }
+    for (var i = 0; i < Object.keys(dataList).length; i++) {
+      for (var j = 0; j < Object.keys(dataList).length - i - 1; j++) {
+        if (dataList[j].avgRate < dataList[j + 1].avgRate) {
+          // If the condition is true then swap them
+          var temp = dataList[j];
+          dataList[j] = dataList[j + 1];
+          dataList[j + 1] = temp;
+        }
+      }
+    }
+    for (var i = 0; i < Object.keys(dataList).length; i++) {
+      /*var dateDiff = today - dataList[i].approvedDate;
+      console.log(dateDiff + dataList[i].approvedDate);*/
+      var msDiff = new Date().getTime() - new Date(dataList[i].approvedDate).getTime();
+      var diff = Math.floor(msDiff / (1000 * 60 * 60 * 24));
+      dataList[i].score = (parseFloat(dataList[i].noOfInteraction) + parseFloat(dataList[i].avgRate) + parseFloat(dataList[i].noOfEnrollments))/diff
+      //console.log(dataList[i].courseId + " " + diff + " "+dataList[i].noOfInteraction+ " " + dataList[i].avgRate + " " + dataList[i].noOfEnrollments + " " + dataList[i].score)
+    }
+    for (var i = 0; i < Object.keys(dataList).length; i++) {
+      for (var j = 0; j < Object.keys(dataList).length - i - 1; j++) {
+        if (dataList[j].score < dataList[j + 1].score) {
+          // If the condition is true then swap them
+          var temp = dataList[j];
+          dataList[j] = dataList[j + 1];
+          dataList[j + 1] = temp;
+        }
+      }
+    }
+    setCourse(dataList);
   };
 
   const insList =

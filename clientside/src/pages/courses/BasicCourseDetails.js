@@ -43,6 +43,7 @@ const BasicCourseInfo = () => {
     formData.append('title', courseTitle);
     formData.append('description', courseDes);
     formData.append('duration', courseDuration);
+    formData.append('durationType', durationType);
     formData.append('language', language);
     formData.append('durationType', durationType);
     formData.append('level', level);
@@ -62,12 +63,17 @@ const BasicCourseInfo = () => {
         setUploadStatus(res.msg);
         console.log(res.data);
         setCourseId(res.data.insertId);
+        alert(res.data.insertId);
         const next = 'Content';
         setResult('done');
 
         setTimeout(
           function () {
+<<<<<<< HEAD
+            history.push('/csslcourse/addCourseContent/cssl00' + res.data.insertId + '/' + courseTitle);
+=======
             history.push("/csslcourse/addCourseContent/cssl00"+res.data.insertId+"/"+courseTitle);
+>>>>>>> e2c14c1a92d403ed38d27afe9c7ac586b3bf316a
             //hri giyoth yana thena
           },
 

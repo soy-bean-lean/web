@@ -71,7 +71,6 @@ const CourseView = () => {
     setContentTitle(val.title);
     setContentNote(val.note);
     setFileContent('http://localhost:3001/uploads/csslCourses/' + val.content);
-    //setFileContent('https://cors-anywhere.herokuapp.com/http://www.pdf995.com/samples/pdf.pdf');
   };
 
   const videoErrorMsg = () => {
