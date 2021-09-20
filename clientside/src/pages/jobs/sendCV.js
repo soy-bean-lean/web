@@ -253,7 +253,23 @@ function JobView() {
                         <Col>
                           <Card body>
                             <Table {...{ ['striped']: true }}>
-                              <tbody> {applications}</tbody>
+                              <tbody> 
+                              
+                              
+                              <th>
+                                Date
+                              </th>
+                              <th>
+                                Applicants
+                              </th>
+                              <th>
+                               Email
+                              </th>
+                              <th>
+                              Marks
+                              </th>
+                              {applications}
+                              </tbody>
                             </Table>
                           </Card>
                         </Col>

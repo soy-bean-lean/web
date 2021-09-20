@@ -27,14 +27,13 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
     const memberID = req.body.memberId;
     const date = req.body.date;
     const about = req.body.about;
-  
 
     const image = req.file.filename;
     console.log(image);
 
     connection.query(
       `INSERT INTO blog (memberId,title,description,content,publishedDate,image) VALUES (?,?,?,?,?,?)`,
-      [memberID, title,about, desc, date, image],
+      [memberID, title, about, desc, date, image],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -49,7 +48,6 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
 Blog.post("/getAllBloggers", (req, res) => {
   const mid = req.body.memberId;
   const sqlSelect =
-
     "SELECT blog.image, user.id , user.firstName,COUNT(user.firstName) as number, user.lastName from member Inner JOIN user on user.id = member.id INNER join blog on blog.memberId = member.memberId GROUP by(firstName) ORDER BY number  DESC";
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
@@ -57,14 +55,17 @@ Blog.post("/getAllBloggers", (req, res) => {
 });
 
 Blog.post("/getAllBlogs", (req, res) => {
-
- 
   const mid = req.body.memberId;
-  const title=req.body.title;
-  const firstName=req.body.firstName;
+  const title = req.body.title;
+  const firstName = req.body.firstName;
 
-  const sqlSelect = "SELECT blog.*, user.id , user.profileImage, user.firstName , user.lastName , user.email , member.id from member Inner JOIN user on user.id = member.id RIGHT join blog on blog.memberId = member.memberId  where user.firstName like '"+firstName+"%' and blog.title like '"+title+"%'  ORDER BY `blog`.`publishedDate` DESC ";
-  
+  const sqlSelect =
+    "SELECT blog.*, user.id , user.profileImage, user.firstName , user.lastName , user.email , member.id from member Inner JOIN user on user.id = member.id RIGHT join blog on blog.memberId = member.memberId  where user.firstName like '" +
+    firstName +
+    "%' and blog.title like '" +
+    title +
+    "%'  ORDER BY `blog`.`publishedDate` DESC ";
+
   //const sqlSelect = "SELECT blogId, title, image, publishedDate FROM blog";
   //"SELECT DISTINCT user.firstName,user.lastName FROM ((user INNER JOIN member ON user.id=member.id ) INNER JOIN blog ON member.memberId=blog.memberId )"
   connection.query(sqlSelect, (err, result) => {
@@ -84,11 +85,11 @@ Blog.post("/getMyBlogs", (req, res) => {
       else {
         res.send(result);
       }
-      }
-    );
-  });
+    }
+  );
+});
 
- // get Blog details to display on the blogView.js
+// get Blog details to display on the blogView.js
 Blog.post("/getBlog", (req, res) => {
   const bid = req.body.bId;
   connection.query(
@@ -103,6 +104,21 @@ Blog.post("/getBlog", (req, res) => {
   );
 });
 
+// get Blog details to display on the blogView.js
+Blog.post("/getBlogComments", (req, res) => {
+  const bid = req.body.bId;
+  const sql =
+    "select blogcomment.*,user.title,user.firstName,user.lastName from blogcomment inner join member on member.memberId=blogcomment.memberId left join user on user.id=member.id  where blogId =" +
+    bid +
+    " ORDER BY `blogcomment`.`commentId` DESC";
+  console.log(sql);
+    connection.query(sql, (error, result, feilds) => {
+    if (error) console.log(error);
+    else {
+      res.send(result);
+    }
+  });
+});
 
 Blog.post("/getBloggerBlogs", (req, res) => {
   const mid = req.body.mId;
@@ -122,7 +138,7 @@ Blog.post("/deleteItem", (req, res) => {
   const tableName = req.body.tableName;
   const qid = req.body.qid;
   const coloum = req.body.coloum;
-console.log(qid);
+  console.log(qid);
   const sqlSelect =
     "delete from " + tableName + " where " + coloum + "  =" + qid;
 
@@ -131,48 +147,54 @@ console.log(qid);
   });
 });
 
-Blog.route("/updateBlog").post(
-  upload.single("image"),
-  (req, res, err) => {
-    // if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
-    //   res.send({ msg: "Not an Image File." });
-    // } else {
-      const bId = req.body.blogId;
-      
+Blog.post("/addComment", (req, res) => {
+  const memberId = req.body.memberId;
+  const blogId = req.body.bId*1;
+  const c = req.body.comment;
+  const commentDate = req.body.date;
+  console.log(memberId)
+  console.log(blogId)
+  console.log(c)
+  console.log(commentDate)
+  // const sqlSelect =    "insert into blogcomment (blogId ,memberId,description,date,replyFor) values (?,?,?,?,?)",[bId, title, about, desc, date, image];          
+  
 
-      const title = req.body.title;
-      const about = req.body.description;
+  connection.query("insert into blogcomment (memberId,blogId ,description,date) values (?,?,?,?)",
+  [memberId,blogId, c,commentDate], (err, result) => {
+    console.log(err);
+    res.send(result);
+  });
+});
 
-      const desc = req.body.content;
-      // const memberID = req.body.memberId;
-      const image = req.file.filename;
+Blog.route("/updateBlog").post(upload.single("image"), (req, res, err) => {
+  // if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
+  //   res.send({ msg: "Not an Image File." });
+  // } else {
+  const bId = req.body.blogId;
 
-     console.log(image);
-      
-      
+  const title = req.body.title;
+  const about = req.body.description;
 
-      connection.query(
-        "UPDATE blog SET title = ?, description = ? ,image = ?, content = ? WHERE blogId = ?;",
-        [
-          title,
-          about,
-          image,
-          desc,
-          bId,
-        ],
-        (error, result, feilds) => {
-          if (error) console.log(error);
-          else {
-            res.send({
-              data: result,
-              msg: "Successfully Updated.",
-            });
-          }
-        }
-      );
-    
-  }
-);
+  const desc = req.body.content;
+  // const memberID = req.body.memberId;
+  const image = req.file.filename;
+
+  console.log(image);
+
+  connection.query(
+    "UPDATE blog SET title = ?, description = ? ,image = ?, content = ? WHERE blogId = ?;",
+    [title, about, image, desc, bId],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send({
+          data: result,
+          msg: "Successfully Updated.",
+        });
+      }
+    }
+  );
+});
 
 //to update
 
@@ -188,8 +210,6 @@ Blog.post("/getBlogView", (req, res) => {
       }
     }
   );
-})
- 
-  
-  export default Blog;
+});
 
+export default Blog;

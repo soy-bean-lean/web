@@ -138,6 +138,15 @@ a:not([href]):not([tabindex]):hover {
   
   border-radius: 50px;
 }
+.comments{ 
+  border-top-right-radius: 50px !important;
+  border-bottom-right-radius: 50px !important;
+  padding-top:10px !important;
+  padding-bottom:10px !important;
+  padding-left:40px !important;
+  width: 80% !important;
+  border-bottom: #000000 !important;
+}
 
 .newUsers{
   width: 50px;
@@ -147,7 +156,9 @@ a:not([href]):not([tabindex]):hover {
   margin-top: 5px;
   border-radius: 50px;
 }
-
+.commentDate{
+  font-size: 15px !important;
+}
 .react-pdf__Page {
   margin-top: 10px;
 }
