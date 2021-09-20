@@ -131,7 +131,7 @@
 }
 
 .react-calendar__tile--active {
-    background: #e6e6e6;
+    background: #585858;
     color: white;
 }
 
@@ -144,6 +144,10 @@
     background-color: #e6e6e6;
 }
 
+.activityOverColor {
+    background: #f3b3aa;
+}
+
 .activityColor {
-    background: #75e081;
+    background: #a7f8a7;
 }

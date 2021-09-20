@@ -10,8 +10,6 @@ approved 1
 rejected 2
 verified 3
 
-
-
 */
 
 secretaryRouter.post("/all", async (req, res) => {
@@ -90,8 +88,8 @@ secretaryRouter.post("/approve", async (req, res) => {
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "2018cs071@stu.ucsc.cmb.ac.lk",
-      pass: "Chamika@97",
+      user: "cssl.system.info@gmail.com",
+      pass: "cssl@123",
 
       //cssl.system.info@gmail.com
     },
@@ -116,7 +114,7 @@ secretaryRouter.post("/approve", async (req, res) => {
                 to: tomail,
                 subject: "CSSL Registration Approved",
                 html: `
-                <p>Hi ${row[0].firstName}, Your account have been approved by the CSSL.</p><p> You can log in to your account now.</p>`,
+                <p>,${row[0].title}. <b>${row[0].firstName} ${row[0].lastName}</b>, Your account have been approved by the CSSL.</p><p> Now You Can Log In To The System </p>`,
               };
 
               transporter.sendMail(mailOptions, (error, info) => {

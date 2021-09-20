@@ -77,8 +77,14 @@ function JobView() {
 
       .then(response => {
         if (response.data.error) {
-          alert(response.data.error);
-        } else {
+          setResult('err');
+          setTimeout(
+            function () {
+              history.push('/dashboard');
+            },
+  
+            2000,
+          );          } else {
           setResult('done');
           setTimeout(
             function () {
@@ -172,13 +178,7 @@ function JobView() {
                     <br>
                     </br>
                     <InputGroup>
-                      <Input
-                        type="password"
-                        className="note"
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                        placeholder="Enter System Email Password"
-                      />
+      
                       {" "}
                       <InputGroupAddon addonType="prepend">
                         <Button color="success" size="LG" onClick={sendEmail}>

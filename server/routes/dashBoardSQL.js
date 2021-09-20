@@ -94,8 +94,8 @@ dashBoardSQL.post("/announcement", (req, res) => {
 dashBoardSQL.post("/recent", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "SELECT * FROM `recentactivities` WHERE memberID = ? LIMIT 2;",
-    [id],
+    "SELECT * FROM `recentactivities` WHERE memberID = 2 LIMIT 3;",
+    //[id],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -108,7 +108,6 @@ dashBoardSQL.post("/recent", (req, res) => {
 
 //Professional dashboard line chart-credits earned this year
 dashBoardSQL.post("/creditsearned", (req, res) => {
-
   const id = req.body.id;
   connection.query(
     "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021 group by month ",
@@ -125,7 +124,6 @@ dashBoardSQL.post("/creditsearned", (req, res) => {
 
 //Professional dashboard donut chart-activity type this year
 dashBoardSQL.post("/activityType", (req, res) => {
-
   const id = req.body.id;
   connection.query(
     "select recordType,sum(credit) as count from cpdrecords where memberId = 'cssl001' group by recordType;",
@@ -140,10 +138,8 @@ dashBoardSQL.post("/activityType", (req, res) => {
   );
 });
 
-
 //Professional dashboard pie chart-credits earned according to type this year
 dashBoardSQL.post("/activityTypeCredits", (req, res) => {
-
   const id = req.body.id;
   connection.query(
     "select recordCategory,sum(credit) as credits from cpdrecords where memberId = 'cssl001' group by recordCategory;",
@@ -160,9 +156,7 @@ dashBoardSQL.post("/activityTypeCredits", (req, res) => {
 
 //Professional dashboard cpd progress percentage
 dashBoardSQL.post("/progressPercentage", (req, res) => {
-
   const id = req.body.id;
-  const earnedCredits = 
   connection.query(
     "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
     [id],
@@ -170,18 +164,91 @@ dashBoardSQL.post("/progressPercentage", (req, res) => {
       if (error) {
         res.send(error);
       } else {
-        console.log(result[0].credits);
-        //res.send(result);
+        const earnedCredits = result[0].credits;
+        const percentage = (earnedCredits / 500) * 100;
+        res.json(percentage);
       }
     }
   );
 });
 
+//Professional dashboard upcoming activities
+dashBoardSQL.post("/upcoming", (req, res) => {
+  const id = req.body.id;
+  const today = new Date();
+  const month = today.getMonth();  
+  const real = month;
+
+  connection.query(
+    "select extract(DAY from recordDate) as day from cpdrecords where memberId = 'cssl001' AND extract(MONTH from recordDate)=? AND extract(YEAR from recordDate)=2021",
+    [id,real],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//credits earned 
+dashBoardSQL.post("/earned", (req, res) => {
+  const id = req.body.id;
+  connection.query(
+    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.json(result[0].credits);
+      }
+    }
+  );
+});
+
+//credits remaining 
+dashBoardSQL.post("/remaining", (req, res) => {
+  const id = req.body.id;
+  connection.query(
+    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        const earnedCredits = result[0].credits;
+        const remaining = 500 - earnedCredits;
+        res.json(remaining);
+      }
+    }
+  );
+});
+
+//credits remaining percentage
+dashBoardSQL.post("/remainingPercentage", (req, res) => {
+  const id = req.body.id;
+  connection.query(
+    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        const earnedCredits = result[0].credits;
+        const remaining = 500 - earnedCredits;
+        const remainingPercentage = (remaining / 500) * 100;
+        res.json(remainingPercentage);
+      }
+    }
+  );
+});
 
 dashBoardSQL.post("/getUserCount", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "SELECT COUNT(user.id) as counts, userType FROM `user` GROUP by user.userType; ",
+    "SELECT COUNT(user.id) as aaa, userType FROM `user` GROUP by user.userType; ",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -192,6 +259,8 @@ dashBoardSQL.post("/getUserCount", (req, res) => {
     }
   );
 });
+
+
 
 export default dashBoardSQL;
 

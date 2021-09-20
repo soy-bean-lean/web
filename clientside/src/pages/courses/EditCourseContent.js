@@ -35,6 +35,8 @@ const EditCourseContent = () => {
 
   const [uploadStatus, setUploadStatus] = useState('');
 
+  const [result, setResult] = useState();
+
   //const cId = props.cid;
   const { id } = useParams();
   const { title } = useParams();
@@ -43,6 +45,22 @@ const EditCourseContent = () => {
   //setCourseTitle(props.location.state);
 
   let history = useHistory();
+
+  function msg() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Greate Attempt is Succesfull</Alert>
+        </>
+      );
+    }
+  }
 
   useEffect(() => {
     const sendData = {
@@ -138,12 +156,25 @@ const EditCourseContent = () => {
       .then(res => res.json())
       .then(res => {
         setUploadStatus(res.msg);
-        alert('Successfully Saved Details');
-        redirectCourse();
+        setResult('done');
+
+        setTimeout(
+          function () {
+            redirectCourse();
+          },
+
+          2000,
+        );    
       })
       .catch(error => {
-        console.log(error);
-      });
+        setResult('err');
+        setTimeout(
+          function () {
+
+          },
+
+          2000,
+        );      });
   };
 
   const redirectCourse = () => {
@@ -180,6 +211,8 @@ const EditCourseContent = () => {
       </CardBody>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
+      <center>
+        {msg()}
         <Card>
           <CardHeader>
             <center>Edit Content</center>
@@ -276,6 +309,7 @@ const EditCourseContent = () => {
             </Form>
           </CardBody>
         </Card>
+        </center>
       </Col>
       <hr></hr>
     </Page>

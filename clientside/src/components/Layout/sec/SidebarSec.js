@@ -38,7 +38,7 @@ const navItemsProffesional = [
   },
 
   {
-    to: '/manageworkshops',
+    to: '/workshop',
     name: 'Manage Workshops',
     exact: false,
     Icon: GIIcons.GiTeacher,

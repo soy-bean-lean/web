@@ -28,7 +28,7 @@ Workshop.route("/addWorkshop").post(upload.single("image"), (req, res, err) => {
     const fromDate = req.body.fromDate;
     const toDate = req.body.toDate;
     const duration = req.body.duration;
-    const credit = req.body.credit;
+    //const credit = req.body.credit;
     const subject = req.body.subject;
     const memberId = req.body.memberId;
 
@@ -36,8 +36,8 @@ Workshop.route("/addWorkshop").post(upload.single("image"), (req, res, err) => {
     console.log(image);
 
     connection.query(
-      `INSERT INTO csslworkshop (title,description,fromDate,toDate,duration,subject,image,credit,addBy) VALUES (?,?,?,?,?,?,?,?,?)`,
-      [title,description,fromDate,toDate,duration,subject,image,credit,memberId],
+      `INSERT INTO csslworkshop (title,description,fromDate,toDate,duration,subject,image,addBy) VALUES (?,?,?,?,?,?,?,?)`,
+      [title,description,fromDate,toDate,duration,subject,image,memberId],
       (err, result) => {
         if (err) {
           console.log(err);

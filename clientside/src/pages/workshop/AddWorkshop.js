@@ -93,7 +93,7 @@ function AddWorkshop() {
     formData.append('fromDate', fromDate);
     formData.append('toDate', toDate);
     formData.append('duration', duration);
-    formData.append('credit', credit);
+    //formData.append('credit', credit);
     formData.append('memberId', authState.id);
 
   
@@ -147,36 +147,7 @@ function AddWorkshop() {
             <CardBody>
               <Form>
 
-              <FormGroup row>
-                  <Label for="exampleEmail" sm={12}>
-                    Import Your Workshop Image From the Chooser
-                  </Label>
-                  <Col sm="12" md={{ size: 6, offset: 4 }}>
-                    <center>
-                      {image && (
-                        <img
-                          className="writeImg"
-                          height="60%"
-                          width="60%"
-                          src={URL.createObjectURL(image)}
-                          alt=""
-                        />
-                      )}
-                    </center>
-                  </Col>
-
-                  <Col sm="12" md={{ size: 6, offset: 4 }}>
-                    <Input
-                      type="file"
-                      className="input"
-                      id="avatar"
-                      name="avatar"
-                      required
-                      accept="image/*"
-                      onChange={e => setImage(e.target.files[0])}
-                    />
-                  </Col>
-                </FormGroup>
+              
 
 
               <FormGroup row>
@@ -288,7 +259,7 @@ function AddWorkshop() {
                   </Col> */}
                 </FormGroup>
 
-                <FormGroup row>
+                {/* <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     Credit
                   </Label>
@@ -298,6 +269,38 @@ function AddWorkshop() {
                       className="input"
                       type="number"
                      onChange={e => setCredit(e.target.value)}
+                    />
+                  </Col>
+                </FormGroup> */}
+
+
+<FormGroup row>
+                  <Label for="exampleEmail" sm={12}>
+                    Import Your Workshop Image From the Chooser
+                  </Label>
+                  <Col sm="12" md={{ size: 6, offset: 4 }}>
+                    <center>
+                      {image && (
+                        <img
+                          className="writeImg"
+                          height="60%"
+                          width="60%"
+                          src={URL.createObjectURL(image)}
+                          alt=""
+                        />
+                      )}
+                    </center>
+                  </Col>
+
+                  <Col sm="12" md={{ size: 6, offset: 4 }}>
+                    <Input
+                      type="file"
+                      className="input"
+                      id="avatar"
+                      name="avatar"
+                      required
+                      accept="image/*"
+                      onChange={e => setImage(e.target.files[0])}
                     />
                   </Col>
                 </FormGroup>

@@ -2,9 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
 
-import { AnnouncementCard, TodosCard } from 'components/Card';
-import HorizontalAvatarList from 'components/HorizontalAvatarList';
-import MapWithBubbles from 'components/MapWithBubbles';
 import Page from 'components/Page';
 import CountUp from 'react-countup';
 
@@ -73,14 +70,14 @@ function DashboardPage() {
   const [lengthMember, setLengthMember] = useState(null);
   const [workshopsLength, setLengthWorkshops] = useState(null);
   const [userCount, setUserCount] = useState(null);
-  const [userTypes, setUserTypes] = useState(null);
+  const [types, setUserTypes] = useState('');
 
   const [applications, setApplications] = useState(null);
   const [recentUsers, setRecentUsers] = useState(null);
   const [blogCount, setBlogCount] = useState(null);
 
-  var userCouts = [0, 0, 0, 0];
-
+  var userCouts = [5, 0, 7, 0];
+  console.log(userCount);
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (var i = 0; i < length; i++) {
     months[dataCPD[i].month] = dataCPD[i].credits;
@@ -98,6 +95,11 @@ function DashboardPage() {
     members.map(
       members => (years.push(members.year), yearData.push(members.members)),
     );
+
+  // types &&
+  //   members.map(
+  //     types => (years.push(members.year), yearData.push(members.members)),
+  //   );
 
   const recenrUsersofCSSL =
     recentUsers &&
@@ -204,10 +206,7 @@ function DashboardPage() {
       },
     ],
   };
-  var s = userCouts[0] * 1;
-  var a = userCouts[1] * 1;
-  var p = userCouts[2] * 1;
-  var c = userCouts[3] * 1;
+
   const memberTypes = {
     labels: ['Student', 'Associate', 'Proffesional', 'Chartered'],
     datasets: [
@@ -218,7 +217,7 @@ function DashboardPage() {
         width: 350,
         backgroundColor: ['#1d7e61', '#ec1317', '#ffc107'],
         borderColor: '#fff',
-        data: [2, 6, 1, 5],
+        data: userCouts,
       },
     ],
   };
@@ -311,8 +310,6 @@ function DashboardPage() {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          console.log(response.data);
-
           setWorkshops(response.data);
           setLengthWorkshops(response.data.length);
         }
@@ -354,28 +351,13 @@ function DashboardPage() {
 
       .then(response => {
         if (response.data.error) {
-          console.log('OOOOO');
+          // console.log('OOOOO');
         } else {
           console.log(response.data);
-          for (var i = 0; i < Object.keys(response.data).length; i++) {
-            console.log(response.data[i].userType);
+          setUserTypes(response.data)
+          console.log(types);
 
-            if (response.data[i].userType == 'Student') {
-              console.log(userCouts[0]);
-              userCouts[0] = response.data[i].counts;
-              console.log(userCouts[0]);
-            } else if (response.data[i].userType == 'Associate') {
-              console.log(userCouts[1]);
-              userCouts[1] = response.data[i].counts;
-              console.log(userCouts[1]);
-            } else if (response.data[i].userType == 'Professional') {
-              console.log(userCouts[2]);
-              p = response.data[i].counts;
-              console.log(userCouts[2]);
-            } else if (response.data[i].userType == 'Chartered') {
-              userCouts[3] = response.data[i].counts;
-            }
-          }
+          
         }
       })
       .catch(error => {

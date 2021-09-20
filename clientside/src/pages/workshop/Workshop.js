@@ -169,42 +169,42 @@ const Workshop = props => {
       </>
     ));
 
-  const myblogs =
-    myBlog &&
-    myBlog.map((myBlog, i) => {
-      return (
-        <>
-          <Link
-            to={'/blogview/cssl00' + myBlog.blogId + '/' + myBlog.title}
-            key={i}
-            className="link-tag"
-          >
-            <Col md={12} sm={10} xs={10} className="mb-2">
-              <Card className="flex-row">
-                <CardImg
-                  src={'http://localhost:3001/uploads/blog/' + myBlog.image}
-                  style={{ width: 'auto', height: 150 }}
-                  className="card-img-left"
-                  // style={{ width: 175, height: 150 }}
-                />
-                <CardBody>
-                  <h3>{myBlog.title}</h3>
-                  <CardText>{myBlog.content}</CardText>
-                </CardBody>
-              </Card>
-              <Button color="primary" className="buttonDIV">
-                Edit
-              </Button>
+  // const myblogs =
+  //   myBlog &&
+  //   myBlog.map((myBlog, i) => {
+  //     return (
+  //       <>
+  //         <Link
+  //           to={'/blogview/cssl00' + myBlog.blogId + '/' + myBlog.title}
+  //           key={i}
+  //           className="link-tag"
+  //         >
+  //           <Col md={12} sm={10} xs={10} className="mb-2">
+  //             <Card className="flex-row">
+  //               <CardImg
+  //                 src={'http://localhost:3001/uploads/blog/' + myBlog.image}
+  //                 style={{ width: 'auto', height: 150 }}
+  //                 className="card-img-left"
+  //                 // style={{ width: 175, height: 150 }}
+  //               />
+  //               <CardBody>
+  //                 {/* <h3>{myBlog.title}</h3> */}
+  //                 <CardText>{myBlog.content}</CardText>
+  //               </CardBody>
+  //             </Card>
+  //             <Button color="primary" className="buttonDIV">
+  //               Edit
+  //             </Button>
 
-              <Button color="danger" className="buttonDIV">
-                Delete
-              </Button>
-            </Col>
-          </Link>
-          <hr className="course-view-line"></hr>
-        </>
-      );
-    });
+  //             <Button color="danger" className="buttonDIV">
+  //               Delete
+  //             </Button>
+  //           </Col>
+  //         </Link>
+  //         <hr className="course-view-line"></hr>
+  //       </>
+  //     );
+  //   });
 
   return (
     <Page title="Workshops">
@@ -224,7 +224,7 @@ const Workshop = props => {
               toggle('1');
             }}
           >
-            CSSL Workshop
+            All Workshop
           </NavLink>
         </NavItem>
         <NavItem>
@@ -234,7 +234,7 @@ const Workshop = props => {
               toggle('2');
             }}
           >
-            Other Workshop
+            Sending Workshop
           </NavLink>
         </NavItem>
       </Nav>
@@ -245,7 +245,7 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">CSSL rkshopWo</Typography>
+                  <Typography className="text-success">All rkshopWo</Typography>
                 </CardHeader>
                 {/* <CardBody>
                   <InputGroup>
@@ -282,9 +282,9 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">Other Workshop</Typography>
+                  <Typography className="text-success">Sending Workshop</Typography>
                 </CardHeader>
-                {myblogs}
+                {/* {myblogs} */}
               </Card>
             </Col>
           </Row>
