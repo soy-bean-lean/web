@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
+//import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.js'
 import './ViewPDF.css'
 
 
 const ViewPDF = props => {
-  //pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-  pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+  //pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+    pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -37,7 +38,6 @@ const ViewPDF = props => {
     <>
       <Document
         file={pdf}
-        //options={{ workerSrc: "/pdf.worker.js" }}
         onLoadSuccess={onDocumentLoadSuccess}
         onLoadError={pdfViewError}
       >
