@@ -469,6 +469,11 @@ function App(props) {
                       path="/manageworksops"
                       component={ManageWorkshop}
                     />
+                    <Route
+                      exact
+                      path="/workshopview/cssl00:id/:title"
+                      component={WorkshopView}
+                    />
                      <Route
                       exact
                       path="/addCredit/cssl00:id/:title"
