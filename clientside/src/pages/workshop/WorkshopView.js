@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import '../../main.css';
 
 import Page from 'components/Page';
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../helpers/AuthContext';
-
-import { confirmAlert } from 'react-confirm-alert';
 import { useParams } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';

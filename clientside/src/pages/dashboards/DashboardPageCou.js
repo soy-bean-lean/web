@@ -455,7 +455,9 @@ function DashboardPage() {
               } else {
                 y = response.data[0].users;
                 var x = res.data[0].paid;
-                setPaidCount((x / y) * 100);
+                var percerntage =Math.round(((x / y) * 100));
+
+                setPaidCount(percerntage);
               }
             });
         }
@@ -508,7 +510,7 @@ function DashboardPage() {
           <Card className="shadow">
             <Calendar
               //onChange={onChange}
-              value={lastWeek}
+              value={today}
               className="calender"
               onChange={changeDate}
               //tileClassName={tileContent}
