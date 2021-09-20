@@ -247,7 +247,6 @@ const CardPage = props => {
     for (var i = 0; i < Object.keys(dataList).length; i++) {
       for (var j = 0; j < Object.keys(dataList).length - i - 1; j++) {
         if (dataList[j].noOfInteraction < dataList[j + 1].noOfInteraction) {
-          // If the condition is true then swap them
           var temp = dataList[j];
           dataList[j] = dataList[j + 1];
           dataList[j + 1] = temp;
@@ -257,7 +256,6 @@ const CardPage = props => {
     for (var i = 0; i < Object.keys(dataList).length; i++) {
       for (var j = 0; j < Object.keys(dataList).length - i - 1; j++) {
         if (dataList[j].avgRate < dataList[j + 1].avgRate) {
-          // If the condition is true then swap them
           var temp = dataList[j];
           dataList[j] = dataList[j + 1];
           dataList[j + 1] = temp;
@@ -265,8 +263,6 @@ const CardPage = props => {
       }
     }
     for (var i = 0; i < Object.keys(dataList).length; i++) {
-      /*var dateDiff = today - dataList[i].approvedDate;
-      console.log(dateDiff + dataList[i].approvedDate);*/
       var msDiff = new Date().getTime() - new Date(dataList[i].approvedDate).getTime();
       var diff = Math.floor(msDiff / (1000 * 60 * 60 * 24));
       dataList[i].score = (parseFloat(dataList[i].noOfInteraction) + parseFloat(dataList[i].avgRate) + parseFloat(dataList[i].noOfEnrollments))/diff
@@ -275,7 +271,6 @@ const CardPage = props => {
     for (var i = 0; i < Object.keys(dataList).length; i++) {
       for (var j = 0; j < Object.keys(dataList).length - i - 1; j++) {
         if (dataList[j].score < dataList[j + 1].score) {
-          // If the condition is true then swap them
           var temp = dataList[j];
           dataList[j] = dataList[j + 1];
           dataList[j + 1] = temp;

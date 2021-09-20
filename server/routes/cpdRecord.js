@@ -46,7 +46,10 @@ Record.post("/addRecord", (req, res) => {
 //get courses
 Record.post("/getCourse", (req, res) => {
   const mid = req.body.mId;
+  //const mode = req.body.mode;
   const courseType = req.body.type;
+  const statusCssl = "Completed";
+  const statusOther = "Approved";
   //need to change the query to get the list of completed courses by the user and not apply for cpd
   /*connection.query("SELECT name FROM csslcourse;", (error, result) => {
     if (error) console.log(error);
@@ -56,14 +59,18 @@ Record.post("/getCourse", (req, res) => {
   });*/
 
   if (courseType == "CSSLcourse") {
-    connection.query("SELECT courseId, name FROM csslcourse;", (error, result) => {
+    connection.query("SELECT csslcourse.* FROM csslcourse INNER JOIN courseenroll ON csslcourse.courseId = courseenroll.courseId WHERE courseenroll.memberId = ? and courseenroll.status = ?;", 
+    [mid, statusCssl],
+    (error, result) => {
       if (error) console.log(error);
       else {
         res.send(result);
       }
     });
   } else if (courseType == "others") {
-    connection.query("SELECT * FROM othercourse WHERE status = ? AND mode = ?;", (error, result) => {
+    connection.query("SELECT * FROM othercourse WHERE status = ?;", 
+    [statusOther],
+    (error, result) => {
       if (error) console.log(error);
       else {
         res.send(result);
