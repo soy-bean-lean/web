@@ -71,7 +71,7 @@ Workshop.post("/getSendWorkshop", (req, res) => {
     //const mid = req.body.mId;
     //console.log(mid);
     connection.query(
-      "SELECT wId, title,description,image FROM csslworkshop WHERE verifiedBy IS NOT NULL;",
+      "SELECT wId, title,description,fromDate,toDate,image FROM csslworkshop WHERE verifiedBy IS NOT NULL;",
       
       (error, result, feilds) => {
         if (error) console.log(error);
@@ -130,7 +130,8 @@ Workshop.route("/addCredit").post(
       // const memberID = req.body.memberId;
      // const image = req.file.filename;
 
-     console.log(image);
+     console.log(wid);
+
       
       
 

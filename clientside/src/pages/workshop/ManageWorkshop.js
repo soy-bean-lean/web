@@ -223,7 +223,7 @@ const ManageWorkshop = props => {
               <Link to={
                      '/addCredit/cssl00' + sendWorkshop.wId + '/' + sendWorkshop.title
                   }>
-                    <Button color="primary"> Assign Credit</Button>
+                    <Button color="primary"> Approved workshop</Button>
                   </Link>
                   {'  '}
               

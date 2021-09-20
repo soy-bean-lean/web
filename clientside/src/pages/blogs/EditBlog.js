@@ -46,8 +46,6 @@ function EditBlog() {
   //     today.getDate();
   let history = useHistory();
 
-  
-
   function msg() {
     if (result == 'err') {
       return (
@@ -70,7 +68,7 @@ function EditBlog() {
       tableName: 'blog',
       coloum: 'blogId',
     };
-console.log(id);
+    console.log(id);
     axios.post('http://localhost:3001/blog/deleteItem', data).then(response => {
       if (response.data.error) {
         setResult('err');
@@ -96,6 +94,7 @@ console.log(id);
     });
   };
 
+
   const submit = () => {
     confirmAlert({
       message: 'Are you sure to Delete ?.',
@@ -115,8 +114,6 @@ console.log(id);
       ],
     });
   };
-
-
   const updateBlog = () => {
     const blogData = new FormData();
     blogData.append('image', image);
@@ -125,16 +122,16 @@ console.log(id);
     blogData.append('content', desc);
     blogData.append('blogId', id);
 
-    console.log("data;",blogData);
+    console.log('data;', blogData);
     fetch('http://localhost:3001/blog/updateBlog', {
       method: 'POST',
-      body:blogData,
+      body: blogData,
       headers: {
         Accept: 'multipart/form-data',
       },
       credentials: 'include',
     })
-    .then(res => res.json())
+      .then(res => res.json())
       .then(res => {
         setResult('done');
         setTimeout(
@@ -149,7 +146,9 @@ console.log(id);
         setResult('err');
         setTimeout(
           function () {
-            history.push('/editview/cssl00' + blogData.blogId + '/' + blogData.title);
+            history.push(
+              '/editview/cssl00' + blogData.blogId + '/' + blogData.title,
+            );
           },
 
           2000,
@@ -157,13 +156,10 @@ console.log(id);
       });
   };
 
-  
-
-
   useEffect(() => {
-    const sendData={
-      id:id,
-    }
+    const sendData = {
+      id: id,
+    };
     axios
       .post('http://localhost:3001/blog/getBlogView', sendData)
 
@@ -176,24 +172,16 @@ console.log(id);
           setAbout(response.data[0].description);
           setDesc(response.data[0].content);
           //setBlogImage(response.data[0].image);
-          
-          
         }
       })
       .catch(error => {
         //   alert(error);
       });
-    
-
-   
-
-     
-      
   }, []);
 
   return (
     <Page title="Edit Blog">
-       <Link to="/blogs">
+      <Link to="/blogs">
         <Button color="primary">Back</Button>
       </Link>
       <hr></hr>
@@ -208,21 +196,23 @@ console.log(id);
                   <Label for="exampleEmail" sm={12}>
                     Import Your Blog Image From the Chooser
                   </Label>
-                  <Col sm="12" md={{ size: 6, offset: 4 }}>
+                  <Col sm={9}>
                     <center>
-                      {/* {image && (
+                      {image && (
                         <img
                           className="writeImg"
-                          height="60%"
-                          width="60%"
+                          height="160px"
+                          width="160px"
                           src={URL.createObjectURL(image)}
                           alt=""
                         />
-                      )} */}
+                      )}
                     </center>
                   </Col>
+                </FormGroup>
 
-                  <Col sm="12" md={{ size: 6, offset: 4 }}>
+                <FormGroup row>
+                <Col sm="12" md={{ size: 6, offset: 4 }}>
                     <Input
                       type="file"
                       className="input"
@@ -234,19 +224,19 @@ console.log(id);
                     />
                   </Col>
                 </FormGroup>
-
+               
+               
+       
                 <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
+                  <Label for="exampleEmail" sm={3}>
                     Blog Topic
-                  </Label> */}
-                  
+                  </Label>
+
                   <Col sm={9}>
-                    
                     <Input
                       type="text"
                       name="title"
-                     value={title}
-                       
+                      value={title}
                       placeholder="Add Title . . . . . "
                       onChange={e => setTitle(e.target.value)}
                     />
@@ -254,28 +244,24 @@ console.log(id);
                 </FormGroup>
 
                 <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
+                  <Label for="exampleEmail" sm={3}>
                     Blog Topic
-                  </Label> */}
-                  
+                  </Label>
+
                   <Col sm={9}>
-                    
                     <Input
                       type="text"
                       name="title"
-                     value={about}
-                       
-                     
-                     onChange={e => setAbout(e.target.value)}
+                      value={about}
+                      onChange={e => setAbout(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
-               
 
                 <FormGroup row>
-                  {/* <Label for="exampleEmail" sm={3}>
+                  <Label for="exampleEmail" sm={3}>
                     Blog Description
-                  </Label> */}
+                  </Label>
                   <Col sm={9}>
                     <Input
                       type="textarea"

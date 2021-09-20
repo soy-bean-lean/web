@@ -15,37 +15,160 @@ import Typography from 'components/Typography';
 
 import { Line } from 'react-chartjs-2';
 import * as AiIcons from 'react-icons/ai';
+import { useHistory } from 'react-router-dom';
 
 import {
   Button,
   Card,
   CardBody,
+  FormGroup,
+  Input,
   Badge,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
   CardImg,
   CardImgOverlay,
   CardLink,
   CardText,
   CardTitle,
   Col,
-  ListGroup,
-  CardHeader,
-  Table,
-  ListGroupItem,
+  Alert,
   Row,
 } from 'reactstrap';
 
 const BlogView = () => {
   const { id } = useParams();
   const { title } = useParams();
+  const [result, setResult] = useState();
+  const { authState, setAuthState } = useContext(AuthContext);
 
   const [blogImg, setBlogImg] = useState('');
   const [profileImg, setProfileImg] = useState('');
   const [blogData, setBlogData] = useState([]);
+  const [comment, setComments] = useState([]);
+  const [numberofComments, setCommentsCount] = useState();
+  const [newComment, setAddComment] = useState('');
+  let history = useHistory();
+
+  function msg() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Greate Attempt is Succesfull</Alert>
+        </>
+      );
+    }
+  }
+  // function newComment(isnew) {
+  //   if (isnew == 'ok') {
+  //     return (
+  //       <>
+  //         <FormGroup row>
+  //           <Col>
+  //             <Input
+  //               type="textarea"
+  //               name="title"
+  //               placeholder="Add Short Description About Your Blog . . . . ."
+  //               // onChange={e => setAbout(e.target.value)}
+  //             />
+  //           </Col>
+  //         </FormGroup>
+  //       </>
+  //     );
+  //   } else {
+  //     return (
+  //       <>
+  //         <FormGroup row></FormGroup>
+  //       </>
+  //     );
+  //   }
+  // }
+
+  var today = new Date(),
+    Currentdate =
+      today.getFullYear() +
+      '-' +
+      (today.getMonth() + 1) +
+      '-' +
+      today.getDate();
+
+  const addComment = () => {
+    const data = {
+      bId: id,
+      memberId: authState.memberId,
+      comment: newComment,
+      date: Currentdate,
+    };
+    axios.post('http://localhost:3001/blog/addComment', data).then(response => {
+      if (response.data.error) {
+        setResult('err');
+        setTimeout(
+          function () {
+            reload();
+          },
+
+          2000,
+        );
+      } else {
+        setResult('done');
+
+        setTimeout(
+          function () {
+            reload();
+          },
+
+          2000,
+        );
+      }
+    });
+  };
+
+  const reload = () => {
+    const formData = {
+      bId: id,
+    };
+    axios
+      .post('http://localhost:3001/blog/getBlog', formData)
+      .then(res => {
+        setBlogData(res.data[0]);
+        setBlogImg('http://localhost:3001/uploads/blog/' + res.data[0].image);
+        setProfileImg(
+          'http://localhost:3001/uploads/profileImages/' +
+            res.data[0].profileImage,
+        );
+      })
+      .catch(error => {
+        setResult('err');
+        setTimeout(
+          function () {
+            reload();
+          },
+
+          2000,
+        );
+      });
+
+    axios
+      .post('http://localhost:3001/blog/getBlogComments', formData)
+      .then(res => {
+        setComments(res.data);
+        setCommentsCount(res.data.length);
+      })
+      .catch(error => {
+        setResult('err');
+        setTimeout(
+          function () {
+            reload();
+          },
+
+          2000,
+        );
+      });
+  };
 
   useEffect(() => {
     const formData = {
@@ -56,14 +179,20 @@ const BlogView = () => {
       .then(res => {
         setBlogData(res.data[0]);
         setBlogImg('http://localhost:3001/uploads/blog/' + res.data[0].image);
-
-        // console.log(
-        //   'http://localhost:3001/uploads/csslCourses/' + res.data[0].image,
-        // );
         setProfileImg(
           'http://localhost:3001/uploads/profileImages/' +
             res.data[0].profileImage,
         );
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios
+      .post('http://localhost:3001/blog/getBlogComments', formData)
+      .then(res => {
+        setComments(res.data);
+        setCommentsCount(res.data.length);
       })
       .catch(error => {
         console.log(error);
@@ -75,37 +204,42 @@ const BlogView = () => {
       __html: DOMPurify.sanitize(html),
     };
   };
+
+  const comments =
+    comment &&
+    comment.map(data => (
+      <>
+        <Badge color="warning" pill className="mr-3">
+          {data.title}. {data.firstName} {data.lastName}
+        </Badge>
+        <br />
+        <Badge color="primary" className="mr-3">
+          {data.date}
+        </Badge>
+        <CardText className="comments">{data.description}</CardText>
+      </>
+    ));
   return (
     <Page title={title}>
       <hr />
       <Link to={'/blogs'}>
         <Button color="primary">Back</Button>
       </Link>
-      {'  '}
-      <Link to={'/courseReviewP/' + id + 'view'}>
-        <Button color="primary">Comments</Button>
-      </Link>
-      {'  '}
-      <Link to={'/coursEnrollsP/' + id}>
-        <Button color="primary">Clap</Button>
-      </Link>
+
       <hr />
       <Row>
         <Col sm="10" md={{ size: 8, offset: 0 }}>
           <Card>
-                          <center>
-                {blogImg && (
-                  <img
-                    src={blogImg}
-                    width="100%"
-                    height="400px"
-                    className="course-img"
-                  ></img>
-                )}
-               
-               
-              </center>
-          
+            <center>
+              {blogImg && (
+                <img
+                  src={blogImg}
+                  width="100%"
+                  height="400px"
+                  className="course-img"
+                ></img>
+              )}
+            </center>
           </Card>
         </Col>
         <Col sm="10" md={{ size: 4, offset: 0 }}>
@@ -118,48 +252,41 @@ const BlogView = () => {
                   height="60px"
                   className="profileImg"
                 ></img>
-                <p>
-                  {blogData.title}. {blogData.firstName}
-                </p>
-                <p> {blogData.email}</p>
-              </center>
+                <br />
+                <Badge color="warning" pill className="mr-3">
+                  {blogData.title}. {blogData.firstName} {blogData.lastName}
+                </Badge>
+                <br />
+                <Badge color="primary" pill className="mr-3">
+                  {blogData.email}
+                </Badge>
 
-              <hr />
-              <span>
-                <AiIcons.AiOutlineClockCircle />
-              </span>
-              {'  '}
-              <span>
-                Read Min : 10 minu
-                {/* Approx. {courseData.duration} {courseData.durationType} to
-                    Complete */}
-              </span>
-              <br></br>
-              <span>
-                <AiIcons.AiOutlineWechat />
-              </span>
-              {'  '}
-              <span>Comment: 5</span>
-              {/* <span> {courseData.language}</span> */}
-              <br></br>
+                <hr />
 
-              <span>
-                <AiIcons.AiOutlineDesktop />
-              </span>
-              {'  '}
-              <span>
-                read count : 10
+                {'  '}
+
+                <Badge color="success" pill className="mr-3">
+                  10 min Read
+                </Badge>
+
+                <br />
+                <Badge color="success" pill className="mr-3">
+                  {numberofComments} Comments
+                </Badge>
+
+                {/* <span> {courseData.language}</span> */}
+                <br></br>
+
+                <Badge color="success" pill className="mr-3">
+                  3 Reads
+                </Badge>
                 {/* {"  "} {courseData.mode} */}
-              </span>
-              <br></br>
-              <span>
-                <AiIcons.AiOutlineBarChart />{' '}
-              </span>
-              <span>
-                publish Date {blogData.publishedDate}
-                {/* {"  "}
-                    {courseData.skillLevel} */}
-              </span>
+
+                <br />
+                <Badge color="success" pill className="mr-3">
+                  Published on {blogData.publishedDate}
+                </Badge>
+              </center>
             </CardBody>
           </Card>
         </Col>
@@ -175,6 +302,35 @@ const BlogView = () => {
               ></CardBody>
             </CardBody>
           </Card>
+        </Col>
+        <Col sm="10" md={{ size: 10, offset: 1 }}>
+          <br></br>
+          <Col sm="10" md={{ size: 12, offset: 0 }}>
+            <FormGroup row>
+              <Col>
+                <center>
+                  {msg()}
+                  <Input
+                    type="textarea"
+                    name="title"
+                    rows="5"
+                    placeholder="Any Comments..........."
+                    onChange={e => setAddComment(e.target.value)}
+                  />
+                </center>
+              </Col>
+            </FormGroup>
+            <FormGroup check row>
+              <Col sm={{ size: 15 }}>
+                <Button onClick={addComment} color="success">
+                  Add My Comment
+                </Button>
+              </Col>
+            </FormGroup>
+          </Col>
+        </Col>
+        <Col sm="10" md={{ size: 7, offset: 3 }}>
+          {comments}
         </Col>
       </Row>
     </Page>

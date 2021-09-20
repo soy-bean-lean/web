@@ -216,7 +216,7 @@ console.log(id);
 
 return (
     <Page title={title}>
-        <Link to="/manageworksops">
+        <Link to="/workshop">
         <Button color="primary">Workshop List</Button>
       </Link>
       <hr></hr>

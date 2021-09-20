@@ -28,20 +28,20 @@ import {
 function AddWorkshop() {
   const { authState, setAuthState } = useContext(AuthContext);
 
-    const [workshopId, setWorkshopId] = useState();
-    const [title, setWorkshopTitle] = useState('');
-    const [description,setWorkshopDes] = useState('');
-    const [fromDate, setFromDate] = useState('');
-    const [toDate, setToDate] = useState('');
-    const [duration, setDuration] = useState('');
-    const [credit, setCredit] = useState('');
-   
-    const [subject, setSubject] = useState('');
-    const [image, setImage] = useState(null);
-    
-    const [result, setResult] = useState();
-  
-    let history = useHistory();
+  const [workshopId, setWorkshopId] = useState();
+  const [title, setWorkshopTitle] = useState('');
+  const [description, setWorkshopDes] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [duration, setDuration] = useState('');
+  const [credit, setCredit] = useState('');
+
+  const [subject, setSubject] = useState('');
+  const [image, setImage] = useState(null);
+
+  const [result, setResult] = useState();
+
+  let history = useHistory();
   //   const [title, setTitle] = useState('');
   // const [about, setAbout] = useState('');
   // const [desc, setDesc] = useState('');
@@ -57,9 +57,6 @@ function AddWorkshop() {
   //     '-' +
   //     today.getDate();
   // let history = useHistory();
-
-
-  
 
   function msg() {
     if (result == 'err') {
@@ -78,12 +75,12 @@ function AddWorkshop() {
   }
 
   const addWorkshop = () => {
-     const formData = new FormData();
+    const formData = new FormData();
     // formData.append('image', image);
     // formData.append('title', title);
     // formData.append('desc', desc);
     // formData.append('about', about);
-  
+
     // formData.append('memberId', 'cssl001');
     // formData.append('date', Currentdate);
 
@@ -96,7 +93,6 @@ function AddWorkshop() {
     //formData.append('credit', credit);
     formData.append('memberId', authState.id);
 
-  
     formData.append('image', image);
     formData.append('subject', subject);
     //alert(image);
@@ -146,11 +142,7 @@ function AddWorkshop() {
             <CardHeader>New Workshop</CardHeader>
             <CardBody>
               <Form>
-
-              
-
-
-              <FormGroup row>
+                <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     Workshop Title
                   </Label>
@@ -167,7 +159,7 @@ function AddWorkshop() {
 
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
-                    Subject 
+                    Subject
                   </Label>
                   <Col sm={9}>
                     <Input
@@ -180,22 +172,15 @@ function AddWorkshop() {
                   </Col>
                 </FormGroup>
 
-
-               
-
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
-                  Description
+                    Description
                   </Label>
-                  
+
                   <Col sm={9}>
-                    
                     <Input
                       type="textarea"
                       name="title"
-                     
-                       
-                     
                       onChange={e => setWorkshopDes(e.target.value)}
                     />
                   </Col>
@@ -205,7 +190,7 @@ function AddWorkshop() {
                   <Label for="exampleEmail" sm={3}>
                     From Date
                   </Label>
-                  <Col sm={3}>
+                  <Col sm={9}>
                     <Input
                       className="input"
                       required
@@ -213,21 +198,20 @@ function AddWorkshop() {
                       onChange={e => setFromDate(e.target.value)}
                     />
                   </Col>
+                </FormGroup>
 
+                <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     To Date
                   </Label>
-                  
-                  <Col sm={3}>
-                 
+
+                  <Col sm={9}>
                     <Input
                       type="date"
                       name="select"
                       required
                       onChange={e => setToDate(e.target.value)}
                     />
-                     
-                   
                   </Col>
                 </FormGroup>
 
@@ -273,8 +257,7 @@ function AddWorkshop() {
                   </Col>
                 </FormGroup> */}
 
-
-<FormGroup row>
+                <FormGroup row>
                   <Label for="exampleEmail" sm={12}>
                     Import Your Workshop Image From the Chooser
                   </Label>
@@ -304,9 +287,6 @@ function AddWorkshop() {
                     />
                   </Col>
                 </FormGroup>
-               
-
-                
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
