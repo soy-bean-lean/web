@@ -49,7 +49,38 @@ Workshop.route("/addWorkshop").post(upload.single("image"), (req, res, err) => {
   }
 });
 
+Workshop.post("/getSendWorkshop", (req, res) => {
+  console.log("get all workshop line -700");
+  //const mid = req.body.mId;
+  //console.log(mid);
+  connection.query(
+    "SELECT wId, title,description,image FROM csslworkshop WHERE credit IS NULL AND verifiedBy IS NULL;",
+    
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+      }
+    );
+  });
 
+
+  Workshop.post("/getWorkshop", (req, res) => {
+    console.log("get all workshop line 700");
+    //const mid = req.body.mId;
+    //console.log(mid);
+    connection.query(
+      "SELECT wId, title,description,image FROM csslworkshop WHERE verifiedBy IS NOT NULL;",
+      
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
+        }
+      );
+    });
 
 
 

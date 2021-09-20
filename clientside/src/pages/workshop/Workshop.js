@@ -18,7 +18,6 @@ import {
   Button,
   Card,
   CardBody,
- 
   Nav,
   NavItem,
   InputGroup,
@@ -27,45 +26,36 @@ import {
   TabContent,
   TabPane,
   CardImg,
-  
   CardText,
- 
   Col,
-  
   CardHeader,
-  
   Row,
 } from 'reactstrap';
 
 const Workshop = props => {
-  const [blog, setBlog] = useState(null);
-  const [blogger, setBlogger] = useState(null);
-  const [myBlog, setMyBlog] = useState(null);
- 
+  const [workshop, setWorkshop] = useState(null);
+  const [sendWorkshop, setSendWorkshop] = useState(null);
+
   const { authState, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
-  
     const data = {
       // mId: authState.id,
       mId: 'cssl001',
     };
     axios
-      .post('http://localhost:3001/blog/getAllBlogs', data)
+      .post('http://localhost:3001/workshop/getWorkshop', data)
 
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setBlog(response.data);
+          setWorkshop(response.data);
         }
       })
       .catch(error => {
         alert(error);
       });
-
-
-
 
     // axios
     //   .post('http://localhost:3001/blog/getAllBloggers', formData)
@@ -82,22 +72,19 @@ const Workshop = props => {
     //   });
 
     axios
-      .post('http://localhost:3001/blog/getMyBlogs', data)
+      .post('http://localhost:3001/workshop/getSendWorkshop', data)
 
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setMyBlog(response.data);
+          setSendWorkshop(response.data);
         }
       })
       .catch(error => {
         alert(error);
       });
   }, []);
-
-
-  
 
   const [activeTab, setActiveTab] = useState('1');
 
@@ -140,27 +127,60 @@ const Workshop = props => {
   //     </>
   //   ));
 
-  const allblogs =
-    blog &&
-    blog.map((blog, i) => (
+  // const workshops =
+  // workshop &&
+  // workshop.map((workshop, i) => (
+  //     <>
+  //       <Link
+  //         to={'/workshopview/cssl00' + workshop.wId + '/' + workshop.title}
+  //         key={i}
+  //         className="link-tag"
+  //       >
+  //         <Col md={12} sm={10} xs={10} className="mb-2">
+  //           <Card className="flex-row">
+  //             <CardImg
+  //               src={'http://localhost:3001/uploads/workshop/' + workshop.image}
+  //               style={{ width: 175, height: 150 }}
+  //             />
+  //             <CardBody>
+  //               <h3>{workshop.title}</h3>
+  //               <CardText>
+  //                 Ratings
+  //                 {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
+  //               </CardText>
+  //             </CardBody>
+  //           </Card>
+  //         </Col>
+  //       </Link>
+  //       <hr className="course-view-line"></hr>
+  //     </>
+  //   ));
+
+  const workshops =
+    workshop &&
+    workshop.map((workshop, i) => (
       <>
         <Link
-          to={'/csslcourses/courseview/cssl00' + blog.blogId + '/' + blog.title}
+          to={'/workshopview/cssl00' + workshop.wId + '/' + workshop.title}
           key={i}
           className="link-tag"
         >
           <Col md={12} sm={10} xs={10} className="mb-2">
             <Card className="flex-row">
-              <CardImg
-                src={'http://localhost:3001/uploads/blog/' + blog.image}
-                style={{ width: 175, height: 150 }}
+              <img
+                src={'http://localhost:3001/uploads/workshop/' + workshop.image}
+                style={{ width: 150, height: 120, margin: 15, radius: 50 }}
               />
+
               <CardBody>
-                <h3>{blog.title}</h3>
-                <CardText>
-                  Ratings
-                  {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-                </CardText>
+                <h3>{workshop.title}</h3>
+                {/* <h6>{blog.description}</h6> */}
+                {/* <h8></h8> */}
+
+                <br></br>
+                <h8>
+                  {/* Author: {blog.firstName} {blog.lastName} | published Date:  {blog.publishedDate} */}
+                </h8>
               </CardBody>
             </Card>
           </Col>
@@ -169,42 +189,47 @@ const Workshop = props => {
       </>
     ));
 
-  // const myblogs =
-  //   myBlog &&
-  //   myBlog.map((myBlog, i) => {
-  //     return (
-  //       <>
-  //         <Link
-  //           to={'/blogview/cssl00' + myBlog.blogId + '/' + myBlog.title}
-  //           key={i}
-  //           className="link-tag"
-  //         >
-  //           <Col md={12} sm={10} xs={10} className="mb-2">
-  //             <Card className="flex-row">
-  //               <CardImg
-  //                 src={'http://localhost:3001/uploads/blog/' + myBlog.image}
-  //                 style={{ width: 'auto', height: 150 }}
-  //                 className="card-img-left"
-  //                 // style={{ width: 175, height: 150 }}
-  //               />
-  //               <CardBody>
-  //                 {/* <h3>{myBlog.title}</h3> */}
-  //                 <CardText>{myBlog.content}</CardText>
-  //               </CardBody>
-  //             </Card>
-  //             <Button color="primary" className="buttonDIV">
-  //               Edit
-  //             </Button>
-
-  //             <Button color="danger" className="buttonDIV">
-  //               Delete
-  //             </Button>
-  //           </Col>
-  //         </Link>
-  //         <hr className="course-view-line"></hr>
-  //       </>
-  //     );
-  //   });
+  const sendWorkshops =
+    sendWorkshop &&
+    sendWorkshop.map((sendWorkshop, i) => {
+      return (
+        <>
+          <Link
+            to={
+              '/workshopview/cssl00' +
+              sendWorkshop.wId +
+              '/' +
+              sendWorkshop.title
+            }
+            key={i}
+            className="link-tag"
+          >
+            <Col md={12} sm={10} xs={10} className="mb-2">
+              <Card className="flex-row">
+                <CardImg
+                  src={
+                    'http://localhost:3001/uploads/workshop/' +
+                    sendWorkshop.image
+                  }
+                  style={{ width: 'auto', height: 150 }}
+                  className="card-img-left"
+                  // style={{ width: 175, height: 150 }}
+                />
+                <CardBody>
+                  {/* <h3>{myBlog.title}</h3> */}
+                  <CardText>{sendWorkshop.title}</CardText>
+                </CardBody>
+              </Card>
+              <Button color="primary" className="buttonDIV">
+                Edit
+              </Button>
+              
+            </Col>
+          </Link>
+          <hr className="course-view-line"></hr>
+        </>
+      );
+    });
 
   return (
     <Page title="Workshops">
@@ -224,7 +249,7 @@ const Workshop = props => {
               toggle('1');
             }}
           >
-            All Workshop
+            All Workshops
           </NavLink>
         </NavItem>
         <NavItem>
@@ -234,7 +259,7 @@ const Workshop = props => {
               toggle('2');
             }}
           >
-            Sending Workshop
+            Sending Workshops
           </NavLink>
         </NavItem>
       </Nav>
@@ -245,7 +270,7 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">All rkshopWo</Typography>
+                  <Typography className="text-success">All workshop</Typography>
                 </CardHeader>
                 {/* <CardBody>
                   <InputGroup>
@@ -270,8 +295,8 @@ const Workshop = props => {
                   </InputGroup>
                 </CardBody> */}
                 <Card className="mb-2"></Card>
-                {allblogs}
-                {/* {allbloggers} */}
+              
+                {workshops}
               </Card>
             </Col>
           </Row>
@@ -282,9 +307,11 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">Sending Workshop</Typography>
+                  <Typography className="text-success">
+                    Sending Workshops
+                  </Typography>
                 </CardHeader>
-                {/* {myblogs} */}
+                {sendWorkshops}
               </Card>
             </Col>
           </Row>
