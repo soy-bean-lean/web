@@ -14,6 +14,28 @@
 .nav-item .nav-link.active {
   color: black;
 }
+.userCards{
+  height: 190px !important;
+}
+.react-calendar__navigation {
+  height: 38px;
+  background:#1d7e61 !important;
+}
+.react-calendar button {
+  margin: 0;
+  border: 0;
+  border-radius: 150px  !important;
+  outline: none;
+}
+
+.react-calendar{
+  width: 100%;
+  max-width: 100%;
+  background: rgb(255, 255, 255) !important;
+  border: 2px solid #ffffff !important;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 0.85em;
+}
 .profileImg {
   border-radius: 100px;
 }
@@ -113,6 +135,16 @@ a:not([href]):not([tabindex]):hover {
   height: 50px;
   margin-right: 20px;
   margin-left: 0px;
+  
+  border-radius: 50px;
+}
+
+.newUsers{
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+  margin: 10px;
+  margin-top: 5px;
   border-radius: 50px;
 }
 

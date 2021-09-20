@@ -39,9 +39,21 @@ reportsSQL.post("/getUsers", (req, res) => {
   });
 });
 
+reportsSQL.post("/getPaidCount", (req, res) => {
+  const year =req.body.year;
+  const sqlSelect =
+    "SELECT count(year) as paid FROM `payment`  where year='2021'; "
+    //"SELECT COUNT(id) As blogs  from test  ;    ";
+
+  console.log(sqlSelect);
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
 reportsSQL.post("/getRecentUsers", (req, res) => {
   const sqlSelect =
-    "SELECT * FROM `user` ORDER BY `user`.`registeredDate` ASC limit 3"
+    "SELECT * FROM `user` ORDER BY `user`.`registeredDate` ASC limit 8"
     //"SELECT COUNT(id) As blogs  from test  ;    ";
 
   console.log(sqlSelect);
