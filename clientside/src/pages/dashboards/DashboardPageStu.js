@@ -61,7 +61,12 @@ class DashboardPage extends React.Component {
     const secondaryColor = '#a5aacf';
 
     return (
-      <Page title="Student Member - DashBoard" >
+      <Page title="DashBoard" >
+             <Badge color="warning" pill className="mr-1">
+             Student Member
+        </Badge>
+
+        <hr />
         <Row>
          
           <Col lg={6} md={6} sm={10} xs={12}>

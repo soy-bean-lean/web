@@ -69,11 +69,7 @@ const BasicCourseInfo = () => {
 
         setTimeout(
           function () {
-<<<<<<< HEAD
-            history.push('/csslcourse/addCourseContent/cssl00' + res.data.insertId + '/' + courseTitle);
-=======
             history.push("/csslcourse/addCourseContent/cssl00"+res.data.insertId+"/"+courseTitle);
->>>>>>> e2c14c1a92d403ed38d27afe9c7ac586b3bf316a
             //hri giyoth yana thena
           },
 

@@ -94,7 +94,7 @@ dashBoardSQL.post("/announcement", (req, res) => {
 dashBoardSQL.post("/recent", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "SELECT * FROM `recentactivities` WHERE memberID = 2 LIMIT 3;",
+    "SELECT * FROM `recentactivities` WHERE memberID = 2 LIMIT 4;",
     //[id],
     (error, result, feilds) => {
       if (error) {
@@ -248,7 +248,22 @@ dashBoardSQL.post("/remainingPercentage", (req, res) => {
 dashBoardSQL.post("/getUserCount", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "SELECT COUNT(user.id) as aaa, userType FROM `user` GROUP by user.userType; ",
+    "SELECT COUNT(user.id) as aaa, userType as type FROM `user` GROUP by user.userType; ",
+    [id],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+dashBoardSQL.post("/getUserStatus", (req, res) => {
+  const id = req.body.id;
+  connection.query(
+    "SELECT COUNT(user.id) as bbb, status FROM `user` GROUP by user.status; ",
     [id],
     (error, result, feilds) => {
       if (error) {
