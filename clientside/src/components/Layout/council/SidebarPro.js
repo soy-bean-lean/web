@@ -46,7 +46,7 @@ const navItemsCouncil = [
   },
 
   {
-    to: '/workshop',
+    to: '/manageworksops',
     name: 'Manage Workshops',
     exact: false,
     Icon: GIIcons.GiTeacher,
