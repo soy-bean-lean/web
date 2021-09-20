@@ -32,7 +32,7 @@ import {
   Row,
 } from 'reactstrap';
 
-const Workshop = props => {
+const ManageWorkshop = props => {
   const [workshop, setWorkshop] = useState(null);
   const [sendWorkshop, setSendWorkshop] = useState(null);
 
@@ -156,7 +156,7 @@ const Workshop = props => {
   //     </>
   //   ));
 
-  const workshops =
+  const approveWorkshops =
     workshop &&
     workshop.map((workshop, i) => (
       <>
@@ -220,9 +220,13 @@ const Workshop = props => {
                   <CardText>{sendWorkshop.title}</CardText>
                 </CardBody>
               </Card>
-              <Button color="primary" className="buttonDIV">
-                Edit
-              </Button>
+              <Link to={
+                     '/addCredit/cssl00' + sendWorkshop.wId + '/' + sendWorkshop.title
+                  }>
+                    <Button color="primary"> Assign Credit</Button>
+                  </Link>
+                  {'  '}
+              
               
             </Col>
           </Link>
@@ -232,13 +236,9 @@ const Workshop = props => {
     });
 
   return (
-    <Page title="Workshops">
+    <Page title="Manage Workshops">
       <hr></hr>
-      <Link to="/addworkshop">
-        <Button color="success" to="/addworkshop">
-          Add Workshop
-        </Button>
-      </Link>
+     
       <br></br>
       <hr></hr>
       <Nav tabs>
@@ -249,7 +249,7 @@ const Workshop = props => {
               toggle('1');
             }}
           >
-            All Workshops
+            Approved Workshops
           </NavLink>
         </NavItem>
         <NavItem>
@@ -259,7 +259,7 @@ const Workshop = props => {
               toggle('2');
             }}
           >
-            Sending Workshops
+            Requested Workshops
           </NavLink>
         </NavItem>
       </Nav>
@@ -270,7 +270,7 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">All workshop</Typography>
+                  <Typography className="text-success">Approved List</Typography>
                 </CardHeader>
                 {/* <CardBody>
                   <InputGroup>
@@ -295,8 +295,8 @@ const Workshop = props => {
                   </InputGroup>
                 </CardBody> */}
                 <Card className="mb-2"></Card>
-              
-                {workshops}
+                {approveWorkshops}
+                
               </Card>
             </Col>
           </Row>
@@ -308,7 +308,7 @@ const Workshop = props => {
               <Card className="mb-3">
                 <CardHeader>
                   <Typography className="text-success">
-                    Sending Workshops
+                    Requested List
                   </Typography>
                 </CardHeader>
                 {sendWorkshops}
@@ -321,4 +321,4 @@ const Workshop = props => {
   );
 };
 
-export default Workshop;
+export default ManageWorkshop;

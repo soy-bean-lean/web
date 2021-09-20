@@ -1,6 +1,6 @@
 import Page from 'components/Page';
 import React, { useContext, useState, useEffect } from 'react';
-
+import { AuthContext } from '../../helpers/AuthContext';
 // import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 // import { toast } from 'react-toastify';
@@ -20,9 +20,13 @@ import {
   Row,
 } from 'reactstrap';
 import Alert from 'reactstrap/lib/Alert';
+import FileUpload from '../../components/FileUpload/FileUploader';
 // let history = useHistory();
 
 const AddCpd = () => {
+
+  const { authState, setAuthState } = useContext(AuthContext);
+
   //cpd
   const [recordName, setRecordName] = useState('');
   const [recType, setRecType] = useState('type');
@@ -39,7 +43,7 @@ const AddCpd = () => {
   const [typeCourseName, setTypeCourseName] = useState('');
   const [platformOther, setPlatformOther] = useState('');
   const [partnerOther, setPartnerOther] = useState('');
-  
+
   const [credit, setCredit] = useState('');
 
   const [workshopId, setWorkshopId] = useState('');
@@ -62,9 +66,9 @@ const AddCpd = () => {
   //retireve course details from database (cssl courses and other courses - depending on the selection)
   const getCourses = event => {
     setCourseType(event.target.value);
-
+    setCredit('');
     const submitCourseData = {
-      mId: 'cssl001',
+      mId: authState.memberId,
       type: event.target.value,
     };
 
@@ -185,12 +189,17 @@ const AddCpd = () => {
       });
   };
 
+  //get file details
+  const getFileData = (val) =>{
+    console.log(val);
+  }
+
   //load data to CSSL Course dropdown list
   const allInCourses =
     inCourseList &&
     inCourseList.map((li, i) => {
       return (
-        <option key={i} value={li.name}>
+        <option key={i} value={i}>
           {li.name}
         </option>
       );
@@ -287,11 +296,21 @@ const AddCpd = () => {
       );
     }, this);
 
-  const getCreditValue = event => {
+  const getOtherCourseCreditValue = event => {
     setCourseName(event.target.value);
     const i = event.target.value;
     if (i != 'Other' && i != '') {
       setCredit(outCourseList[i].credit);
+    } else {
+      setCredit('');
+    }
+  };
+
+  const getInCourseCreditValue = event => {
+    setCourseName(event.target.value);
+    const i = event.target.value;
+    if (i != 'type' && i != '') {
+      setCredit(inCourseList[i].credit);
     } else {
       setCredit('');
     }
@@ -327,7 +346,7 @@ const AddCpd = () => {
                     <Input
                       name="select"
                       type="select"
-                      onChange={e => setRecType(e.target.value)}
+                      onChange={(e) => {setRecType(e.target.value); setCredit('');}}
                     >
                       <option value="type"></option>
                       <option value="course">Courses</option>
@@ -364,18 +383,18 @@ const AddCpd = () => {
                 </FormGroup>
                 <FormGroup row>
                   <Label for="exampleEmail" sm={12}>
-                    Import Your Proof File From the Chooser (Images and PDF
-                    Files)
+                    Import Your Proof File(Images, PDF and Zip Files Accepted)
                   </Label>
-                  <Col sm="12" md={{ size: 6, offset: 4 }}>
-                    <Input
+                  <Col sm="12" md={{ size: 6, offset: 3 }}>
+                    {/* <Input
                       color="primary"
                       type="file"
                       className="input"
                       id="avatar"
                       name="avatar"
                       accept="image/*, application/pdf"
-                    />
+                    /> */}
+                    <FileUpload onUploadFile = {getFileData} />
                   </Col>
                 </FormGroup>
 
@@ -393,6 +412,7 @@ const AddCpd = () => {
     </Page>
   );
 
+  //render details according to the record type
   function renderDetails(r_type) {
     if (r_type == 'type') {
       return <FormGroup row></FormGroup>;
@@ -485,6 +505,7 @@ const AddCpd = () => {
     }
   }
 
+  //if record type is Course, then check this condition to get the type of the course
   function renderCourseDetails(c_type) {
     if (c_type == '') {
       return <FormGroup row></FormGroup>;
@@ -497,7 +518,11 @@ const AddCpd = () => {
             CSSL Course
           </Label>
           <Col sm={9}>
-            <Input type="select" name="select">
+            <Input
+              type="select"
+              name="select"
+              onChange={getInCourseCreditValue}
+            >
               <option value="type"></option>
               {allInCourses}
             </Input>
@@ -694,7 +719,11 @@ const AddCpd = () => {
               Course
             </Label>
             <Col sm={9}>
-              <Input type="select" name="select" onChange={getCreditValue}>
+              <Input
+                type="select"
+                name="select"
+                onChange={getOtherCourseCreditValue}
+              >
                 <option value=""></option>
                 {allOnlineOutCourses}
                 <option value="Other">Other</option>
@@ -707,7 +736,7 @@ const AddCpd = () => {
       );
     }
   }
-  
+
   function renderTypeCourseFields(course) {
     if (course == 'Other') {
       return (
@@ -727,8 +756,7 @@ const AddCpd = () => {
   function renderOfflineOtherCourseList(partner) {
     if (partner == '') {
       return <FormGroup row></FormGroup>;
-    }
-    else if (partner == 'Other') {
+    } else if (partner == 'Other') {
       return (
         <>
           <FormGroup row>
@@ -745,8 +773,7 @@ const AddCpd = () => {
           </FormGroup>
         </>
       );
-    }
-     else {
+    } else {
       return (
         <>
           <FormGroup row>
@@ -754,7 +781,11 @@ const AddCpd = () => {
               Course
             </Label>
             <Col sm={9}>
-              <Input type="select" name="select" onChange={e => setCourseName(e.target.value)}>
+              <Input
+                type="select"
+                name="select"
+                onChange={getOtherCourseCreditValue}
+              >
                 <option value=""></option>
                 {allOfflineOutCourses}
                 <option value="Other">Other</option>
