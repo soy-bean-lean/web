@@ -66,17 +66,17 @@ function AddCredit() {
 
   const deleteItem = () => {
     const data = {
-      qid: id,
-      tableName: 'blog',
-      coloum: 'blogId',
+      wid: id,
+      tableName: 'csslworkshop',
+      coloum: 'wId',
     };
 console.log(id);
-    axios.post('http://localhost:3001/blog/deleteItem', data).then(response => {
+    axios.post('http://localhost:3001/workshop/deleteItem', data).then(response => {
       if (response.data.error) {
         setResult('err');
         setTimeout(
           function () {
-            history.push('/blogs');
+            history.push('/manageworksops');
           },
 
           2000,
@@ -86,7 +86,7 @@ console.log(id);
 
         setTimeout(
           function () {
-            history.push('/blogs');
+            history.push('/manageworksops');
             //hri giyoth yana thena
           },
 
@@ -192,8 +192,8 @@ console.log(id);
   }, []);
 
   return (
-    <Page title="Edit Blog">
-       <Link to="/blogs">
+    <Page title="Assign Credit/Deny Request">
+       <Link to="/manageworksops">
         <Button color="primary">Back</Button>
       </Link>
       <hr></hr>
@@ -201,16 +201,16 @@ console.log(id);
         <center>
           {msg()}
           <Card>
-            <CardHeader>New Blog</CardHeader>
+            <CardHeader>Workshop Details</CardHeader>
             <CardBody>
               <Form>
-                <FormGroup row>
+                {/* <FormGroup row>
                   <Label for="exampleEmail" sm={12}>
                     Import Your Blog Image From the Chooser
                   </Label>
                   <Col sm="12" md={{ size: 6, offset: 4 }}>
                     <center>
-                      {/* {image && (
+                      {image && (
                         <img
                           className="writeImg"
                           height="60%"
@@ -218,7 +218,7 @@ console.log(id);
                           src={URL.createObjectURL(image)}
                           alt=""
                         />
-                      )} */}
+                      )}
                     </center>
                   </Col>
 
@@ -233,7 +233,7 @@ console.log(id);
                       onChange={e => setBlogImage(e.target.files[0])}
                     />
                   </Col>
-                </FormGroup>
+                </FormGroup> */}
 
                 <FormGroup row>
                   {/* <Label for="exampleEmail" sm={3}>
