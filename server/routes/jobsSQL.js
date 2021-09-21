@@ -328,7 +328,11 @@ Job.route("/addJobApplicaation").post(
       !req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|pdf|PDF|png|PNG)$/)
     ) {
       res.send({ msg: "Not an Image File." });
-    } else {
+    }
+    
+    else {
+
+      
       const Currentdate = req.body.Currentdate;
       const memberId = req.body.memberId;
       const jobId = req.body.jobId;
