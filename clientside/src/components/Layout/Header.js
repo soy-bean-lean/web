@@ -92,6 +92,7 @@ function Header(props) {
     history.push('/');
   };
   const profile = () => {
+    setisOpenUserCardPopover(false);
     history.push('/profile');
   };
 
