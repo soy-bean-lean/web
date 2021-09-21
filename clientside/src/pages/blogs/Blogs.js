@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import classnames from 'classnames';
 import Typography from 'components/Typography';
+import TextEditor from '../../components/TextEditor/RichTextEditor';
 
 import { Line } from 'react-chartjs-2';
 import {
@@ -138,14 +139,14 @@ const Blogs = props => {
 
               <CardBody>
                 <h3>{blog.title}</h3>
-                <h6>{blog.description}</h6>
+                <p>{blog.description}</p>
                 {/* <h8></h8> */}
 
                 <br></br>
                 <h8>
-                Author: {blog.firstName} {blog.lastName} | published Date:  {blog.publishedDate}
+                  Author: {blog.firstName} {blog.lastName} | published Date:{' '}
+                  {blog.publishedDate}
                 </h8>
-              
               </CardBody>
             </Card>
           </Col>
@@ -159,47 +160,29 @@ const Blogs = props => {
     myBlog.map((blog, i) => {
       return (
         <>
-          <Link
-            to={
-              '/blogview/cssl00' + blog.blogId + '/' + blog.title
-            }
-            key={i}
-            className="link-tag"
-          >
-            <Col md={12} sm={10} xs={10} className="mb-2">
-              <Card className="flex-row">
-                <img
-                  src={'http://localhost:3001/uploads/blog/' + blog.image}
-                  style={{ width: 150, height: 120, margin: 15, radius: 50 }}
-                />
+          <Col md={12} sm={10} xs={10} className="mb-2">
+            <Card className="flex-row">
+              <img
+                src={'http://localhost:3001/uploads/blog/' + blog.image}
+                style={{ width: 150, height: 120, margin: 15, radius: 50 }}
+              />
 
-                <CardBody>
-                  <h3>{blog.title}</h3>
-                  <h6>{blog.description}</h6>
-                  <h8>{blog.publishedDate}</h8>
-
-                  <br></br>
-                  {/* <h6>
+              <CardBody>
+                <h3><b>{blog.title}</b></h3>
+                <p>{blog.description}</p>
+                <h8>{blog.publishedDate}</h8>
+                <Link to={'/editview/cssl00' + blog.blogId + '/' + blog.title}>
+                  <Button color="primary">Edit/Delete</Button>
+                </Link>
+                <br></br>
+                {/* <h6>
                     {blog.firstName} {blog.lastName}
                   </h6> */}
-                  {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-                </CardBody>
-              </Card>
-              <Row className="buttonDIV">
-                <Col sm="12">
-                  <Link to={
-                     '/editview/cssl00' + blog.blogId + '/' + blog.title
-                  }>
-                    <Button color="primary">Edit Your Blog</Button>
-                  </Link>
-                  {'  '}
-                  {/* <Link to="">
-                    <Button color="danger">Delete</Button>
-                  </Link> */}
-                </Col>
-              </Row>
-            </Col>
-          </Link>
+                {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
+              </CardBody>
+            </Card>
+          </Col>
+
           <hr className="course-view-line"></hr>
         </>
       );

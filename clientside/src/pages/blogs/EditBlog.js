@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import Typography from 'components/Typography';
 import { confirmAlert } from 'react-confirm-alert';
 import { useParams } from 'react-router-dom';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import { useHistory } from 'react-router-dom';
 
