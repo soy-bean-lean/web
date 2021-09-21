@@ -305,7 +305,7 @@ Course.post("/", (req, res) => {
   );
 });
 
-
+//retrieve content list (CourseView.js)
 Course.post("/getContentList", (req, res) => {
   const cid = req.body.cId;
   const stDel = "Deleted";
@@ -715,7 +715,7 @@ Course.post("/insertEnCourseContent", (req, res) => {
   const cid = req.body.cId;
   const mid = req.body.mId;
   const cntId = req.body.cntId;
-  const status = "Enroll";
+  const status = req.body.status;
   connection.query(
     "INSERT INTO contentaccess (memberId, courseId, contentId, status) VALUES (?,?,?,?);",
     [mid, cid, cntId, status],
@@ -727,5 +727,21 @@ Course.post("/insertEnCourseContent", (req, res) => {
     }
   );
 });
+
+//retrieve enrolled content list (EnrolledCourseView.js)
+Course.post("/getEnrolledContentList", (req, res) => {
+  const cid = req.body.cId;
+  connection.query(
+    "SELECT coursecontent.contentId, coursecontent.title, coursecontent.description, contentaccess.status FROM coursecontent INNER JOIN contentaccess ON coursecontent.courseId = contentaccess.courseId AND coursecontent.contentId = contentaccess.contentId WHERE coursecontent.courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 
 export default Course;

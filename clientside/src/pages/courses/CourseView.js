@@ -175,12 +175,19 @@ const CourseView = () => {
 
     var stDate = yyyy + '-' + mm + '-' + dd;
     var lastAcc = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mn + ':' + ss;
-
+    var st;
     for (var i = 0; i < Object.keys(courseList).length; i++) {
+      if(i == 0){
+        st = "Start";
+      }
+      else{
+        st = "Enroll";
+      }
       const submitData = {
         cId: id,
         mId: authState.memberId,
         cntId: courseList[i].contentId,
+        status: st,
       };
       axios
         .post(

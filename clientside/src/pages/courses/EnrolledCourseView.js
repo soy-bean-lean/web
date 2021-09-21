@@ -61,7 +61,7 @@ const CourseView = () => {
       });
 
     axios
-      .post('http://localhost:3001/csslcourse/getContentList', formData)
+      .post('http://localhost:3001/csslcourse/getEnrolledContentList', formData)
 
       .then(response => {
         if (response.data.error) {
@@ -81,8 +81,46 @@ const CourseView = () => {
       <>
         <Card>
           <CardBody>
-            <h4>
-              {content.title}{' '}
+            <h4>{content.title} </h4>
+            {content.status == 'Start' && (
+              <Link
+                to={
+                  '/csslcourse/enrolledcourse/cssl00' +
+                  id +
+                  '/' +
+                  title +
+                  '/' +
+                  'accesscontent' +
+                  '/' +
+                  content.contentId +
+                  '/' +
+                  content.title
+                }
+              >
+                <Button color="success">Start</Button>
+              </Link>
+            )}
+
+            {content.status == 'Ongoing' || content.status == 'Test' && (
+              <Link
+                to={
+                  '/csslcourse/enrolledcourse/cssl00' +
+                  id +
+                  '/' +
+                  title +
+                  '/' +
+                  'accesscontent' +
+                  '/' +
+                  content.contentId +
+                  '/' +
+                  content.title
+                }
+              >
+                <Button color="primary">Continue</Button>
+              </Link>
+            )}
+
+            {content.status == 'Complete' && (
               <Link
                 to={
                   '/csslcourse/enrolledcourse/cssl00' +
@@ -99,7 +137,7 @@ const CourseView = () => {
               >
                 <Button color="primary">View</Button>
               </Link>
-            </h4>
+            )}
             <hr></hr>
             <p>{content.description}</p>
           </CardBody>
