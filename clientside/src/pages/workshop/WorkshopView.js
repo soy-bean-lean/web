@@ -181,20 +181,24 @@ function WorkshopView() {
       })
       .catch(error => {});
   }, []);
+  const back = () => {
 
+    history.push('/workshop')
+    }
   return (
-    <Page>
-      <Link to="/workshop">
-        <Button color="primary">Workshop List</Button>
-      </Link>
+    <Page title="Workshops">
+     
+     
       <hr></hr>
+      
       <Row>
         <Col sm="5" md={{ size: 8, offset: 2 }}>
           <br></br>
+          {msg()} 
           <Card className="shadow">
             <CardBody>
               <center>
-                {msg()} <h4>{title}</h4>
+               <h4>{title}</h4>
                 <hr />
                 {/* <br /> */}
                 <img
@@ -221,12 +225,15 @@ function WorkshopView() {
                 <br></br>
                 <br></br>
                 <p>{desc}</p>
-                {/* <Col sm={{ size: 15 }}>
+                <Col sm={{ size: 15 }}>
+                <Button onClick={back} color="primary">
+                        Back
+                      </Button>{' '}
                       <Button onClick={submit} color="danger">
                         Delete
                       </Button>{' '}
                       
-                    </Col> */}
+                    </Col>
               </center>
             </CardBody>
           </Card>

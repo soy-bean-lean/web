@@ -244,12 +244,14 @@ function AddCredit() {
 
   //     </Page>
   //   );
+  const back = () => {
+    history.push('/manageworksops');
+  };
 
   return (
     <Page title="Requested Workshop">
-      <Link to="/manageworksops">
-        <Button color="primary">Workshop List</Button>
-      </Link>
+      <hr></hr>
+
       <Row>
         <Col sm="5" md={{ size: 8, offset: 2 }}>
           <br></br>
@@ -257,25 +259,18 @@ function AddCredit() {
             <Card className="profileInfo">
               <CardBody>
                 <center>
-                  {msg()}{' '}
-                  <Badge pill color="warning" className="mr-1">
-                    Requested Workshop
-                  </Badge>
-                  <br />
+                  <h4>{title}</h4>
+                  <hr />
                   {/* <br /> */}
                   <img
                     src={'http://localhost:3001/uploads/workshop/' + image}
                     height="60%"
                     width="60%"
-                    className="writeImg"
+                    className="workshopImg"
                   />
-                  <br></br>
-                  <br></br>
-                  <h4>{title}</h4>{' '}
-                  {/* <Badge pill color="warning" className="mr-1">
-                  {type.toUpperCase()}
-                </Badge> */}
                   <br />
+                 
+                 <hr/>
                   <br />
                   <p>{desc}</p>
                   <p>{subject}</p>
@@ -283,7 +278,7 @@ function AddCredit() {
                   <p>{duration + '  hours per Day'}</p>
                 </center>
                 <FormGroup row>
-                  <Col>
+                  <Col sm="10" md={{ size: 4, offset: 4 }}>
                     <Input
                       type="number"
                       name="title"
@@ -292,12 +287,13 @@ function AddCredit() {
                     />
                   </Col>
                 </FormGroup>
-
-              </CardBody>
-              <CardBody>
+                <hr />
                 <FormGroup check row>
                   <center>
                     <Col sm={{ size: 15 }}>
+                      <Button onClick={back} color="primary">
+                        Back
+                      </Button>{' '}
                       <Button onClick={submit} color="danger">
                         Reject
                       </Button>{' '}

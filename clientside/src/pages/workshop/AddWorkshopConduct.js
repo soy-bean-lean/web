@@ -91,6 +91,10 @@ function AddWorkshop() {
       });
   };
 
+  const finish = () => {
+
+history.push('/workshop')
+  }
   const addConductorAndFinish = () => {
     const data2 = {
       conducterId: 'cssl00' + conducterId,
@@ -229,6 +233,10 @@ function AddWorkshop() {
                     </Button>{' '}
                     <Button onClick={addConductorAndFinish} color="success">
                       Save & Finish
+                    </Button>
+                    {" "}
+                    <Button onClick={finish} color="success">
+                      Finish
                     </Button>
                   </Col>
                 </FormGroup>

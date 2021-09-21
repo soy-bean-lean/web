@@ -9,7 +9,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../helpers/AuthContext';
 import { useParams } from 'react-router-dom';
-
+import QRCode from 'react-qr-code';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -43,13 +43,6 @@ function ApproveWorkshopView() {
 
   let history = useHistory();
 
-  
-
-  
-  
-
- 
-
   useEffect(() => {
     const sendData = {
       id: id,
@@ -75,9 +68,25 @@ function ApproveWorkshopView() {
       })
       .catch(error => {});
   }, []);
-
+  const back = () => {
+    history.push('/manageworksops');
+  };
+  function downloadQR() {
+    const canvas = document.getElementById(id);
+    const pngUrl = canvas
+      .toDataURL('image/png')
+      .replace('image/png', 'image/octet-stream');
+    let downloadLink = document.createElement('a');
+    downloadLink.href = pngUrl;
+    downloadLink.download = 'cssl workshop QR - ' + id + '.png';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  }
   return (
-    <Page>
+    <Page title="Approved Workshop">
+      <hr></hr>
+
       <Link to="/manageworksops">
         <Button color="primary">Workshop List</Button>
       </Link>
@@ -92,12 +101,18 @@ function ApproveWorkshopView() {
                 {data.T}. {data.firstName} {data.lastName}
                 <hr />
                 {/* <br /> */}
-                <img
-                  src={'http://localhost:3001/uploads/workshop/' + image}
-                  height="60%"
-                  width="60%"
-                  className="workshopImg"
-                />
+                <Row>
+                  <Col sm="12" md={{ size: 6, offset: 0 }}>
+                    <img
+                      src={'http://localhost:3001/uploads/workshop/' + image}
+                      height="150px"
+                      width="150px"
+                    />
+                  </Col>
+                  <Col sm="12" md={{ size: 4, offset: 0 }}>
+                    <QRCode size={150} level={'H'} value={id} id={id} />
+                  </Col>
+                </Row>
                 <br></br>
                 <br></br>
                 <Badge color="warning" pill className="mr-1">
@@ -116,12 +131,7 @@ function ApproveWorkshopView() {
                 <br></br>
                 <br></br>
                 <p>{desc}</p>
-                {/* <Col sm={{ size: 15 }}>
-                      <Button onClick={submit} color="danger">
-                        Delete
-                      </Button>{' '}
-                      
-                    </Col> */}
+                <hr />
               </center>
             </CardBody>
           </Card>
