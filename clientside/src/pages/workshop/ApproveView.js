@@ -25,7 +25,7 @@ import {
   Row,
 } from 'reactstrap';
 
-function SendWorkshopView() {
+function ApproveWorkshopView() {
   const { id } = useParams();
   const add = '';
   const [image, setImage] = useState('');
@@ -35,79 +35,19 @@ function SendWorkshopView() {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [duration, setDuration] = useState('');
+  const [credit, setCredit] = useState('');
 
+  const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
 
   let history = useHistory();
 
-  function msg() {
-    if (result == 'err') {
-      return (
-        <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
-        </>
-      );
-    } else if (result == 'done') {
-      return (
-        <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
-        </>
-      );
-    }
-  }
+  
 
-  const deleteItem = () => {
-    const data = {
-      wid: id,
-      tableName: 'csslworkshop',
-      coloum: 'wId',
-    };
-    console.log(id);
-    axios
-      .post('http://localhost:3001/workshop/deleteItem', data)
-      .then(response => {
-        if (response.data.error) {
-          setResult('err');
-          setTimeout(
-            function () {
-              history.push('/workshop');
-            },
+  
+  
 
-            2000,
-          );
-        } else {
-          setResult('done');
-
-          setTimeout(
-            function () {
-              history.push('/workshop');
-            },
-
-            2000,
-          );
-        }
-      });
-  };
-
-  const submit = () => {
-    confirmAlert({
-      message: 'Are you sure to Delete ?.',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => {
-            deleteItem();
-          },
-        },
-        {
-          label: 'No',
-          onClick: () => {
-            //alert('Click No')
-          },
-        },
-      ],
-    });
-  };
+ 
 
   useEffect(() => {
     const sendData = {
@@ -127,7 +67,7 @@ function SendWorkshopView() {
           setFromDate(response.data[0].fromDate);
           setToDate(response.data[0].toDate);
           setDuration(response.data[0].duration);
-
+          setCredit(response.data[0].credit);
           setImage(response.data[0].image);
         }
       })
@@ -136,7 +76,7 @@ function SendWorkshopView() {
 
   return (
     <Page>
-      <Link to="/workshop">
+      <Link to="/manageworksops">
         <Button color="primary">Workshop List</Button>
       </Link>
       <hr></hr>
@@ -146,7 +86,7 @@ function SendWorkshopView() {
           <Card className="shadow">
             <CardBody>
               <center>
-                {msg()} <h4>{title}</h4>
+                <h4>{title}</h4>
                 <hr />
                 {/* <br /> */}
                 <img
@@ -173,11 +113,12 @@ function SendWorkshopView() {
                 <br></br>
                 <br></br>
                 <p>{desc}</p>
-                <Col sm={{ size: 15 }}>
-                  <Button onClick={submit} color="danger">
-                    Delete
-                  </Button>{' '}
-                </Col>
+                {/* <Col sm={{ size: 15 }}>
+                      <Button onClick={submit} color="danger">
+                        Delete
+                      </Button>{' '}
+                      
+                    </Col> */}
               </center>
             </CardBody>
           </Card>
@@ -187,4 +128,4 @@ function SendWorkshopView() {
   );
 }
 
-export default SendWorkshopView;
+export default ApproveWorkshopView;
