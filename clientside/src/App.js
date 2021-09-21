@@ -63,6 +63,8 @@ const DashboardPageStu = React.lazy(() =>
 //cpd
 const cpdRecords = React.lazy(() => import('pages/cpd/CPD'));
 const AddCPD = React.lazy(() => import('pages/cpd/addCPD'));
+const cpdApproval = React.lazy(() => import('pages/cpd/cpdApproval.js'));
+const cpdView = React.lazy(() => import('pages/cpd/cpdView.js'));
 
 //courses
 const csslCourses = React.lazy(() => import('pages/courses/Courses'));
@@ -103,7 +105,9 @@ const CourseContentApprovalView = React.lazy(() =>
 const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
 const AddWorkshop = React.lazy(() => import('pages/workshop/AddWorkshop'));
 const AddWorkshopConducter = React.lazy(() => import('pages/workshop/AddWorkshopConduct'));
+const SendWorkshopView = React.lazy(() => import('pages/workshop/SendWorkshopView'));
 const WorkshopView = React.lazy(() => import('pages/workshop/WorkshopView'));
+const ApproveWorkshopView = React.lazy(() => import('pages/workshop/ApproveView'));
 const ManageWorkshop = React.lazy(() => import('pages/workshop/ManageWorkshop'));
 const AddCredit = React.lazy(() => import('pages/workshop/AddCredit'));
 const SendEmail = React.lazy(() => import('pages/workshop/SendEmail'));
@@ -438,9 +442,11 @@ function App(props) {
                     />{' '}
                     {/* need to change component */}
                     {/*CPD Related Routes*/}
+                    <Route path="/cpdView/:id" component={cpdView} />{' '}
+
                     <Route
                       path="/cpdapproval/cpdrecords"
-                      component={Login}
+                      component={cpdApproval}
                     />{' '}
                     {/* need to change component */}
                     <Route
@@ -483,6 +489,11 @@ function App(props) {
                       exact
                       path="/addCredit/cssl00:id/:title"
                       component={AddCredit}
+                    />
+                     <Route
+                      exact
+                      path="/approveworkshopview/cssl00:id/:title"
+                      component={ApproveWorkshopView}
                     />
 
                     <Route
@@ -571,6 +582,11 @@ function App(props) {
                       exact
                       path="/workshopview/cssl00:id/:title"
                       component={WorkshopView}
+                    />
+                    <Route
+                      exact
+                      path="/sendworkshopview/cssl00:id/:title"
+                      component={SendWorkshopView}
                     />
                     <Route
                       exact

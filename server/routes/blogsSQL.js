@@ -29,7 +29,9 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
     const about = req.body.about;
 
     const image = req.file.filename;
+    console.log("***************************************************************************");
     console.log(memberID);
+    console.log("***************************************************************************");
 
     connection.query(
       `INSERT INTO blog (memberId,title,description,content,publishedDate,image) VALUES (?,?,?,?,?,?)`,
@@ -64,8 +66,8 @@ Blog.post("/getAllBlogs", (req, res) => {
     firstName +
     "%' and blog.title like '" +
     title +
-    "%'  ORDER BY `blog`.`publishedDate` DESC ";
-
+    "%'  and blog.reviewBy IS NOT NULL ORDER BY `blog`.`blogId`  DESC ";
+console.log
   //const sqlSelect = "SELECT blogId, title, image, publishedDate FROM blog";
   //"SELECT DISTINCT user.firstName,user.lastName FROM ((user INNER JOIN member ON user.id=member.id ) INNER JOIN blog ON member.memberId=blog.memberId )"
   connection.query(sqlSelect, (err, result) => {
@@ -78,7 +80,7 @@ Blog.post("/getMyBlogs", (req, res) => {
   const mid = req.body.mId;
   console.log(mid);
   connection.query(
-    "SELECT blogId, title,description,image, content FROM blog WHERE memberId = ?;",
+    "SELECT blogId, title,description,image, content FROM blog WHERE memberId = ?  ORDER BY `blog`.`blogId`  DESC ;",
     [mid],
     (error, result, feilds) => {
       if (error) console.log(error);

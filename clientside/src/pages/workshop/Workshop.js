@@ -196,7 +196,7 @@ const Workshop = props => {
         <>
           <Link
             to={
-              '/workshopview/cssl00' +
+              '/sendworkshopview/cssl00' +
               sendWorkshop.wId +
               '/' +
               sendWorkshop.title
@@ -213,10 +213,10 @@ const Workshop = props => {
                   }
                   style={{ width: 150, height: 150 }}
                   className="card-img-left"
-                  // style={{ width: 175, height: 150 }}
+                  
                 />
                 <CardBody>
-                  {/* <h3>{myBlog.title}</h3> */}
+                 
                   <CardText>
                   <h3>{sendWorkshop.title}</h3>
                     <h6>{sendWorkshop.description}</h6>

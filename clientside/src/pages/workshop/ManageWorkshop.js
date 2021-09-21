@@ -15,6 +15,7 @@ import { Line } from 'react-chartjs-2';
 import {
   Button,
   Card,
+  Badge,
   CardBody,
   Nav,
   NavItem,
@@ -26,13 +27,16 @@ import {
   CardImg,
   CardText,
   Col,
+  Table,
   CardHeader,
   Row,
 } from 'reactstrap';
+const tableTypes = ['striped'];
 
 const ManageWorkshop = props => {
   const [workshop, setWorkshop] = useState(null);
   const [sendWorkshop, setSendWorkshop] = useState(null);
+  //const[approveWorkshop]
 
   const { authState, setAuthState } = useContext(AuthContext);
 
@@ -56,7 +60,7 @@ const ManageWorkshop = props => {
       });
 
     // axios
-    //   .post('http://localhost:3001/blog/getAllBloggers', formData)
+    //   .post('http://localhost:3001/workshop/getApprovedWorkshop', data)
 
     //   .then(response => {
     //     if (response.data.error) {
@@ -90,152 +94,89 @@ const ManageWorkshop = props => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  // const allbloggers =
-  //   blogger &&
-  //   blogger.map((blogger, i) => (
-  //     <>
-  //       <Link
-  //         to={'/csslcourses/courseview/cssl00' + blogger.memberId}
-  //         key={i}
-  //         className="link-tag"
-  //       >
-  //         <Col md={12} sm={10} xs={10} className="mb-2">
-  //           <Card className="flex-row">
-  //             <CardImg
-  //               src={
-  //                 'http://localhost:3001/uploads/profileImages/' +
-  //                 blogger.profileImage
-  //               }
-  //               style={{ width: 175, height: 150 }}
-  //             />
-  //             <CardBody>
-  //               <h3>
-  //                 {blogger.firstName} {blogger.lastName}{' '}
-  //               </h3>
-  //               <CardText>
-  //                 Ratings
-  //                 Number of Blogs :4
-  //                 {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-  //               </CardText>
-  //             </CardBody>
-  //           </Card>
-  //         </Col>
-  //       </Link>
-  //       <hr className="course-view-line"></hr>
-  //     </>
-  //   ));
-
-  // const workshops =
-  // workshop &&
-  // workshop.map((workshop, i) => (
-  //     <>
-  //       <Link
-  //         to={'/workshopview/cssl00' + workshop.wId + '/' + workshop.title}
-  //         key={i}
-  //         className="link-tag"
-  //       >
-  //         <Col md={12} sm={10} xs={10} className="mb-2">
-  //           <Card className="flex-row">
-  //             <CardImg
-  //               src={'http://localhost:3001/uploads/workshop/' + workshop.image}
-  //               style={{ width: 175, height: 150 }}
-  //             />
-  //             <CardBody>
-  //               <h3>{workshop.title}</h3>
-  //               <CardText>
-  //                 Ratings
-  //                 {/* Rating: {course.avgRate} | {course.noOfInteraction} students */}
-  //               </CardText>
-  //             </CardBody>
-  //           </Card>
-  //         </Col>
-  //       </Link>
-  //       <hr className="course-view-line"></hr>
-  //     </>
-  //   ));
-
   const approveWorkshops =
     workshop &&
     workshop.map((workshop, i) => (
       <>
-        <Link
-          to={'/workshopview/cssl00' + workshop.wId + '/' + workshop.title}
-          key={i}
-          className="link-tag"
-        >
-          <Col md={12} sm={10} xs={10} className="mb-2">
-            <Card className="flex-row">
-              <img
-                src={'http://localhost:3001/uploads/workshop/' + workshop.image}
-                style={{ width: 150, height: 120, margin: 15, radius: 50 }}
-              />
+        <tr>
+          <td>{workshop.title}</td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {workshop.fromDate}
+              </Badge>
+            </center>
+          </td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {workshop.toDate}
+              </Badge>
+            </center>
+          </td>
 
-              <CardBody>
-                <h3>{workshop.title}</h3>
-                {/* <h6>{blog.description}</h6> */}
-                {/* <h8></h8> */}
-
-                <br></br>
-                <h8>
-                  {/* Author: {blog.firstName} {blog.lastName} | published Date:  {blog.publishedDate} */}
-                </h8>
-              </CardBody>
-            </Card>
-          </Col>
-        </Link>
-        <hr className="course-view-line"></hr>
+          <td>
+            <center>
+              {'   '}
+              <Link
+                to={
+                  '/approveworkshopview/cssl00' +
+                  workshop.wId +
+                  '/' +
+                  workshop.title
+                }
+              >
+                <Button color="primary" size="sm">
+                  View More{' '}
+                </Button>
+              </Link>
+            </center>
+          </td>
+        </tr>
       </>
     ));
 
   const sendWorkshops =
     sendWorkshop &&
-    sendWorkshop.map((sendWorkshop, i) => {
-      return (
-        <>
-          <Link
-            to={
-              '/workshopview/cssl00' +
-              sendWorkshop.wId +
-              '/' +
-              sendWorkshop.title
-            }
-            key={i}
-            className="link-tag"
-          >
-            <Col md={12} sm={10} xs={10} className="mb-2">
-              <Card className="flex-row">
-                <CardImg
-                  src={
-                    'http://localhost:3001/uploads/workshop/' +
-                    sendWorkshop.image
-                  }
-                  style={{ width: 150, height: 150 }}
-                  className="card-img-left"
-                  // style={{ width: 175, height: 150 }}
-                />
-                <CardBody>
-                  {/* <h3>{myBlog.title}</h3> */}
-                  <CardText>{sendWorkshop.title}</CardText>
-                  <Link
-                    to={
-                      '/addCredit/cssl00' +
-                      sendWorkshop.wId +
-                      '/' +
-                      sendWorkshop.title
-                    }
-                  >
-                    <Button color="primary"> Approved Workshop</Button>
-                  </Link>
-                </CardBody>
-              </Card>
+    sendWorkshop.map((sendWorkshop, i) => (
+      <>
+        <tr>
+          <td>{sendWorkshop.title}</td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {sendWorkshop.fromDate}
+              </Badge>
+            </center>
+          </td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {sendWorkshop.toDate}
+              </Badge>
+            </center>
+          </td>
 
-              {'  '}
-            </Col>
-          </Link>
-          <hr className="course-view-line"></hr>
-        </>
-      );
-    });
+          <td>
+            <center>
+              {'   '}
+              <Link
+                to={
+                  '/addCredit/cssl00' +
+                  sendWorkshop.wId +
+                  '/' +
+                  sendWorkshop.title
+                }
+              >
+                <Button color="primary" size="sm">
+                  View More{' '}
+                </Button>
+              </Link>
+            </center>
+          </td>
+        </tr>
+      </>
+    ));
 
   return (
     <Page title="Manage Workshops">
@@ -262,42 +203,35 @@ const ManageWorkshop = props => {
           </NavLink>
         </NavItem>
       </Nav>
-
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
           <Row>
             <Col sm="12">
-              <Card className="mb-3">
-                <CardHeader>
-                  <Typography className="text-success">
-                    Approved List
-                  </Typography>
-                </CardHeader>
-                {/* <CardBody>
-                  <InputGroup>
-                    <Input
-                      type="text"
-                      className="note"
-                      placeholder="Search By Bloggers"
-                      onChange={event => {
-                        setFirstName(event.target.value);
-                      }}
-                      onKeyUp={getData}
-                    />{' '}
-                    <Input
-                      type="text"
-                      className="note"
-                      onChange={event => {
-                        setTitle(event.target.value);
-                      }}
-                      onKeyUp={getData}
-                      placeholder="Seach By Blog Titles"
-                    />{' '}
-                  </InputGroup>
-                </CardBody> */}
-                <Card className="mb-2"></Card>
-                {approveWorkshops}
-              </Card>
+              {tableTypes.map((tableType, index) => (
+                <Row>
+                  <Col>
+                    <Card className="mb-3">
+                      <CardBody>
+                        <Row>
+                          <Col>
+                            <Card body>
+                              <Table {...{ ['striped']: true }}>
+                                <tbody>
+                                  <th>Title</th>
+                                  <th>From Date</th>
+                                  <th>To Date</th>
+                                  <th></th>
+                                  {approveWorkshops}
+                                </tbody>
+                              </Table>
+                            </Card>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              ))}
             </Col>
           </Row>
         </TabPane>
@@ -305,14 +239,31 @@ const ManageWorkshop = props => {
         <TabPane tabId="2">
           <Row>
             <Col sm="12">
-              <Card className="mb-3">
-                <CardHeader>
-                  <Typography className="text-success">
-                    Requested List
-                  </Typography>
-                </CardHeader>
-                {sendWorkshops}
-              </Card>
+              {tableTypes.map((tableType, index) => (
+                <Row>
+                  <Col>
+                    <Card className="mb-3">
+                      <CardBody>
+                        <Row>
+                          <Col>
+                            <Card body>
+                              <Table {...{ ['striped']: true }}>
+                                <tbody>
+                                  <th>Title</th>
+                                  <th>From Date</th>
+                                  <th>To Date</th>
+                                  <th></th>
+                                  {sendWorkshops}
+                                </tbody>
+                              </Table>
+                            </Card>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              ))}
             </Col>
           </Row>
         </TabPane>

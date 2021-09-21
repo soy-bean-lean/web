@@ -69,7 +69,7 @@ Workshop.post("/getSendWorkshop", (req, res) => {
   //const mid = req.body.mId;
   //console.log(mid);
   connection.query(
-    "SELECT wId, title,description,image FROM csslworkshop WHERE credit IS NULL AND verifiedBy IS NULL ORDER BY `csslworkshop`.`wId`  DESC;",
+    "SELECT wId, title,description,image,subject,fromDate,toDate FROM csslworkshop WHERE credit IS NULL AND verifiedBy IS NULL ORDER BY `csslworkshop`.`wId`  DESC;",
 
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -99,12 +99,29 @@ Workshop.post("/getConductors", (req, res) => {
   );
 });
 
+
+//getApproved workshop details
+Workshop.post("/getApprovedWorkshop", (req, res) => {
+  console.log("get all workshop line 999");
+  const wid = req.body.id;
+
+  connection.query(
+    "SELECT csslworkshop.* ,user.title AS T,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id) WHERE csslworkshop.verifiedBy IS NOT NULL AND csslworkshop.wId= ?;",
+    [wid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 Workshop.post("/getWorkshop", (req, res) => {
   console.log("get all workshop line 700");
-  //const mid = req.body.mId;
-  //console.log(mid);
+
   connection.query(
-    "SELECT wId, title,description,fromDate,toDate,image FROM csslworkshop WHERE verifiedBy IS NOT NULL;",
+    "SELECT wId, title,description,fromDate,toDate,image,subject FROM csslworkshop WHERE verifiedBy IS NOT NULL;",
 
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -159,59 +176,29 @@ Workshop.post("/getWorkshopView", (req, res) => {
   );
 });
 
+Workshop.route("/addCredit").post((req, res, err) => {
+  const wid = req.body.wid;
+  const mid = req.body.verifiedBy;
 
-  
+  const credit = req.body.credit;
 
-Workshop.route("/addCredit").post(
-  //upload.single("image"),
-  (req, res, err) => {
-    // if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
-    //   res.send({ msg: "Not an Image File." });
-    // } else {
-      const wid = req.body.wid;
-      const mid=req.body.verifiedBy;
+  console.log(wid);
+  console.log(mid);
 
-      const credit = req.body.credit;
-      //const about = req.body.description;
-
-     // const desc = req.body.content;
-      // const memberID = req.body.memberId;
-     // const image = req.file.filename;
-
-     console.log(wid);
-     console.log(mid);
-
-
-      
-      
-
-      connection.query(
-        "UPDATE csslworkshop SET credit = ?, verifiedBy = ?  WHERE wId = ?;",
-        [
-          credit,
-          mid,
-          wid
-        ],
-        (error, result, feilds) => {
-          if (error) console.log(error);
-          else {
-            res.send({
-              data: result,
-              msg: "Successfully Updated.",
-            });
-          }
-        }
-      );
-    
-  }
-);
-
-  
-
-
-
-
-
+  connection.query(
+    "UPDATE csslworkshop SET credit = ?, verifiedBy = ?  WHERE wId = ?;",
+    [credit, mid, wid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send({
+          data: result,
+          msg: "Successfully Updated.",
+        });
+      }
+    }
+  );
+});
 
 Workshop.post("/addConducter", async (req, res) => {
   const conducterId = req.body.conducterId;
@@ -238,6 +225,5 @@ Workshop.post("/addConducter", async (req, res) => {
 });
 
 //SELECT csslworkshop.* ,user.title,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id)
-
 
 export default Workshop;

@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import '../../main.css';
 
 import Page from 'components/Page';
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../helpers/AuthContext';
-import QRCode from 'react-qr-code';
-
-import { confirmAlert } from 'react-confirm-alert';
 import { useParams } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
@@ -17,7 +17,6 @@ import {
   Button,
   Card,
   CardBody,
-  FormGroup,
   CardHeader,
   Col,
   Alert,
@@ -26,7 +25,7 @@ import {
   Row,
 } from 'reactstrap';
 
-function SendEmail() {
+function SendWorkshopView() {
   const { id } = useParams();
   const add = '';
   const [image, setImage] = useState('');
@@ -36,22 +35,9 @@ function SendEmail() {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [duration, setDuration] = useState('');
-  const [credit, setCredit] = useState('');
-  const [data, setData] = useState([]);
 
-
-  const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
 
-  //const [image, setBlogImage] = useState();
-
-  // var today = new Date(),
-  //   Currentdate =
-  //     today.getFullYear() +
-  //     '-' +
-  //     (today.getMonth() + 1) +
-  //     '-' +
-  //     today.getDate();
   let history = useHistory();
 
   function msg() {
@@ -70,46 +56,86 @@ function SendEmail() {
     }
   }
 
+  const deleteItem = () => {
+    const data = {
+      wid: id,
+      tableName: 'csslworkshop',
+      coloum: 'wId',
+    };
+    console.log(id);
+    axios
+      .post('http://localhost:3001/workshop/deleteItem', data)
+      .then(response => {
+        if (response.data.error) {
+          setResult('err');
+          setTimeout(
+            function () {
+              history.push('/workshop');
+            },
+
+            2000,
+          );
+        } else {
+          setResult('done');
+
+          setTimeout(
+            function () {
+              history.push('/workshop');
+            },
+
+            2000,
+          );
+        }
+      });
+  };
+
+  const submit = () => {
+    confirmAlert({
+      message: 'Are you sure to Delete ?.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            deleteItem();
+          },
+        },
+        {
+          label: 'No',
+          onClick: () => {
+            //alert('Click No')
+          },
+        },
+      ],
+    });
+  };
+
   useEffect(() => {
     const sendData = {
       id: id,
     };
     axios
-      .post('http://localhost:3001/workshop/getApprovedWorkshop', sendData)
+      .post('http://localhost:3001/workshop/getWorkshopView', sendData)
 
       .then(response => {
         if (response.data.error) {
           //    alert(response.data.error);
         } else {
-         // console.log(response.data[0]);
-          setData(response.data[0]);
-
+          console.log(response.data[0]);
           setTitle(response.data[0].title);
           setDesc(response.data[0].description);
           setSubject(response.data[0].subject);
           setFromDate(response.data[0].fromDate);
           setToDate(response.data[0].toDate);
           setDuration(response.data[0].duration);
-          setCredit(response.data[0].credit);
+
           setImage(response.data[0].image);
         }
       })
-      .catch(error => {
-        //   alert(error);
-      });
+      .catch(error => {});
   }, []);
 
-  //   return (
-  //     <Page title="Assign Credit/Deny Request">
-  //        <Link to="/manageworksops">
-  //         <Button color="primary">Back</Button>
-  //       </Link>
-
-  //     </Page>
-  //   );
-
   return (
-    <Page title="Send Mail to Conductors">
+    <Page>
       <Link to="/workshop">
         <Button color="primary">Workshop List</Button>
       </Link>
@@ -117,40 +143,42 @@ function SendEmail() {
       <Row>
         <Col sm="5" md={{ size: 8, offset: 2 }}>
           <br></br>
-          <Card className="profileInfo">
+          <Card className="shadow">
             <CardBody>
               <center>
-                {msg()}{' '}
-            
-               
-               
+                {msg()} <h4>{title}</h4>
+                <hr />
+                {/* <br /> */}
+                <img
+                  src={'http://localhost:3001/uploads/workshop/' + image}
+                  height="60%"
+                  width="60%"
+                  className="workshopImg"
+                />
                 <br></br>
-              
-               
+                <br></br>
                 <Badge color="warning" pill className="mr-1">
                   {subject}
                 </Badge>
                 <br></br>
                 <br></br>
-                {data.T}. {data.firstName} {data.lastName}
                 <Badge color="primary" pill className="mr-1">
-                  {'From' + '  ' + fromDate + '  To ' + toDate}{' '}
+                  From Date: {fromDate} | To Date: {toDate}
                 </Badge>
                 <br></br>
                 <br></br>
                 <Badge color="primary" pill className="mr-1">
                   {duration + '  hours per Day'}
                 </Badge>
-<br/>
-<hr/>
-                <FormGroup row>
-                  <Col>
-                    <QRCode value={id} />
-                  </Col>
-                </FormGroup>
+                <br></br>
+                <br></br>
+                <p>{desc}</p>
+                <Col sm={{ size: 15 }}>
+                  <Button onClick={submit} color="danger">
+                    Delete
+                  </Button>{' '}
+                </Col>
               </center>
-
-              <p>conduct By</p>
             </CardBody>
           </Card>
         </Col>
@@ -159,4 +187,4 @@ function SendEmail() {
   );
 }
 
-export default SendEmail;
+export default SendWorkshopView;
