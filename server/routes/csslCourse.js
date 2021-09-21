@@ -32,10 +32,11 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
     const level = req.body.level;
     const image = req.file.filename;
     const mode = req.body.mode;
+    const category = req.body.category;
     const status = "OnGoing";
 
     connection.query(
-      "INSERT INTO csslcourse (name, description, duration, durationType, language, skillLevel, image, mode, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?);",
+      "INSERT INTO csslcourse (name, description, duration, durationType, language, skillLevel, image, mode, category, conductedBy, status) VALUES (?,?,?,?,?,?,?,?,?,?,?);",
       [
         title,
         description,
@@ -45,6 +46,7 @@ Course.route("/basicInfo").post(upload.single("image"), (req, res, err) => {
         level,
         image,
         mode,
+        category,
         lecturer,
         status,
       ],
@@ -77,10 +79,11 @@ Course.route("/editCourseInfo").post(
       const level = req.body.level;
       const image = req.file.filename;
       const mode = req.body.mode;
+      const category = req.body.category;
       const status = "OnGoing";
 
       connection.query(
-        "UPDATE csslcourse SET name = ?, description = ?, duration = ?, durationType = ?, language = ?, skillLevel = ?, image = ?, mode = ?, status = ? WHERE courseId = ?;",
+        "UPDATE csslcourse SET name = ?, description = ?, duration = ?, durationType = ?, language = ?, skillLevel = ?, image = ?, mode = ?, category = ?, status = ? WHERE courseId = ?;",
         [
           title,
           description,
@@ -90,6 +93,7 @@ Course.route("/editCourseInfo").post(
           level,
           image,
           mode,
+          category,
           status,
           cid,
         ],
@@ -389,11 +393,12 @@ Course.post("/getContentInfo", (req, res) => {
   );
 });
 
+//retirieve course information (EditCourseDetails.js)
 Course.post("/getCourseInfo", (req, res) => {
   const cid = req.body.cid;
   const status = "Deleted";
   connection.query(
-    "SELECT name, description, duration, durationType, language, skillLevel, image, mode FROM csslcourse WHERE courseId = ? AND status != ?;",
+    "SELECT name, description, duration, durationType, language, skillLevel, image, mode, category FROM csslcourse WHERE courseId = ? AND status != ?;",
     [cid,status],
     (error, result, feilds) => {
       if (error) console.log(error);

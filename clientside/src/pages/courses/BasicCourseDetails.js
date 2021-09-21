@@ -29,6 +29,7 @@ const BasicCourseInfo = () => {
   const [language, setLanguage] = useState('');
   const [level, setLevel] = useState('');
   const [mode, setMode] = useState(''); 
+  const [category, setCategory] = useState('');
   const [imgFile, setImgFile] = useState();
   const [uploadStatus, setUploadStatus] = useState('');
   const [page, setPage] = useState('Content');
@@ -48,6 +49,7 @@ const BasicCourseInfo = () => {
     formData.append('level', level);
     formData.append('mode', mode);
     formData.append('lecturer', mId);
+    formData.append('category', category);
 
     fetch('http://localhost:3001/csslcourse/basicInfo', {
       method: 'POST',
@@ -93,7 +95,7 @@ const BasicCourseInfo = () => {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccefull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
@@ -159,7 +161,7 @@ const BasicCourseInfo = () => {
                     <Input
                       type="select"
                       name="select"
-                      required
+                      required='required'
                       onChange={e => setDurationType(e.target.value)}
                     >
                       <option value="type"></option>
@@ -167,6 +169,29 @@ const BasicCourseInfo = () => {
                       <option value="Days">Days</option>
                       <option value="Weeks">Weeks</option>
                       <option value="Months">Months</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Category
+                  </Label>
+
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      required
+                      name="select"
+                      onChange={e => setCategory(e.target.value)}
+                    >
+                      <option value=""></option>
+                      <option value="Programming">Programming</option>
+                      <option value="Web Application Development">Web Application Development</option>
+                      <option value="Mobile Application Development">Mobile Application Development</option>
+                      <option value="Database Designing">Database Designing</option>
+                      <option value="ML and AI">ML and AI</option>
+                      <option value="Software Testing">Software Testing</option>
+                      <option value="Software Engineering">Software Engineering</option>
                     </Input>
                   </Col>
                 </FormGroup>
