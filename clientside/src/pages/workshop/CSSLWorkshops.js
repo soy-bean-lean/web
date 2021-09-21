@@ -85,7 +85,7 @@ const TablePage = () => {
     data &&
     data.map(data => (
       <>
-        <Col sm="5" md={{ size: 4, offset: 0 }} className="workshop">
+        <Col sm="5" md={{ size: 4, offset: 0 }}>
           <Card className="shadow">
             <CardBody>
               <center>
@@ -101,11 +101,7 @@ const TablePage = () => {
                   className="workshopImg"
                 />
                 <hr />
-                <center>
-                  <Badge color="danger" pill className="mr-1">
-                    {data.subject}{' '}
-                  </Badge>
-                </center>
+                <center>{data.subject} </center>
 
                 <center>
                   <Badge color="warning" pill className="mr-1">

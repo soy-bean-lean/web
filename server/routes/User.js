@@ -687,4 +687,60 @@ userRouter.get("/auth", validateToken, (req, res) => {
   res.json(req.user);
 });
 
+const storageRegistrationData = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/memberRegistraion");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const uploadReg = multer({
+  storage: storageRegistrationData,
+});
+
+userRouter
+  .route("/addUserProofs")
+  .post(uploadReg.single("image"), (req, res, err) => {
+    if (
+      !req.file.originalname.match(
+        /\.(jpg|zip|war|WAR|ZIP|JPG|jpeg|JPEG|png|PNG)$/
+      )
+    ) {
+      res.send({ msg: "Not an Image File." });
+    } else {
+      const sss = req.file.filename;
+      //   const id = req.body.memberId;
+      const sqlSelect =
+        "SELECT user.id FROM `user` ORDER BY `user`.`id` DESC limit 1; ";
+
+      connection.query(sqlSelect, (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result[0].id);
+          connection.query(
+            " UPDATE user SET userProof =" +
+              " '" +
+              sss +
+              "'" +
+              "  WHERE id = " +
+              result[0].id +
+              ";",
+
+            (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.json("success");
+              }
+            }
+          );
+        }
+      });
+    }
+  });
+
 export default userRouter;
