@@ -254,7 +254,7 @@ export const chartjs = {
         yAxes: [
           {
             stacked: true,
-            display: false,
+            display: true,
           },
         ],
       },
