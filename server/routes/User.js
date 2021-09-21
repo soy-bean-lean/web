@@ -94,13 +94,18 @@ userRouter.post("/updateBasicDetails", async (req, res) => {
   );
 });
 
+
+
 //Register
 
 userRouter.post("/", async (req, res) => {
+
+  
   //member details
   const title = req.body.title;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
+  const nic = req.body.nic;
   const residentialAddress = req.body.residentialAddress;
   const contactNumber = req.body.contactNumber;
   const birthDate = req.body.birthDate;
@@ -120,11 +125,12 @@ userRouter.post("/", async (req, res) => {
       if (result.length <= 0) {
         bcrypt.hash(password, 10).then((hash) => {
           connection.query(
-            `INSERT INTO user (title,firstName,lastName,residentialAddress,contactNumber,birthDate,email,password,userType) VALUES (?,?,?,?,?,?,?,?,?)`,
+            `INSERT INTO user (title,firstName,lastName,nic,residentialAddress,contactNumber,birthDate,email,password,userType) VALUES (?,?,?,?,?,?,?,?,?,?)`,
             [
               title,
               firstName,
               lastName,
+              nic,
               residentialAddress,
               contactNumber,
               birthDate,
@@ -143,7 +149,53 @@ userRouter.post("/", async (req, res) => {
                     if (err) {
                       res.json({ err });
                     } else {
-                      res.json("successfully added to database");
+                      connection.query(
+                        `INSERT INTO logininfo (un, pw) VALUES (?,?)`,
+                        [email, hash],
+                        (err, result) => {
+                          if (err) {
+                            res.json({ error });
+                          } else {
+                            const frommail = "cssl.system.info@gmail.com";
+                            const tomail = email;
+                            let smtpTransport = createTransport({
+                              service: "Gmail",
+                              port: 465,
+
+                              auth: {
+                                user: "cssl.system.info@gmail.com",
+                                pass: "cssl@123",
+                              },
+                            });
+
+                            var mailOptions = {
+                              from: frommail,
+                              to: tomail,
+                              subject: "Account Verfication",
+                              html: `
+                <p>Hi ${firstName}, You details has been sent for the verification</p>               
+                `,
+                            };
+
+                            smtpTransport.sendMail(
+                              mailOptions,
+                              (error, info) => {
+                                if (error) {
+                                  res.json({
+                                    msg: "fail",
+                                  });
+                                } else {
+                                  res.json({
+                                    msg: "success",
+                                  });
+                                }
+                              }
+                            );
+
+                            smtpTransport.close();                            
+                          }
+                        }
+                      );
                     }
                   }
                 );
@@ -156,7 +208,6 @@ userRouter.post("/", async (req, res) => {
       }
     }
   );
- 
 });
 
 //login
@@ -175,30 +226,15 @@ userRouter.post("/login", async (req, res) => {
           if (!match) {
             res.json({ errorPass: "Incorrect password" });
           } else {
-
-            const id = result[0].id; 
+            const id = result[0].id;
             connection.query(
               //temporary sql query for testing
-              "SELECT * FROM member WHERE id=?",  
-              [id],        
+              "SELECT * FROM member WHERE id=?",
+              [id],
               (err, row) => {
-                
-                if(row.length > 0){
+                if (row.length > 0) {
                   const accessToken = sign(
-                      {
-                        firstName: result[0].firstName,
-                        lastName: result[0].lastName,
-                        id: result[0].id,
-                        role: result[0].userType,
-                        profileImage: result[0].profileImage,
-                        email: username,
-                        memberId: row[0].memberId,
-                      },
-                      "importantsecret"
-                    );
-                    console.log("_____" + result[0].profileImage);
-                    res.json({
-                      token: accessToken,
+                    {
                       firstName: result[0].firstName,
                       lastName: result[0].lastName,
                       id: result[0].id,
@@ -206,25 +242,23 @@ userRouter.post("/login", async (req, res) => {
                       profileImage: result[0].profileImage,
                       email: username,
                       memberId: row[0].memberId,
-                    });
-
-                }
-                else{
+                    },
+                    "importantsecret"
+                  );
+                  console.log("_____" + result[0].profileImage);
+                  res.json({
+                    token: accessToken,
+                    firstName: result[0].firstName,
+                    lastName: result[0].lastName,
+                    id: result[0].id,
+                    role: result[0].userType,
+                    profileImage: result[0].profileImage,
+                    email: username,
+                    memberId: row[0].memberId,
+                  });
+                } else {
                   const accessToken = sign(
-                      {
-                        firstName: result[0].firstName,
-                        lastName: result[0].lastName,
-                        id: result[0].id,
-                        role: result[0].userType,
-                        profileImage: result[0].profileImage,
-                        email: username,
-                        memberId: "",
-                      },
-                      "importantsecret"
-                    );
-                    console.log("_____" + result[0].profileImage);
-                    res.json({
-                      token: accessToken,
+                    {
                       firstName: result[0].firstName,
                       lastName: result[0].lastName,
                       id: result[0].id,
@@ -232,12 +266,23 @@ userRouter.post("/login", async (req, res) => {
                       profileImage: result[0].profileImage,
                       email: username,
                       memberId: "",
-                    });
+                    },
+                    "importantsecret"
+                  );
+                  console.log("_____" + result[0].profileImage);
+                  res.json({
+                    token: accessToken,
+                    firstName: result[0].firstName,
+                    lastName: result[0].lastName,
+                    id: result[0].id,
+                    role: result[0].userType,
+                    profileImage: result[0].profileImage,
+                    email: username,
+                    memberId: "",
+                  });
                 }
-
-          })
-
-            
+              }
+            );
           }
         });
       } else {
@@ -246,7 +291,7 @@ userRouter.post("/login", async (req, res) => {
     }
   );
 
- // console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = "+username);
+  // console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = "+username);
 });
 
 //forgotPassword
@@ -256,13 +301,12 @@ userRouter.post("/forgot", async (req, res) => {
 
   connection.query(
     //temporary sql query for testing
-    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
+    "SELECT * FROM user WHERE email = ?",
 
     [username],
     (err, row) => {
       if (row.length > 0) {
         const id = row[0].id;
-
         connection.query(
           `INSERT INTO token (userID, token) VALUES (?,?)`,
           [id, token],
@@ -270,7 +314,7 @@ userRouter.post("/forgot", async (req, res) => {
             if (err) {
               res.json({ error });
             } else {
-              const frommail = "vegemartucsc@gmail.com";
+              const frommail = "cssl.system.info@gmail.com";
               const tomail = row[0].email;
               const web = `http://localhost:3000/reset/${token}`;
               let smtpTransport = createTransport({
@@ -278,8 +322,8 @@ userRouter.post("/forgot", async (req, res) => {
                 port: 465,
 
                 auth: {
-                  user: "vegemartucsc@gmail.com",
-                  pass: "vegemart 123",
+                  user: "cssl.system.info@gmail.com",
+                  pass: "cssl@123",
                 },
               });
 
@@ -342,10 +386,22 @@ userRouter.post("/reset", async (req, res) => {
                 [userID],
                 (err, emailResult) => {
                   connection.query(
+                    "UPDATE `logininfo` SET `pw` = ? WHERE `un` = ? ;",
+                    [hash, emailResult[0].email],
+                    (error, result, feilds) => {
+                      if (err) {
+                        res.json({ error });
+                      } else {
+                        res.json("successfully updated database");
+                      }
+                    }
+                  );
+
+                  connection.query(
                     "DELETE FROM `token` WHERE `userID` = ?",
                     [userID],
                     (err, row) => {
-                      const frommail = "vegemartucsc@gmail.com";
+                      const frommail = "cssl.system.info@gmail.com";
                       const tomail = emailResult[0].email;
                       const web = "http://localhost:3000/";
                       let smtpTransport = createTransport({
@@ -353,8 +409,8 @@ userRouter.post("/reset", async (req, res) => {
                         port: 465,
 
                         auth: {
-                          user: "vegemartucsc@gmail.com",
-                          pass: "vegemart 123",
+                          user: "cssl.system.info@gmail.com",
+                          pass: "cssl@123",
                         },
                       });
 
@@ -501,10 +557,7 @@ userRouter.post("/updatePassword", async (req, res) => {
 userRouter.post("/getProfileData", (req, res) => {
   const memberId = req.body.memberId;
 
-  const sqlSelect =
-    "select  * from user where id = " +
-    memberId +
-    ";";
+  const sqlSelect = "select  * from user where id = " + memberId + ";";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
