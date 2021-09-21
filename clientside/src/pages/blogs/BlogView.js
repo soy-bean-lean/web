@@ -58,7 +58,7 @@ const BlogView = () => {
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Greate Attempt is Succesfull..</Alert>
         </>
       );
     }
