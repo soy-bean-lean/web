@@ -19,7 +19,6 @@ import {
   Col,
   
   Table,
-  ListGroupItem,
   Row,
 } from 'reactstrap';
 import { func } from 'prop-types';

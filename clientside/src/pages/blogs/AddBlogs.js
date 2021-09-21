@@ -72,7 +72,7 @@ function AddBlogs() {
 
     formData.append('memberId', authState.memberId);
     formData.append('date', Currentdate);
-    //alert(image);
+    console.log(authState.memberId);
     fetch('http://localhost:3001/blog/addBlog', {
       method: 'POST',
       body: formData,

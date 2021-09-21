@@ -15,7 +15,7 @@ function FileUpload(props) {
     //console.log(acceptedFiles);
     props.onUploadFile(acceptedFiles);
     setFileSt(1);
-    setFileData(acceptedFiles[0].name);
+    setFileData(acceptedFiles[0]);
   };
 
   const errorMsg = () => {
@@ -25,7 +25,7 @@ function FileUpload(props) {
 
   const removeFile = (acceptedFiles) =>{
     acceptedFiles = [];
-    props.onUploadFile(acceptedFiles[0]);
+    props.onUploadFile(acceptedFiles[0]['File']);
     setFileSt(0);
   }
   return (

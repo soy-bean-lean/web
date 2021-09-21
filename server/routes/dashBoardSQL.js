@@ -248,7 +248,7 @@ dashBoardSQL.post("/remainingPercentage", (req, res) => {
 dashBoardSQL.post("/getUserCount", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "SELECT COUNT(user.id) as aaa, userType as type FROM `user` GROUP by user.userType; ",
+    "SELECT COUNT(user.id) as aaa, userType as type FROM `user` where status != 0 GROUP by user.userType ; ",
     [id],
     (error, result, feilds) => {
       if (error) {

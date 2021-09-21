@@ -28,20 +28,22 @@ import {
 function AddWorkshop() {
   const { authState, setAuthState } = useContext(AuthContext);
 
-    const [workshopId, setWorkshopId] = useState();
-    const [title, setWorkshopTitle] = useState('');
-    const [description,setWorkshopDes] = useState('');
-    const [fromDate, setFromDate] = useState('');
-    const [toDate, setToDate] = useState('');
-    const [duration, setDuration] = useState('');
-    const [credit, setCredit] = useState('');
-   
-    const [subject, setSubject] = useState('');
-    const [image, setImage] = useState(null);
-    
-    const [result, setResult] = useState();
-  
-    let history = useHistory();
+  const [workshopId, setWorkshopId] = useState();
+  const [title, setWorkshopTitle] = useState('');
+  const [description, setWorkshopDes] = useState('');
+  const [location, setLocation] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [duration, setDuration] = useState('');
+  const [credit, setCredit] = useState('');
+  const [workshopGenaratedID, setWorkshopIdGenarated] = useState('');
+
+  const [subject, setSubject] = useState('');
+  const [image, setImage] = useState(null);
+
+  const [result, setResult] = useState();
+
+  let history = useHistory();
   //   const [title, setTitle] = useState('');
   // const [about, setAbout] = useState('');
   // const [desc, setDesc] = useState('');
@@ -57,9 +59,6 @@ function AddWorkshop() {
   //     '-' +
   //     today.getDate();
   // let history = useHistory();
-
-
-  
 
   function msg() {
     if (result == 'err') {
@@ -78,25 +77,19 @@ function AddWorkshop() {
   }
 
   const addWorkshop = () => {
-     const formData = new FormData();
-    // formData.append('image', image);
-    // formData.append('title', title);
-    // formData.append('desc', desc);
-    // formData.append('about', about);
-  
-    // formData.append('memberId', 'cssl001');
-    // formData.append('date', Currentdate);
+    const formData = new FormData();
+    
 
     formData.append('workshopId', workshopId);
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('location', location);
     formData.append('fromDate', fromDate);
     formData.append('toDate', toDate);
     formData.append('duration', duration);
     //formData.append('credit', credit);
     formData.append('memberId', authState.id);
 
-  
     formData.append('image', image);
     formData.append('subject', subject);
     //alert(image);
@@ -110,10 +103,12 @@ function AddWorkshop() {
     })
       .then(res => res.json())
       .then(res => {
+        setWorkshopIdGenarated(res.data.insertId);
+        console.log(res.data.insertId);
         setResult('done');
         setTimeout(
           function () {
-            history.push('/workshop');
+            history.push('/AddWorkshopConducter/'+res.data.insertId);
           },
 
           2000,
@@ -146,28 +141,12 @@ function AddWorkshop() {
             <CardHeader>New Workshop</CardHeader>
             <CardBody>
               <Form>
-
+               
               
-
-
-              <FormGroup row>
-                  <Label for="exampleEmail" sm={3}>
-                    Workshop Title
-                  </Label>
-                  <Col sm={9}>
-                    <Input
-                      type="text"
-                      name="email"
-                      onChange={event => {
-                        setWorkshopTitle(event.target.value);
-                      }}
-                    />
-                  </Col>
-                </FormGroup>
 
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
-                    Subject 
+                    Subject
                   </Label>
                   <Col sm={9}>
                     <Input
@@ -180,23 +159,30 @@ function AddWorkshop() {
                   </Col>
                 </FormGroup>
 
-
-               
-
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
-                  Description
+                  Categorie
                   </Label>
-                  
+
                   <Col sm={9}>
-                    
                     <Input
                       type="textarea"
                       name="title"
-                     
-                       
-                     
                       onChange={e => setWorkshopDes(e.target.value)}
+                    />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                   Location
+                  </Label>
+
+                  <Col sm={9}>
+                    <Input
+                      type="textarea"
+                      name="title"
+                      onChange={e => setLocation(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
@@ -205,7 +191,7 @@ function AddWorkshop() {
                   <Label for="exampleEmail" sm={3}>
                     From Date
                   </Label>
-                  <Col sm={3}>
+                  <Col sm={9}>
                     <Input
                       className="input"
                       required
@@ -213,21 +199,20 @@ function AddWorkshop() {
                       onChange={e => setFromDate(e.target.value)}
                     />
                   </Col>
+                </FormGroup>
 
+                <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
                     To Date
                   </Label>
-                  
-                  <Col sm={3}>
-                 
+
+                  <Col sm={9}>
                     <Input
                       type="date"
                       name="select"
                       required
                       onChange={e => setToDate(e.target.value)}
                     />
-                     
-                   
                   </Col>
                 </FormGroup>
 
@@ -273,8 +258,7 @@ function AddWorkshop() {
                   </Col>
                 </FormGroup> */}
 
-
-<FormGroup row>
+                <FormGroup row>
                   <Label for="exampleEmail" sm={12}>
                     Import Your Workshop Image From the Chooser
                   </Label>
@@ -304,9 +288,6 @@ function AddWorkshop() {
                     />
                   </Col>
                 </FormGroup>
-               
-
-                
 
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>

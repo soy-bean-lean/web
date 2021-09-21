@@ -40,6 +40,7 @@ const CourseView = () => {
   const [profileImg, setProfileImg] = useState('');
   const [courseData, setCourseData] = useState([]);
   const [content, setContent] = useState(null);
+  const [enContentList, setEnContentList] = useState(null);
 
   useEffect(() => {
     const formData = {
@@ -74,6 +75,20 @@ const CourseView = () => {
       .catch(error => {
         alert(error);
       });
+
+    axios
+      .post('http://localhost:3001/csslcourse/updateInteractionCount', formData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log();
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
   }, []);
 
   const contentList =
@@ -91,7 +106,108 @@ const CourseView = () => {
         <br></br>
       </>
     ));
-  console.log(courseImg);
+
+  const enrollCourse = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    var hh = String(today.getHours()).padStart(2, '0');
+    var mn = String(today.getMinutes() + 1).padStart(2, '0');
+    var ss = String(today.getSeconds()).padStart(2, '0');
+
+    var stDate = yyyy + '-' + mm + '-' + dd;
+    var lastAcc = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mn + ':' + ss;
+
+    const submitData = {
+      cId: id,
+      mId: authState.memberId,
+      stDate: stDate,
+      lastAccess: lastAcc,
+    };
+
+    axios
+      .post('http://localhost:3001/csslcourse/enrollCourse', submitData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          getEnrollCourseContents();
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+
+  const getEnrollCourseContents = () => {
+    const submitData = {
+      cId: id,
+      mId: authState.memberId,
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/getEnCourseContent', submitData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setEnContentList(response.data);
+          setEnrollCourseContents(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+
+  const setEnrollCourseContents = courseList => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    var hh = String(today.getHours()).padStart(2, '0');
+    var mn = String(today.getMinutes() + 1).padStart(2, '0');
+    var ss = String(today.getSeconds()).padStart(2, '0');
+
+    var stDate = yyyy + '-' + mm + '-' + dd;
+    var lastAcc = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mn + ':' + ss;
+    var st;
+    for (var i = 0; i < Object.keys(courseList).length; i++) {
+      if(i == 0){
+        st = "Start";
+      }
+      else{
+        st = "Enroll";
+      }
+      const submitData = {
+        cId: id,
+        mId: authState.memberId,
+        cntId: courseList[i].contentId,
+        status: st,
+      };
+      axios
+        .post(
+          'http://localhost:3001/csslcourse/insertEnCourseContent',
+          submitData,
+        )
+
+        .then(response => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            console.log(response.data);
+          }
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
+  };
+
   return (
     <Page title="CSSL COURSES">
       <CardHeader>
@@ -129,7 +245,10 @@ const CourseView = () => {
                   <Button color="primary">Reviews</Button>
                 </Link>
                 {'  '}
-                <Link to={'/csslcourse/enrolledcourse/cssl00'+ id + '/' + title}>
+                <Link
+                  to={'/csslcourse/enrolledcourse/cssl00' + id + '/' + title}
+                  onClick={enrollCourse}
+                >
                   <Button color="primary">Enroll</Button>
                 </Link>
               </center>

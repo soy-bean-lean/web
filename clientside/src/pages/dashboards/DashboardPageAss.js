@@ -65,7 +65,9 @@ class DashboardPage extends React.Component {
        <Badge color="warning" pill className="mr-1">
                  Associate Member
                 </Badge>
+        <hr/>
         <Row>
+
          <hr/>
           <Col lg={6} md={6} sm={10} xs={12}>
             <NumberWidget

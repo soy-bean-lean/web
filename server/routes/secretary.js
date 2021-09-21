@@ -80,7 +80,7 @@ secretaryRouter.post("/regVerified", async (req, res) => {
     }
   );
 });
-
+//insert into member dagnn
 secretaryRouter.post("/approve", async (req, res) => {
   const userID = req.body.userID;
   const secID = req.body.councilId;
@@ -108,6 +108,22 @@ secretaryRouter.post("/approve", async (req, res) => {
             if (error) {
               res.send(error);
             } else {
+              
+            /*  const genaratedMemberID= 'cssl00'+userID;
+              connection.query(
+                `INSERT INTO member (id, memberId ,  memberType) VALUES (?,?,?)`,
+                [userID, designation, companyName, businessAddress],
+                (err, result) => {
+                  if (err) {
+                    res.json({ err });
+                  } else {
+                    res.json("successfully added to database");
+                  }
+                }
+              );
+*/
+              //**********************************************member insert***************************************************** */
+
               const tomail = row[0].email;
               var mailOptions = {
                 from: "2018cs071@stu.ucsc.cmb.ac.lk",

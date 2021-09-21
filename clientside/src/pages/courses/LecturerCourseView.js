@@ -11,24 +11,23 @@ import {
   Button,
   Card,
   CardBody,
-  
   CardText,
   CardTitle,
   Col,
   CardHeader,
-
   Row,
+  Alert
 } from 'reactstrap';
 
 const LecturerCourseView = () => {
   const { id } = useParams();
   const { title } = useParams();
-  const { cntId } = useParams();
-  const { cntTitle } = useParams();
 
   const [courseImg, setCourseImg] = useState('');
   const [courseStatus, setCourseStatus] = useState('');
   const [content, setContent] = useState(null);
+  const [result, setResult] = useState('');
+
   const { authState, setAuthState } = useContext(AuthContext);
 
   let history = useHistory();
@@ -98,14 +97,13 @@ const LecturerCourseView = () => {
     });
   };
 
-  const deleteContentConfirm = () => {
+  const deleteContentConfirm = val => {
     confirmAlert({
-      title: title + ' - ' + '',
-      message: 'Confirm to Send to Approval.',
+      message: 'Confirm to Delete Content.',
       buttons: [
         {
           label: 'Yes',
-          onClick: () => alert('confirm - ' + cntTitle),
+          onClick: () => deleteSelectedContent(val),
         },
         {
           label: 'No',
@@ -126,12 +124,56 @@ const LecturerCourseView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-       //   alert('Course Deleted Successfully');
-          redirectCourseList();
+          //setResult('done');
+          setTimeout(function () {
+            redirectCourseList();
+          }, 2000);
         }
       })
       .catch(error => {
-        alert(error);
+        //setResult('err');
+        setTimeout(
+          function () {
+            redirectCourseList();
+          },
+
+          2000,
+        );
+      });
+  };
+
+  const deleteSelectedContent = val => {
+    const sendData = {
+      courseId: id,
+      contentId: val,
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/deleteCourseContent', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setResult('done');
+          setTimeout(
+            function () {
+              redirectCourseList();
+              redirectCourse();
+            },
+
+            2000,
+          );
+        }
+      })
+      .catch(error => {
+        setResult('err');
+        setTimeout(
+          function () {
+            redirectCourseList();
+            redirectCourse();
+          },
+          2000,
+        );
       });
   };
 
@@ -146,7 +188,6 @@ const LecturerCourseView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          alert('Course Sent to Approval');//**************************************************** */
           redirectCourseList();
         }
       })
@@ -163,6 +204,10 @@ const LecturerCourseView = () => {
   const redirectCourse = () => {
     let path = '/courseView/cssl00' + id + '/' + title;
     history.push(path);
+  };
+
+  const setSelectedContent = event => {
+    deleteContentConfirm(event.target.dataset.value);
   };
 
   const contentList =
@@ -191,21 +236,13 @@ const LecturerCourseView = () => {
                 >
                   <Button color="warning">Edit</Button>
                 </Link>{' '}
-                <Link
-                  to={
-                    '/csslcourse/deleteCourseContent/cssl00' +
-                    id +
-                    '/' +
-                    title +
-                    '/' +
-                    content.contentId +
-                    '/' +
-                    content.title
-                  }
-                  onClick={deleteContentConfirm}
+                <Button
+                  color="danger"
+                  data-value={content.contentId}
+                  onClick={setSelectedContent}
                 >
-                  <Button color="danger">Delete</Button>
-                </Link>
+                  Delete
+                </Button>
               </CardBody>
             </Card>
           </Col>
@@ -213,13 +250,29 @@ const LecturerCourseView = () => {
       </>
     ));
 
+    function msg() {
+      if (result == 'err') {
+        return (
+          <>
+            <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          </>
+        );
+      } else if (result == 'done') {
+        return (
+          <>
+            <Alert color="success">Attempt Successfull</Alert>
+          </>
+        );
+      }
+    }
+
   return (
     <Page title="Course">
       <hr></hr>
-      {courseStatus == "OnGoing" &&(
-      <Link onClick={confirmApproval}>
-        <Button color="success">Get Approval</Button>
-      </Link>
+      {courseStatus == 'OnGoing' && (
+        <Link onClick={confirmApproval}>
+          <Button color="success">Get Approval</Button>
+        </Link>
       )}
       {'  '}
       <Link to={'/csslcourse/editCourse/cssl00' + id + '/' + title}>
@@ -246,7 +299,9 @@ const LecturerCourseView = () => {
               <Button color="primary">Add Quiz</Button>
             </Link>
           </CardHeader>
-
+          <br/>
+          <center>{msg()}</center>
+          
           <CardBody>
             <Card body>{contentList}</Card>
           </CardBody>

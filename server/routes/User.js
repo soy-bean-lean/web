@@ -147,7 +147,7 @@ userRouter.post("/", async (req, res) => {
                   [row.insertId, designation, companyName, businessAddress],
                   (err, result) => {
                     if (err) {
-                      res.json({ error });
+                      res.json({ err });
                     } else {
                       connection.query(
                         `INSERT INTO logininfo (un, pw) VALUES (?,?)`,
