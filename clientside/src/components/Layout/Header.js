@@ -72,8 +72,9 @@ function Header(props) {
   const handleSidebarControlButton = event => {
     event.preventDefault();
     event.stopPropagation();
-
+    
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
+    setisOpenUserCardPopover(false);
   };
 
   let history = useHistory();

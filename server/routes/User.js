@@ -136,7 +136,7 @@ userRouter.post("/", async (req, res) => {
             ],
             (err, row) => {
               if (err) {
-                res.json({ error });
+                res.json({ err: "NIC should be unique" });
               } else {
                 connection.query(
                   `INSERT INTO employmentdetails (userID, designation, companyName, businessAddress) VALUES (?,?,?,?)`,
@@ -223,12 +223,15 @@ userRouter.post("/login", async (req, res) => {
             res.json({ errorPass: "Incorrect password" });
           } else {
             const id = result[0].id;
+            
             connection.query(
               //temporary sql query for testing
               "SELECT * FROM member WHERE id=?",
               [id],
               (err, row) => {
+                console.log(row);
                 if (row.length > 0) {
+                  console.log("done");
                   const accessToken = sign(
                     {
                       firstName: result[0].firstName,
@@ -253,6 +256,7 @@ userRouter.post("/login", async (req, res) => {
                     memberId: row[0].memberId,
                   });
                 } else {
+                  console.log("none");
                   const accessToken = sign(
                     {
                       firstName: result[0].firstName,
@@ -594,23 +598,22 @@ userRouter.post("/payment", (req, res) => {
           if (error) {
             res.send(error);
           } else {
-            connection.query(
-              `INSERT INTO payment (year, amount, type, memberId) VALUES (?,?,?,?)`,
-              [year, amount, role, userID],
-              (err, result) => {
-                if (err) {
-                  res.json({ error });
-                } else {
-                  connection.query(`SELECT * FROM member;`, (err, result) => {
+            connection.query(`SELECT * FROM member;`, (err, result) => {
+              if (err) {
+                res.json({ error });
+              } else {
+                const rows = result.length + 1;
+                const memberID = "CSSL00" + rows;
+                connection.query(
+                  `INSERT INTO member (id, memberId, memberType) VALUES (?,?,?)`,
+                  [userID, memberID, role],
+                  (err, result) => {
                     if (err) {
                       res.json({ error });
                     } else {
-                      const rows = result.length + 1;
-                      const memberID = "CSSL00" + rows;
-                      console.log(memberID);
                       connection.query(
-                        `INSERT INTO member (id, memberId, memberType) VALUES (?,?,?)`,
-                        [userID, memberID, role],
+                        `INSERT INTO payment (year, amount, type, memberId) VALUES (?,?,?,?)`,
+                        [year, amount, role, memberID],
                         (err, result) => {
                           if (err) {
                             res.json({ error });
@@ -657,10 +660,10 @@ userRouter.post("/payment", (req, res) => {
                         }
                       );
                     }
-                  });
-                }
+                  }
+                );
               }
-            );
+            });
           }
         }
       );
@@ -682,6 +685,26 @@ userRouter.post("/payment", (req, res) => {
   //   res.send(result);
   // });
 });
+
+//payment verification profile page
+userRouter.post("/paymentVerfication", (req, res) => {
+  //const memberID = req.body.id;
+  const memberID = "CSSL001";
+
+  connection.query(   
+    "SELECT * FROM `payment` WHERE `memberId` = ? AND year=YEAR(CURDATE());",
+    [memberID],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        
+        res.json(result);
+      }
+    }
+  );
+});
+
 
 userRouter.get("/auth", validateToken, (req, res) => {
   res.json(req.user);
