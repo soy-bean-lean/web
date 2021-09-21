@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import '../../main.css';
 
 import Page from 'components/Page';
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../helpers/AuthContext';
+
+import { confirmAlert } from 'react-confirm-alert';
 import { useParams } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
@@ -26,7 +25,7 @@ import {
   Row,
 } from 'reactstrap';
 
-function WorkshopView() {
+function SendEmail() {
   const { id } = useParams();
   const add = '';
   const [image, setImage] = useState('');
@@ -71,102 +70,8 @@ function WorkshopView() {
     }
   }
 
-  const deleteItem = () => {
-    const data = {
-      wid: id,
-      tableName: 'csslworkshop',
-      coloum: 'wId',
-    };
-console.log(id);
-    axios.post('http://localhost:3001/workshop/deleteItem', data).then(response => {
-      if (response.data.error) {
-        setResult('err');
-        setTimeout(
-          function () {
-            history.push('/manageworksops');
-          },
-
-          2000,
-        );
-      } else {
-        setResult('done');
-
-        setTimeout(
-          function () {
-            history.push('/manageworksops');
-            //hri giyoth yana thena
-          },
-
-          2000,
-        );
-      }
-    });
-  };
-
-  const submit = () => {
-    confirmAlert({
-      message: 'Are you sure to Delete ?.',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => {
-            deleteItem();
-          },
-        },
-        {
-          label: 'No',
-          onClick: () => {
-            //alert('Click No')
-          },
-        },
-      ],
-    });
-  };
 
 
-  const updateBlog = () => {
-    const blogData = new FormData();
-    //blogData.append('image', image);
-    blogData.append('title', title);
-    blogData.append('description', desc);
-    blogData.append('subject', subject);
-    blogData.append('fromDate', fromDate);
-    blogData.append('toDate', toDate);
-    blogData.append('duration', duration);
-    blogData.append('credit', credit);
-    blogData.append('wId', id);
-
-    console.log("data;",blogData);
-    fetch('http://localhost:3001/blog/updateBlog', {
-      method: 'POST',
-      body:blogData,
-      headers: {
-        Accept: 'multipart/form-data',
-      },
-      credentials: 'include',
-    })
-    .then(res => res.json())
-      .then(res => {
-        setResult('done');
-        setTimeout(
-          function () {
-            history.push('/manageworksops');
-          },
-
-          2000,
-        );
-      })
-      .catch(error => {
-        setResult('err');
-        setTimeout(
-          function () {
-            history.push('/addCredit/cssl00' + blogData.wId + '/' + blogData.title);
-          },
-
-          2000,
-        );
-      });
-  };
 
   
 
@@ -216,7 +121,7 @@ console.log(id);
 //   );
 
 return (
-    <Page title={title}>
+    <Page title="Send Mail to Conductors">
         <Link to="/workshop">
         <Button color="primary">Workshop List</Button>
       </Link>
@@ -249,13 +154,16 @@ return (
                 </Badge> */}
                 <br />
                 <br />
-                <p>{desc}</p>
-                <p>{subject}</p>
+                
+                <p>{'Categorie: ' +subject}</p>
                <p> { 'From' +'  '+ fromDate + '  To ' + toDate}</p>
-                <p>{duration + '  hours per Day'}</p>
+                <p>{duration + '  hours'}</p>
              
                 
               </center>
+
+             
+              <p>conduct By</p>
               </CardBody>
           </Card>
         </Col>
@@ -264,4 +172,4 @@ return (
   );
 }
 
-export default WorkshopView;
+export default SendEmail;

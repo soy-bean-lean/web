@@ -29,7 +29,7 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
     const about = req.body.about;
 
     const image = req.file.filename;
-    console.log(image);
+    console.log(memberID);
 
     connection.query(
       `INSERT INTO blog (memberId,title,description,content,publishedDate,image) VALUES (?,?,?,?,?,?)`,
