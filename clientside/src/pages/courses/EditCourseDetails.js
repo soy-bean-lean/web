@@ -29,6 +29,7 @@ const EditCourseDetails = () => {
   const [language, setLanguage] = useState('');
   const [level, setLevel] = useState('');
   const [mode, setMode] = useState('');
+  const [category, setCategory] = useState('');
   const [imgFile, setImgFile] = useState();
   const [durationType, setDurationType] = useState('');
   const [result, setResult] = useState();
@@ -74,6 +75,7 @@ const EditCourseDetails = () => {
     formData.append('level', level);
     formData.append('mode', mode);
     formData.append('image', imgFile);
+    formData.append('category', category);
 
     fetch('http://localhost:3001/csslcourse/editCourseInfo', {
       method: 'POST',
@@ -88,10 +90,16 @@ const EditCourseDetails = () => {
         setUploadStatus(res.msg);
         console.log(res.data);
         setResult('done');
-        redirectCourse();
+        setTimeout(
+          function () {
+            redirectCourse();
+          },
+          2000,
+        ); 
       })
       .catch(error => {
         console.log(error);
+        setResult('err');
       });
   };
 
@@ -103,6 +111,7 @@ const EditCourseDetails = () => {
     setLanguage(record.language);
     setLevel(record.skillLevel);
     setMode(record.mode);
+    setCategory(record.category);
     //setImgFile('http://localhost:3001/uploads/csslCourses/'+record.image);
     setImgFile(record.image);
     setImgUrl('http://localhost:3001/uploads/csslCourses/'+record.image);
@@ -204,6 +213,30 @@ return (
                 </Input>
               </Col>
             </FormGroup>
+            <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Category
+                  </Label>
+
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      required
+                      name="select"
+                      value={category}
+                      onChange={e => setCategory(e.target.value)}
+                    >
+                      <option value=""></option>
+                      <option value="Programming">Programming</option>
+                      <option value="Web Application Development">Web Application Development</option>
+                      <option value="Mobile Application Development">Mobile Application Development</option>
+                      <option value="Database Designing">Database Designing</option>
+                      <option value="ML and AI">ML and AI</option>
+                      <option value="Software Testing">Software Testing</option>
+                      <option value="Software Engineering">Software Engineering</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
             <FormGroup row>
               <Label for="exampleEmail" sm={3}>
                 Language
