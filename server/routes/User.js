@@ -213,7 +213,7 @@ userRouter.post("/login", async (req, res) => {
   const password = req.body.password;
   connection.query(
     //temporary sql query for testing
-    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE user.paymentStatus=0 AND logininfo.un = ?",
+    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE user.paymentStatus=1 AND logininfo.un = ?",
 
     [username],
     (err, result) => {
