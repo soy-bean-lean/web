@@ -228,20 +228,9 @@ function AddWorkshop() {
                       onChange={e => setDuration(e.target.value)}
                     />
                   </Col>
-                  {/* <Col sm={6}>
-                    <Input
-                      type="select"
-                      name="select"
-                      required
-                      onChange={e => setDurationType(e.target.value)}
-                    >
-                      <option value="type"></option>
-                      <option value="Hours">Hours</option>
-                      <option value="Days">Days</option>
-                      <option value="Weeks">Weeks</option>
-                      <option value="Months">Months</option>
-                    </Input>
-                  </Col> */}
+                  <Label for="exampleEmail" sm={2}>
+                    hours
+                  </Label>
                 </FormGroup>
 
                 {/* <FormGroup row>
