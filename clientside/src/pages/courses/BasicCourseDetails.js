@@ -62,20 +62,14 @@ const BasicCourseInfo = () => {
         setUploadStatus(res.msg);
         console.log(res.data);
         setCourseId(res.data.insertId);
-        //alert(res.data.insertId);
-        const next = 'Content';
         setResult('done');
 
         setTimeout(
           function () {
             history.push("/csslcourse/addCourseContent/cssl00"+res.data.insertId+"/"+courseTitle);
-            //hri giyoth yana thena
           },
-
           2000,
-        );
-        setPage(next);
-       
+        ); 
       })
       .catch(error => {
         setResult('err');
@@ -105,11 +99,12 @@ const BasicCourseInfo = () => {
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Attempt Successfull</Alert>
         </>
       );
     }
   }
+  
   return (
     <Page title="Lecturing Course">
       <Link to="/lecCourse">

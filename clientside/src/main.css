@@ -21,6 +21,9 @@
   height: 38px;
   background:#1d7e61 !important;
 }
+.workshopImg{
+  border-radius: 50px;
+}
 .react-calendar button {
   margin: 0;
   border: 0;

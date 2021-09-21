@@ -69,7 +69,7 @@ Workshop.post("/getSendWorkshop", (req, res) => {
   //const mid = req.body.mId;
   //console.log(mid);
   connection.query(
-    "SELECT wId, title,description,image FROM csslworkshop WHERE credit IS NULL AND verifiedBy IS NULL;",
+    "SELECT wId, title,description,image FROM csslworkshop WHERE credit IS NULL AND verifiedBy IS NULL ORDER BY `csslworkshop`.`wId`  DESC;",
 
     (error, result, feilds) => {
       if (error) console.log(error);

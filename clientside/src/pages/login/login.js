@@ -113,7 +113,7 @@ const Login = () => {
       return (
         <>
           <Alert className="loginAlert" color="success">
-            Login Succefull
+            Login Succeful
           </Alert>
         </>
       );
@@ -121,7 +121,7 @@ const Login = () => {
       return (
         <>
           <Alert className="loginAlert" color="danger">
-            Invalid Details
+            Invalid Details user
           </Alert>
         </>
       );
@@ -129,7 +129,7 @@ const Login = () => {
       return (
         <>
           <Alert className="loginAlert" color="danger">
-            Invalid Details
+            Invalid Details pss
           </Alert>
         </>
       );
@@ -213,7 +213,7 @@ const Login = () => {
                         tag="a"
                         href="/forgotpassword"
                       >
-                        forget password?{' '}
+                        forgot password?{' '}
                       </Label>
                     </Col>
                   </FormGroup>
@@ -222,18 +222,18 @@ const Login = () => {
                   <FormGroup check row>
                     <Col>
                       <Link to="/registration">
-                        <Button className="buttonDIV" color="primary">
-                          Sign Up
+                        <Button className="buttonDIV mr-2" color="primary">
+                          Register
                         </Button>
                       </Link>
-
                       <Button
-                        className="buttonDIV"
+                        className="buttonDIV "
                         onClick={login}
                         color="success"
                       >
-                        Sign In
+                        Login
                       </Button>
+                      
                     </Col>
                   </FormGroup>
                 </Form>

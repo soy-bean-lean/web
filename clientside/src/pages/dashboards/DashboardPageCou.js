@@ -306,34 +306,7 @@ function DashboardPage() {
       description: '',
     };
 
-    // axios
-    //   .post('http://localhost:3001/cpd/', formData)
-
-    //   .then(response => {
-    //     if (response.data.error) {
-    //       alert(response.data.error);
-    //     } else {
-    //       setRecord(response.data);
-    //       for (var i = 0; i < Object.keys(response.data).length; i++) {
-    //         if (response.data[i].status == 'Approved') {
-    //           a++;
-    //           setStudents(a);
-    //         } else if (response.data[i].status == 'Pending') {
-    //           b++;
-    //           setAssociates(b);
-    //         } else if (response.data[i].status == 'Rejected') {
-    //           c++;
-    //           setPro(c);
-    //         } else {
-    //           console.log('Error:', i);
-    //         }
-    //       }
-    //     }
-    //   })
-    //   .catch(error => {
-    //     alert(error);
-    //   });
-
+    
     const data = {
       memberId: authState.id,
       year: '2021',

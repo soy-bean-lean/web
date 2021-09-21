@@ -53,7 +53,7 @@ reportsSQL.post("/getPaidCount", (req, res) => {
 
 reportsSQL.post("/getRecentUsers", (req, res) => {
   const sqlSelect =
-    "SELECT * FROM `user` ORDER BY `user`.`registeredDate` ASC limit 8"
+    "SELECT * FROM `user` where status = 1  ORDER BY `user`.`registeredDate` ASC limit 8;"
     //"SELECT COUNT(id) As blogs  from test  ;    ";
 
   console.log(sqlSelect);

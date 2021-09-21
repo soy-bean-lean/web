@@ -108,9 +108,21 @@ secretaryRouter.post("/approve", async (req, res) => {
             if (error) {
               res.send(error);
             } else {
-
-//**********************************************member insert***************************************************** */
-
+              
+            /*  const genaratedMemberID= 'cssl00'+userID;
+              connection.query(
+                `INSERT INTO member (id, memberId ,  memberType) VALUES (?,?,?)`,
+                [userID, designation, companyName, businessAddress],
+                (err, result) => {
+                  if (err) {
+                    res.json({ err });
+                  } else {
+                    res.json("successfully added to database");
+                  }
+                }
+              );
+*/
+              //**********************************************member insert***************************************************** */
 
               const tomail = row[0].email;
               var mailOptions = {
@@ -140,9 +152,6 @@ secretaryRouter.post("/approve", async (req, res) => {
     }
   );
 });
-
- 
-
 
 secretaryRouter.post("/verify", async (req, res) => {
   const userID = req.body.userID;

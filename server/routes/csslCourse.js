@@ -305,7 +305,7 @@ Course.post("/", (req, res) => {
   );
 });
 
-
+//retrieve content list (CourseView.js)
 Course.post("/getContentList", (req, res) => {
   const cid = req.body.cId;
   const stDel = "Deleted";
@@ -660,5 +660,126 @@ Course.post("/getContent", (req, res) => {
   );
 });
 
+//increment noOfInteraction (CourseView.js)
+Course.post("/updateInteractionCount", (req, res) => {
+  const cid = req.body.cId;
+  connection.query(
+    "UPDATE csslcourse SET noOfInteraction = noOfInteraction + 1 WHERE courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 
+//user enroll to a course (CourseView.js)
+Course.post("/enrollCourse", (req, res) => {
+  const cid = req.body.cId;
+  const mid = req.body.mId;
+  const stDate = req.body.stDate;
+  const lastAccess = req.body.lastAccess;
+  const status = "Ongoing";
+  connection.query(
+    "INSERT INTO courseenroll (courseId, memberId, startDate, lastAccess, status) VALUES (?,?,?,?,?);",
+    [cid, mid, stDate, lastAccess, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get course list of enrolled course (CourseView.js)
+Course.post("/getEnCourseContent", (req, res) => {
+  const cid = req.body.cId;
+  const status = "Approved";
+  connection.query(
+    "SELECT contentId FROM coursecontent WHERE courseId = ? AND status = ? ORDER BY contentOrder;",
+    [cid, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//insert course list of enrolled course to contentaccess table (CourseView.js)
+Course.post("/insertEnCourseContent", (req, res) => {
+  const cid = req.body.cId;
+  const mid = req.body.mId;
+  const cntId = req.body.cntId;
+  const status = req.body.status;
+  connection.query(
+    "INSERT INTO contentaccess (memberId, courseId, contentId, status) VALUES (?,?,?,?);",
+    [mid, cid, cntId, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//retrieve enrolled content list (EnrolledCourseView.js)
+Course.post("/getEnrolledContentList", (req, res) => {
+  const cid = req.body.cId;
+  connection.query(
+    "SELECT coursecontent.contentId, coursecontent.title, coursecontent.description, contentaccess.status FROM coursecontent INNER JOIN contentaccess ON coursecontent.courseId = contentaccess.courseId AND coursecontent.contentId = contentaccess.contentId WHERE coursecontent.courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get user's content access details for the relevant course (CourseContentView.js)
+Course.post("/getContentAccessInfo", (req, res) => {
+  const cid = req.body.cId;
+  const cntid = req.body.cntId;
+  const mid = req.body.mId;
+
+  connection.query(
+    "SELECT startDate, status FROM contentaccess WHERE contentId = ? AND courseId = ? AND memberId = ?;",
+    [cntid,cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//update content access info (CourseContentView.js)
+Course.post("/updateContentAccessInfo", (req, res) => {
+  const cid = req.body.cId;
+  const mid = req.body.mId;
+  const cntId = req.body.cntId;
+  const stDate = req.body.stDate;
+  const lastAccess = req.body.lastAccess;
+  const status = req.body.status;
+  //const type = req.body.type;
+
+  connection.query(
+    "UPDATE contentaccess SET startDate = ?, lastAccess = ?, status = ? WHERE contentId = ? AND courseId = ? AND memberId = ?;",
+    [stDate, lastAccess, status, cntId, cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 export default Course;

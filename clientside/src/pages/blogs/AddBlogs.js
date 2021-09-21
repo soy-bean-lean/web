@@ -70,7 +70,7 @@ function AddBlogs() {
     formData.append('desc', desc);
     formData.append('about', about);
 
-    formData.append('memberId', authState.memberId);
+    formData.append('memberId', "cssl00"+authState.id);
     formData.append('date', Currentdate);
     console.log(authState.memberId);
     fetch('http://localhost:3001/blog/addBlog', {
