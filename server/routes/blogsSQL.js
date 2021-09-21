@@ -40,7 +40,20 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
         if (err) {
           console.log(err);
         } else {
-          res.json("success");
+          
+         
+          
+          const recentUpdates =
+            "insert into recentactivities  ( memberId,title,description) values ('" +   memberID +    "','Add  a Blog','New Blog about "+title+" for   on "+date+"')";
+            console.log(recentUpdates);
+          connection.query(recentUpdates, (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.json("success");
+            }
+          });
+        
         }
       }
     );
