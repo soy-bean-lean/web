@@ -179,7 +179,18 @@ Course.route("/courseContent").post(upload.single("cfile"), (req, res, err) => {
 
   connection.query(
     "INSERT INTO coursecontent (contentId, contentNo, title, description, note, contentType, content, contentOrder, status, courseId) VALUES (?,?,?,?,?,?,?,?,?,?);",
-    [contentId, contentNo, title, description, note, type, content, order, status, courseId],
+    [
+      contentId,
+      contentNo,
+      title,
+      description,
+      note,
+      type,
+      content,
+      order,
+      status,
+      courseId,
+    ],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -213,7 +224,17 @@ Course.route("/editCourseContent").post(
 
     connection.query(
       "UPDATE coursecontent SET title = ?, description = ?, note = ?, contentType = ?, content = ?, contentOrder = ?, status = ? WHERE contentId = ? AND courseId = ?;",
-      [title, description, note, type, content, order, status, contentId, courseId],
+      [
+        title,
+        description,
+        note,
+        type,
+        content,
+        order,
+        status,
+        contentId,
+        courseId,
+      ],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -249,10 +270,10 @@ Course.post("/updateContentOrder", (req, res) => {
   const current = req.body.current;
   const order = req.body.order;
 
-  if(current < order){
+  if (current < order) {
     connection.query(
       "UPDATE coursecontent SET contentOrder = contentOrder - 1 WHERE courseId = ? AND contentOrder > ? AND contentOrder <= ?;",
-      [courseId,current, order],
+      [courseId, current, order],
       (error, result, feilds) => {
         if (error) console.log(error);
         else {
@@ -260,8 +281,7 @@ Course.post("/updateContentOrder", (req, res) => {
         }
       }
     );
-  }
-  else if(current > order){
+  } else if (current > order) {
     connection.query(
       "UPDATE coursecontent SET contentOrder = contentOrder + 1 WHERE courseId = ? AND contentOrder < ? AND contentOrder >= ?;",
       [courseId, current, order],
@@ -273,9 +293,7 @@ Course.post("/updateContentOrder", (req, res) => {
       }
     );
   }
-  
 });
-
 
 //delete coursecontent(it's only update the status to deleted)
 Course.post("/deleteCourseContent", (req, res) => {
@@ -341,7 +359,6 @@ Course.post("/getContentNo", (req, res) => {
   );
 });
 
-
 //get last content order list of the relevant course (AddCourseContent.js)
 Course.post("/getContentOrderList", (req, res) => {
   const cId = req.body.id;
@@ -399,7 +416,7 @@ Course.post("/getCourseInfo", (req, res) => {
   const status = "Deleted";
   connection.query(
     "SELECT name, description, duration, durationType, language, skillLevel, image, mode, category FROM csslcourse WHERE courseId = ? AND status != ?;",
-    [cid,status],
+    [cid, status],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -428,7 +445,7 @@ Course.post("/getCourseList", (req, res) => {
   const mid = req.body.mId;
   const status = "Approved";
   connection.query(
-    //need to add not equal conductedBy to memeberId and not enrolled by the memberId 
+    //need to add not equal conductedBy to memeberId and not enrolled by the memberId
     "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ? ORDER BY approvedDate DESC;",
     [mid, mid, status],
     (error, result, feilds) => {
@@ -480,7 +497,11 @@ Course.post("/getFilterCourseList", (req, res) => {
   const category = req.body.category;
   const status = "Approved";
 
-  if((level == "" && instructor == "") || (level == "" && category == "") || (category == "" && instructor == "")){
+  if (
+    (level == "" && instructor == "") ||
+    (level == "" && category == "") ||
+    (category == "" && instructor == "")
+  ) {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND (skillLevel = ? OR conductedBy = ? OR category = ?) AND conductedBy != ? AND status = ?;",
       [mid, level, instructor, category, mid, status],
@@ -491,8 +512,7 @@ Course.post("/getFilterCourseList", (req, res) => {
         }
       }
     );
-  }
-  else if(level != "" && instructor != "" && category != ""){
+  } else if (level != "" && instructor != "" && category != "") {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND skillLevel = ? AND conductedBy = ? AND category = ? AND conductedBy != ? AND status = ?;",
       [mid, level, instructor, category, mid, status],
@@ -503,8 +523,7 @@ Course.post("/getFilterCourseList", (req, res) => {
         }
       }
     );
-  }
-  else if(level != "" && instructor == "" && category != ""){
+  } else if (level != "" && instructor == "" && category != "") {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND skillLevel = ? AND category = ? AND conductedBy != ? AND status = ?;",
       [mid, level, category, mid, status],
@@ -515,8 +534,7 @@ Course.post("/getFilterCourseList", (req, res) => {
         }
       }
     );
-  }
-  else if(level == "" && instructor != "" && category != ""){
+  } else if (level == "" && instructor != "" && category != "") {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy = ? AND category = ? AND conductedBy != ? AND status = ?;",
       [mid, instructor, category, mid, status],
@@ -527,8 +545,7 @@ Course.post("/getFilterCourseList", (req, res) => {
         }
       }
     );
-  }
-  else if(level != "" && instructor != "" && category == ""){
+  } else if (level != "" && instructor != "" && category == "") {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND skillLevel = ? AND conductedBy = ? AND conductedBy != ? AND status = ?;",
       [mid, level, instructor, mid, status],
@@ -539,8 +556,7 @@ Course.post("/getFilterCourseList", (req, res) => {
         }
       }
     );
-  }
-  else{
+  } else {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ?;",
       [mid, mid, status],
@@ -561,7 +577,7 @@ Course.post("/getSearchCourseList", (req, res) => {
   const status = "Approved";
   connection.query(
     "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND (name LIKE ? OR category LIKE ? ) AND conductedBy != ? AND status = ?;",
-    [mid, '%'+sQuery+'%', '%'+sQuery+'%', mid, status],
+    [mid, "%" + sQuery + "%", "%" + sQuery + "%", mid, status],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -576,7 +592,7 @@ Course.post("/getSortCourseList", (req, res) => {
   const mid = req.body.mId;
   const type = req.body.sortType;
   const status = "Approved";
-  if(type == "Rating"){
+  if (type == "Rating") {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ? ORDER BY avgRate DESC;",
       [mid, mid, status],
@@ -587,9 +603,7 @@ Course.post("/getSortCourseList", (req, res) => {
         }
       }
     );
-
-  }
-  else if(type == "Interaction"){
+  } else if (type == "Interaction") {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ? ORDER BY noOfInteraction DESC;",
       [mid, mid, status],
@@ -600,9 +614,7 @@ Course.post("/getSortCourseList", (req, res) => {
         }
       }
     );
-
-  }
-  else if(type == "Date"){
+  } else if (type == "Date") {
     connection.query(
       "SELECT * FROM csslcourse WHERE courseId NOT IN (SELECT courseId FROM courseenroll WHERE memberID = ?) AND conductedBy != ? AND status = ? ORDER BY approvedDate DESC;",
       [mid, mid, status],
@@ -613,10 +625,7 @@ Course.post("/getSortCourseList", (req, res) => {
         }
       }
     );
-
-  }
-  else{
-
+  } else {
   }
 });
 
@@ -655,7 +664,7 @@ Course.post("/getContent", (req, res) => {
   const cntid = req.body.cntId;
   connection.query(
     "SELECT title, contentType, content, note, status FROM coursecontent WHERE contentId = ? AND courseId = ?;",
-    [cntid,cid],
+    [cntid, cid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -692,8 +701,32 @@ Course.post("/enrollCourse", (req, res) => {
     [cid, mid, stDate, lastAccess, status],
     (error, result, feilds) => {
       if (error) console.log(error);
+      // recent Activity
       else {
-        res.send(result);
+        const sqlSelect =
+          "SELECT csslcourse.name FROM `csslcourse` where courseId = " + cid + "; ";
+
+        connection.query(sqlSelect, (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            const memberId = mid;
+
+            console.log(result[0].name);
+            const recentUpdates =
+              "insert into recentactivities  ( memberId,title,description) values ('" +   memberId +    "','Course Enrollment','Enrolled To "+result[0].name+"  on "+stDate+"')";
+              console.log(recentUpdates);
+            connection.query(recentUpdates, (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.json("success");
+              }
+            });
+          }
+        });
+
+        //res.send(result);
       }
     }
   );
@@ -756,7 +789,7 @@ Course.post("/getContentAccessInfo", (req, res) => {
 
   connection.query(
     "SELECT startDate, status FROM contentaccess WHERE contentId = ? AND courseId = ? AND memberId = ?;",
-    [cntid,cid, mid],
+    [cntid, cid, mid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {

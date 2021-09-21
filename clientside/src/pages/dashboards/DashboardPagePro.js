@@ -358,7 +358,7 @@ function DashboardPage() {
         }
       })
       .catch(error => {
-        alert(error);
+      //  alert(error);
       });
 
     axios

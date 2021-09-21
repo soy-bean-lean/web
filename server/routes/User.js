@@ -701,6 +701,8 @@ const uploadReg = multer({
   storage: storageRegistrationData,
 });
 
+
+
 userRouter
   .route("/addUserProofs")
   .post(uploadReg.single("image"), (req, res, err) => {

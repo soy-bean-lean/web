@@ -291,6 +291,7 @@ const CourseView = () => {
                 {'  '}
               </center>
             </CardBody>
+            
           </Card>
         </Col>
       </Row>

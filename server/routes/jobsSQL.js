@@ -69,6 +69,8 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
           console.log(err);
           res.send(result);
         } else {
+         
+         
           res.json("success");
         }
       }
