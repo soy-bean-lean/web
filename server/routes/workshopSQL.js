@@ -115,12 +115,12 @@ Workshop.post("/getWorkshopView", (req, res) => {
 
 
 Workshop.route("/addCredit").post(
-  upload.single("image"),
+  //upload.single("image"),
   (req, res, err) => {
     // if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG)$/)) {
     //   res.send({ msg: "Not an Image File." });
     // } else {
-      const wid = req.body.wId;
+      const wid = req.body.wid;
       const mid=req.body.verifiedBy;
 
       const credit = req.body.credit;
@@ -131,6 +131,8 @@ Workshop.route("/addCredit").post(
      // const image = req.file.filename;
 
      console.log(wid);
+     console.log(mid);
+
 
       
       
@@ -155,6 +157,9 @@ Workshop.route("/addCredit").post(
     
   }
 );
+
+
+//SELECT csslworkshop.* ,user.title,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id)
 
 
 

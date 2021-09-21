@@ -167,7 +167,7 @@ function AddWorkshop() {
 
                 <FormGroup row>
                   <Label for="exampleEmail" sm={3}>
-                    Subject 
+                  Categorie
                   </Label>
                   <Col sm={9}>
                     <Input

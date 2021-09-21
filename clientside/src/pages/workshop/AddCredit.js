@@ -75,6 +75,39 @@ function AddCredit() {
     }
   }
 
+  const approve = () => {
+    const data = {
+      wid: wId,
+      verifiedBy: authState.memberId,
+      credit: credit,
+    };
+console.log(id);
+    axios.post('http://localhost:3001/workshop/addCredit', data).then(response => {
+      if (response.data.error) {
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push('/addCredit/cssl00' + data.wid+ '/'+title);
+          },
+
+          2000,
+        );
+      } else {
+        setResult('done');
+
+        setTimeout(
+          function () {
+            history.push('/sendEmail/cssl00' + data.wid + '/'+title);
+            //hri giyoth yana thena
+          },
+
+          2000,
+        );
+      }
+    });
+  };
+
+
   const deleteItem = () => {
     const data = {
       wid: id,
@@ -128,51 +161,51 @@ console.log(id);
   };
 
 
-  const approve = () => {
-    const blogData = new FormData();
-    //blogData.append('image', image);
-    blogData.append('title', title);
-    blogData.append('description', desc);
-    blogData.append('subject', subject);
-    blogData.append('fromDate', fromDate);
-    blogData.append('toDate', toDate);
-    blogData.append('duration', duration);
-    blogData.append('credit', credit);
-    blogData.append('wId', id);
+//   const approve = () => {
+//     const blogData = new FormData();
+//     blogData.append('image', image);
+//     blogData.append('title', title);
+//     blogData.append('description', desc);
+//     blogData.append('subject', subject);
+//     blogData.append('fromDate', fromDate);
+//     blogData.append('toDate', toDate);
+//     blogData.append('duration', duration);
+//     blogData.append('credit', credit);
+//     blogData.append('wId', wId);
 
-    blogData.append('verifiedBy', authState.memberId);
+//     blogData.append('verifiedBy', authState.memberId);
 
-    console.log("data;",blogData);
-    fetch('http://localhost:3001/workshop/addCredit', {
-      method: 'POST',
-      body:blogData,
-      headers: {
-        Accept: 'multipart/form-data',
-      },
-      credentials: 'include',
-    })
-    .then(res => res.json())
-      .then(res => {
-        setResult('done');
-        setTimeout(
-          function () {
-            history.push('/manageworksops');
-          },
+//     console.log("data;",blogData);
+//     fetch('http://localhost:3001/workshop/addCredit', {
+//       method: 'POST',
+//       body:blogData,
+//       headers: {
+//         Accept: 'multipart/form-data',
+//       },
+//       credentials: 'include',
+//     })
+//     .then(res => res.json())
+//       .then(res => {
+//         setResult('done');
+//         setTimeout(
+//           function () {
+//             history.push('/sendEmail/cssl00' + blogData.wId + '/' + blogData.title);
+//           },
 
-          2000,
-        );
-      })
-      .catch(error => {
-        setResult('err');
-        setTimeout(
-          function () {
-            history.push('/addCredit/cssl00' + blogData.wId + '/' + blogData.title);
-          },
+//           2000,
+//         );
+//       })
+//       .catch(error => {
+//         setResult('err');
+//         setTimeout(
+//           function () {
+//             history.push('/addCredit/cssl00' + blogData.wId + '/' + blogData.title);
+//           },
 
-          2000,
-        );
-      });
-  };
+//           2000,
+//         );
+//       });
+//   };
 
   
 
@@ -271,7 +304,7 @@ return (
                       placeholder="Assign  Credit"
                        
                      
-                      //onChange={e => setWorkshopDes(e.target.value)}
+                    onChange={e => setCredit(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
@@ -292,7 +325,7 @@ return (
                       <Button onClick={submit} color="danger">
                         Reject
                       </Button>{' '}
-                      <Button  color="success">
+                      <Button onClick={approve} color="success">
                         Approve
                       </Button>
                     </Col>

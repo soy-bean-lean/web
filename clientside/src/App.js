@@ -104,6 +104,7 @@ const AddWorkshop = React.lazy(() => import('pages/workshop/AddWorkshop'));
 const WorkshopView = React.lazy(() => import('pages/workshop/WorkshopView'));
 const ManageWorkshop = React.lazy(() => import('pages/workshop/ManageWorkshop'));
 const AddCredit = React.lazy(() => import('pages/workshop/AddCredit'));
+const SendEmail = React.lazy(() => import('pages/workshop/SendEmail'));
 
 
 
@@ -467,6 +468,7 @@ function App(props) {
                     <Route
                       exact
                       path="/manageworksops"
+                      // component={SendEmail}
                       component={ManageWorkshop}
                     />
                     <Route
@@ -478,6 +480,12 @@ function App(props) {
                       exact
                       path="/addCredit/cssl00:id/:title"
                       component={AddCredit}
+                    />
+
+                    <Route
+                      exact
+                      path="/sendEmail/cssl00:id/:title"
+                      component={SendEmail}
                     />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
                     <Route path="/badges" component={BadgePagePro} />
