@@ -187,7 +187,9 @@ function WorkshopView() {
     }
   return (
     <Page title="Workshops">
-     
+      <Link to="/workshop">
+        <Button color="primary">Workshop List</Button>
+      </Link>
      
       <hr></hr>
       
@@ -226,12 +228,12 @@ function WorkshopView() {
                 <br></br>
                 <p>{desc}</p>
                 <Col sm={{ size: 15 }}>
-                <Button onClick={back} color="primary">
+                {/* <Button onClick={back} color="primary">
                         Back
                       </Button>{' '}
                       <Button onClick={submit} color="danger">
                         Delete
-                      </Button>{' '}
+                      </Button>{' '} */}
                       
                     </Col>
               </center>
