@@ -46,11 +46,18 @@ const CourseView = () => {
   const [contentTitle, setContentTitle] = useState('');
   const [contentNote, setContentNote] = useState('');
   const [fileContent, setFileContent] = useState('');
+  
+  const [accessInfo, setAccessInfo] = useState(null);
+
+  const [cntAccessStatus, setCntAccessStatus] = useState('');
+  const [cntStDate, setCntStDate] = useState('');
+  const [cntLastAccess, setcCntLastAccess] = useState('');
 
   useEffect(() => {
     const formData = {
       cId: id,
       cntId: cntId,
+      mId: authState.memberId,
     };
     axios
       .post('http://localhost:3001/csslcourse/getContent', formData)
@@ -66,7 +73,91 @@ const CourseView = () => {
       .catch(error => {
         alert(error);
       });
+
+    axios
+      .post('http://localhost:3001/csslcourse/getContentAccessInfo', formData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setAccessInfo(response.data[0]);
+          updateAccessInfo(response.data[0]);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
   }, []);
+
+  const updateAccessInfo = (info) =>{
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    var hh = String(today.getHours()).padStart(2, '0');
+    var mn = String(today.getMinutes() + 1).padStart(2, '0');
+    var ss = String(today.getSeconds()).padStart(2, '0');
+
+    var stDate = yyyy + '-' + mm + '-' + dd;
+    var lastAcc = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mn + ':' + ss;
+
+
+    if(info.startDate == null || info.startDate == '' || info.status == 'Start'){
+      setCntStDate(today);
+      setcCntLastAccess(lastAcc);
+      setCntAccessStatus('Ongoing');
+      const submitData = {
+        cId: id,
+        cntId: cntId,
+        mId: authState.memberId,
+        stDate: stDate,
+        lastAccess: lastAcc,
+        status: 'Ongoing',
+        type: 'Initial'
+      };
+      axios
+      .post('http://localhost:3001/csslcourse/updateContentAccessInfo', submitData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+
+    }
+    else{
+      setcCntLastAccess(lastAcc);
+      const submitData = {
+        cId: id,
+        cntId: cntId,
+        mId: authState.memberId,
+        stDate: info.startDate,
+        lastAccess: lastAcc,
+        status: info.status,
+        type: 'Other'
+      };
+      axios
+      .post('http://localhost:3001/csslcourse/updateContentAccessInfo', submitData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+    }
+  }
 
   const setData = val => {
     setContentTitle(val.title);

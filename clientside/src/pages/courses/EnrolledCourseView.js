@@ -101,7 +101,7 @@ const CourseView = () => {
               </Link>
             )}
 
-            {content.status == 'Ongoing' || content.status == 'Test' && (
+            {(content.status == 'Ongoing' || content.status == 'Test') && (
               <Link
                 to={
                   '/csslcourse/enrolledcourse/cssl00' +
@@ -135,7 +135,7 @@ const CourseView = () => {
                   content.title
                 }
               >
-                <Button color="primary">View</Button>
+                <Button color="info">View</Button>
               </Link>
             )}
             <hr></hr>

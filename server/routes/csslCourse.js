@@ -743,5 +743,43 @@ Course.post("/getEnrolledContentList", (req, res) => {
   );
 });
 
+//get user's content access details for the relevant course (CourseContentView.js)
+Course.post("/getContentAccessInfo", (req, res) => {
+  const cid = req.body.cId;
+  const cntid = req.body.cntId;
+  const mid = req.body.mId;
 
+  connection.query(
+    "SELECT startDate, status FROM contentaccess WHERE contentId = ? AND courseId = ? AND memberId = ?;",
+    [cntid,cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//update content access info (CourseContentView.js)
+Course.post("/updateContentAccessInfo", (req, res) => {
+  const cid = req.body.cId;
+  const mid = req.body.mId;
+  const cntId = req.body.cntId;
+  const stDate = req.body.stDate;
+  const lastAccess = req.body.lastAccess;
+  const status = req.body.status;
+  //const type = req.body.type;
+
+  connection.query(
+    "UPDATE contentaccess SET startDate = ?, lastAccess = ?, status = ? WHERE contentId = ? AND courseId = ? AND memberId = ?;",
+    [stDate, lastAccess, status, cntId, cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 export default Course;
