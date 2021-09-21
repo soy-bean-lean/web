@@ -243,7 +243,6 @@ const CardPage = props => {
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
-    console.log('Res:', dataList);
     for (var i = 0; i < Object.keys(dataList).length; i++) {
       for (var j = 0; j < Object.keys(dataList).length - i - 1; j++) {
         if (dataList[j].noOfInteraction < dataList[j + 1].noOfInteraction) {
@@ -280,6 +279,12 @@ const CardPage = props => {
     setCourse(dataList);
   };
 
+  const printValue = (event) =>{
+    console.log(event);
+    alert(event.target.dataset.value);
+    
+  }
+
   const insList =
     instructorList &&
     instructorList.map((li, i) => {
@@ -313,9 +318,11 @@ const CardPage = props => {
           }
           key={i}
           className="link-tag"
+          
         >
           <Col md={12} sm={10} xs={10} className="mb-2">
             <Card className="flex-row">
+
               <CardImg
                 src={
                   'http://localhost:3001/uploads/csslCourses/' + course.image

@@ -660,5 +660,72 @@ Course.post("/getContent", (req, res) => {
   );
 });
 
+//increment noOfInteraction (CourseView.js)
+Course.post("/updateInteractionCount", (req, res) => {
+  const cid = req.body.cId;
+  connection.query(
+    "UPDATE csslcourse SET noOfInteraction = noOfInteraction + 1 WHERE courseId = ?;",
+    [cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//user enroll to a course (CourseView.js)
+Course.post("/enrollCourse", (req, res) => {
+  const cid = req.body.cId;
+  const mid = req.body.mId;
+  const stDate = req.body.stDate;
+  const lastAccess = req.body.lastAccess;
+  const status = "Ongoing";
+  connection.query(
+    "INSERT INTO courseenroll (courseId, memberId, startDate, lastAccess, status) VALUES (?,?,?,?,?);",
+    [cid, mid, stDate, lastAccess, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get course list of enrolled course (CourseView.js)
+Course.post("/getEnCourseContent", (req, res) => {
+  const cid = req.body.cId;
+  const status = "Approved";
+  connection.query(
+    "SELECT contentId FROM coursecontent WHERE courseId = ? AND status = ? ORDER BY contentOrder;",
+    [cid, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//insert course list of enrolled course to contentaccess table (CourseView.js)
+Course.post("/insertEnCourseContent", (req, res) => {
+  const cid = req.body.cId;
+  const mid = req.body.mId;
+  const cntId = req.body.cntId;
+  const status = "Enroll";
+  connection.query(
+    "INSERT INTO contentaccess (memberId, courseId, contentId, status) VALUES (?,?,?,?);",
+    [mid, cid, cntId, status],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 
 export default Course;

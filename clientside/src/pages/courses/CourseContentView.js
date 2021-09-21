@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../helpers/AuthContext';
+import DOMPurify from 'dompurify';
 import Typography from 'components/Typography';
 import {
   Button,
@@ -40,7 +41,7 @@ const CourseView = () => {
   const { cntTitle } = useParams();
 
   const { authState, setAuthState } = useContext(AuthContext);
-  
+
   const [contentData, setContentData] = useState(null);
   const [contentTitle, setContentTitle] = useState('');
   const [contentNote, setContentNote] = useState('');
@@ -70,7 +71,7 @@ const CourseView = () => {
   const setData = val => {
     setContentTitle(val.title);
     setContentNote(val.note);
-    console.log(val)
+    console.log(val);
     setFileContent('http://localhost:3001/uploads/csslCourses/' + val.content);
   };
 
@@ -79,26 +80,32 @@ const CourseView = () => {
     console.error();
   };
 
+  const createMarkup = html => {
+    return {
+      __html: DOMPurify.sanitize(html),
+    };
+  };
+
   const content =
     contentData &&
     contentData.map((li, i) => {
       if (li.contentType == 'File') {
         return (
           <>
-          <Col sm="10" md={{ size: 12, offset: 0 }}>
-            <Card>
-              <CardBody>
-                <ViewPDF pdf={fileContent} />
-                <a
-                  href={
-                    'http://localhost:3001/uploads/csslCourses/' + li.content
-                  }
-                  download
-                >
-                  File (click to download)
-                </a>
-              </CardBody>
-            </Card>
+            <Col sm="10" md={{ size: 12, offset: 0 }}>
+              <Card>
+                <CardBody>
+                  <ViewPDF pdf={fileContent} />
+                  <a
+                    href={
+                      'http://localhost:3001/uploads/csslCourses/' + li.content
+                    }
+                    download
+                  >
+                    File (click to download)
+                  </a>
+                </CardBody>
+              </Card>
             </Col>
             <br></br>
           </>
@@ -159,7 +166,10 @@ const CourseView = () => {
                 <CardBody>
                   <h4>{contentTitle}</h4>
                   <hr></hr>
-                  <p>{contentNote}</p>
+                  <CardBody
+                    className="preview"
+                    dangerouslySetInnerHTML={createMarkup(contentNote)}
+                  ></CardBody>
                 </CardBody>
               </Card>
             </CardBody>

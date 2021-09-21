@@ -255,7 +255,7 @@ const AddCpd = () => {
   //get file details
   const getFileData = val => {
     console.log(val);
-    setProofFile(val);
+    //setProofFile(val);
   };
 
   //load data to CSSL Course dropdown list
@@ -463,7 +463,7 @@ const AddCpd = () => {
                       accept="image/*, application/pdf"
                       onChange={e => setProofFile(e.target.files[0])}
                     />
-                    {/* <FileUpload onUploadFile={getFileData} /> */}
+                     {/* <FileUpload onUploadFile={getFileData} /> */}
                   </Col>
                 </FormGroup>
 
