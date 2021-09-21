@@ -39,7 +39,6 @@ function SendEmail() {
   const [credit, setCredit] = useState('');
   const [data, setData] = useState([]);
 
-
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
 
@@ -79,9 +78,9 @@ function SendEmail() {
 
       .then(response => {
         if (response.data.error) {
-          //    alert(response.data.error);
+         
         } else {
-         // console.log(response.data[0]);
+          
           setData(response.data[0]);
 
           setTitle(response.data[0].title);
@@ -120,13 +119,7 @@ function SendEmail() {
           <Card className="profileInfo">
             <CardBody>
               <center>
-                {msg()}{' '}
-            
-               
-               
-                <br></br>
-              
-               
+                {msg()} <br></br>
                 <Badge color="warning" pill className="mr-1">
                   {subject}
                 </Badge>
@@ -141,8 +134,8 @@ function SendEmail() {
                 <Badge color="primary" pill className="mr-1">
                   {duration + '  hours per Day'}
                 </Badge>
-<br/>
-<hr/>
+                <br />
+                <hr />
                 <FormGroup row>
                   <Col>
                     <QRCode value={id} />
