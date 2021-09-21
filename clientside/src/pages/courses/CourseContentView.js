@@ -70,6 +70,7 @@ const CourseView = () => {
   const setData = val => {
     setContentTitle(val.title);
     setContentNote(val.note);
+    console.log(val)
     setFileContent('http://localhost:3001/uploads/csslCourses/' + val.content);
   };
 

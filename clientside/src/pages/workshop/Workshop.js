@@ -262,7 +262,7 @@ const Workshop = props => {
               toggle('2');
             }}
           >
-            Sending Workshops
+            Pending Workshops
           </NavLink>
         </NavItem>
       </Nav>
@@ -310,8 +310,8 @@ const Workshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">
-                    Sending Workshops
+                  <Typography color ="primary" className="text-success">
+                    Pending Workshops
                   </Typography>
                 </CardHeader>
                 {sendWorkshops}

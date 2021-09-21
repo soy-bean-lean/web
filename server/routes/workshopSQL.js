@@ -24,6 +24,7 @@ Workshop.route("/addWorkshop").post(upload.single("image"), (req, res, err) => {
   } else {
     const title = req.body.title;
     const description = req.body.description;
+    const location = req.body.location;
     //const workshopId = req.body.workshopId;
     const fromDate = req.body.fromDate;
     const toDate = req.body.toDate;
@@ -36,13 +37,27 @@ Workshop.route("/addWorkshop").post(upload.single("image"), (req, res, err) => {
     console.log(image);
 
     connection.query(
-      `INSERT INTO csslworkshop (title,description,fromDate,toDate,duration,subject,image,addBy) VALUES (?,?,?,?,?,?,?,?)`,
-      [title,description,fromDate,toDate,duration,subject,image,memberId],
+      `INSERT INTO csslworkshop (title,description,fromDate,toDate,duration,subject,image,addBy,location) VALUES (?,?,?,?,?,?,?,?,?)`,
+      [
+        title,
+        description,
+        fromDate,
+        toDate,
+        duration,
+        subject,
+        image,
+        memberId,
+        location,
+      ],
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          res.json("success");
+          console.log(result);
+          res.send({
+            data: result,
+            msg: "Successfully Saved.",
+          });
         }
       }
     );
@@ -55,46 +70,77 @@ Workshop.post("/getSendWorkshop", (req, res) => {
   //console.log(mid);
   connection.query(
     "SELECT wId, title,description,image FROM csslworkshop WHERE credit IS NULL AND verifiedBy IS NULL;",
-    
+
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
         res.send(result);
       }
-      }
-    );
-  });
+    }
+  );
+});
+Workshop.post("/getConductors", (req, res) => {
+  const memberId = req.body.memberId;
+  //console.log(mid);
+  const sql =
+    "select id,title,firstName,lastName,email from user where id != " +
+    memberId;
+  console.log(sql);
 
+  connection.query(
+    sql,
 
-  Workshop.post("/getWorkshop", (req, res) => {
-    console.log("get all workshop line 700");
-    //const mid = req.body.mId;
-    //console.log(mid);
-    connection.query(
-      "SELECT wId, title,description,fromDate,toDate,image FROM csslworkshop WHERE verifiedBy IS NOT NULL;",
-      
-      (error, result, feilds) => {
-        if (error) console.log(error);
-        else {
-          res.send(result);
-        }
-        }
-      );
-    });
-
-
-    Workshop.post("/deleteItem", (req, res) => {
-      const tableName = req.body.tableName;
-      const wid = req.body.wid;
-      const coloum = req.body.coloum;
-    console.log(wid);
-      const sqlSelect =
-        "delete from " + tableName + " where " + coloum + "  =" + wid;
-    
-      connection.query(sqlSelect, (err, result) => {
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
         res.send(result);
-      });
-    });
+      }
+    }
+  );
+});
+
+Workshop.post("/getWorkshop", (req, res) => {
+  console.log("get all workshop line 700");
+  //const mid = req.body.mId;
+  //console.log(mid);
+  connection.query(
+    "SELECT wId, title,description,fromDate,toDate,image FROM csslworkshop WHERE verifiedBy IS NOT NULL;",
+
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+Workshop.post("/getWorkshopFromAndTo", (req, res) => {
+  const wid = req.body.wid;
+  connection.query(
+    "SELECT * FROM `csslworkshop` where wid = " + wid + ";",
+
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+Workshop.post("/deleteItem", (req, res) => {
+  const tableName = req.body.tableName;
+  const wid = req.body.wid;
+  const coloum = req.body.coloum;
+  console.log(wid);
+  const sqlSelect =
+    "delete from " + tableName + " where " + coloum + "  =" + wid;
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
 
 //to update show workshop details
 
@@ -113,6 +159,8 @@ Workshop.post("/getWorkshopView", (req, res) => {
   );
 });
 
+
+  
 
 Workshop.route("/addCredit").post(
   //upload.single("image"),
@@ -158,15 +206,38 @@ Workshop.route("/addCredit").post(
   }
 );
 
+  
+
+
+
+
+
+
+Workshop.post("/addConducter", async (req, res) => {
+  const conducterId = req.body.conducterId;
+  const wid = req.body.wid;
+  const assignDate = req.body.assignDate;
+  console.log("++++++++++++++++++++++++++++");
+
+  console.log(wid);
+  console.log(assignDate);
+  connection.query(
+    `INSERT INTO workshopconduct (wId  , memberId  ,date) VALUES (?,?,?)`,
+
+    [wid, conducterId, assignDate],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send(result);
+      } else {
+        //  console.log(error);
+        res.json("success");
+      }
+    }
+  );
+});
 
 //SELECT csslworkshop.* ,user.title,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id)
 
 
-
-
-
-  
- 
-  
-  export default Workshop;
-
+export default Workshop;

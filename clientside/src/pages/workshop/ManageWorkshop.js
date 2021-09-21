@@ -1,14 +1,12 @@
 import Page from 'components/Page';
 import { AuthContext } from '../../helpers/AuthContext';
 import { Link } from 'react-router-dom';
-import bg11Image from 'assets/img/bg/background_1920-11.jpg';
-import bg18Image from 'assets/img/bg/background_1920-18.jpg';
-import bg1Image from 'assets/img/bg/background_640-1.jpg';
-import bg3Image from 'assets/img/bg/background_640-3.jpg';
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
+
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import '../../main.css';
 
 import classnames from 'classnames';
 import Typography from 'components/Typography';
@@ -211,23 +209,27 @@ const ManageWorkshop = props => {
                     'http://localhost:3001/uploads/workshop/' +
                     sendWorkshop.image
                   }
-                  style={{ width: 'auto', height: 150 }}
+                  style={{ width: 150, height: 150 }}
                   className="card-img-left"
                   // style={{ width: 175, height: 150 }}
                 />
                 <CardBody>
                   {/* <h3>{myBlog.title}</h3> */}
                   <CardText>{sendWorkshop.title}</CardText>
+                  <Link
+                    to={
+                      '/addCredit/cssl00' +
+                      sendWorkshop.wId +
+                      '/' +
+                      sendWorkshop.title
+                    }
+                  >
+                    <Button color="primary"> Approved Workshop</Button>
+                  </Link>
                 </CardBody>
               </Card>
-              <Link to={
-                     '/addCredit/cssl00' + sendWorkshop.wId + '/' + sendWorkshop.title
-                  }>
-                    <Button color="primary"> Approved workshop</Button>
-                  </Link>
-                  {'  '}
-              
-              
+
+              {'  '}
             </Col>
           </Link>
           <hr className="course-view-line"></hr>
@@ -237,9 +239,6 @@ const ManageWorkshop = props => {
 
   return (
     <Page title="Manage Workshops">
-      <hr></hr>
-     
-      <br></br>
       <hr></hr>
       <Nav tabs>
         <NavItem>
@@ -270,7 +269,9 @@ const ManageWorkshop = props => {
             <Col sm="12">
               <Card className="mb-3">
                 <CardHeader>
-                  <Typography className="text-success">Approved List</Typography>
+                  <Typography className="text-success">
+                    Approved List
+                  </Typography>
                 </CardHeader>
                 {/* <CardBody>
                   <InputGroup>
@@ -296,7 +297,6 @@ const ManageWorkshop = props => {
                 </CardBody> */}
                 <Card className="mb-2"></Card>
                 {approveWorkshops}
-                
               </Card>
             </Col>
           </Row>
