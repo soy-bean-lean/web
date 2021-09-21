@@ -94,7 +94,7 @@ dashBoardSQL.post("/announcement", (req, res) => {
 dashBoardSQL.post("/recent", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "SELECT * FROM `recentactivities` WHERE memberID = ? LIMIT 4;",
+    "SELECT * FROM `recentactivities` WHERE memberID = ? ORDER BY title ASC LIMIT 4 ;",
     [id],
     (error, result, feilds) => {
       if (error) {

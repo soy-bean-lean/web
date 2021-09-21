@@ -40,6 +40,7 @@ const Profile = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [result, setResult] = useState();
   const [resultBasic, setResultBasic] = useState();
+  const [payment, setPayment] = useState(0);
 
   const [imgFile, setImgFile] = useState();
   const setEditabledJobApp = () => {
@@ -90,6 +91,24 @@ const Profile = () => {
       .catch(error => {});
   };
   let history = useHistory();
+
+  useEffect(() => {
+    const data = {
+      id: authState.memberId,
+    };
+    axios
+      .post('http://localhost:3001/auth/paymentVerfication', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setPayment(response.data[0].paymentID);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }, []);
 
   function msg() {
     if (resultBasic == 'eee') {
@@ -212,14 +231,12 @@ const Profile = () => {
         setResultBasic('ok');
         setTimeout(
           function () {
-             history.push('/dashboard');
-             history.push('/profile');
+            history.push('/dashboard');
+            history.push('/profile');
           },
 
           2000,
         );
-
-
       })
       .catch(error => {
         setResultBasic('eee');
@@ -229,7 +246,8 @@ const Profile = () => {
           },
 
           2000,
-        );      });
+        );
+      });
   };
 
   useEffect(() => {
@@ -549,50 +567,56 @@ const Profile = () => {
             </CardBody>
           </Card>
           <br></br>
-          <Card>
-            <center>
-              <br></br>
-              <Typography className="text-success">
-                <h5>Payment Successful</h5>
-                <hr></hr>
-              </Typography>
-              <img
-                src={'http://localhost:3001/uploads/paymentDone.gif'}
-                width="260px"
-                height="200px"
-                className="succesfull"
-              />
-            </center>
-            <br></br>
-          </Card>
-          <br></br>
-          <Card>
-            <center>
-              <br></br>
-              <Typography className="text-danger">
-                <h5>Incomplete Payment</h5>
-                <hr></hr>
-              </Typography>
-              <img
-                src={'http://localhost:3001/uploads/pay.gif'}
-                width="260px"
-                height="200px"
-                className="succesfull"
-              />
-            </center>
-            <br></br>
-            <FormGroup check row>
-                <center>
-                  <Col sm={{ size: 15 }}>
-                    <Button  color="primary">
-                      Pay 20$ For CSSL
-                    </Button>
-                  </Col>
-                </center>
-              </FormGroup>{' '}
-              <br></br>
-
-          </Card>
+          <>
+            <div>
+              {!payment == 0 ? (
+                <Card>
+                  <center>
+                    <br></br>
+                    <Typography className="text-success">
+                      <h5>Payment Successful</h5>
+                      <hr></hr>
+                    </Typography>
+                    <img
+                      src={'http://localhost:3001/uploads/paymentDone.gif'}
+                      width="260px"
+                      height="200px"
+                      className="succesfull"
+                    />
+                  </center>
+                  <br></br>
+                </Card>
+              ) : (
+                <>
+                  <br></br>
+                  <Card>
+                    <center>
+                      <br></br>
+                      <Typography className="text-danger">
+                        <h5>Incomplete Payment</h5>
+                        <hr></hr>
+                      </Typography>
+                      <img
+                        src={'http://localhost:3001/uploads/pay.gif'}
+                        width="260px"
+                        height="200px"
+                        className="succesfull"
+                      />
+                    </center>
+                    <br></br>
+                    <FormGroup check row>
+                      <center>
+                        <Col sm={{ size: 15 }}>
+                          <Button color="primary">Pay 20$ For CSSL</Button>
+                        </Col>
+                      </center>
+                    </FormGroup>{' '}
+                    <br></br>
+                  </Card>
+                </>
+              )}
+            </div>
+          </>
           <br></br>
         </Col>
       </Row>

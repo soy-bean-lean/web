@@ -159,15 +159,21 @@ const Registration = props => {
   });
 
   const [error, setError] = useState('');
+  const [err, setErr] = useState('');
+
 
   const onSubmit = data => {
     console.log('anuska');
     axios.post('http://localhost:3001/auth', data).then(response => {
       if (response.data.error) {
         setError(response.data.error);
-      } else {
-        history.push('./');
+      } 
+      else if(response.data.err) {
+        setErr(response.data.error);
       }
+      else{
+      history.push('./');
+    }
     });
   };
 
@@ -442,6 +448,9 @@ const Registration = props => {
                             }
                             className="bg-light"
                           />
+                          <div className="text-md-left text-danger">
+                            <b>{err}</b>
+                          </div>
                           <ErrorMessage
                             name="nic"
                             render={msg => (

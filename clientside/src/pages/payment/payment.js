@@ -54,7 +54,7 @@ const Payment = ({ orderId, name }) => {
             setRole(response.data[0].userType);
 
         }
-        else if(response.data[0].userType=="proffesional"){
+        else if(response.data[0].userType=="professional"){
             //pay();
             setAmount(1500);
             setFname(response.data[0].firstName);
