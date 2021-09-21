@@ -25,7 +25,7 @@ import {
   Row,
 } from 'reactstrap';
 
-function WorkshopView() {
+function SendWorkshopView() {
   const { id } = useParams();
   const add = '';
   const [image, setImage] = useState('');
@@ -35,9 +35,9 @@ function WorkshopView() {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [duration, setDuration] = useState('');
-  const [credit, setCredit] = useState('');
+ 
 
-  const { authState, setAuthState } = useContext(AuthContext);
+  
   const [result, setResult] = useState();
 
   let history = useHistory();
@@ -72,7 +72,7 @@ function WorkshopView() {
           setResult('err');
           setTimeout(
             function () {
-              history.push('/manageworksops');
+              history.push('/workshop');
             },
 
             2000,
@@ -82,7 +82,7 @@ function WorkshopView() {
 
           setTimeout(
             function () {
-              history.push('/manageworksops');
+              history.push('/workshop');
             },
 
             2000,
@@ -111,51 +111,7 @@ function WorkshopView() {
     });
   };
 
-  const updateBlog = () => {
-    const blogData = new FormData();
-    //blogData.append('image', image);
-    blogData.append('title', title);
-    blogData.append('description', desc);
-    blogData.append('subject', subject);
-    blogData.append('fromDate', fromDate);
-    blogData.append('toDate', toDate);
-    blogData.append('duration', duration);
-    blogData.append('credit', credit);
-    blogData.append('wId', id);
-
-    console.log('data;', blogData);
-    fetch('http://localhost:3001/blog/updateBlog', {
-      method: 'POST',
-      body: blogData,
-      headers: {
-        Accept: 'multipart/form-data',
-      },
-      credentials: 'include',
-    })
-      .then(res => res.json())
-      .then(res => {
-        setResult('done');
-        setTimeout(
-          function () {
-            history.push('/manageworksops');
-          },
-
-          2000,
-        );
-      })
-      .catch(error => {
-        setResult('err');
-        setTimeout(
-          function () {
-            history.push(
-              '/addCredit/cssl00' + blogData.wId + '/' + blogData.title,
-            );
-          },
-
-          2000,
-        );
-      });
-  };
+  
 
   useEffect(() => {
     const sendData = {
@@ -175,7 +131,7 @@ function WorkshopView() {
           setFromDate(response.data[0].fromDate);
           setToDate(response.data[0].toDate);
           setDuration(response.data[0].duration);
-          setCredit(response.data[0].credit);
+        
           setImage(response.data[0].image);
         }
       })
@@ -221,12 +177,12 @@ function WorkshopView() {
                 <br></br>
                 <br></br>
                 <p>{desc}</p>
-                {/* <Col sm={{ size: 15 }}>
+                <Col sm={{ size: 15 }}>
                       <Button onClick={submit} color="danger">
                         Delete
                       </Button>{' '}
                       
-                    </Col> */}
+                    </Col>
               </center>
             </CardBody>
           </Card>
@@ -236,4 +192,4 @@ function WorkshopView() {
   );
 }
 
-export default WorkshopView;
+export default SendWorkshopView;

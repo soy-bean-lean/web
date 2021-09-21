@@ -196,7 +196,7 @@ const Workshop = props => {
         <>
           <Link
             to={
-              '/workshopview/cssl00' +
+              '/sendworkshopview/cssl00' +
               sendWorkshop.wId +
               '/' +
               sendWorkshop.title

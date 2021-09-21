@@ -104,6 +104,7 @@ const CourseContentApprovalView = React.lazy(() =>
 const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
 const AddWorkshop = React.lazy(() => import('pages/workshop/AddWorkshop'));
 const AddWorkshopConducter = React.lazy(() => import('pages/workshop/AddWorkshopConduct'));
+const SendWorkshopView = React.lazy(() => import('pages/workshop/SendWorkshopView'));
 const WorkshopView = React.lazy(() => import('pages/workshop/WorkshopView'));
 const ManageWorkshop = React.lazy(() => import('pages/workshop/ManageWorkshop'));
 const AddCredit = React.lazy(() => import('pages/workshop/AddCredit'));
@@ -573,6 +574,11 @@ function App(props) {
                       exact
                       path="/workshopview/cssl00:id/:title"
                       component={WorkshopView}
+                    />
+                    <Route
+                      exact
+                      path="/sendworkshopview/cssl00:id/:title"
+                      component={SendWorkshopView}
                     />
                     <Route
                       exact
