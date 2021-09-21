@@ -1,20 +1,10 @@
 import Page from 'components/Page';
 import { AuthContext } from '../../helpers/AuthContext';
 import { Link } from 'react-router-dom';
-import TextEditor from '../../components/TextEditor/RichTextEditor';
 import DOMPurify from 'dompurify';
-
-import { bgCards, gradientCards, overlayCards } from 'demos/cardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
-import classnames from 'classnames';
-import Typography from 'components/Typography';
-
-import { Line } from 'react-chartjs-2';
-import * as AiIcons from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -24,22 +14,18 @@ import {
   FormGroup,
   Input,
   Badge,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
   CardText,
-  CardTitle,
   Col,
   Alert,
   Row,
 } from 'reactstrap';
+
 
 const BlogView = () => {
   const { id } = useParams();
   const { title } = useParams();
   const [result, setResult] = useState();
   const { authState, setAuthState } = useContext(AuthContext);
-
   const [blogImg, setBlogImg] = useState('');
   const [profileImg, setProfileImg] = useState('');
   const [blogData, setBlogData] = useState([]);
@@ -48,45 +34,22 @@ const BlogView = () => {
   const [newComment, setAddComment] = useState('');
   let history = useHistory();
 
+//message for error or success
   function msg() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Againg</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull..</Alert>
+          <Alert color="success">Greate Attempt is Successfull..</Alert>
         </>
       );
     }
   }
-  // function newComment(isnew) {
-  //   if (isnew == 'ok') {
-  //     return (
-  //       <>
-  //         <FormGroup row>
-  //           <Col>
-  //             <Input
-  //               type="textarea"
-  //               name="title"
-  //               placeholder="Add Short Description About Your Blog . . . . ."
-  //               // onChange={e => setAbout(e.target.value)}
-  //             />
-  //           </Col>
-  //         </FormGroup>
-  //       </>
-  //     );
-  //   } else {
-  //     return (
-  //       <>
-  //         <FormGroup row></FormGroup>
-  //       </>
-  //     );
-  //   }
-  // }
 
   var today = new Date(),
     Currentdate =
@@ -219,6 +182,7 @@ const BlogView = () => {
         <CardText className="comments">{data.description}</CardText>
       </>
     ));
+
   return (
     <Page title={title}>
       <hr />
@@ -260,28 +224,19 @@ const BlogView = () => {
                 <Badge color="primary" pill className="mr-3">
                   {blogData.email}
                 </Badge>
-
                 <hr />
-
                 {'  '}
-
                 <Badge color="success" pill className="mr-3">
                   10 min Read
                 </Badge>
-
                 <br />
                 <Badge color="success" pill className="mr-3">
                   {numberofComments} Comments
                 </Badge>
-
-                {/* <span> {courseData.language}</span> */}
                 <br></br>
-
                 <Badge color="success" pill className="mr-3">
                   3 Reads
                 </Badge>
-                {/* {"  "} {courseData.mode} */}
-
                 <br />
                 <Badge color="success" pill className="mr-3">
                   Published on {blogData.publishedDate}
@@ -314,7 +269,7 @@ const BlogView = () => {
                     type="textarea"
                     name="title"
                     rows="5"
-                    placeholder="Any Comments..........."
+                    placeholder="Any Comments"
                     onChange={e => setAddComment(e.target.value)}
                   />
                 </center>

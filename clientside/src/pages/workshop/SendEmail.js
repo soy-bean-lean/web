@@ -79,8 +79,19 @@ function SendEmail() {
 
       .then(response => {
         if (response.data.error) {
-          //    alert(response.data.error);
+         
         } else {
+          
+          // setData(response.data[0]);
+
+          // setTitle(response.data[0].title);
+          // setDesc(response.data[0].description);
+          // setSubject(response.data[0].subject);
+          // setFromDate(response.data[0].fromDate);
+          // setToDate(response.data[0].toDate);
+          // setDuration(response.data[0].duration);
+          // setCredit(response.data[0].credit);
+          // setImage(response.data[0].image);
           // console.log(response.data[0]);
           setConductData(response.data);
           console.log(response.data);
