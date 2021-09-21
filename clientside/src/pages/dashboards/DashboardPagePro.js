@@ -264,7 +264,7 @@ function DashboardPage() {
 
     //Recent Activities
     const data = {
-      id: authState.id,
+      id: authState.memberId,
     };
     axios
       .post('http://localhost:3001/Dash/recent', data)

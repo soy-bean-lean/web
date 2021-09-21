@@ -21,6 +21,7 @@ import PageSpinner from 'components/PageSpinner';
 
 import Login from 'pages/login/login';
 import Registration from 'pages/registration/registration';
+import Payment from 'pages/payment/payment';
 import Profile from 'pages/profile/profile';
 import memberView from 'pages/registration/profile';
 import approveMemberView from 'pages/registration/profileApproval';
@@ -257,6 +258,7 @@ function App(props) {
                 <>
                   <Route exact path="/" exact component={Login} />
                   <Route path="/registration" component={Registration} />
+                  <Route path="/payment/:id" component={Payment} />
                   <Route path="/forgotpassword" component={ForgotPassword} />
                   <Route path="/reset/:token" component={ResetPassword} />
                 </>

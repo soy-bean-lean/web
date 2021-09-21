@@ -125,12 +125,15 @@ secretaryRouter.post("/approve", async (req, res) => {
               //**********************************************member insert***************************************************** */
 
               const tomail = row[0].email;
+              const web = `http://localhost:3000/payment/${userID}`;
               var mailOptions = {
                 from: "2018cs071@stu.ucsc.cmb.ac.lk",
                 to: tomail,
                 subject: "CSSL Registration Approved",
                 html: `
-                <p>,${row[0].title}. <b>${row[0].firstName} ${row[0].lastName}</b>, Your account have been approved by the CSSL.</p><p> Now You Can Log In To The System </p>`,
+                <p>,${row[0].title}. <b>${row[0].firstName} ${row[0].lastName}</b>, Your account have been approved by the CSSL.</p><p> You have to pay the membership fee to login. Please pay the membership fee from the link below
+                ${web}                   
+                </p>`,
               };
 
               transporter.sendMail(mailOptions, (error, info) => {
