@@ -129,7 +129,7 @@ const RegistrationVerification = props => {
             <td>{data.registeredDate}</td>
             <td>
               <Badge pill color="primary" className="mr-1">
-                Pending
+                Waiting for approval
               </Badge>
             </td>
           </tr>

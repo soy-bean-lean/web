@@ -9,7 +9,7 @@ dashBoardSQL.post("/getCPDData", (req, res) => {
   const memberId = req.body.memberId;
   const sqlSelect =
     // "select extract(MONTH from AdDate) as month,sum(Credits) as credits from test group by month;"
-    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords  group by month ;";
+    "select extract(MONTH from registeredDate) as month, COUNT(*) as count from user  group by month ;";
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
@@ -109,8 +109,9 @@ dashBoardSQL.post("/recent", (req, res) => {
 //Professional dashboard line chart-credits earned this year
 dashBoardSQL.post("/creditsearned", (req, res) => {
   const id = req.body.id;
+  
   connection.query(
-    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021 group by month ",
+    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE()) group by month ",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -158,7 +159,7 @@ dashBoardSQL.post("/activityTypeCredits", (req, res) => {
 dashBoardSQL.post("/progressPercentage", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
+    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE());",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -180,8 +181,8 @@ dashBoardSQL.post("/upcoming", (req, res) => {
   const real = month;
 
   connection.query(
-    "select extract(DAY from recordDate) as day from cpdrecords where memberId = 'cssl001' AND extract(MONTH from recordDate)=? AND extract(YEAR from recordDate)=2021",
-    [id,real],
+    "select extract(DAY from recordDate) as day from cpdrecords where memberId = 'cssl001' AND extract(MONTH from recordDate)=MONTH(CURDATE()) AND extract(YEAR from recordDate)=YEAR(CURDATE())",
+    [id],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -196,7 +197,7 @@ dashBoardSQL.post("/upcoming", (req, res) => {
 dashBoardSQL.post("/earned", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
+    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE());",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -212,7 +213,7 @@ dashBoardSQL.post("/earned", (req, res) => {
 dashBoardSQL.post("/remaining", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
+    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE());",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -230,7 +231,7 @@ dashBoardSQL.post("/remaining", (req, res) => {
 dashBoardSQL.post("/remainingPercentage", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=2021;",
+    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE());",
     [id],
     (error, result, feilds) => {
       if (error) {

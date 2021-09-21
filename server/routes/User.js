@@ -94,13 +94,9 @@ userRouter.post("/updateBasicDetails", async (req, res) => {
   );
 });
 
-
-
 //Register
 
 userRouter.post("/", async (req, res) => {
-
-  
   //member details
   const title = req.body.title;
   const firstName = req.body.firstName;
@@ -192,7 +188,7 @@ userRouter.post("/", async (req, res) => {
                               }
                             );
 
-                            smtpTransport.close();                            
+                            smtpTransport.close();
                           }
                         }
                       );
@@ -217,7 +213,7 @@ userRouter.post("/login", async (req, res) => {
   const password = req.body.password;
   connection.query(
     //temporary sql query for testing
-    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
+    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE user.paymentStatus=0 AND logininfo.un = ?",
 
     [username],
     (err, result) => {
@@ -562,6 +558,129 @@ userRouter.post("/getProfileData", (req, res) => {
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
+});
+
+//payment
+userRouter.post("/payment", (req, res) => {
+  const userID = req.body.id;
+
+  connection.query(
+    "SELECT * FROM `user` WHERE `id` = ?;",
+    [userID],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+
+  //paid
+  userRouter.post("/paid", (req, res) => {
+    const userID = req.body.id;
+    const role = req.body.role;
+    const amount = req.body.amount;
+    const email = req.body.email;
+    const fName = req.body.fName;
+    const today = new Date();
+    const year = today.getFullYear();
+
+    if (req.body.amount != 0) {
+      connection.query(
+        "UPDATE `user` SET `paymentStatus` = ? WHERE `id` = ? ;",
+        [1, userID],
+        (error, result, feilds) => {
+          if (error) {
+            res.send(error);
+          } else {
+            connection.query(
+              `INSERT INTO payment (year, amount, type, memberId) VALUES (?,?,?,?)`,
+              [year, amount, role, userID],
+              (err, result) => {
+                if (err) {
+                  res.json({ error });
+                } else {
+                  connection.query(`SELECT * FROM member;`, (err, result) => {
+                    if (err) {
+                      res.json({ error });
+                    } else {
+                      const rows = result.length + 1;
+                      const memberID = "CSSL00" + rows;
+                      console.log(memberID);
+                      connection.query(
+                        `INSERT INTO member (id, memberId, memberType) VALUES (?,?,?)`,
+                        [userID, memberID, role],
+                        (err, result) => {
+                          if (err) {
+                            res.json({ error });
+                          } else {
+                            const frommail = "cssl.system.info@gmail.com";
+                            const tomail = email;
+                            const web = `http://localhost:3000`;
+                            let smtpTransport = createTransport({
+                              service: "Gmail",
+                              port: 465,
+
+                              auth: {
+                                user: "cssl.system.info@gmail.com",
+                                pass: "cssl@123",
+                              },
+                            });
+
+                            var mailOptions = {
+                              from: frommail,
+                              to: email,
+                              subject: "CSSL account has been created",
+                              html: `
+                <p>Hi ${fName}, Now you can log into the system</p>
+                ${web}                
+                `,
+                            };
+
+                            smtpTransport.sendMail(
+                              mailOptions,
+                              (error, info) => {
+                                if (error) {
+                                  res.json({
+                                    msg: "fail",
+                                  });
+                                } else {
+                                  res.json({
+                                    msg: "success",
+                                  });
+                                }
+                              }
+                            );
+                            smtpTransport.close();
+                          }
+                        }
+                      );
+                    }
+                  });
+                }
+              }
+            );
+          }
+        }
+      );
+    } else {
+    }
+    // connection.query(
+    //   "SELECT * FROM `user` WHERE `id` = ?;",
+    //   [userID],
+    //   (error, result, feilds) => {
+    //     if (error) {
+    //       res.send(error);
+    //     } else {
+    //       res.json(result);
+    //     }
+  });
+  // const sqlSelect = "select  * from user where id = " + memberId + ";";
+
+  // connection.query(sqlSelect, (err, result) => {
+  //   res.send(result);
+  // });
 });
 
 userRouter.get("/auth", validateToken, (req, res) => {
