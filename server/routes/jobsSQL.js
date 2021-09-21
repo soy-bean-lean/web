@@ -389,7 +389,9 @@ Job.post("/getJobs", (req, res) => {
   const name = req.body.companyName;
   const location = req.body.location;
   const role = req.body.jobRole;
-
+  console.log(name)
+  console.log(location)
+  console.log(role)
   const sqlSelect =
     "SELECT jvId , companyName , location ,designation,questionType from jobvacancy where companyName like '" +
     name +
