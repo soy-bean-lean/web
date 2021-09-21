@@ -38,7 +38,7 @@ function SendEmail() {
   const [duration, setDuration] = useState('');
   const [credit, setCredit] = useState('');
   const [data, setData] = useState([]);
-
+  const [conduct, setConductData] = useState(null);
 
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
@@ -81,17 +81,10 @@ function SendEmail() {
         if (response.data.error) {
           //    alert(response.data.error);
         } else {
-         // console.log(response.data[0]);
-          setData(response.data[0]);
-
-          setTitle(response.data[0].title);
-          setDesc(response.data[0].description);
-          setSubject(response.data[0].subject);
-          setFromDate(response.data[0].fromDate);
-          setToDate(response.data[0].toDate);
-          setDuration(response.data[0].duration);
-          setCredit(response.data[0].credit);
-          setImage(response.data[0].image);
+          // console.log(response.data[0]);
+          setConductData(response.data);
+          console.log(response.data);
+          console.log(conduct);
         }
       })
       .catch(error => {
@@ -120,13 +113,7 @@ function SendEmail() {
           <Card className="profileInfo">
             <CardBody>
               <center>
-                {msg()}{' '}
-            
-               
-               
-                <br></br>
-              
-               
+                {msg()} <br></br>
                 <Badge color="warning" pill className="mr-1">
                   {subject}
                 </Badge>
@@ -141,8 +128,8 @@ function SendEmail() {
                 <Badge color="primary" pill className="mr-1">
                   {duration + '  hours per Day'}
                 </Badge>
-<br/>
-<hr/>
+                <br />
+                <hr />
                 <FormGroup row>
                   <Col>
                     <QRCode value={id} />

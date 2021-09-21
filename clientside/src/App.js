@@ -110,6 +110,7 @@ const ApproveWorkshopView = React.lazy(() => import('pages/workshop/ApproveView'
 const ManageWorkshop = React.lazy(() => import('pages/workshop/ManageWorkshop'));
 const AddCredit = React.lazy(() => import('pages/workshop/AddCredit'));
 const SendEmail = React.lazy(() => import('pages/workshop/SendEmail'));
+const CSSLWorkshops = React.lazy(() => import('pages/workshop/CSSLWorkshops'));
 
 
 
@@ -345,7 +346,7 @@ function App(props) {
                       component={courseView}
                     />
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                    <Route exact path="/csslworkshops" component={CSSLWorkshops} />{' '}
                     {/* need to change component */}
                     {/*Forum Related Routes*/}
                     <Route exact path="/forum" component={Login} />{' '}
