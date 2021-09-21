@@ -62,6 +62,8 @@ const DashboardPageStu = React.lazy(() =>
 //cpd
 const cpdRecords = React.lazy(() => import('pages/cpd/CPD'));
 const AddCPD = React.lazy(() => import('pages/cpd/addCPD'));
+const cpdApproval = React.lazy(() => import('pages/cpd/cpdApproval.js'));
+const cpdView = React.lazy(() => import('pages/cpd/cpdView.js'));
 
 //courses
 const csslCourses = React.lazy(() => import('pages/courses/Courses'));
@@ -436,9 +438,11 @@ function App(props) {
                     />{' '}
                     {/* need to change component */}
                     {/*CPD Related Routes*/}
+                    <Route path="/cpdView/:id" component={cpdView} />{' '}
+
                     <Route
                       path="/cpdapproval/cpdrecords"
-                      component={Login}
+                      component={cpdApproval}
                     />{' '}
                     {/* need to change component */}
                     <Route
