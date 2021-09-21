@@ -74,33 +74,37 @@ Record.post("/getCourse", (req, res) => {
   });*/
 
   if (courseType == "CSSLcourse") {
-    connection.query("SELECT csslcourse.* FROM csslcourse INNER JOIN courseenroll ON csslcourse.courseId = courseenroll.courseId WHERE courseenroll.memberId = ? and courseenroll.status = ?;", 
-    [mid, statusCssl],
-    (error, result) => {
-      if (error) console.log(error);
-      else {
-        res.send(result);
+    connection.query(
+      "SELECT csslcourse.* FROM csslcourse INNER JOIN courseenroll ON csslcourse.courseId = courseenroll.courseId WHERE courseenroll.memberId = ? and courseenroll.status = ?;",
+      [mid, statusCssl],
+      (error, result) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
       }
-    });
+    );
   } else if (courseType == "others") {
-    connection.query("SELECT * FROM othercourse WHERE status = ?;", 
-    [statusOther],
-    (error, result) => {
-      if (error) console.log(error);
-      else {
-        res.send(result);
+    connection.query(
+      "SELECT * FROM othercourse WHERE status = ?;",
+      [statusOther],
+      (error, result) => {
+        if (error) console.log(error);
+        else {
+          res.send(result);
+        }
       }
-    });
+    );
   } else {
     const result = "Select Course Type";
     res.send(result);
   }
 });
 
-//get distinct platforms in othercourse table 
+//get distinct platforms in othercourse table
 Record.post("/getPlatform", (req, res) => {
   const mode = req.body.mode;
-  const status = 'Approved';
+  const status = "Approved";
   connection.query(
     "SELECT DISTINCT platform FROM othercourse WHERE mode = ? AND status = ?;",
     [mode, status],
@@ -116,7 +120,7 @@ Record.post("/getPlatform", (req, res) => {
 //get distinct partners in othercourse table according to the course mode
 Record.post("/getPartner", (req, res) => {
   const mode = req.body.mode;
-  const status = 'Approved';
+  const status = "Approved";
   connection.query(
     "SELECT DISTINCT partner FROM othercourse WHERE mode = ? AND status = ?;",
     [mode, status],
@@ -133,9 +137,9 @@ Record.post("/getPartner", (req, res) => {
 Record.post("/getWorkshop", (req, res) => {
   const mid = req.body.mId;
   const workshopType = req.body.type;
-  const status = 'Approved';
+  const status = "Approved";
   const verifyType1 = null;
-  const verifyType2 = '';
+  const verifyType2 = "";
   if (workshopType == "CSSLworkshop") {
     connection.query(
       "SELECT title, fromDate, toDate FROM csslworkshop WHERE verifiedBy != ? AND verifiedBy != ?;",
@@ -166,7 +170,7 @@ Record.post("/getWorkshop", (req, res) => {
 
 //get all the guest lectures which are conducted by the relevant member
 Record.post("/getGuestLecture", (req, res) => {
-  const mid = req.body.mId; 
+  const mid = req.body.mId;
   const g_date = req.body.gDate;
   connection.query(
     "SELECT guestlecture.university, guestlecture.description FROM guestlecture INNER JOIN glselect ON guestlecture.gId = glselect.gId WHERE guestlecture.date = ? AND glselect.memberId = ?;",
@@ -183,7 +187,9 @@ Record.post("/getGuestLecture", (req, res) => {
 });
 
 //insert course details (basicCourseDetails.js)
-Record.route("/submitCsslCourse").post(upload.single("proof"), (req, res, err) => {
+Record.route("/submitCsslCourse").post(
+  upload.single("proof"),
+  (req, res, err) => {
     const mId = req.body.mId;
     const recTitle = req.body.recTitle;
     const recordType = req.body.recordType;
@@ -220,6 +226,138 @@ Record.route("/submitCsslCourse").post(upload.single("proof"), (req, res, err) =
         }
       }
     );
-  });
+  }
+);
 
+Record.post("/cpdApproval", async (req, res) => {
+  connection.query(
+    "SELECT * FROM `user` WHERE `status` = ? AND (`userType` = ? OR `userType` = ? OR `userType` = ? OR `userType` = ?);",
+    [1, "student", "associate", "professional", "chartered"],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+Record.post("/all", async (req, res) => {
+  console.log("(*&^$%");
+
+  const sql =
+    "select cpdrecords.type ,cpdrecords.recordId, cpdrecords.memberId , cpdrecords.credit, cpdrecords.status,user.title,user.firstName,user.lastName, cpdrecords.`recTitle` from cpdrecords inner join member on member.memberId = cpdrecords.memberId left join user on user.id =member.id ORDER BY `cpdrecords`.`recordId` DESC ;";
+
+  connection.query(sql, (error, result, feilds) => {
+    if (error) {
+      console.log(error);
+      console.log("(*&^456454554546$%");
+
+      res.send(error);
+    } else {
+      console.log("(*&^$%====================");
+
+      res.send(result);
+    }
+  });
+});
+
+Record.post("/getcpdData", async (req, res) => {
+  const recordId = req.body.cpdId;
+
+  const sql =
+    "select recordId ,type,refId from cpdrecords where recordId =" +
+    recordId +
+    ";";
+  connection.query(sql, (error, result, feilds) => {
+    if (error) {
+      res.send(error);
+    } else {
+      var sqlQ;
+
+      if (result[0].type == "CSSL COURSE") {
+        const slqQ =
+          "select csslcourse.*, cpdrecords.* from cpdrecords inner join csslcourse on cpdrecords.refId=csslcourse.courseId where cpdrecords.recordId =" +
+          result[0].recordId +
+          ";";
+
+        connection.query(slqQ, (err, r, feilds) => {
+          if (err) {
+            res.send(err);
+          } else {
+            console.log(
+              "--------------------------1-----------------------------------------"
+            );
+            res.send(r);
+            console.log(r);
+          }
+        });
+      } else if (result[0].type == "OTHER COURSE") {
+        const slqQ =
+          "select othercourse.*, cpdrecords.* from cpdrecords inner join csslcourse on cpdrecords.refId=othercourse.courseId where cpdrecords.recordId =" +
+          result[0].recordId +
+          ";";
+
+        connection.query(slqQ, (err, result, feilds) => {
+          if (err) {
+            res.send(err);
+          } else {
+            console.log(
+              "--------------------------2-------------------------------------------"
+            );
+            
+          }
+        });
+      } else if (result[0].type == "CSSL GUEST LECTURES") {
+        const slqQ =
+          "select guestlecture.*, cpdrecords.* from cpdrecords inner join csslcourse on cpdrecords.refId=guestlecture.gId where cpdrecords.recordId =" +
+          result[0].recordId +
+          ";";
+
+        connection.query(slqQ, (err, result, feilds) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send(result);
+          }
+        });
+      } else if (result[0].type == "OTHER WORKSHOP") {
+        const slqQ =
+          "select csslworkshop.*, cpdrecords.* from cpdrecords inner join csslworkshop on cpdrecords.refId=csslworkshop.wId  where cpdrecords.recordId =" +
+          result[0].recordId +
+          ";";
+
+        connection.query(slqQ, (err, result, feilds) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send(result);
+          }
+        });
+      } else if (result[0].type == "CSSL WORKSHOP") {
+        const slqQ =
+          "select csslworkshop.*, cpdrecords.* from cpdrecords inner join csslworkshop on cpdrecords.refId=csslworkshop.wId  where cpdrecords.recordId =" +
+          result[0].recordId +
+          ";";
+
+        connection.query(slqQ, (err, result, feilds) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }
+      console.log(
+        "--------------------------5-----------------------------------------"
+      );
+
+     
+      console.log(
+        "--------------------------6-----------------------------------------"
+      );
+    }
+  });
+});
 export default Record;
