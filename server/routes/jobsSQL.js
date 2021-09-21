@@ -391,7 +391,7 @@ Job.post("/getJobs", (req, res) => {
   const role = req.body.jobRole;
 
   const sqlSelect =
-    "SELECT jvId , companyName , location ,designation from jobvacancy where companyName like '" +
+    "SELECT jvId , companyName , location ,designation,questionType from jobvacancy where companyName like '" +
     name +
     "%' and location like '" +
     location +
@@ -510,7 +510,7 @@ Job.post("/getMaximumQuestions", (req, res) => {
 
 Job.post("/getAllQuestion", (req, res) => {
   const sqlSelect =
-    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct from jobquestions";
+    "SELECT Qnumber  , Question , Answer1 ,Answer2,Answer3,Answer4,Correct,type from jobquestions";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
