@@ -94,8 +94,8 @@ dashBoardSQL.post("/announcement", (req, res) => {
 dashBoardSQL.post("/recent", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "SELECT * FROM `recentactivities` WHERE memberID = 2 LIMIT 4;",
-    //[id],
+    "SELECT * FROM `recentactivities` WHERE memberID = ? LIMIT 4;",
+    [id],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -111,7 +111,7 @@ dashBoardSQL.post("/creditsearned", (req, res) => {
   const id = req.body.id;
   
   connection.query(
-    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE()) group by month ",
+    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE()) group by month ",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -127,7 +127,7 @@ dashBoardSQL.post("/creditsearned", (req, res) => {
 dashBoardSQL.post("/activityType", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select recordType,sum(credit) as count from cpdrecords where memberId = 'cssl001' group by recordType;",
+    "select recordType,sum(credit) as count from cpdrecords where memberId = ? group by recordType;",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -143,7 +143,7 @@ dashBoardSQL.post("/activityType", (req, res) => {
 dashBoardSQL.post("/activityTypeCredits", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select recordCategory,sum(credit) as credits from cpdrecords where memberId = 'cssl001' group by recordCategory;",
+    "select type,sum(credit) as credits from cpdrecords where memberId = ? group by type;",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -159,7 +159,7 @@ dashBoardSQL.post("/activityTypeCredits", (req, res) => {
 dashBoardSQL.post("/progressPercentage", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+    "select sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -181,7 +181,7 @@ dashBoardSQL.post("/upcoming", (req, res) => {
   const real = month;
 
   connection.query(
-    "select extract(DAY from recordDate) as day from cpdrecords where memberId = 'cssl001' AND extract(MONTH from recordDate)=MONTH(CURDATE()) AND extract(YEAR from recordDate)=YEAR(CURDATE())",
+    "select extract(DAY from recordDate) as day from cpdrecords where memberId = ? AND extract(MONTH from recordDate)=MONTH(CURDATE()) AND extract(YEAR from recordDate)=YEAR(CURDATE())",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -197,7 +197,7 @@ dashBoardSQL.post("/upcoming", (req, res) => {
 dashBoardSQL.post("/earned", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+    "select sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -213,7 +213,7 @@ dashBoardSQL.post("/earned", (req, res) => {
 dashBoardSQL.post("/remaining", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+    "select sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
     [id],
     (error, result, feilds) => {
       if (error) {
@@ -231,7 +231,7 @@ dashBoardSQL.post("/remaining", (req, res) => {
 dashBoardSQL.post("/remainingPercentage", (req, res) => {
   const id = req.body.id;
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = 'cssl001' AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+    "select sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
     [id],
     (error, result, feilds) => {
       if (error) {
