@@ -638,7 +638,7 @@ Course.post("/getEnrollCourseList", (req, res) => {
 Course.post("/getCourse", (req, res) => {
   const cid = req.body.cId;
   connection.query(
-    "SELECT csslcourse.name, csslcourse.description, csslcourse.duration, csslcourse.durationType, csslcourse.language, csslcourse.skillLevel, csslcourse.image, csslcourse.mode, user.title, user.firstName, user.lastName, user.profileImage FROM ((csslcourse INNER JOIN member ON member.memberId = csslcourse.conductedBy) INNER JOIN user ON user.id = member.id) WHERE courseId = ?;",
+    "SELECT csslcourse.name, csslcourse.description, csslcourse.duration, csslcourse.durationType, csslcourse.language, csslcourse.skillLevel, csslcourse.image, csslcourse.mode, csslcourse.category, csslcourse.status, user.title, user.firstName, user.lastName, user.profileImage FROM ((csslcourse INNER JOIN member ON member.memberId = csslcourse.conductedBy) INNER JOIN user ON user.id = member.id) WHERE courseId = ?;",
     [cid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -654,7 +654,7 @@ Course.post("/getContent", (req, res) => {
   const cid = req.body.cId;
   const cntid = req.body.cntId;
   connection.query(
-    "SELECT title, contentType, content, note FROM coursecontent WHERE contentId = ? AND courseId = ?;",
+    "SELECT title, contentType, content, note, status FROM coursecontent WHERE contentId = ? AND courseId = ?;",
     [cntid,cid],
     (error, result, feilds) => {
       if (error) console.log(error);
