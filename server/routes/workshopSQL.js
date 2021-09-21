@@ -103,10 +103,11 @@ Workshop.post("/getConductors", (req, res) => {
 //getApproved workshop details
 Workshop.post("/getApprovedWorkshop", (req, res) => {
   console.log("get all workshop line 999");
+  const wid = req.body.id;
 
   connection.query(
-    "SELECT csslworkshop.* ,user.title,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id) WHERE csslworkshop.verifiedBy IS NOT NULL  ORDER BY `csslworkshop`.`fromDate` ASC;",
-
+    "SELECT csslworkshop.* ,user.title AS T,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id) WHERE csslworkshop.verifiedBy IS NOT NULL AND csslworkshop.wId= ?;",
+    [wid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {

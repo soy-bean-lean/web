@@ -36,6 +36,7 @@ function ApproveWorkshopView() {
   const [toDate, setToDate] = useState('');
   const [duration, setDuration] = useState('');
   const [credit, setCredit] = useState('');
+  const [data, setData] = useState([]);
 
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
@@ -54,13 +55,14 @@ function ApproveWorkshopView() {
       id: id,
     };
     axios
-      .post('http://localhost:3001/workshop/getWorkshopView', sendData)
+      .post('http://localhost:3001/workshop/getApprovedWorkshop', sendData)
 
       .then(response => {
         if (response.data.error) {
           //    alert(response.data.error);
         } else {
           console.log(response.data[0]);
+          setData(response.data[0]);
           setTitle(response.data[0].title);
           setDesc(response.data[0].description);
           setSubject(response.data[0].subject);
@@ -87,6 +89,7 @@ function ApproveWorkshopView() {
             <CardBody>
               <center>
                 <h4>{title}</h4>
+                {data.T}. {data.firstName} {data.lastName}
                 <hr />
                 {/* <br /> */}
                 <img

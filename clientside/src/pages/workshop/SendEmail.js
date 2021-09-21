@@ -37,6 +37,8 @@ function SendEmail() {
   const [toDate, setToDate] = useState('');
   const [duration, setDuration] = useState('');
   const [credit, setCredit] = useState('');
+  const [data, setData] = useState([]);
+
 
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
@@ -73,13 +75,15 @@ function SendEmail() {
       id: id,
     };
     axios
-      .post('http://localhost:3001/workshop/getWorkshopView', sendData)
+      .post('http://localhost:3001/workshop/getApprovedWorkshop', sendData)
 
       .then(response => {
         if (response.data.error) {
           //    alert(response.data.error);
         } else {
-          console.log(response.data[0]);
+         // console.log(response.data[0]);
+          setData(response.data[0]);
+
           setTitle(response.data[0].title);
           setDesc(response.data[0].description);
           setSubject(response.data[0].subject);
@@ -128,6 +132,7 @@ function SendEmail() {
                 </Badge>
                 <br></br>
                 <br></br>
+                {data.T}. {data.firstName} {data.lastName}
                 <Badge color="primary" pill className="mr-1">
                   {'From' + '  ' + fromDate + '  To ' + toDate}{' '}
                 </Badge>
