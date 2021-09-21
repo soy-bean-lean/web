@@ -40,15 +40,6 @@ function WorkshopView() {
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
 
-  //const [image, setBlogImage] = useState();
-
-  // var today = new Date(),
-  //   Currentdate =
-  //     today.getFullYear() +
-  //     '-' +
-  //     (today.getMonth() + 1) +
-  //     '-' +
-  //     today.getDate();
   let history = useHistory();
 
   function msg() {
@@ -92,7 +83,6 @@ function WorkshopView() {
           setTimeout(
             function () {
               history.push('/manageworksops');
-              //hri giyoth yana thena
             },
 
             2000,
@@ -189,13 +179,11 @@ function WorkshopView() {
           setImage(response.data[0].image);
         }
       })
-      .catch(error => {
-        //   alert(error);
-      });
+      .catch(error => {});
   }, []);
 
   return (
-    <Page title={title}>
+    <Page>
       <Link to="/workshop">
         <Button color="primary">Workshop List</Button>
       </Link>
@@ -223,15 +211,23 @@ function WorkshopView() {
                 <br></br>
                 <br></br>
                 <Badge color="primary" pill className="mr-1">
-                  {'From' + '  ' + fromDate + '  To ' + toDate}{' '}
+                From Date: {fromDate} |  To Date:  {toDate}
+                 
                 </Badge>
                 <br></br>
                 <br></br>
                 <Badge color="primary" pill className="mr-1">
                   {duration + '  hours per Day'}
                 </Badge>
+                <br></br>
+                <br></br>
                 <p>{desc}</p>
-               
+                {/* <Col sm={{ size: 15 }}>
+                      <Button onClick={submit} color="danger">
+                        Delete
+                      </Button>{' '}
+                      
+                    </Col> */}
               </center>
             </CardBody>
           </Card>
