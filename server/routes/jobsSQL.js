@@ -69,6 +69,8 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
           console.log(err);
           res.send(result);
         } else {
+         
+         
           res.json("success");
         }
       }
@@ -328,7 +330,11 @@ Job.route("/addJobApplicaation").post(
       !req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|pdf|PDF|png|PNG)$/)
     ) {
       res.send({ msg: "Not an Image File." });
-    } else {
+    }
+    
+    else {
+
+      
       const Currentdate = req.body.Currentdate;
       const memberId = req.body.memberId;
       const jobId = req.body.jobId;
@@ -389,7 +395,9 @@ Job.post("/getJobs", (req, res) => {
   const name = req.body.companyName;
   const location = req.body.location;
   const role = req.body.jobRole;
-
+  console.log(name)
+  console.log(location)
+  console.log(role)
   const sqlSelect =
     "SELECT jvId , companyName , location ,designation,questionType from jobvacancy where companyName like '" +
     name +

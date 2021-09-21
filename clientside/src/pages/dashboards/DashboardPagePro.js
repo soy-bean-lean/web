@@ -352,7 +352,9 @@ function DashboardPage() {
           setcreditsEarned(response.data);
         }
       })
-      .catch(error => {});
+      .catch(error => {
+      //  alert(error);
+      });
 
     axios
       .post('http://localhost:3001/Dash/remaining', data)

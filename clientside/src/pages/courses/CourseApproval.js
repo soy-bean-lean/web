@@ -31,16 +31,15 @@ import {
 const tableTypes = ['striped'];
 
 const CourseApproval = props => {
-  const courseTitle = 'Machine Learning';
 
   const [activeTab, setActiveTab] = useState('1');
 
   const [data, setData] = useState([]);
   //const [user, setUser] = useState(userDetails);
-  const [noApprovedUsers, setApprovedCourses] = useState(null);
-  const [noRejectedUsers, setRejecteddCourses] = useState(null);
-  const [noPendingUsers, setPendingCourses] = useState(null);
-  const [count, setDeletedCourses] = useState(null);
+  const [approvedCourses, setApprovedCourses] = useState(null);
+  const [rejectedCourses, setRejecteddCourses] = useState(null);
+  const [pendingCourses, setPendingCourses] = useState(null);
+  const [deleteCourses, setDeletedCourses] = useState(null);
   const [pendingCount, setPending] = useState(null);
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -111,8 +110,8 @@ const CourseApproval = props => {
       });
   }, []);
   const pending =
-  noPendingUsers &&
-    noPendingUsers.map((data, i) => {
+  pendingCourses &&
+  pendingCourses.map((data, i) => {
       return (
         <>
           <tr>
@@ -125,14 +124,14 @@ const CourseApproval = props => {
                 </Badge>
               </center>
             </td>
-           
+          
             <td>
-            <Link to={'/courseapproval/csslcourses/cssl008/'+courseTitle}>
+            <Link to={'/courseapproval/csslcourses/cssl00' + data.courseId + '/' + data.name}>
               <Button
                 pill
                 color="success"
                 size="sm"
-                to={'/memberView/' + data.id}
+                //to={'/memberView/' + data.id}
               >
                 View{' '}
               </Button>
@@ -144,8 +143,8 @@ const CourseApproval = props => {
     });
 
   const approved =
-    noApprovedUsers &&
-    noApprovedUsers.map(data => (
+  approvedCourses &&
+  approvedCourses.map(data => (
       <>
       <tr>
         <td>{data.name}</td>
@@ -167,8 +166,8 @@ const CourseApproval = props => {
     ));
 
   const deleted =
-    noPendingUsers &&
-    noPendingUsers.map(data => (
+  deleteCourses &&
+  deleteCourses.map(data => (
       <>
       <tr>
         <td>{data.name}</td>
@@ -191,8 +190,8 @@ const CourseApproval = props => {
     ));
 
   const rejected =
-    noRejectedUsers &&
-    noRejectedUsers.map(data => (
+  rejectedCourses &&
+  rejectedCourses.map(data => (
       <>
       <tr>
         <td>{data.name}</td>
@@ -213,6 +212,7 @@ const CourseApproval = props => {
     </>
     ));
 
+
   return (
     <Page title="Course Approval">
       <hr></hr>
@@ -225,7 +225,8 @@ const CourseApproval = props => {
               toggle('1');
             }}
           >
-            Pending Course Approvals <Badge color="info"> {pendingCount}</Badge>
+            Pending Course Approvals 
+            {pendingCount > 0 && (<Badge color="info"> {pendingCount}</Badge>)}
           </NavLink>
         </NavItem>
         <NavItem>

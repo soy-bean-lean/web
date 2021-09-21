@@ -26,7 +26,7 @@ councilRouter.post("/all", async (req, res) => {
 });
 
 councilRouter.post("/CoursePending", async (req, res) => {
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status  ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Pending'";
+  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Pending'";
 
   connection.query(sql,
     (error, result, feilds) => {
@@ -41,7 +41,7 @@ councilRouter.post("/CoursePending", async (req, res) => {
 
 councilRouter.post("/CourseApproved", async (req, res) => {
 
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status  ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Approved'";
+  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Approved'";
   connection.query(sql  
     ,
     (error, result, feilds) => {
@@ -55,7 +55,7 @@ councilRouter.post("/CourseApproved", async (req, res) => {
 });
 councilRouter.post("/CoursesRejected", async (req, res) => {
 
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status  ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Rejected'";
+  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Rejected'";
   connection.query(sql  
     ,
     (error, result, feilds) => {
@@ -85,7 +85,7 @@ councilRouter.post("/CoursesRejected", async (req, res) => {
 
 councilRouter.post("/CourseDeleted", async (req, res) => {
 
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status  ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Deleted'";
+  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Deleted'";
   connection.query(sql,
     
     (error, result, feilds) => {
@@ -204,6 +204,92 @@ councilRouter.post("/reject", async (req, res) => {
             }
           }
         );
+      }
+    }
+  );
+});
+
+//approve content (CourseContentApprovalView.js)
+councilRouter.post("/approveContent", (req, res) => {
+  const cid = req.body.cId;
+  const cntid = req.body.cntId;
+  const status = 'Approved';
+  connection.query(
+    "UPDATE coursecontent SET status = ? WHERE courseId = ? AND contentId = ?;",
+    [status, cid, cntid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//reject content (CourseContentApprovalView.js)
+councilRouter.post("/rejectContent", (req, res) => {
+  const cid = req.body.cId;
+  const cntid = req.body.cntId;
+  const status = 'Rejected';
+  connection.query(
+    "UPDATE coursecontent SET status = ? WHERE courseId = ? AND contentId = ?;",
+    [status, cid, cntid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//approve course (CourseApprovalView.js)
+councilRouter.post("/approveCourse", (req, res) => {
+  const mid = req.body.mId;
+  const cid = req.body.cId;
+  const appDate = req.body.appDate;
+  const status = 'Approved';
+  connection.query(
+    "UPDATE csslcourse SET status = ?, approvedBy = ?, approvedDate = ? WHERE courseId = ?;",
+    [status, mid, appDate, cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//reject course (CourseApprovalView.js)
+councilRouter.post("/rejectCourse", (req, res) => {
+  const mid = req.body.mId;
+  const cid = req.body.cId;
+  const appDate = req.body.appDate;
+  const status = 'Rejected';
+  connection.query(
+    "UPDATE csslcourse SET status = ?, approvedBy = ?, approvedDate = ? WHERE courseId = ?;",
+    [status, mid, appDate, cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//change status of the course contents of a relevant course according to a course status (CourseApprovalView.js)
+councilRouter.post("/changeAllContentStatus", (req, res) => {
+  const cid = req.body.cId;
+  const status = req.body.status;
+  connection.query(
+    "UPDATE coursecontent SET status = ? WHERE courseId = ?;",
+    [status, cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
       }
     }
   );

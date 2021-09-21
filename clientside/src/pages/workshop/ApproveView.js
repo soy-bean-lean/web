@@ -37,6 +37,7 @@ function ApproveWorkshopView() {
   const [duration, setDuration] = useState('');
   const [credit, setCredit] = useState('');
   const [data, setData] = useState([]);
+  const [conduct, setConductData] = useState(null);
 
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
@@ -56,6 +57,9 @@ function ApproveWorkshopView() {
         } else {
           console.log(response.data[0]);
           setData(response.data[0]);
+          setConductData(response.data);
+
+
           setTitle(response.data[0].title);
           setDesc(response.data[0].description);
           setSubject(response.data[0].subject);
@@ -68,9 +72,13 @@ function ApproveWorkshopView() {
       })
       .catch(error => {});
   }, []);
+
+
   const back = () => {
     history.push('/manageworksops');
   };
+
+
   function downloadQR() {
     const canvas = document.getElementById(id);
     const pngUrl = canvas
@@ -83,6 +91,20 @@ function ApproveWorkshopView() {
     downloadLink.click();
     document.body.removeChild(downloadLink);
   }
+
+
+  const conductors =
+  conduct &&
+  conduct.map(conduct => (
+    <>
+      <Badge color="warning" pill className="mr-3">
+      {conduct.T} .  {conduct.firstName} {conduct.lastName}
+      </Badge>
+      <br />
+      
+      {/* <CardText className="comments">{data.description}</CardText> */}
+    </>
+  ));
   return (
     <Page title="Approved Workshop">
       <hr></hr>
@@ -98,7 +120,10 @@ function ApproveWorkshopView() {
             <CardBody>
               <center>
                 <h4>{title}</h4>
-                {data.T}. {data.firstName} {data.lastName}
+                {conductors}
+  
+
+                {/* {data.T}. {data.firstName} {data.lastName} */}
                 <hr />
                 {/* <br /> */}
                 <Row>
