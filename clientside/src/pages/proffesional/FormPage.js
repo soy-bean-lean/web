@@ -33,34 +33,7 @@ const FormPage = () => {
   const [imgFile, setImgFile] = useState('asd');
 
   //cpd
-  const [recType, setRecType] = useState('type');
-
-  const [courseId, setCourseId] = useState('');
-  const [courseName, setCourseName] = useState('');
-  const [courseType, setCourseType] = useState('');
-  const [mode, setMode] = useState('');
-  const [level, setLevel] = useState('');
-  const [platform, setPlatform] = useState('');
-  const [partner, setPartner] = useState('');
-  const [credit, setCredit] = useState('');
-
-  const [workshopId, setWorkshopId] = useState('');
-  const [workshopName, setWorkshopName] = useState('');
-  const [workshopType, setWorkshopType] = useState('');
-  const [workshopDate, setWorkshopDate] = useState('');
-
-  const [glDate, setGLDate] = useState('');
-  const [guestLecture, setGuestLecture] = useState('');
-  const [guestLectureId, setGuestLectureId] = useState('');
-
-  const [inCourseList, setInCourseList] = useState(null);
-  const [outCourseList, setOutCourseList] = useState(null);
-  const [outCoursePlatform, setOutCoursePlatform] = useState(null);
-  const [outCoursePartner, setOutCoursePartner] = useState(null);
-  const [inWorkshopList, setInWorkshopList] = useState(null);
-  const [outWorkshopList, setOutWorkshopList] = useState(null);
-  const [guestLectureList, setGuestLectureList] = useState(null);
-
+  
   const addJob = () => {
     const formData = new FormData();
     formData.append('image', imgFile);

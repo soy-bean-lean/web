@@ -13,14 +13,13 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
 import {
-    Badge,
+  Badge,
   Button,
   Card,
   CardBody,
   CardHeader,
   Col,
   Alert,
- 
   Input,
   Label,
   Row,
@@ -33,17 +32,16 @@ function WorkshopView() {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [subject, setSubject] = useState('');
- const [fromDate, setFromDate] = useState('');
- const [toDate, setToDate] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [duration, setDuration] = useState('');
   const [credit, setCredit] = useState('');
 
   const { authState, setAuthState } = useContext(AuthContext);
   const [result, setResult] = useState();
 
-  
   //const [image, setBlogImage] = useState();
- 
+
   // var today = new Date(),
   //   Currentdate =
   //     today.getFullYear() +
@@ -52,8 +50,6 @@ function WorkshopView() {
   //     '-' +
   //     today.getDate();
   let history = useHistory();
-
-  
 
   function msg() {
     if (result == 'err') {
@@ -77,30 +73,32 @@ function WorkshopView() {
       tableName: 'csslworkshop',
       coloum: 'wId',
     };
-console.log(id);
-    axios.post('http://localhost:3001/workshop/deleteItem', data).then(response => {
-      if (response.data.error) {
-        setResult('err');
-        setTimeout(
-          function () {
-            history.push('/manageworksops');
-          },
+    console.log(id);
+    axios
+      .post('http://localhost:3001/workshop/deleteItem', data)
+      .then(response => {
+        if (response.data.error) {
+          setResult('err');
+          setTimeout(
+            function () {
+              history.push('/manageworksops');
+            },
 
-          2000,
-        );
-      } else {
-        setResult('done');
+            2000,
+          );
+        } else {
+          setResult('done');
 
-        setTimeout(
-          function () {
-            history.push('/manageworksops');
-            //hri giyoth yana thena
-          },
+          setTimeout(
+            function () {
+              history.push('/manageworksops');
+              //hri giyoth yana thena
+            },
 
-          2000,
-        );
-      }
-    });
+            2000,
+          );
+        }
+      });
   };
 
   const submit = () => {
@@ -123,7 +121,6 @@ console.log(id);
     });
   };
 
-
   const updateBlog = () => {
     const blogData = new FormData();
     //blogData.append('image', image);
@@ -136,16 +133,16 @@ console.log(id);
     blogData.append('credit', credit);
     blogData.append('wId', id);
 
-    console.log("data;",blogData);
+    console.log('data;', blogData);
     fetch('http://localhost:3001/blog/updateBlog', {
       method: 'POST',
-      body:blogData,
+      body: blogData,
       headers: {
         Accept: 'multipart/form-data',
       },
       credentials: 'include',
     })
-    .then(res => res.json())
+      .then(res => res.json())
       .then(res => {
         setResult('done');
         setTimeout(
@@ -160,7 +157,9 @@ console.log(id);
         setResult('err');
         setTimeout(
           function () {
-            history.push('/addCredit/cssl00' + blogData.wId + '/' + blogData.title);
+            history.push(
+              '/addCredit/cssl00' + blogData.wId + '/' + blogData.title,
+            );
           },
 
           2000,
@@ -168,13 +167,10 @@ console.log(id);
       });
   };
 
-  
-
-
   useEffect(() => {
-    const sendData={
-      id:id,
-    }
+    const sendData = {
+      id: id,
+    };
     axios
       .post('http://localhost:3001/workshop/getWorkshopView', sendData)
 
@@ -187,76 +183,57 @@ console.log(id);
           setDesc(response.data[0].description);
           setSubject(response.data[0].subject);
           setFromDate(response.data[0].fromDate);
-          setToDate(response.data[0].toDate );
+          setToDate(response.data[0].toDate);
           setDuration(response.data[0].duration);
           setCredit(response.data[0].credit);
           setImage(response.data[0].image);
-          
-          
         }
       })
       .catch(error => {
         //   alert(error);
       });
-    
-
-   
-
-     
-      
   }, []);
 
-//   return (
-//     <Page title="Assign Credit/Deny Request">
-//        <Link to="/manageworksops">
-//         <Button color="primary">Back</Button>
-//       </Link>
-      
-//     </Page>
-//   );
-
-return (
+  return (
     <Page title={title}>
-        <Link to="/workshop">
+      <Link to="/workshop">
         <Button color="primary">Workshop List</Button>
       </Link>
       <hr></hr>
       <Row>
-        <Col sm="5" md={{ size: 6, offset: 3 }}>
+        <Col sm="5" md={{ size: 8, offset: 2 }}>
           <br></br>
-          <Card className="profileInfo">
+          <Card className="shadow">
             <CardBody>
               <center>
-                {msg()}{' '}
-                <Badge pill color="primary" className="mr-1">
-                  Workshop details
-                </Badge>
-                <br />
+                {msg()} <h4>{title}</h4>
+                <hr />
                 {/* <br /> */}
                 <img
                   src={'http://localhost:3001/uploads/workshop/' + image}
                   height="60%"
-                          width="60%"
-                  className="writeImg"
+                  width="60%"
+                  className="workshopImg"
                 />
                 <br></br>
                 <br></br>
-                <h4>
-                  {title} 
-                </h4>{' '}
-                {/* <Badge pill color="warning" className="mr-1">
-                  {type.toUpperCase()}
-                </Badge> */}
-                <br />
-                <br />
+                <Badge color="warning" pill className="mr-1">
+                  {subject}
+                </Badge>
+                <br></br>
+                <br></br>
+                <Badge color="primary" pill className="mr-1">
+                  {'From' + '  ' + fromDate + '  To ' + toDate}{' '}
+                </Badge>
+                <br></br>
+                <br></br>
+                <Badge color="primary" pill className="mr-1">
+                  {duration + '  hours per Day'}
+                </Badge>
                 <p>{desc}</p>
-                <p>{subject}</p>
-               <p> { 'From' +'  '+ fromDate + '  To ' + toDate}</p>
-                <p>{duration + '  hours per Day'}</p>
-             
-                
+               
               </center>
-              </CardBody>
+            </CardBody>
           </Card>
         </Col>
       </Row>

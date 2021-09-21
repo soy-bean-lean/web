@@ -141,7 +141,7 @@ userRouter.post("/", async (req, res) => {
                   [row.insertId, designation, companyName, businessAddress],
                   (err, result) => {
                     if (err) {
-                      res.json({ error });
+                      res.json({ err });
                     } else {
                       res.json("successfully added to database");
                     }

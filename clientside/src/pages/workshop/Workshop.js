@@ -211,7 +211,7 @@ const Workshop = props => {
                     'http://localhost:3001/uploads/workshop/' +
                     sendWorkshop.image
                   }
-                  style={{ width: 'auto', height: 150 }}
+                  style={{ width: 150, height: 150 }}
                   className="card-img-left"
                   // style={{ width: 175, height: 150 }}
                 />
@@ -220,12 +220,11 @@ const Workshop = props => {
                   <CardText>
                   <h3>{sendWorkshop.title}</h3>
                     <h6>{sendWorkshop.description}</h6>
+
                     </CardText>
                 </CardBody>
               </Card>
-              <Button color="primary" className="buttonDIV">
-                Edit
-              </Button>
+          
               
             </Col>
           </Link>

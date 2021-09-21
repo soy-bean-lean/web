@@ -1,33 +1,20 @@
 import logo200Image from 'assets/img/logo/logo_200.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
-import SourceLink from 'components/SourceLink';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as GIIcons from 'react-icons/gi';
 import * as HiIcons from 'react-icons/hi';
 import React from 'react';
 import {
-  MdAccountCircle,
-  MdArrowDropDownCircle,
-  MdBorderAll,
-  MdBrush,
-  MdChromeReaderMode,
+
   MdDashboard,
-  MdGroupWork,
- 
-  MdRadioButtonChecked,
+  
   MdReport,
-  MdStar,
-  MdTextFields,
-  MdViewCarousel,
-  MdViewDay,
-  MdViewList,
   MdWeb,
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
   // UncontrolledTooltip,
-  Collapse,
   Nav,
   Navbar,
   NavItem,

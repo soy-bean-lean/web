@@ -80,32 +80,33 @@ function AddCredit() {
       verifiedBy: authState.memberId,
       credit: credit,
     };
-console.log(id);
-    axios.post('http://localhost:3001/workshop/addCredit', data).then(response => {
-      if (response.data.error) {
-        setResult('err');
-        setTimeout(
-          function () {
-            history.push('/addCredit/cssl00' + data.wid+ '/'+title);
-          },
+    console.log(id);
+    axios
+      .post('http://localhost:3001/workshop/addCredit', data)
+      .then(response => {
+        if (response.data.error) {
+          setResult('err');
+          setTimeout(
+            function () {
+              history.push('/addCredit/cssl00' + data.wid + '/' + title);
+            },
 
-          2000,
-        );
-      } else {
-        setResult('done');
+            2000,
+          );
+        } else {
+          setResult('done');
 
-        setTimeout(
-          function () {
-            history.push('/sendEmail/cssl00' + data.wid + '/'+title);
-            //hri giyoth yana thena
-          },
+          setTimeout(
+            function () {
+              history.push('/sendEmail/cssl00' + data.wid + '/' + title);
+              //hri giyoth yana thena
+            },
 
-          2000,
-        );
-      }
-    });
+            2000,
+          );
+        }
+      });
   };
-
 
   const deleteItem = () => {
     const data = {
@@ -161,52 +162,51 @@ console.log(id);
     });
   };
 
+  //   const approve = () => {
+  //     const blogData = new FormData();
+  //     blogData.append('image', image);
+  //     blogData.append('title', title);
+  //     blogData.append('description', desc);
+  //     blogData.append('subject', subject);
+  //     blogData.append('fromDate', fromDate);
+  //     blogData.append('toDate', toDate);
+  //     blogData.append('duration', duration);
+  //     blogData.append('credit', credit);
+  //     blogData.append('wId', wId);
 
-//   const approve = () => {
-//     const blogData = new FormData();
-//     blogData.append('image', image);
-//     blogData.append('title', title);
-//     blogData.append('description', desc);
-//     blogData.append('subject', subject);
-//     blogData.append('fromDate', fromDate);
-//     blogData.append('toDate', toDate);
-//     blogData.append('duration', duration);
-//     blogData.append('credit', credit);
-//     blogData.append('wId', wId);
+  //     blogData.append('verifiedBy', authState.memberId);
 
-//     blogData.append('verifiedBy', authState.memberId);
+  //     console.log("data;",blogData);
+  //     fetch('http://localhost:3001/workshop/addCredit', {
+  //       method: 'POST',
+  //       body:blogData,
+  //       headers: {
+  //         Accept: 'multipart/form-data',
+  //       },
+  //       credentials: 'include',
+  //     })
+  //     .then(res => res.json())
+  //       .then(res => {
+  //         setResult('done');
+  //         setTimeout(
+  //           function () {
+  //             history.push('/sendEmail/cssl00' + blogData.wId + '/' + blogData.title);
+  //           },
 
-//     console.log("data;",blogData);
-//     fetch('http://localhost:3001/workshop/addCredit', {
-//       method: 'POST',
-//       body:blogData,
-//       headers: {
-//         Accept: 'multipart/form-data',
-//       },
-//       credentials: 'include',
-//     })
-//     .then(res => res.json())
-//       .then(res => {
-//         setResult('done');
-//         setTimeout(
-//           function () {
-//             history.push('/sendEmail/cssl00' + blogData.wId + '/' + blogData.title);
-//           },
+  //           2000,
+  //         );
+  //       })
+  //       .catch(error => {
+  //         setResult('err');
+  //         setTimeout(
+  //           function () {
+  //             history.push('/addCredit/cssl00' + blogData.wId + '/' + blogData.title);
+  //           },
 
-//           2000,
-//         );
-//       })
-//       .catch(error => {
-//         setResult('err');
-//         setTimeout(
-//           function () {
-//             history.push('/addCredit/cssl00' + blogData.wId + '/' + blogData.title);
-//           },
-
-//           2000,
-//         );
-//       });
-//   };
+  //           2000,
+  //         );
+  //       });
+  //   };
 
   useEffect(() => {
     const sendData = {
@@ -251,7 +251,7 @@ console.log(id);
         <Button color="primary">Workshop List</Button>
       </Link>
       <Row>
-        <Col sm="5" md={{ size: 6, offset: 3 }}>
+        <Col sm="5" md={{ size: 8, offset: 2 }}>
           <br></br>
           <center>
             <Card className="profileInfo">
@@ -288,25 +288,16 @@ console.log(id);
                       type="number"
                       name="title"
                       placeholder="Assign  Credit"
-                       
-                     
-                    onChange={e => setCredit(e.target.value)}
+                      onChange={e => setCredit(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
 
-                <FormGroup row>
-                  <Col>
-                    <QRCode value={id} />
-                  </Col>
-                </FormGroup>
-                </CardBody>
+              </CardBody>
               <CardBody>
-
                 <FormGroup check row>
                   <center>
                     <Col sm={{ size: 15 }}>
-                      
                       <Button onClick={submit} color="danger">
                         Reject
                       </Button>{' '}
