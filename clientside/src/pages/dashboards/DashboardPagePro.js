@@ -58,7 +58,7 @@ const today = new Date();
 const lastWeek = new Date(
   today.getFullYear(),
   today.getMonth(),
-  today.getDate() - 5,
+  today.getDate() + 5,
 );
 const a = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 15);
 
@@ -176,7 +176,7 @@ function DashboardPage() {
   retrievePie &&
     retrievePie.map(
       retrievePie => (
-        category.push(retrievePie.recordCategory),
+        category.push(retrievePie.type),
         countType.push(retrievePie.credits)
       ),
     );
@@ -247,6 +247,7 @@ function DashboardPage() {
     ],
   };
 
+  console.log(authState);
   //Announcements
   useEffect(() => {
     axios
@@ -264,7 +265,7 @@ function DashboardPage() {
 
     //Recent Activities
     const data = {
-      id: authState.id,
+      id: authState.memberId,
     };
     axios
       .post('http://localhost:3001/Dash/recent', data)
@@ -469,7 +470,7 @@ function DashboardPage() {
                   value={(a, lastWeek)}
                   className="calender"
                   onChange={changeDate}
-                  //tileClassName={tileContent}
+                  tileClassName={tileClassName}
                 />
               </CardBody>
             </Card>
@@ -497,13 +498,13 @@ function DashboardPage() {
 
                 <Col xs="6">
                   <CardHeader>
-                    Type of the category{' '}
+                    Type of the Activity{' '}
                     <small className="text-muted text-capitalize">
                       Credits Earned
                     </small>
                   </CardHeader>
                   <CardBody>
-                    <Pie data={state3} options={chartjs.doughnut.options} />
+                    <Bar data={state3} options={chartjs.bar.options} />
                   </CardBody>
                 </Col>
               </Row>

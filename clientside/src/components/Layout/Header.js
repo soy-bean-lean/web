@@ -28,6 +28,7 @@ import {
   Nav,
   Navbar,
   NavItem,
+  Badge,
   NavLink,
   Popover,
   PopoverBody,
@@ -91,7 +92,7 @@ function Header(props) {
     history.push('/');
   };
   const profile = () => {
-    
+    setisOpenUserCardPopover(false);
     history.push('/profile');
   };
 
@@ -109,34 +110,6 @@ function Header(props) {
         </Nav>
 
         <Nav navbar className={bem.e('nav-right')}>
-          <NavItem className="d-inline-flex">
-            <NavLink id="Popover1" className="position-relative">
-              {isNotificationConfirmed ? (
-                <MdNotificationsNone
-                  size={25}
-                  className="text-primary can-click"
-                  onClick={toggleNotificationPopover}
-                />
-              ) : (
-                <MdNotificationsActiveWithBadge
-                  size={25}
-                  className="text-primary can-click animated swing infinite"
-                  onClick={toggleNotificationPopover}
-                />
-              )}
-            </NavLink>
-            <Popover
-              placement="bottom"
-              isOpen={isOpenNotificationPopover}
-              toggle={toggleNotificationPopover}
-              target="Popover1"
-            >
-              <PopoverBody>
-                <Notifications notificationsData={notificationsData} />
-              </PopoverBody>
-            </Popover>
-          </NavItem>
-
           <NavItem>
             <NavLink id="Popover2">
               {/* //profile image */}
@@ -156,7 +129,6 @@ function Header(props) {
                   subtitle={authState.role}
                   subtitle={authState.email}
                   className="border-light"
-                  
                 >
                   <ListGroup flush>
                     <ListGroupItem

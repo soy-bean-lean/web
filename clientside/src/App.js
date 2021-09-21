@@ -21,6 +21,7 @@ import PageSpinner from 'components/PageSpinner';
 
 import Login from 'pages/login/login';
 import Registration from 'pages/registration/registration';
+import Payment from 'pages/payment/payment';
 import Profile from 'pages/profile/profile';
 import memberView from 'pages/registration/profile';
 import approveMemberView from 'pages/registration/profileApproval';
@@ -110,6 +111,7 @@ const ApproveWorkshopView = React.lazy(() => import('pages/workshop/ApproveView'
 const ManageWorkshop = React.lazy(() => import('pages/workshop/ManageWorkshop'));
 const AddCredit = React.lazy(() => import('pages/workshop/AddCredit'));
 const SendEmail = React.lazy(() => import('pages/workshop/SendEmail'));
+const CSSLWorkshops = React.lazy(() => import('pages/workshop/CSSLWorkshops'));
 
 
 
@@ -261,6 +263,7 @@ function App(props) {
                 <>
                   <Route exact path="/" exact component={Login} />
                   <Route path="/registration" component={Registration} />
+                  <Route path="/payment/:id" component={Payment} />
                   <Route path="/forgotpassword" component={ForgotPassword} />
                   <Route path="/reset/:token" component={ResetPassword} />
                 </>
@@ -345,7 +348,7 @@ function App(props) {
                       component={courseView}
                     />
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                    <Route exact path="/csslworkshops" component={CSSLWorkshops} />{' '}
                     {/* need to change component */}
                     {/*Forum Related Routes*/}
                     <Route exact path="/forum" component={Login} />{' '}

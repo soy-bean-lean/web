@@ -69,7 +69,7 @@ function DashboardPage() {
 
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (var i = 0; i < length; i++) {
-    months[dataCPD[i].month] = dataCPD[i].credits;
+    months[dataCPD[i].month] = dataCPD[i].count;
   }
 
   var monthsWorkshops = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -606,11 +606,11 @@ function DashboardPage() {
             </CardBody>
           </Card> */}
         </Col>
-        <Col sm="5" md={{ size: 6, offset: 0 }}>
+        <Col sm="12" md={{ size: 12, offset: 0 }}>
           <Card className="shadow">
             <center>
               {' '}
-              <CardHeader>CPD Reports </CardHeader>{' '}
+              <CardHeader>Members </CardHeader>{' '}
             </center>
             <CardBody>
               <Line data={barGraphData} options={chartjs.line.options} />

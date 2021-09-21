@@ -15,9 +15,8 @@ import {
   NavLink,
   TabContent,
   TabPane,
- 
   Col,
-  
+  Badge,
   Table,
   Row,
 } from 'reactstrap';
@@ -76,7 +75,13 @@ const CardPage = props => {
         <tr>
           <td hidden> {data.jvId}</td>
           <td>{data.companyName}</td>
-          <td>{data.designation}</td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {data.designation}
+              </Badge>
+            </center>
+          </td>
 
           <td>
             <center>
@@ -86,7 +91,6 @@ const CardPage = props => {
                   View More{' '}
                 </Button>
               </Link>
-             
             </center>
           </td>
         </tr>
@@ -100,7 +104,13 @@ const CardPage = props => {
         <tr>
           <td hidden>{data.Qnumber}</td>
           <td>{data.Question} </td>
-
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {data.type}
+              </Badge>
+            </center>
+          </td>
           <td>
             <center>
               {'   '}
@@ -111,11 +121,10 @@ const CardPage = props => {
               </Link>
             </center>
           </td>
-         
         </tr>
       </>
     ));
-
+    
   return (
     <Page title="Manage Jobs">
       <hr></hr>
