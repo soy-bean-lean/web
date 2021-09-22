@@ -356,7 +356,7 @@ Record.post("/getcpdData", async (req, res) => {
       res.send(error);
     } else {
       var sqlQ;
-
+      console.log(result);
       if (result[0].type == "CSSLcourse") {
         const slqQ =
           "select csslcourse.*, cpdrecords.recordId, cpdrecords.recTitle, cpdrecords.recordType, cpdrecords.recordDate, cpdrecords.proof, cpdrecords.note, cpdrecords.credit, cpdrecords.type, cpdrecords.memberId from cpdrecords inner join csslcourse on cpdrecords.refId=csslcourse.courseId where cpdrecords.recordId =" +
@@ -367,26 +367,20 @@ Record.post("/getcpdData", async (req, res) => {
           if (err) {
             res.send(err);
           } else {
-            console.log(
-              "--------------------------1-----------------------------------------"
-            );
             res.send(r);
-            console.log(r);
           }
         });
-      } else if (result[0].recType == "Course" && result[0].type == "others") {
+      } else if (result[0].recordType == 'Course' && result[0].type == 'others') {
         const slqQ =
-          "select othercourse.*, cpdrecords.* from cpdrecords inner join othercourse on cpdrecords.refId=othercourse.courseId where cpdrecords.recordId =" +
+          "select othercourse.*, cpdrecords.recordId, cpdrecords.recTitle, cpdrecords.recordType, cpdrecords.recordDate, cpdrecords.proof, cpdrecords.note, cpdrecords.credit, cpdrecords.type, cpdrecords.memberId from cpdrecords inner join othercourse on cpdrecords.refId=othercourse.courseId where cpdrecords.recordId =" +
           result[0].recordId +
           ";";
 
-        connection.query(slqQ, (err, result, feilds) => {
+        connection.query(slqQ, (err, r, feilds) => {
           if (err) {
             res.send(err);
           } else {
-            console.log(
-              "--------------------------2-------------------------------------------"
-            );
+            res.send(r);
           }
         });
       } else if (result[0].type == "Guest Lecture") {
@@ -395,15 +389,15 @@ Record.post("/getcpdData", async (req, res) => {
           result[0].recordId +
           ";";
 
-        connection.query(slqQ, (err, result, feilds) => {
+        connection.query(slqQ, (err, r, feilds) => {
           if (err) {
             res.send(err);
           } else {
-            res.send(result);
+            res.send(r);
           }
         });
       } else if (
-        result[0].recType == "wORKSHOP" &&
+        result[0].recordType == "Workshop" &&
         result[0].type == "others"
       ) {
         const slqQ =
@@ -411,11 +405,11 @@ Record.post("/getcpdData", async (req, res) => {
           result[0].recordId +
           ";";
 
-        connection.query(slqQ, (err, result, feilds) => {
+        connection.query(slqQ, (err, r, feilds) => {
           if (err) {
             res.send(err);
           } else {
-            res.send(result);
+            res.send(r);
           }
         });
       } else if (result[0].type == "CSSLworkshop") {
@@ -432,13 +426,6 @@ Record.post("/getcpdData", async (req, res) => {
           }
         });
       }
-      console.log(
-        "--------------------------5-----------------------------------------"
-      );
-
-      console.log(
-        "--------------------------6-----------------------------------------"
-      );
     }
   });
 });

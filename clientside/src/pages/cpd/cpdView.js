@@ -37,15 +37,11 @@ const ViewCPD = () => {
   const [note, setNote] = useState('');
   const [proof, setProof] = useState();
   const [memberId, setMemberId] = useState('');
-
-  const [cpdData, setCpdData] = useState(null);
+  const [status, setStatus] = useState('');
 
   const [result, setResultBasic] = useState();
 
-  const [imgFile, setImgFile] = useState();
-
   const [recordData, setRecordData] = useState(null);
-  const [activityData, setActivityData] = useState(null);
 
   let history = useHistory();
 
@@ -78,13 +74,10 @@ const ViewCPD = () => {
           setNote(response.data[0].note);
           setRecordDate(response.data[0].recordDate);
           setMemberId(response.data[0].memberId);
+          setStatus(response.data[0].status)
 
-          console.log(recordData);
-          /*getActivityInfo(
-            response.data[0].refId,
-            response.data[0].recType,
-            response.data[0].type,
-          );*/
+          console.log(response.data);
+          console.log(credit);
         }
       })
       .catch(error => {
@@ -98,77 +91,130 @@ const ViewCPD = () => {
       if (actType == 'CSSLcourse') {
         return (
           <>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Member Id</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {memberId} </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Record Title</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {recordTitle} </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Record Date</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {recordDate} </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Record Type</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> CSSL Course </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Course Name</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {courseName} </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Credit Value</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {credit} </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Note</strong>
+            </Label>
+            <Col sm={12}>
+              <p>{note}</p>
+            </Col>
             <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Member Id
-              </Label>
-              <Col sm={9}>
-                <Input readOnly value={memberId} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Record Title
-              </Label>
-              <Col sm={9}>
-                <Input readOnly value={recordTitle} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Record Date
-              </Label>
-              <Col sm={9}>
-                <Input readOnly value={recordDate} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Record Type
-              </Label>
-              <Col sm={9}>
-                <Input readOnly value="CSSL COURSE" />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Course Name
-              </Label>
-              <Col sm={9}>
-                <Input readOnly value={courseName} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Credit Value
-              </Label>
-              <Col sm={9}>
-                <Input readOnly value={credit} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Note
-              </Label>
-              <Col sm={9}>
-                <p>{note}</p>
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={3}>
-                Uploaded Files
-              </Label>
-              <Col sm={9}>
-                <p style={{ border: 'solid', width: 150 }}>
+              <Col sm={12}>
+                <p style={{ width: 200 }}>
                   <a
                     href={'http://localhost:3001/uploads/cpdRecords/' + proof}
                     download
                   >
-                    Click Here to Download
+                    Click Here to Download Attachments
                   </a>
                 </p>
               </Col>
             </FormGroup>
+            
+          </>
+        );
+      } else if (actType == 'others' && recordType == 'Course') {
+        return (
+          <>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Member Id</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {memberId} </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Record Title</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {recordTitle} </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Record Date</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {recordDate} </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Record Type</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> Other Course </Label>
+            </Col>
+            <Label for="exampleEmail" sm={12}>
+              <strong>Course Name</strong>
+            </Label>
+            <Col sm={12}>
+              <Label> {courseName} </Label>
+            </Col>
+
+            <Label for="exampleEmail" sm={12}>
+              <strong>Note</strong>
+            </Label>
+            <Col sm={12}>
+              <p>{note}</p>
+            </Col>
+            <FormGroup row>
+              <Col sm={12}>
+                <p style={{ width: 200 }}>
+                  <a
+                    href={'http://localhost:3001/uploads/cpdRecords/' + proof}
+                    download
+                  >
+                    Click Here to Download Attachments
+                  </a>
+                </p>
+              </Col>
+            </FormGroup>
+            <Col sm={6}>
+              {(status == "Approved") && (
+                <Label> {credit} </Label>
+              )}
+              {status != "Approved" && (
+                
+                <Input
+                type="number"
+                min="0"
+                className="input"
+                placeholder="Credit Value"
+                onChange={e => setCredit(e.target.value)}
+              /> 
+              )}
+            </Col>
           </>
         );
       }
@@ -188,39 +234,48 @@ const ViewCPD = () => {
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Attempt Succesfull</Alert>
+          <Alert color="success">Attempt Successfull</Alert>
         </>
       );
     }
+    else if (result == 'validate') {
+      return (
+        <>
+          <Alert color="warning">Need to Assign Credit Value Before Approve the Record</Alert>
+        </>
+      );
   }
+}
 
   const approveRecord = () => {
-    const formData = {
-      cpdId: id,
-      appId: authState.memberId,
-      appDate: today,
-    };
-
-    axios
-      .post('http://localhost:3001/cpd/approveRecord', formData)
-      .then(response => {
-        if (response.data.error) {
-          setResultBasic('err');
-        } else {
-          setResultBasic('done');
-          setTimeout(
-            function () {
+    if(credit == 0){
+      setResultBasic('validate');
+    }
+    else{
+      const formData = {
+        cpdId: id,
+        appId: authState.memberId,
+        appDate: today,
+      };
+  
+      axios
+        .post('http://localhost:3001/cpd/approveRecord', formData)
+        .then(response => {
+          if (response.data.error) {
+            setResultBasic('err');
+          } else {
+            setResultBasic('done');
+            setTimeout(function () {
               history.push('/cpdapproval/cpdrecords');
-            },
-            2000,
-          );
-        }
-      })
-      .catch(error => {
-        setResultBasic('err');
-      });
+            }, 2000);
+          }
+        })
+        .catch(error => {
+          setResultBasic('err');
+        });
+    }
+    
   };
-
 
   const rejectRecord = () => {
     const formData = {
@@ -282,8 +337,6 @@ const ViewCPD = () => {
             <CardBody>
               <center>
                 {msg()}
-                <br />
-                <br />
                 {cpdRecordRender}
               </center>
               <CardBody>
@@ -301,7 +354,7 @@ const ViewCPD = () => {
                       </Button>
                     </Col>
                   </center>
-                </FormGroup>{' '}
+                </FormGroup>
               </CardBody>
             </CardBody>
           </Card>
