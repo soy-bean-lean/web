@@ -29,7 +29,7 @@ function ApproveWorkshopView() {
   const { id } = useParams();
   const add = '';
   const [image, setImage] = useState('');
-  const [title, setTitle] = useState('');
+ // const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [subject, setSubject] = useState('');
   const [fromDate, setFromDate] = useState('');
@@ -56,28 +56,24 @@ function ApproveWorkshopView() {
           //    alert(response.data.error);
         } else {
           console.log(response.data[0]);
+         
           setData(response.data[0]);
           setConductData(response.data);
-
-
-          setTitle(response.data[0].title);
+         //setTitle(response.data[0].title);
           setDesc(response.data[0].description);
           setSubject(response.data[0].subject);
           setFromDate(response.data[0].fromDate);
           setToDate(response.data[0].toDate);
-          setDuration(response.data[0].duration);
-          setCredit(response.data[0].credit);
+          setDuration(response.data[0].duration)
           setImage(response.data[0].image);
         }
       })
       .catch(error => {});
   }, []);
 
-
   const back = () => {
     history.push('/manageworksops');
   };
-
 
   function downloadQR() {
     const canvas = document.getElementById(id);
@@ -92,19 +88,18 @@ function ApproveWorkshopView() {
     document.body.removeChild(downloadLink);
   }
 
-
   const conductors =
-  conduct &&
-  conduct.map(conduct => (
-    <>
-      <Badge color="warning" pill className="mr-3">
-      {conduct.T} .  {conduct.firstName} {conduct.lastName}
-      </Badge>
-      <br />
-      
-      {/* <CardText className="comments">{data.description}</CardText> */}
-    </>
-  ));
+    conduct &&
+    conduct.map(conduct => (
+      <>
+        <Badge color="warning" pill className="mr-3">
+          {conduct.T} . {conduct.firstName} {conduct.lastName}
+        </Badge>
+        <br />
+
+        {/* <CardText className="comments">{data.description}</CardText> */}
+      </>
+    ));
   return (
     <Page title="Approved Workshop">
       <hr></hr>
@@ -119,9 +114,8 @@ function ApproveWorkshopView() {
           <Card className="shadow">
             <CardBody>
               <center>
-                <h4>{title}</h4>
-                {conductors}
-  
+                <h4>{data.title}</h4>
+              
 
                 {/* {data.T}. {data.firstName} {data.lastName} */}
                 <hr />
@@ -138,6 +132,8 @@ function ApproveWorkshopView() {
                     <QRCode size={150} level={'H'} value={id} id={id} />
                   </Col>
                 </Row>
+
+               Conduct By: {conductors}
                 <br></br>
                 <br></br>
                 <Badge color="warning" pill className="mr-1">

@@ -111,6 +111,57 @@ function SendEmail() {
 
   //     </Page>
   //   );
+// const conductors =
+//     conduct &&
+//     conduct.map(conduct => (
+//       <>
+//         <Badge color="warning" pill className="mr-3">
+//           {conduct.T} . {conduct.firstName} {conduct.lastName}
+//         </Badge>
+//         <br />
+
+//         {/* <CardText className="comments">{data.description}</CardText> */}
+//       </>
+//     ));
+
+    const conductors =
+    conduct &&
+    conduct.map((conduct, i) => (
+      <>
+        <tr>
+          <td> {conduct.T} . {conduct.firstName} {conduct.lastName}</td>
+          <td>
+            <center>
+              {/* <Badge color="warning" pill className="mr-1">
+                {sendWorkshop.fromDate}
+              </Badge> */}
+            </center>
+          </td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {conduct.date}
+              </Badge>
+            </center>
+          </td>
+          <td>
+          {conduct.email}
+          </td>
+
+          <td>
+            <center>
+            
+             
+                <Button color="primary" size="sm">
+                  Send Email{' '}
+                </Button>
+             
+            </center>
+          </td>
+        </tr>
+      </>
+    ));
+
 
   return (
     <Page title="Send Mail to Conductors">
