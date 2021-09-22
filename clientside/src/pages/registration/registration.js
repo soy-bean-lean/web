@@ -149,13 +149,13 @@ const Registration = props => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Password must match')
       .required('Confirm password is required'),
-    file: Yup.mixed()
-      .required('A file is required')
-      .test(
-        'fileFormat',
-        'Unsupported Format',
-        value => value && SUPPORTED_FORMATS.includes(value.type),
-      ),
+    // file: Yup.mixed()
+    //   .required('A file is required')
+    //   .test(
+    //     'fileFormat',
+    //     'Unsupported Format',
+    //     value => value && SUPPORTED_FORMATS.includes(value.type),
+    //   ),
   });
 
   const [error, setError] = useState('');
