@@ -22,9 +22,8 @@ import {
 } from 'reactstrap';
 import { AuthContext } from '../../helpers/AuthContext';
 
-const Profile = () => {
+const ViewCPD = () => {
   const { authState, setAuthState } = useContext(AuthContext);
-  const [ProfileData, setProfileData] = useState();
 
   const { id } = useParams();
 
@@ -44,6 +43,9 @@ const Profile = () => {
 
   const [imgFile, setImgFile] = useState();
 
+  const [recordData, setRecordData] = useState(null);
+  const [activityData, setActivityData] = useState(null);  
+
   const reject = () => {
     const formData2 = {
       userID: id,
@@ -51,46 +53,41 @@ const Profile = () => {
     };
 
     axios
-      .post('http://localhost:3001/secretary/reject', formData2)
+      .post('http://localhost:3001/cpd/rejectRecord', formData2)
       .then(response => {
         if (response.data.error) {
           setResultBasic('err');
-          setTimeout(
-            function () {
-              // history.push('/jobadvertisements');
-            },
-
-            2000,
-          );
         } else {
           setResultBasic('done');
           setTimeout(
             function () {
-              // history.push('/jobadvertisements');
+              history.push('/cpdapproval/cpdrecords');
             },
 
             2000,
           );
         }
       })
-      .catch(error => {});
+      .catch(error => {
+        setResultBasic('err');
+      });
   };
-  
+
   const back = () => {
-    history.push('/verifyuser');
+    history.push('/cpdapproval/cpdrecords');
   };
 
   function msg() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt, Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Attempt Succesfull</Alert>
         </>
       );
     }
@@ -102,29 +99,24 @@ const Profile = () => {
     };
 
     axios
-      .post('http://localhost:3001/secretary/verify', formData2)
+      .post('http://localhost:3001/cpd/approveRecord', formData2)
       .then(response => {
         if (response.data.error) {
           setResultBasic('err');
-          setTimeout(
-            function () {
-              history.push('/verifyuser');
-            },
-
-            2000,
-          );
         } else {
           setResultBasic('done');
           setTimeout(
             function () {
-              history.push('/verifyuser');
+              history.push('/cpdapproval/cpdrecords');
             },
 
             2000,
           );
         }
       })
-      .catch(error => {});
+      .catch(error => {
+        setResultBasic('err');
+      });
   };
   let history = useHistory();
 
@@ -138,22 +130,15 @@ const Profile = () => {
 
       .then(response => {
         if (response.data.error) {
-          //    alert(response.data.error);
+          console.log(response.data.error);
         } else {
-
-          //  
-          // setFirstName(response.data[0].firstName);
-          // setSecondName(response.data[0].lastName);
-          // setAddress(response.data[0].residentialAddress);
-          // setEmail(response.data[0].email);
-          // setUserType(response.data[0].userType);
-          // setUserTitle(response.data[0].title);
-          // setContact(response.data[0].contactNumber);
-          // setNIC(response.data[0].nic);
-          // setDOB(response.data[0].birthDate);
-          // setProfileImage(response.data[0].profileImage);
-          setData(response.data);
+          setRecordData(response.data[0]);
           console.log(response.data);
+          /*getActivityInfo(
+            response.data[0].refId,
+            response.data[0].recType,
+            response.data[0].type,
+          );*/
         }
       })
       .catch(error => {
@@ -161,8 +146,31 @@ const Profile = () => {
       });
   }, []);
 
+  const getActivityInfo = (recId, recType, actType) => {
+    const actData = {
+      cpdId: recId,
+      recType: recType,
+      actType: actType,
+    };
+
+    axios
+      .post('http://localhost:3001/cpd/getActivityDetails', actData)
+
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          setActivityData(response.data[0]);
+          console.log(response.data);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
-    <Page title='CPD Approvals'>
+    <Page title="CPD Approvals">
       <Row>
         <Col sm="5" md={{ size: 6, offset: 3 }}>
           <br></br>
@@ -170,27 +178,13 @@ const Profile = () => {
             <CardBody>
               <center>
                 {msg()}
-                <img
-                  src={'http://localhost:3001/uploads/profileImages/' + proPic}
-                  width="160px"
-                  height="160px"
-                  className="profileImg"
-                />
-                <br></br>
-                <br></br>
-                <h4>
-                  {title} . {firstName} {secondName}
-                </h4>{' '}
-                <Badge pill color="warning" className="mr-1">
-                  {type.toUpperCase()}
-                </Badge>
                 <br />
                 <br />
-                <p>{email}</p>
-                <p>{contact}</p>
-                <p>{dob}</p>
-                <p>{address}</p>
-                <p>{NIC}</p>
+                {/* <h4>{recordData.recTitle}</h4>
+                <p>{recordData.memberId}</p>
+                <p>{recordData.recType} - {recordData.type == 'CSSLcourse' &&( "CSSL")}</p>
+                <p>{recordData.note}</p>
+                <p>{recordData.recordDate}</p> */}
               </center>
               <CardBody>
                 <FormGroup check row>
@@ -203,7 +197,7 @@ const Profile = () => {
                         Reject
                       </Button>{' '}
                       <Button onClick={verify} color="success">
-                        Verify
+                        Approve
                       </Button>
                     </Col>
                   </center>
@@ -217,4 +211,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ViewCPD;

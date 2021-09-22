@@ -89,9 +89,7 @@ const enrolledCourseView = React.lazy(() =>
 const courseContentView = React.lazy(() =>
   import('pages/courses/CourseContentView'),
 );
-const CourseApproval = React.lazy(() =>
-  import('pages/courses/CourseApproval'),
-);
+const CourseApproval = React.lazy(() => import('pages/courses/CourseApproval'));
 
 const CourseApprovalView = React.lazy(() =>
   import('pages/courses/CourseApprovalView'),
@@ -104,16 +102,22 @@ const CourseContentApprovalView = React.lazy(() =>
 //workshops
 const Workshop = React.lazy(() => import('pages/workshop/Workshop'));
 const AddWorkshop = React.lazy(() => import('pages/workshop/AddWorkshop'));
-const AddWorkshopConducter = React.lazy(() => import('pages/workshop/AddWorkshopConduct'));
-const SendWorkshopView = React.lazy(() => import('pages/workshop/SendWorkshopView'));
+const AddWorkshopConducter = React.lazy(() =>
+  import('pages/workshop/AddWorkshopConduct'),
+);
+const SendWorkshopView = React.lazy(() =>
+  import('pages/workshop/SendWorkshopView'),
+);
 const WorkshopView = React.lazy(() => import('pages/workshop/WorkshopView'));
-const ApproveWorkshopView = React.lazy(() => import('pages/workshop/ApproveView'));
-const ManageWorkshop = React.lazy(() => import('pages/workshop/ManageWorkshop'));
+const ApproveWorkshopView = React.lazy(() =>
+  import('pages/workshop/ApproveView'),
+);
+const ManageWorkshop = React.lazy(() =>
+  import('pages/workshop/ManageWorkshop'),
+);
 const AddCredit = React.lazy(() => import('pages/workshop/AddCredit'));
 const SendEmail = React.lazy(() => import('pages/workshop/SendEmail'));
 const CSSLWorkshops = React.lazy(() => import('pages/workshop/CSSLWorkshops'));
-
-
 
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
@@ -349,7 +353,11 @@ function App(props) {
                       component={courseView}
                     />
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={CSSLWorkshops} />{' '}
+                    <Route
+                      exact
+                      path="/csslworkshops"
+                      component={CSSLWorkshops}
+                    />{' '}
                     {/* need to change component */}
                     {/*Forum Related Routes*/}
                     <Route exact path="/forum" component={Login} />{' '}
@@ -423,48 +431,38 @@ function App(props) {
                       component={Login}
                     />{' '}
                     {/* need to change component */}
-
-
                     {/*Course Related Routes*/}
                     <Route
-                    exact
+                      exact
                       path="/courseapproval/csslcourses"
                       component={CourseApproval}
                     />{' '}
-                    {/* need to change component */}
                     <Route
                       exact
                       path="/courseapproval/csslcourses/cssl00:id/:title"
                       component={CourseApprovalView}
                     />{' '}
-                    {/* need to change component */}
                     <Route
+                      exact
                       path="/courseapproval/csslcourses/cssl00:id/:title/:cntId/:cntTitle"
                       component={CourseContentApprovalView}
                     />{' '}
-                    {/* need to change component */}
-                    {/*CPD Related Routes*/}
-                    <Route path="/cpdView/:id" component={cpdView} />{' '}
-
+                    {/* <Route path="/cpdView/:id" component={cpdView} />{' '} */}
                     <Route
+                      exact
                       path="/cpdapproval/cpdrecords"
                       component={cpdApproval}
-                    />{' '}
-                    {/* need to change component */}
+                    />
                     <Route
+                      exact
                       path="/cpdapproval/cpdrecords/record00:id/:title"
-                      component={Login}
+                      component={cpdView}
                     />{' '}
-                    {/* need to change component */}
                     {/*Blog Related Routes*/}
                     <Route path="/reviewblogs" component={reviewblogs} />{' '}
+                    <Route path="/reviewblogs/blog00:id" component={Login} />{' '}
                     {/* need to change component */}
-                    <Route
-                      path="/reviewblogs/blog00:id"
-                      component={Login}
-                    />{' '}
-                    {/* need to change component */}
-                    {/*Blog Related Routes*/}
+                    {/*Job Related Routes*/}
                     <Route
                       path="/jobapplications"
                       component={jobApplications}
@@ -487,17 +485,16 @@ function App(props) {
                       path="/workshopview/cssl00:id/:title"
                       component={WorkshopView}
                     />
-                     <Route
+                    <Route
                       exact
                       path="/addCredit/cssl00:id/:title"
                       component={AddCredit}
                     />
-                     <Route
+                    <Route
                       exact
                       path="/approveworkshopview/cssl00:id/:title"
                       component={ApproveWorkshopView}
                     />
-
                     <Route
                       exact
                       path="/sendEmail/cssl00:id/:title"
@@ -590,11 +587,7 @@ function App(props) {
                       path="/sendworkshopview/cssl00:id/:title"
                       component={SendWorkshopView}
                     />
-                    <Route
-                      exact
-                      path="/manageworksops"
-                      component={Login}
-                    />{' '}
+                    <Route exact path="/manageworksops" component={Login} />{' '}
                     {/* need to change component */}
                     <Route exact path="/reports" component={Reports} />{' '}
                     {/* need to change component */}
@@ -962,7 +955,7 @@ function App(props) {
                     <Route path="/charts" component={ChartPagePro} />
                   </React.Suspense>
                 </MainLayoutStudent>
-             )}
+              )}
               {authState.role == 'ddd' && (
                 <MainLayoutDefault breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
