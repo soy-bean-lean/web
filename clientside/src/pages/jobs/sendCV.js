@@ -27,6 +27,7 @@ import {
   Row,
   CardImgOverlay,
   CardLink,
+  FormGroup,
   CardText,
   CardTitle,
   Col,
@@ -46,7 +47,7 @@ function JobView() {
   let history = useHistory();
 
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const [number, setNumber] = useState('');
   const [image, setJobImage] = useState('');
   const { id } = useParams();
 
@@ -69,7 +70,7 @@ function JobView() {
     const data = {
       jobId: id,
       password: password,
-      username: username,
+      number: number,
     };
 
     axios
@@ -82,17 +83,19 @@ function JobView() {
             function () {
               history.push('/dashboard');
             },
-  
+
             2000,
-          );          } else {
+          );
+        } else {
           setResult('done');
           setTimeout(
             function () {
               history.push('/dashboard');
             },
-  
+
             2000,
-          );        }
+          );
+        }
       })
       .catch(error => {
         setResult('err');
@@ -155,31 +158,32 @@ function JobView() {
                     <h2 className="a">{compayData.designation}</h2>
                     <h4 className="a">{compayData.location}</h4>
                   </CardText>
-            
+
                   <h4 className="a">{compayData.contact}</h4>
                   <h4 className="a">{compayData.email}</h4>
-            
+
                   <CardTitle>{compayData.description}</CardTitle>
                 </CardBody>
               </Card>
               <Card className="flex-row">
                 <CardBody>
-                  <Col sm="12" md={{ size: 6, offset: 3 }}>
+                  <Col sm="12" md={{ size: 8, offset: 2 }}>
                     <InputGroup>
                       <Input
-                        type="email"
+                        type="password"
                         className="note"
-                        onChange={e => setUsername(e.target.value)}
+                        onChange={e => setPassword(e.target.value)}
                         required
-                        placeholder="Enter System Email "
+                        placeholder="Enter Password "
+                      />{' '}
+                      <Input
+                        type="number"
+                        className="note"
+                        placeholder="Number Of Applications"
+                        onChange={event => {
+                          setNumber(event.target.value);
+                        }}
                       />
-                      
-                    </InputGroup>
-                    <br>
-                    </br>
-                    <InputGroup>
-      
-                      {" "}
                       <InputGroupAddon addonType="prepend">
                         <Button color="success" size="LG" onClick={sendEmail}>
                           Send CV{' '}
@@ -216,18 +220,19 @@ function JobView() {
 
           <td>
             <center>
-           
-                <Button color="success" size="sm">
-                  <a color="success" className='ancorTag'
-                    href={
-                      'http://localhost:3001/uploads/jobApplicationCVs/' +
-                      applicationData.cv
-                    }
-                    download
-                  >
-                    Download CV{' '}
-                  </a>
-                </Button>
+              <Button color="success" size="sm">
+                <a
+                  color="success"
+                  className="ancorTag"
+                  href={
+                    'http://localhost:3001/uploads/jobApplicationCVs/' +
+                    applicationData.cv
+                  }
+                  download
+                >
+                  Download CV{' '}
+                </a>
+              </Button>
             </center>
           </td>
         </tr>
@@ -236,11 +241,8 @@ function JobView() {
   return (
     <>
       <Page title="Job Applications">
-      
         <hr></hr>
-        <center>
-          {msg()}
-          </center>
+        <center>{msg()}</center>
         {company}
         <Row>
           <Col sm="12">
@@ -253,22 +255,12 @@ function JobView() {
                         <Col>
                           <Card body>
                             <Table {...{ ['striped']: true }}>
-                              <tbody> 
-                              
-                              
-                              <th>
-                                Date
-                              </th>
-                              <th>
-                                Applicants
-                              </th>
-                              <th>
-                               Email
-                              </th>
-                              <th>
-                              Marks
-                              </th>
-                              {applications}
+                              <tbody>
+                                <th>Date</th>
+                                <th>Applicants</th>
+                                <th>Email</th>
+                                <th>Marks</th>
+                                {applications}
                               </tbody>
                             </Table>
                           </Card>
@@ -281,7 +273,6 @@ function JobView() {
             ))}
           </Col>
         </Row>
-       
       </Page>
     </>
   );

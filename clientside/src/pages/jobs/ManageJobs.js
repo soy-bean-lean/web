@@ -41,7 +41,7 @@ const CardPage = props => {
       location: '',
     };
     axios
-      .post('http://localhost:3001/job/getJobs', data)
+      .post('http://localhost:3001/job/getJobsSec', data)
 
       .then(response => {
         if (response.data.error) {
@@ -69,16 +69,27 @@ const CardPage = props => {
   }, []);
 
   const jobview =
-    data &&
-    data.map(data => (
-      <>
-        <tr>
+  data &&
+  data.map((data, i) => {
+      if (data.activity == 'open') {
+        return (
+          <>
+            <tr>
           <td hidden> {data.jvId}</td>
           <td>{data.companyName}</td>
           <td>
             <center>
               <Badge color="warning" pill className="mr-1">
                 {data.designation}
+              </Badge>
+            </center>
+          </td>
+
+
+          <td>
+            <center>
+              <Badge color="success" pill className="mr-1">
+                OPENED
               </Badge>
             </center>
           </td>
@@ -94,8 +105,87 @@ const CardPage = props => {
             </center>
           </td>
         </tr>
-      </>
-    ));
+          </>
+        );
+      
+    
+      
+      } else if (data.activity == 'close') {
+        return (
+          <>
+          <tr>
+          <td hidden> {data.jvId}</td>
+          <td>{data.companyName}</td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {data.designation}
+              </Badge>
+            </center>
+          </td>
+
+
+          <td>
+            <center>
+              <Badge color="danger" pill className="mr-1">
+               CLOSED
+              </Badge>
+            </center>
+          </td>
+
+          <td>
+            <center>
+              {'   '}
+              <Link to={'/editJobVaccencies/' + data.jvId}>
+                <Button color="primary" size="sm">
+                  View More{' '}
+                </Button>
+              </Link>
+            </center>
+          </td>
+        </tr>
+          </>
+        );
+      }
+    });
+
+  // const jobview =
+  //   data &&
+  //   data.map(data => (
+  //     <>
+  //       <tr>
+  //         <td hidden> {data.jvId}</td>
+  //         <td>{data.companyName}</td>
+  //         <td>
+  //           <center>
+  //             <Badge color="warning" pill className="mr-1">
+  //               {data.designation}
+  //             </Badge>
+  //           </center>
+  //         </td>
+
+
+  //         <td>
+  //           <center>
+  //             <Badge color="info" pill className="mr-1">
+  //               {data.activity}
+  //             </Badge>
+  //           </center>
+  //         </td>
+
+  //         <td>
+  //           <center>
+  //             {'   '}
+  //             <Link to={'/editJobVaccencies/' + data.jvId}>
+  //               <Button color="primary" size="sm">
+  //                 View More{' '}
+  //               </Button>
+  //             </Link>
+  //           </center>
+  //         </td>
+  //       </tr>
+  //     </>
+  //   ));
 
   const jobQuestions =
     applicents &&

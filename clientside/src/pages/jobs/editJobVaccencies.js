@@ -36,6 +36,7 @@ function UpdateJobVacancies() {
   const [location, setLocation] = useState('');
   const [contact, setContact] = useState('');
   const [email, setEmail] = useState('');
+  const [act, setActivity] = useState('');
   const [description, setDescription] = useState('');
   const [imgFile, setImgFile] = useState();
   const [questionType, setQuestionType] = useState('Other');
@@ -109,6 +110,7 @@ function UpdateJobVacancies() {
       description: description,
       imgFile: imgFile,
       jvId: id,
+      activity: act,
       questionType: questionType,
       numberOfQuestions: numberOfQuestions,
       addBy: authState.id,
@@ -162,6 +164,7 @@ function UpdateJobVacancies() {
           setJobRole(response.data[0].designation);
           setLocation(response.data[0].location);
           setEmail(response.data[0].email);
+          setActivity(response.data[0].activity);
           setContact(response.data[0].contact);
           setDescription(response.data[0].description);
           setImgFile(response.data[0].advertisment);
@@ -306,6 +309,22 @@ function UpdateJobVacancies() {
                         setDescription(event.target.value);
                       }}
                     />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Active States
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      name="select"
+                      onChange={e => setActivity(e.target.value)}
+                    >
+                      <option value={act}>{act}</option>
+                      <option value="open">Open</option>
+                      <option value="close">Close</option>
+                    </Input>
                   </Col>
                 </FormGroup>
                 <FormGroup row>

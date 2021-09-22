@@ -1,5 +1,6 @@
 import Page from 'components/Page';
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { AuthContext } from '../../helpers/AuthContext';
 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -7,6 +8,7 @@ import axios from 'axios';
 
 import {
   Card,
+  Badge,
   Input,
   CardBody,
   Button,
@@ -22,6 +24,7 @@ const tableTypes = ['striped'];
 
 const TablePage = () => {
   const [data, setData] = useState(null);
+  const { authState, setAuthState } = useContext(AuthContext);
 
   const [companyName, setCompanyName] = useState('');
   const [jobRole, setJobRole] = useState('');
@@ -51,6 +54,8 @@ const TablePage = () => {
       companyName: '',
       jobRole: '',
       location: '',
+      memberId : authState.id,
+
     };
     axios
       .post('http://localhost:3001/job/getJobs', data)
@@ -74,8 +79,21 @@ const TablePage = () => {
         <tr>
           <td hidden>{data.jvId}</td>
           <td>{data.companyName}</td>
-          <td>{data.designation}</td>
-          <td>{data.location}</td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {data.designation}
+              </Badge>
+            </center>
+          </td>
+          <td>
+            <center>
+              <Badge color="danger" pill className="mr-1">
+                {data.location}
+              </Badge>
+            </center>
+          </td>
+
 
           <td>
             <Link to={'/jobAddvertisment/' + data.jvId}>

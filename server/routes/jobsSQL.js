@@ -69,8 +69,6 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
           console.log(err);
           res.send(result);
         } else {
-         
-         
           res.json("success");
         }
       }
@@ -84,6 +82,7 @@ Job.post("/updateJob", async (req, res) => {
   const jobRole = req.body.jobRole;
   const contact = req.body.contact;
   const email = req.body.email;
+  const activity = req.body.activity;
   const description = req.body.description;
   const addBy = req.body.addBy;
   const jvId = req.body.jvId;
@@ -94,10 +93,10 @@ Job.post("/updateJob", async (req, res) => {
     "SELECT count(type) as max , type from jobquestions where type = '" +
     questionType +
     "' GROUP BY type;";
-  console.log(sqlSelect);
+
+  console.log(activity);
   connection.query(sqlSelect, (err, result1) => {
     if (result1[0].max < numberOfQuestions) {
-      console.log("overed");
       i = result1[0].max;
 
       connection.query(
@@ -105,7 +104,9 @@ Job.post("/updateJob", async (req, res) => {
           companyName +
           " ' , location = '" +
           location +
-          " ' ,designation = '" +
+          " ' , activity = '" +
+          activity +
+          "' ,designation = '" +
           jobRole +
           " ' ,email = '" +
           email +
@@ -134,17 +135,40 @@ Job.post("/updateJob", async (req, res) => {
         }
       );
     } else {
-      console.log("ok");
       i = parseInt(numberOfQuestions);
-      console.log(i);
-      console.log(numberOfQuestions);
+      console.log("+================");
 
+      console.log(
+        " UPDATE jobvacancy SET activity = '" +
+        activity +
+          " ' , location = '" +
+          location +
+          " ' ,designation = '" +
+          jobRole +
+          " ' ,email = '" +
+          email +
+          " ' ,contact = '" +
+          contact +
+          " ' ,addBy = '" +
+          addBy +
+          " ' ,email = '" +
+          email +
+          " ' ,questionCount = '" +
+          i +
+          " ' ,questionType = '" +
+          questionType +
+          " ' ,description = '" +
+          description +
+          " '  WHERE jvId=" +
+          jvId +
+          ";"
+      );
       connection.query(
         " UPDATE jobvacancy SET companyName = '" +
           companyName +
           " ' , location = '" +
           location +
-          " ' ,designation = '" +
+          " ' , activity ='"+activity +"' ,designation = '" +
           jobRole +
           " ' ,email = '" +
           email +
@@ -217,7 +241,7 @@ Job.post("/updateQuestion", async (req, res) => {
 
 Job.post("/sendEmail", async (req, res) => {
   const password = req.body.password;
-  const username = req.body.username;
+  const number = req.body.number;
   const jobId = req.body.jobId;
 
   const from = "cssl.system.info@gmail.com"; //system mail
@@ -234,7 +258,9 @@ Job.post("/sendEmail", async (req, res) => {
   const sqlSelect =
     "SELECT jobapplicant.cv , user.firstName ,user.lastName ,user.title ,jobapplicant.jvId,  user.email,jobvacancy.designation ,jobapplicant.date ,jobvacancy.email as companyemail ,jobapplicant.marks, jobapplicant.memberId FROM `jobapplicant` LEFT JOIN user ON user.id=jobapplicant.memberId LEFT JOIN jobvacancy on jobvacancy.jvId = jobapplicant.jvId WHERE jobapplicant.jvId =  " +
     jobId +
-    " ORDER BY `jobapplicant`.`marks`  DESC;";
+    " ORDER BY `jobapplicant`.`marks`  DESC limit " +
+    number +
+    ";";
 
   connection.query(sqlSelect, (err, result) => {
     var i = 0;
@@ -255,7 +281,7 @@ Job.post("/sendEmail", async (req, res) => {
       );
 
       var mailOptions = {
-        from: "cssl.system.info@gmail.com" ,
+        from: "cssl.system.info@gmail.com",
         to: companyemail,
         cc: email,
         subject: "Job Application for " + designation,
@@ -274,7 +300,7 @@ Job.post("/sendEmail", async (req, res) => {
           designation +
           " on last " +
           date +
-          " ____________________ HR Manager CSSL ____________________      ",
+          "",
 
         // attachments: [
         //   {
@@ -330,11 +356,7 @@ Job.route("/addJobApplicaation").post(
       !req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|pdf|PDF|png|PNG)$/)
     ) {
       res.send({ msg: "Not an Image File." });
-    }
-    
-    else {
-
-      
+    } else {
       const Currentdate = req.body.Currentdate;
       const memberId = req.body.memberId;
       const jobId = req.body.jobId;
@@ -360,30 +382,39 @@ Job.route("/addJobApplicaation").post(
           if (err) {
             res.send(result);
           } else {
-
             const sqlSelect =
-            "SELECT jobvacancy.companyName , designation FROM `jobvacancy` where jvId  = " + jobId + "; ";
-  
-          connection.query(sqlSelect, (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              //const memberId = mid;
-  
-              console.log(result[0].companyName);
-              const recentUpdates =
-                "insert into recentactivities  ( memberId,title,description) values ('cssl00" +   memberId +    "','Apply To a Job','Apply a Job From  "+result[0].companyName+" for "+result[0].designation+"  on "+Currentdate+"')";
+              "SELECT jobvacancy.companyName , designation FROM `jobvacancy` where jvId  = " +
+              jobId +
+              "; ";
+
+            connection.query(sqlSelect, (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                //const memberId = mid;
+
+                console.log(result[0].companyName);
+                const recentUpdates =
+                  "insert into recentactivities  ( memberId,title,description) values ('cssl00" +
+                  memberId +
+                  "','Apply To a Job','Apply a Job From  " +
+                  result[0].companyName +
+                  " for " +
+                  result[0].designation +
+                  "  on " +
+                  Currentdate +
+                  "')";
                 console.log(recentUpdates);
-              connection.query(recentUpdates, (err, result) => {
-                if (err) {
-                  console.log(err);
-                } else {
-                  res.json("success");
-                }
-              });
-            }
-          });
-            }
+                connection.query(recentUpdates, (err, result) => {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    res.json("success");
+                  }
+                });
+              }
+            });
+          }
         }
       );
     }
@@ -417,9 +448,9 @@ Job.post("/getJobs", (req, res) => {
   const name = req.body.companyName;
   const location = req.body.location;
   const role = req.body.jobRole;
-  console.log(name)
-  console.log(location)
-  console.log(role)
+  console.log(name);
+  console.log(location);
+  console.log(role);
   const sqlSelect =
     "SELECT jvId , companyName , location ,designation,questionType from jobvacancy where companyName like '" +
     name +
@@ -428,6 +459,27 @@ Job.post("/getJobs", (req, res) => {
     "%' and designation like '" +
     role +
     "%' and activity ='open'";
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+Job.post("/getJobsSec", (req, res) => {
+  const name = req.body.companyName;
+  const location = req.body.location;
+  const role = req.body.jobRole;
+  console.log(name);
+  console.log(location);
+  console.log(role);
+  const sqlSelect =
+    "SELECT jvId , companyName , location ,designation,questionType,activity from jobvacancy where companyName like '" +
+    name +
+    "%' and location like '" +
+    location +
+    "%' and designation like '" +
+    role +
+    "%' and activity ='open' OR activity ='close'";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
@@ -483,7 +535,7 @@ Job.get("/getCVtoSend", (req, res) => {
 Job.get("/getJobView", (req, res) => {
   const jid = req.query.id;
   connection.query(
-    "SELECT jvId , companyName , location ,designation,description,questionCount,questionType ,contact ,email,advertisment from jobvacancy where jvId = ?;",
+    "SELECT jvId , companyName ,activity, location ,designation,description,questionCount,questionType ,contact ,email,advertisment from jobvacancy where jvId = ?;",
     [jid],
     (error, result, feilds) => {
       if (error) console.log(error);
