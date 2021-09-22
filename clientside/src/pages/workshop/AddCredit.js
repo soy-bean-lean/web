@@ -282,6 +282,7 @@ function AddCredit() {
                     <Input
                       type="number"
                       name="title"
+                      min="0"
                       placeholder="Assign  Credit"
                       onChange={e => setCredit(e.target.value)}
                     />
