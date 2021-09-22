@@ -118,6 +118,7 @@ const CSSLWorkshops = React.lazy(() => import('pages/workshop/CSSLWorkshops'));
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
 const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
+const reviewblogs = React.lazy(() => import('pages/blogs/reviewblogs'));
 const BlogView = React.lazy(() => import('pages/blogs/BlogView'));
 const EditView = React.lazy(() => import('pages/blogs/EditBlog'));
 
@@ -456,7 +457,7 @@ function App(props) {
                     />{' '}
                     {/* need to change component */}
                     {/*Blog Related Routes*/}
-                    <Route path="/reviewblogs" component={Login} />{' '}
+                    <Route path="/reviewblogs" component={reviewblogs} />{' '}
                     {/* need to change component */}
                     <Route
                       path="/reviewblogs/blog00:id"
@@ -962,7 +963,7 @@ function App(props) {
                   </React.Suspense>
                 </MainLayoutStudent>
              )}
-              {/* {authState.role == 'ddd' && (
+              {authState.role == 'ddd' && (
                 <MainLayoutDefault breakpoint={props.breakpoint}>
                   <React.Suspense fallback={<PageSpinner />}>
                     <Route exact path="/" component={DashboardPage} />
@@ -1000,7 +1001,7 @@ function App(props) {
                     <Route exact path="/charts" component={ChartPage} />
                   </React.Suspense>
                 </MainLayoutDefault>
-              )} */}
+              )}
 
               {/* proffesional members data */}
               {/* chartered members data */}

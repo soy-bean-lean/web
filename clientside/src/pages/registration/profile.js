@@ -36,6 +36,7 @@ const Profile = () => {
   const [dob, setDOB] = useState('');
   const [email, setEmail] = useState('');
   const [proPic, setProfileImage] = useState('');
+  const [file, setFileName] = useState('');
   const [title, setUserTitle] = useState('');
   const [type, setUserType] = useState('');
 
@@ -74,7 +75,7 @@ const Profile = () => {
       })
       .catch(error => {});
   };
-  
+
   const back = () => {
     history.push('/verifyuser');
   };
@@ -148,6 +149,7 @@ const Profile = () => {
           setContact(response.data[0].contactNumber);
           setNIC(response.data[0].nic);
           setDOB(response.data[0].birthDate);
+          setFileName(response.data[0].userProof);
           setProfileImage(response.data[0].profileImage);
         }
       })
@@ -186,6 +188,14 @@ const Profile = () => {
                 <p>{dob}</p>
                 <p>{address}</p>
                 <p>{NIC}</p>
+                <a
+                  download
+                  href={
+                    'http://localhost:3001/uploads/memberRegistraion/' + file
+                  }
+                >
+                  Download Attachments
+                </a>
               </center>
               <CardBody>
                 <FormGroup check row>

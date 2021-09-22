@@ -79,6 +79,7 @@ Workshop.post("/getSendWorkshop", (req, res) => {
     }
   );
 });
+
 Workshop.post("/getConductors", (req, res) => {
   const memberId = req.body.memberId;
   //console.log(mid);
@@ -99,6 +100,24 @@ Workshop.post("/getConductors", (req, res) => {
   );
 });
 
+Workshop.post("/getConductorsForCards", (req, res) => {
+  const memberId = req.body.memberId;
+  //console.log(mid);
+  const sql =
+    "SELECT workshopconduct.*,member.memberId,user.title As T ,user.firstName,user.lastName,user.userType,user.profileImage FROM `workshopconduct` inner join member on member.memberId=workshopconduct.memberId Inner join user on user.id = member.id ORDER BY `wId` ASC;";
+  console.log(sql);
+
+  connection.query(
+    sql,
+
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
 
 //getApproved workshop details
 Workshop.post("/getApprovedWorkshop", (req, res) => {
@@ -106,8 +125,33 @@ Workshop.post("/getApprovedWorkshop", (req, res) => {
   const wid = req.body.id;
 
   connection.query(
-    "SELECT csslworkshop.* ,user.title AS T,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id) WHERE csslworkshop.verifiedBy IS NOT NULL AND csslworkshop.wId= ?;",
+    "SELECT   csslworkshop.* ,user.title AS T,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id) WHERE csslworkshop.verifiedBy IS NOT NULL AND csslworkshop.wId= ?;",
     [wid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//getApproved workshop details
+Workshop.post("/getApprovedWorkshopCards", (req, res) => {
+  const workshop = req.body.workshop;
+  const subject = req.body.subject;
+  const location = req.body.location;
+console.log(workshop)
+console.log(location)
+console.log(subject)
+  connection.query(
+    "SELECT  csslworkshop.* from csslworkshop  WHERE title like '" +
+      workshop +
+      "%' and subject like '" +
+      subject +
+      "%' and location like '" +
+      location +
+      "%' and csslworkshop.verifiedBy IS NOT NULL;",
     (error, result, feilds) => {
       if (error) console.log(error);
       else {

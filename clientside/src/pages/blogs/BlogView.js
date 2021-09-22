@@ -264,7 +264,7 @@ const BlogView = () => {
             <FormGroup row>
               <Col>
                 <center>
-                  {msg()}
+
                   <Input
                     type="textarea"
                     name="title"

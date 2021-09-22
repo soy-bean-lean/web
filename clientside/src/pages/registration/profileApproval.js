@@ -38,6 +38,7 @@ const Profile = () => {
   const [proPic, setProfileImage] = useState('');
   const [title, setUserTitle] = useState('');
   const [type, setUserType] = useState('');
+  const [file, setFileName] = useState('');
 
   const [result, setResultBasic] = useState();
 
@@ -149,6 +150,8 @@ const Profile = () => {
           setNIC(response.data[0].nic);
           setDOB(response.data[0].birthDate);
           setProfileImage(response.data[0].profileImage);
+          setFileName(response.data[0].userProof);
+
         }
       })
       .catch(error => {
@@ -191,6 +194,14 @@ const Profile = () => {
                 <p>{dob}</p>
                 <p>{address}</p>
                 <p>{NIC}</p>
+                <a
+                  download
+                  href={
+                    'http://localhost:3001/uploads/memberRegistraion/' + file
+                  }
+                >
+                  Download Attachments
+                </a>
               </center>
               <CardBody>
                 <FormGroup check row>

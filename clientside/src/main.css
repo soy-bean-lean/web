@@ -11,8 +11,21 @@
   justify-content: center;
   margin-top: 20px;
 }
+
+.mainCard{
+  height: 500px !important;
+  overflow-y: hidden !important;
+}
 .nav-item .nav-link.active {
   color: black;
+}
+.workShopCard{
+  height: 400px !important;
+  overflow-y: hidden !important;
+}
+.workShopCardDes{
+  height: 250px !important;
+overflow-y: scroll;
 }
 .userCards{
   height: 190px !important;
@@ -22,7 +35,7 @@
   background:#1d7e61 !important;
 }
 .workshopImg{
-  border-radius: 50px;
+  border-radius: 30px;
 }
 .react-calendar button {
   margin: 0;
@@ -123,7 +136,9 @@ a:not([href]):not([tabindex]):hover {
   color: black;
   text-decoration: none;
 }
-
+.shadow{
+  border-radius: 15px !important;
+}
 .link-tag:hover {
   color: black;
   text-decoration: none;
@@ -132,7 +147,9 @@ a:not([href]):not([tabindex]):hover {
 .nav-tabs .nav-item.show .nav-link {
   border-bottom: 3px solid #4f62c0;
 }
-
+.tinyString{
+  font-size: 15px!important;
+}
 .profileImageSmall{
   width: 50px;
   height: 50px;

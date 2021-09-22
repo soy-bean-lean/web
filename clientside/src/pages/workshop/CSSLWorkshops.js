@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-
 import {
   Card,
   Input,
   CardBody,
+  Badge,
   Button,
   CardHeader,
   InputGroup,
@@ -22,19 +22,20 @@ const tableTypes = ['striped'];
 
 const TablePage = () => {
   const [data, setData] = useState(null);
+  const [conductors, setConductore] = useState(null);
 
-  const [companyName, setCompanyName] = useState('');
-  const [jobRole, setJobRole] = useState('');
+  const [workshop, setWorkshopTitle] = useState('');
+  const [subject, setSubject] = useState('');
   const [location, setLocation] = useState('');
 
   const getData = () => {
     const data = {
-      companyName: companyName,
-      jobRole: jobRole,
+      workshop: workshop,
+      subject: subject,
       location: location,
     };
     axios
-      .post('http://localhost:3001/job/getJobs', data)
+      .post('http://localhost:3001/workshop/getApprovedWorkshopCards', data)
       .then(response => {
         if (response.data.error) {
           alert(response.data.error);
@@ -48,12 +49,12 @@ const TablePage = () => {
   };
   useEffect(() => {
     const data = {
-      companyName: '',
-      jobRole: '',
-      location: '',
+      workshop: workshop,
+      subject: subject,
+      location: location,
     };
     axios
-      .post('http://localhost:3001/job/getJobs', data)
+      .post('http://localhost:3001/workshop/getApprovedWorkshopCards', data)
 
       .then(response => {
         if (response.data.error) {
@@ -65,87 +66,138 @@ const TablePage = () => {
       .catch(error => {
         alert(error);
       });
+    axios
+      .post('http://localhost:3001/workshop/getConductorsForCards', data)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setConductore(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
   }, []);
 
-  const jobview =
+  const workshops =
     data &&
     data.map(data => (
       <>
-        <tr>
-          <td hidden>{data.jvId}</td>
-          <td>{data.companyName}</td>
-          <td>{data.designation}</td>
-          <td>{data.location}</td>
+        <Col sm="5" md={{ size: 4, offset: 0 }}>
+          <Card className="shadow">
+            <CardBody>
+              <center>
+                <h5 hidden> {data.wId}</h5>
+                <h6>
+                  <b>{data.title}</b>
+                </h6>
+                <hr />
+                <img
+                  src={'http://localhost:3001/uploads/workshop/' + data.image}
+                  height="150px"
+                  width="250px"
+                  className="workshopImg"
+                />
+                <hr />
+                <center>{data.subject} </center>
 
-          <td>
-            <Link to={'/jobAddvertisment/' + data.jvId}>
-              <Button
-                color="success"
-                size="sm"
-                to={'/jobAddvertisment/' + data.jvId}
-              >
-                Apply{' '}
-              </Button>
-            </Link>
-          </td>
-        </tr>
+                <center>
+                  <Badge color="warning" pill className="mr-1">
+                    At {data.location}{' '}
+                  </Badge>
+                </center>
+
+                <center>
+                  <Badge color="danger" pill className="mr-1">
+                    From :{data.fromDate}{' '}
+                  </Badge>{' '}
+                  <Badge color="danger" pill className="mr-1">
+                    To :{data.toDate}{' '}
+                  </Badge>
+                </center>
+                <hr />
+              </center>
+              <p>Conducting By</p>
+              <center>
+                <Row>
+                  {conductors &&
+                    conductors.map((li, i) => {
+                      {
+                        if (data.wId == li.wId) {
+                          return (
+                            <>
+                              <Col sm="12" md={{ size: 2, offset: 0 }}>
+                                <img
+                                  src={
+                                    'http://localhost:3001/uploads/profileImages/' +
+                                    li.profileImage
+                                  }
+                                  height="80%"
+                                  width="80%"
+                                  title={
+                                    li.T +
+                                    '.' +
+                                    li.firstName +
+                                    ' ' +
+                                    li.lastName
+                                  }
+                                  className="profileImageSmall"
+                                />
+                              </Col>
+                            </>
+                          );
+                        }
+                      }
+                    }, this)}
+                </Row>
+              </center>
+            </CardBody>
+          </Card>
+        </Col>
       </>
     ));
+
   return (
-    <Page title="Jobs" className="TablePage">
+    <Page>
       {tableTypes.map((tableType, index) => (
         <Row>
           <Col>
-            <Card className="mb-2">
-              <CardHeader>Current Job Vaccencies</CardHeader>
-            </Card>
-            <Card className="mb-2">
-              <CardBody>
-                <InputGroup>
-                  <Input
-                    type="text"
-                    className="note"
-                    placeholder="Search By Company Name"
-                    onChange={event => {
-                      setCompanyName(event.target.value);
-                    }}
-                    onKeyUp={getData}
-                  />{' '}
-                  <Input
-                    type="text"
-                    className="note"
-                    onChange={event => {
-                      setJobRole(event.target.value);
-                    }}
-                    onKeyUp={getData}
-                    placeholder="Seach By Job Role"
-                  />{' '}
-                  <Input
-                    type="text"
-                    className="note"
-                    onChange={event => {
-                      setLocation(event.target.value);
-                    }}
-                    onKeyUp={getData}
-                    placeholder="Seach By Location"
-                  />
-                </InputGroup>
-              </CardBody>
+            <Card className="shadow">
+              <InputGroup>
+                <Input
+                  type="text"
+                  className="note"
+                  placeholder="Search By Workshop Title"
+                  onChange={event => {
+                    setWorkshopTitle(event.target.value);
+                  }}
+                  onKeyUp={getData}
+                />{' '}
+                <Input
+                  type="text"
+                  className="note"
+                  onChange={event => {
+                    setSubject(event.target.value);
+                  }}
+                  onKeyUp={getData}
+                  placeholder="Seach By Subject"
+                />
+                <Input
+                  type="text"
+                  className="note"
+                  onChange={event => {
+                    setLocation(event.target.value);
+                  }}
+                  onKeyUp={getData}
+                  placeholder="Seach By Location"
+                />
+              </InputGroup>
             </Card>
 
-            <Card>
-              <CardBody>
-                <Row>
-                  <Col>
-                    <Card body>
-                      <Table {...{ ['striped']: true }}>
-                        <tbody>{jobview}</tbody>
-                      </Table>
-                    </Card>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
+            <br />
+            <Row>{workshops}</Row>
           </Col>
         </Row>
       ))}
