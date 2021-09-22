@@ -124,13 +124,11 @@ const RegistrationVerification = props => {
                 </Badge>
               </center>
             </td>
-            <td>{data.contactNumber}</td>
             <td>{data.email}</td>
             <td>{data.registeredDate}</td>
             <td>
               <Badge pill color="primary" className="mr-1">
-                Waiting for approval
-              </Badge>
+Pending              </Badge>
             </td>
           </tr>
         </>
@@ -149,7 +147,6 @@ const RegistrationVerification = props => {
                 </Badge>
               </center>
             </td>{' '}
-            <td>{data.contactNumber}</td>
             <td>{data.email}</td>
             <td>{data.registeredDate}</td>
             <td>
@@ -176,7 +173,6 @@ const RegistrationVerification = props => {
                 </center>
               </center>
             </td>{' '}
-            <td>{data.contactNumber}</td>
             <td>{data.email}</td>
             <td>{data.registeredDate}</td>
             <td>
@@ -204,7 +200,6 @@ const RegistrationVerification = props => {
                 </center>
               </center>
             </td>{' '}
-            <td>{data.contactNumber}</td>
             <td>{data.email}</td>
             <td>{data.registeredDate}</td>
             <td>
@@ -251,7 +246,6 @@ const RegistrationVerification = props => {
               {data.userType.toUpperCase()}{' '}
             </Badge>
           </td>{' '}
-          <td>{data.contactNumber}</td>
           <td>{data.email}</td>
           <td>{data.registeredDate}</td>
           <td>

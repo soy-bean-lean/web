@@ -140,7 +140,7 @@ Job.post("/updateJob", async (req, res) => {
 
       console.log(
         " UPDATE jobvacancy SET activity = '" +
-        activity +
+          activity +
           " ' , location = '" +
           location +
           " ' ,designation = '" +
@@ -168,7 +168,9 @@ Job.post("/updateJob", async (req, res) => {
           companyName +
           " ' , location = '" +
           location +
-          " ' , activity ='"+activity +"' ,designation = '" +
+          " ' , activity ='" +
+          activity +
+          "' ,designation = '" +
           jobRole +
           " ' ,email = '" +
           email +
@@ -258,9 +260,7 @@ Job.post("/sendEmail", async (req, res) => {
   const sqlSelect =
     "SELECT jobapplicant.cv , user.firstName ,user.lastName ,user.title ,jobapplicant.jvId,  user.email,jobvacancy.designation ,jobapplicant.date ,jobvacancy.email as companyemail ,jobapplicant.marks, jobapplicant.memberId FROM `jobapplicant` LEFT JOIN user ON user.id=jobapplicant.memberId LEFT JOIN jobvacancy on jobvacancy.jvId = jobapplicant.jvId WHERE jobapplicant.jvId =  " +
     jobId +
-    " ORDER BY `jobapplicant`.`marks`  DESC limit " +
-    number +
-    ";";
+    " ORDER BY `jobapplicant`.`marks`  DESC limit "+number;
 
   connection.query(sqlSelect, (err, result) => {
     var i = 0;
@@ -285,30 +285,23 @@ Job.post("/sendEmail", async (req, res) => {
         to: companyemail,
         cc: email,
         subject: "Job Application for " + designation,
-        text:
-          "Dear HR Manager ,                                                                    " +
-          title +
-          " " +
-          firstName +
-          " " +
-          lastName +
-          "CV is attached with this email as " +
-          title +
-          " " +
-          firstName +
-          " has applied for a job vaccancy -" +
-          designation +
-          " on last " +
-          date +
-          "",
 
-        // attachments: [
-        //   {
-        //     filename: cv,
-        //     path: "http://localhost:3001/uploads/jobApplicationCVs/" + cv,
-        //     contentType: "application/pdf",
-        //   },
-        // ],
+        html: `
+        <p>Dear HR Manager,This is a CV of Our CSSL Member ${firstName} For The ${designation}</p>               
+        `,
+
+        // text:
+        //   "Dear HR Manager,"+title+""+ firstName +""+lastName +"CV is attached with this email as " +title+""+firstName+" has applied for a job vaccancy -" +designation +
+        //   " on last " +
+        //   date +
+        //   "",
+        attachments: [
+          {
+            filename: cv,
+            path: "http://localhost:3001/uploads/jobApplicationCVs/" + cv,
+            contentType: "application/pdf",
+          },
+        ],
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
@@ -316,7 +309,7 @@ Job.post("/sendEmail", async (req, res) => {
           res.send(result);
         } else {
           connection.query(
-            " UPDATE jobvacancy SET activity = 'closed'  WHERE jvId=" +
+            " UPDATE jobvacancy SET activity = 'close'  WHERE jvId=" +
               jvId +
               ";",
 
@@ -341,8 +334,6 @@ Job.post("/sendEmail", async (req, res) => {
               }
             }
           );
-
-          res.json("success");
         }
       });
     }
@@ -501,7 +492,7 @@ Job.post("/deleteItem", (req, res) => {
 
 Job.post("/getApplicents", (req, res) => {
   const sqlSelect =
-    "SELECT jobapplicant.jvId , jobapplicant.cv,COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId Where jobapplicant.status = 'pending'  GROUP by jvId; ";
+    "SELECT jobapplicant.jvId , jobapplicant.cv,COUNT(jobapplicant.jvId) as numberOfApplicent, jobvacancy.email , jobvacancy.companyName FROM `jobapplicant` INNER JOIN jobvacancy ON jobvacancy.jvId=jobapplicant.jvId Where jobapplicant.status = 'pending'  GROUP by jvId  ORDER BY `numberOfApplicent` DESC; ";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
