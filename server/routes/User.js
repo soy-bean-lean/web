@@ -689,8 +689,7 @@ userRouter.post("/payment", (req, res) => {
 //payment verification profile page
 userRouter.post("/paymentVerfication", (req, res) => {
   //const memberID = req.body.id;
-  console.log(req.body.id);
-  const memberID = "CSSL001";
+  const memberID = req.body.id;
 
   connection.query(   
     "SELECT * FROM `payment` WHERE `memberId` = ? AND year=YEAR(CURDATE());",
