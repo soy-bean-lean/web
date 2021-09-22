@@ -703,7 +703,7 @@ Course.post("/enrollCourse", (req, res) => {
       if (error) console.log(error);
       // recent Activity
       else {
-        const sqlSelect =
+        /*const sqlSelect =
           "SELECT csslcourse.name FROM `csslcourse` where courseId = " + cid + "; ";
 
         connection.query(sqlSelect, (err, result) => {
@@ -724,9 +724,9 @@ Course.post("/enrollCourse", (req, res) => {
               }
             });
           }
-        });
+        });*/
 
-        //res.send(result);
+        res.send(result);
       }
     }
   );
@@ -769,9 +769,10 @@ Course.post("/insertEnCourseContent", (req, res) => {
 //retrieve enrolled content list (EnrolledCourseView.js)
 Course.post("/getEnrolledContentList", (req, res) => {
   const cid = req.body.cId;
+  const mid = req.body.mId;
   connection.query(
     "SELECT coursecontent.contentId, coursecontent.title, coursecontent.description, contentaccess.status FROM coursecontent INNER JOIN contentaccess ON coursecontent.courseId = contentaccess.courseId AND coursecontent.contentId = contentaccess.contentId WHERE coursecontent.courseId = ?;",
-    [cid],
+    [cid, mid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -862,4 +863,65 @@ Course.post("/updateNextContentStatus", (req, res) => {
     }
   );
 });
+
+//get status of a last course content for relevant user  (EnrolledCourseView.js)
+Course.post("/completeEnrollCourse", (req, res) => {
+  const cid = req.body.cId;
+  //const certifiedDate = req.body.certifiedDate;
+  const lastAcc = req.body.lastAcc;
+  const mid = req.body.mid;
+  const cntstatus1 = 'Ongoing';
+  const cntstatus2 = 'Start';
+  const cntstatus3 = 'Enroll';
+  const status = 'Completed';
+  console.log(cid);
+  console.log(mid);
+  console.log(lastAcc);
+  connection.query(
+    "UPDATE courseenroll SET courseenroll.lastAccess = ?, courseenroll.status = ? WHERE NOT EXISTS (SELECT contentaccess.contentId FROM contentaccess WHERE contentaccess.courseId = ? AND contentaccess.memberId = ? AND (contentaccess.status = ? OR contentaccess.status = ? OR contentaccess.status = ?)) AND courseenroll.courseId = ? AND courseenroll.memberId = ?;",
+    [lastAcc, status, cid, mid, cntstatus1, cntstatus2, cntstatus3, cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//get enrolled course info (EnrolledCourseView.js)
+Course.post("/enrollCourseData", (req, res) => {
+  const cid = req.body.cId;
+  const mid = req.body.mid;
+
+  connection.query(
+    "SELECT * FROM courseenroll WHERE courseId = ? AND memberId = ?;",
+    [cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//update certified date of a enrolled course info (EnrolledCourseView.js)
+Course.post("/updateCourseData", (req, res) => {
+  const cid = req.body.cId;
+  const certifiedDate = req.body.certifiedDate;
+  const mid = req.body.mid;
+
+  connection.query(
+    "UPDATE courseenroll SET certifiedDate = ? WHERE courseId = ? AND memberId = ?;",
+    [certifiedDate, cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 export default Course;
