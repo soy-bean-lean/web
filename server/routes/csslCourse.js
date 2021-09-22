@@ -647,7 +647,7 @@ Course.post("/getEnrollCourseList", (req, res) => {
 Course.post("/getCourse", (req, res) => {
   const cid = req.body.cId;
   connection.query(
-    "SELECT csslcourse.name, csslcourse.description, csslcourse.duration, csslcourse.durationType, csslcourse.language, csslcourse.skillLevel, csslcourse.image, csslcourse.mode, csslcourse.category, csslcourse.status, user.title, user.firstName, user.lastName, user.profileImage FROM ((csslcourse INNER JOIN member ON member.memberId = csslcourse.conductedBy) INNER JOIN user ON user.id = member.id) WHERE courseId = ?;",
+    "SELECT csslcourse.name, csslcourse.description, csslcourse.duration, csslcourse.durationType, csslcourse.language, csslcourse.skillLevel, csslcourse.image, csslcourse.mode, csslcourse.category, csslcourse.status, csslcourse.credit, user.title, user.firstName, user.lastName, user.profileImage FROM ((csslcourse INNER JOIN member ON member.memberId = csslcourse.conductedBy) INNER JOIN user ON user.id = member.id) WHERE courseId = ?;",
     [cid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -812,6 +812,48 @@ Course.post("/updateContentAccessInfo", (req, res) => {
   connection.query(
     "UPDATE contentaccess SET startDate = ?, lastAccess = ?, status = ? WHERE contentId = ? AND courseId = ? AND memberId = ?;",
     [stDate, lastAccess, status, cntId, cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//update content access info (CourseContentView.js)
+Course.post("/updateAccessContentStatus", (req, res) => {
+  const cid = req.body.cId;
+  const mid = req.body.mId;
+  const cntId = req.body.cntId;
+  const comDate = req.body.comDate;
+  const lastAccess = req.body.lastAccess;
+  const status = 'Complete';
+  //const type = req.body.type;
+
+  connection.query(
+    "UPDATE contentaccess SET completeDate = ?, lastAccess = ?, status = ? WHERE contentId = ? AND courseId = ? AND memberId = ?;",
+    [comDate, lastAccess, status, cntId, cid, mid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//update content access status to start (CourseContentView.js)
+Course.post("/updateNextContentStatus", (req, res) => {
+  const cid = req.body.cId;
+  const cntid = req.body.cntId;
+  const mid = req.body.mId;
+  const newStatus = 'Start';
+  const currentStatus = 'Enroll';
+
+  connection.query(
+    "UPDATE contentaccess SET status = ? WHERE contentId = (SELECT contentId FROM contentaccess WHERE courseId = ? AND memberId = ? AND status = ? LIMIT 1) AND courseId = ? AND memberId = ?;",
+    [newStatus, cid, mid, currentStatus, cid, mid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
