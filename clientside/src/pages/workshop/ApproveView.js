@@ -31,7 +31,7 @@ function ApproveWorkshopView() {
   const { id } = useParams();
   const add = '';
   const [image, setImage] = useState('');
-  // const [title, setTitle] = useState('');
+     const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [subject, setSubject] = useState('');
   const [fromDate, setFromDate] = useState('');
@@ -61,7 +61,7 @@ function ApproveWorkshopView() {
 
           setData(response.data[0]);
           setConductData(response.data);
-          //setTitle(response.data[0].title);
+        setTitle(response.data[0].title);
           setDesc(response.data[0].description);
           setSubject(response.data[0].subject);
           setFromDate(response.data[0].fromDate);
@@ -116,7 +116,7 @@ function ApproveWorkshopView() {
           <Card className="shadow">
             <CardBody>
               <center>
-                <h4>{data.title}</h4>
+                <h4>{title}</h4>
 
                 {/* {data.T}. {data.firstName} {data.lastName} */}
                 <hr />
