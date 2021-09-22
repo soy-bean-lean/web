@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import * as AiIcons from 'react-icons/ai';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../helpers/AuthContext';
@@ -53,7 +53,11 @@ const CourseView = () => {
 
   const [cntAccessStatus, setCntAccessStatus] = useState('');
   const [cntStDate, setCntStDate] = useState('');
-  const [cntLastAccess, setcCntLastAccess] = useState('');
+  const [cntLastAccess, setCntLastAccess] = useState('');
+
+  const [status, setStatus] = useState('');
+
+  let history = useHistory();
 
   useEffect(() => {
     const formData = {
@@ -85,6 +89,7 @@ const CourseView = () => {
         } else {
           setAccessInfo(response.data[0]);
           updateAccessInfo(response.data[0]);
+          setStatus(response.data[0].status);
         }
       })
       .catch(error => {
@@ -111,7 +116,7 @@ const CourseView = () => {
       info.status == 'Start'
     ) {
       setCntStDate(today);
-      setcCntLastAccess(lastAcc);
+      setCntLastAccess(lastAcc);
       setCntAccessStatus('Ongoing');
       const submitData = {
         cId: id,
@@ -139,7 +144,7 @@ const CourseView = () => {
           alert(error);
         });
     } else {
-      setcCntLastAccess(lastAcc);
+      setCntLastAccess(lastAcc);
       const submitData = {
         cId: id,
         cntId: cntId,
@@ -166,6 +171,60 @@ const CourseView = () => {
           alert(error);
         });
     }
+  };
+
+  const markAsComplete = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    var hh = String(today.getHours()).padStart(2, '0');
+    var mn = String(today.getMinutes() + 1).padStart(2, '0');
+    var ss = String(today.getSeconds()).padStart(2, '0');
+
+    var nowDate = yyyy + '-' + mm + '-' + dd;
+    var lastAcc = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mn + ':' + ss;
+    const formData = {
+      cId: id,
+      cntId: cntId,
+      mId: authState.memberId,
+      stDate: nowDate,
+      comDate: nowDate,
+      lastAccess: lastAcc,
+    };
+    axios
+      .post(
+        'http://localhost:3001/csslcourse/updateAccessContentStatus',
+        formData,
+      )
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          axios
+            .post(
+              'http://localhost:3001/csslcourse/updateNextContentStatus',
+              formData,
+            )
+
+            .then(response => {
+              if (response.data.error) {
+                alert(response.data.error);
+              } else {
+                let path =
+                  '/csslcourse/enrolledcourse/cssl00' + id + '/' + title;
+                history.push(path);
+              }
+            })
+            .catch(error => {
+              alert(error);
+            });
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
   };
 
   const setData = val => {
@@ -278,24 +337,38 @@ const CourseView = () => {
 
             <CardBody>
               <center>
-                <Link>
-                  <Button color="primary">Mark as Complete</Button>
-                </Link>
+                {status != 'Complete' && (
+                  <Link onClick={markAsComplete}>
+                    <Button color="primary">Mark as Complete</Button>
+                  </Link>
+                )}
+                {'  '}
+                {status == 'Complete' && (
+                  <center>
+                    <h3>
+                      <Badge color="success" className="mr-1">
+                        {status.toUpperCase()}{' '}
+                      </Badge>
+                    </h3>
+                  </center>
+                )}
                 {'  '}
                 <Link
-                  to={
-                    '/csslcourse/enrolledcourse/cssl00' +
-                    id +
-                    '/' +
-                    title +
-                    '/' +
-                    'attemptquiz' +
-                    '/' +
-                    cntId +
-                    cntTitle
-                  }
+                // to={
+                //   '/csslcourse/enrolledcourse/cssl00' +
+                //   id +
+                //   '/' +
+                //   title +
+                //   '/' +
+                //   'attemptquiz' +
+                //   '/' +
+                //   cntId +
+                //   cntTitle
+                // }
                 >
-                  <Button color="success">Quiz</Button>
+                  <Button color="success" hidden={true}>
+                    Quiz
+                  </Button>
                 </Link>
                 {'  '}
               </center>
@@ -310,7 +383,7 @@ const CourseView = () => {
                         type="textarea"
                         name="title"
                         rows="5"
-                        placeholder="Any Comments"
+                        placeholder="Comments..."
                         //onChange={e => setAddComment(e.target.value)}
                       />
                     </center>
@@ -319,7 +392,7 @@ const CourseView = () => {
                 <FormGroup check row>
                   <Col sm={{ size: 15 }}>
                     <Button /*onClick={addComment}*/ color="success">
-                      Add My Comment
+                      Add Comment
                     </Button>
                   </Col>
                 </FormGroup>
