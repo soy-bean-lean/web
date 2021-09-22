@@ -21,18 +21,28 @@ import {
   Input,
   Label,
   Row,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from 'reactstrap';
 import Alert from 'reactstrap/lib/Alert';
 // let history = useHistory();
-
 const Registration = props => {
+  const { buttonLabel, className } = props;
   const [image, setFileName] = useState('');
+  const [modal, setModal] = useState(false);
+  const [error, setError] = useState('');
+  const [err, setErr] = useState('');
+  const [result, setResult] = useState();
+
+  const toggle = () => setModal(!modal);
 
   const addDataFile = () => {
     const formData = new FormData();
     formData.append('image', image);
 
-    alert(image);
+    // alert(image);
     fetch('http://localhost:3001/auth/addUserProofs', {
       method: 'POST',
       body: formData,
@@ -43,10 +53,10 @@ const Registration = props => {
     })
       .then(res => res.json())
       .then(res => {
+        setResult('done');
         setTimeout(
           function () {
-            history.push('/');
-            history.push('/');
+            history.push('./');
           },
 
           2000,
@@ -79,6 +89,8 @@ const Registration = props => {
     email: '',
     password: '',
     confirmPassword: '',
+    // file: '',
+    // profilePic: '',
   };
 
   const phoneRegExp =
@@ -101,11 +113,11 @@ const Registration = props => {
   ];
   const category = ['student', 'associate', 'professional'];
 
-  const SUPPORTED_FORMATS = [
-    'application/pdf',
-    'application/zip',
-    'application/rar',
-  ];
+  // const SUPPORTED_FORMATS = [
+  //   'application/pdf',
+  //   'application/zip',
+  //   'application/rar',
+  // ];
 
   const SUPPORTED_FORMATS_IMAGE = ['image/jpg', 'image/jpeg', 'image/png'];
 
@@ -147,24 +159,32 @@ const Registration = props => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Password must match')
       .required('Confirm password is required'),
-   
+    // file: Yup.mixed()
+    //   .required('A file is required')
+    //   .test(
+    //     'fileFormat',
+    //     'Unsupported Format',
+    //     value => value && SUPPORTED_FORMATS.includes(value.type),
+    //   ),
   });
-
-  const [error, setError] = useState('');
-  const [err, setErr] = useState('');
-
 
   const onSubmit = data => {
     axios.post('http://localhost:3001/auth', data).then(response => {
       if (response.data.error) {
         setError(response.data.error);
-      } 
-      else if(response.data.err) {
+      } else if (response.data.err) {
         setErr(response.data.error);
+      } else {
+        // setResult('done');
+        // setTimeout(
+        //   function () {
+        //     history.push('./');
+        //   },
+
+        //   2000,
+        // );
+        toggle();
       }
-      else{
-      history.push('./');
-    }
     });
   };
 
@@ -176,6 +196,28 @@ const Registration = props => {
     setError('');
   };
 
+  function message() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Succesfully Registered</Alert>
+        </>
+      );
+    }
+  }
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear() - 18;
+  today = yyyy + '-' + mm + '-' + dd;
+
   return (
     <>
       <Page>
@@ -183,6 +225,39 @@ const Registration = props => {
         <br></br>
         <br></br>
         <Col sm="11" md={{ size: 9, offset: 2 }}>
+          
+          <Modal isOpen={modal} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>
+              <b>Membership Application</b>
+            </ModalHeader>
+
+            <ModalBody>
+              
+              Dear valued member, to prove the recognition of your identity we
+              kindly request you to attach the necessary documents here which
+              will be reviewed by CSSL council officers.
+              <p>
+                <small className="text-danger">
+                  Only attach zip, rar files
+                </small>
+              </p>
+              <Input
+                type="file"
+                className="input"
+                id="course-img"
+                name="course-img"
+                accept="file/pdf"
+                onChange={e => setFileName(e.target.files[0])}
+              />
+            {message()}
+            </ModalBody>
+            <ModalFooter>
+              <Button color="success" onClick={addDataFile}>
+                Upload
+              </Button>{' '}
+            </ModalFooter>
+          </Modal>
+
           <center>
             <Formik
               initialValues={initialValues}
@@ -190,8 +265,11 @@ const Registration = props => {
               validationSchema={validationSchema}
             >
               {({ setFieldValue, errors, resetForm }) => (
-                <Card>
-                  <CardHeader tag="h1">Membership Registration</CardHeader>
+                <Card className="shadow">
+                  <CardHeader tag="h1">
+                    <b>Membership Application</b>
+                  </CardHeader>
+
                   <CardBody>
                     <CardSubtitle
                       tag="h5"
@@ -421,7 +499,7 @@ const Registration = props => {
                         </Label>
                         <Label
                           for="exampleEmail"
-                          sm={6}
+                          sm={5}
                           className="text-md-left mb-1"
                         >
                           <b>
@@ -451,10 +529,11 @@ const Registration = props => {
                             )}
                           />
                         </Col>
-                        <Col sm={6} className="text-box">
+                        <Col sm={5} className="text-box">
                           <Input
                             type="date"
                             name="birthDate"
+                            max={today}
                             onChange={e =>
                               setFieldValue('birthDate', e.target.value, false)
                             }
@@ -694,7 +773,8 @@ const Registration = props => {
                           />
                         </Col>
                       </FormGroup>
-                      <FormGroup check row>
+
+                      <FormGroup check row className="mt-5">
                         <Col sm={{ size: 15 }}>
                           <Button color="success" type="submit">
                             Register
@@ -728,6 +808,47 @@ const Registration = props => {
         <br></br>
         <br></br>
 
+        {/* 
+        
+          <FormGroup row className="mb-0 ml-2">
+                        <Label
+                          for="exampleEmail"
+                          sm={9}
+                          className="text-md-left mb-1"
+                        >
+                          <b>
+                            Attach necessary documents needed to prove you an
+                            employee <span className="text-danger">*</span>
+                          </b>
+                          <div className="text-danger">
+                            only pdf, zip, rar file formats accepted
+                          </div>
+                        </Label>
+                      </FormGroup>
+                      <FormGroup row className="mb-5 ml-2">
+                        <Col sm={5} className="text-box">
+                          <Input
+                            type="file"
+                            className="input"
+                            id="course-img"
+                            name="course-img"
+                            accept="file/pdf"
+                            onChange={e => setFileName(e.target.files[0])}
+                          />
+                          <Button onClick={addDataFile} className="text-md-left mt-2" color="success">
+                        Update Profile Picture
+                      </Button>
+                          <ErrorMessage
+                            name="file"
+                            render={msg => (
+                              <div className="text-md-left text-danger">
+                                <b>{msg}</b> *
+                              </div>
+                            )}
+                          />
+                        </Col>
+                      </FormGroup>
+
         <CardBody>
           <center>
             <br></br>
@@ -756,7 +877,7 @@ const Registration = props => {
               </center>
             </FormGroup>{' '}
           </center>
-        </CardBody>
+        </CardBody> */}
       </Page>
     </>
   );

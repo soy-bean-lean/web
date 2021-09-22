@@ -41,19 +41,19 @@ const ResetPassword = props => {
   };
 
   const validationSchema = Yup.object().shape({
-    // password: Yup.string()
-    //   .min(6, 'Password must at least have 6 charaters')
-    //   .required('Password is required')
-    //   .matches(
-    //     /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-    //     'Password must contain at least 8 characters, one uppercase, one number and one special case character',
-    //   ),
-    // confirmPassword: Yup.string()
-    //   .oneOf(
-    //     [Yup.ref('password'), null],
-    //     'Password and confirm password should match',
-    //   )
-    //   .required('Confirm password is required'),
+    password: Yup.string()
+      .min(6, 'Password must at least have 6 charaters')
+      .required('Password is required')
+      .matches(
+        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+        'Password must contain at least 8 characters, one uppercase, one number and one special case character',
+      ),
+    confirmPassword: Yup.string()
+      .oneOf(
+        [Yup.ref('password'), null],
+        'Password and confirm password should match',
+      )
+      .required('Confirm password is required'),
   });
 
   let history = useHistory();
@@ -70,7 +70,7 @@ const ResetPassword = props => {
 
   const Redirect = () => {
     setModal(!modal);
-    history.push('http://localhost:3001');
+    history.push('./');
   };
 
   return (
