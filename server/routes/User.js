@@ -113,7 +113,7 @@ userRouter.post("/", async (req, res) => {
   const designation = req.body.designation;
   const companyName = req.body.companyName;
   const businessAddress = req.body.businessAddress;
-
+  
   connection.query(
     "SELECT * FROM user WHERE email = ?",
     [email],
@@ -136,7 +136,7 @@ userRouter.post("/", async (req, res) => {
             ],
             (err, row) => {
               if (err) {
-                res.json({ err: "NIC should be unique" });
+                res.json({ err: "NIC should be unique" });                
               } else {
                 connection.query(
                   `INSERT INTO employmentdetails (userID, designation, companyName, businessAddress) VALUES (?,?,?,?)`,
@@ -146,8 +146,8 @@ userRouter.post("/", async (req, res) => {
                       res.json({ err });
                     } else {
                       connection.query(
-                        `INSERT INTO logininfo (un, pw) VALUES (?,?)`,
-                        [email, hash],
+                        `INSERT INTO logininfo (id,un, pw) VALUES (?,?,?)`,
+                        [row.insertId,email, hash],
                         (err, result) => {
                           if (err) {
                             res.json({ error });
@@ -223,7 +223,7 @@ userRouter.post("/login", async (req, res) => {
             res.json({ errorPass: "Incorrect password" });
           } else {
             const id = result[0].id;
-            
+            console.log(id);
             connection.query(
               //temporary sql query for testing
               "SELECT * FROM member WHERE id=?",
@@ -255,7 +255,8 @@ userRouter.post("/login", async (req, res) => {
                     email: username,
                     memberId: row[0].memberId,
                   });
-                } else {
+                } 
+                else {
                   console.log("none");
                   const accessToken = sign(
                     {
@@ -701,20 +702,49 @@ userRouter.post("/paymentVerfication", (req, res) => {
   //const memberID = req.body.id;
   const memberID = req.body.id;
 
-  connection.query(   
+  connection.query(
     "SELECT * FROM `payment` WHERE `memberId` = ? AND year=YEAR(CURDATE());",
     [memberID],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
+        console.log("error");
       } else {
-        
+        console.log("done");
         res.json(result);
       }
     }
   );
 });
 
+//membership payment
+userRouter.post("/memberpayment", (req, res) => {
+  //const memberID = req.body.id;
+  const memberID = req.body.id;
+  const amount = req.body.amount;
+  const role = req.body.role;
+  const today = new Date();
+  const year = today.getFullYear();
+  const paid = req.body.paid;
+  
+  if(paid==1){
+
+    connection.query(
+      `INSERT INTO payment (year, amount, type, memberId) VALUES (?,?,?,?)`,
+      [year, amount, role, memberID],
+      (err, result) => {
+        if (err) {
+          console.log("error");
+        } else {
+          console.log("successful");
+        }
+      }
+    );
+  }
+  else{
+    console.log("not yet paid");
+  }
+});
 
 userRouter.get("/auth", validateToken, (req, res) => {
   res.json(req.user);
@@ -733,8 +763,6 @@ const storageRegistrationData = multer.diskStorage({
 const uploadReg = multer({
   storage: storageRegistrationData,
 });
-
-
 
 userRouter
   .route("/addUserProofs")
