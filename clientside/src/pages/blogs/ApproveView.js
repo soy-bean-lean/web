@@ -290,10 +290,8 @@ function ApproveView() {
                 className="preview"
                 dangerouslySetInnerHTML={createMarkup(blogData.content)}
               ></CardBody>
-            </CardBody>
-          </Card>
-        </Col>
-        <hr />
+
+<hr />
         <FormGroup check row>
           <center>
             <Col sm={{ size: 15 }}>
@@ -309,6 +307,10 @@ function ApproveView() {
             </Col>
           </center>
         </FormGroup>{' '}
+            </CardBody>
+          </Card>
+        </Col>
+        
       </Row>
     </Page>
   );
