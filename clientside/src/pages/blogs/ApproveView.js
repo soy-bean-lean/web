@@ -66,7 +66,7 @@ function ApproveView() {
 
   const approve = () => {
     const data = {
-      bid: bId,
+      bid: id,
       reviewBy: authState.memberId,
     };
     console.log(id);
@@ -98,6 +98,8 @@ function ApproveView() {
   };
 
   const deleteItem = () => {
+    alert(id);
+    alert(bId);
     const data = {
       bid: id,
       tableName: 'blog',

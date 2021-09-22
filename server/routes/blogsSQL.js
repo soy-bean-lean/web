@@ -162,18 +162,18 @@ Blog.post("/getBloggerBlogs", (req, res) => {
   );
 });
 
-Blog.post("/deleteItem", (req, res) => {
-  const tableName = req.body.tableName;
-  const qid = req.body.qid;
-  const coloum = req.body.coloum;
-  console.log(qid);
-  const sqlSelect =
-    "delete from " + tableName + " where " + coloum + "  =" + qid;
+// Blog.post("/deleteItem", (req, res) => {
+//   const tableName = req.body.tableName;
+//   const qid = req.body.qid;
+//   const coloum = req.body.coloum;
+//   console.log(qid);
+//   const sqlSelect =
+//     "delete from " + tableName + " where " + coloum + "  =" + qid;
 
-  connection.query(sqlSelect, (err, result) => {
-    res.send(result);
-  });
-});
+//   connection.query(sqlSelect, (err, result) => {
+//     res.send(result);
+//   });
+// });
 
 Blog.post("/addComment", (req, res) => {
   const memberId = req.body.memberId;
