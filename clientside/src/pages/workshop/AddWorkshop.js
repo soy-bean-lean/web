@@ -210,6 +210,7 @@ function AddWorkshop() {
                     <Input
                       className="input"
                       required
+                      
                       type="date"
                       min={today}
                       onChange={e => setFromDate(e.target.value)}
@@ -241,6 +242,7 @@ function AddWorkshop() {
                     <Input
                       className="input"
                       required
+                      min="0"
                       type="number"
                       onChange={e => setDuration(e.target.value)}
                     />

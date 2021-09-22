@@ -25,54 +25,57 @@ councilRouter.post("/all", async (req, res) => {
   );
 });
 
-councilRouter.post("/CoursePending", async (req, res) => {
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Pending'";
-
-  connection.query(sql,
-    (error, result, feilds) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(result);
-      }
+councilRouter.post("/allReq", async (req, res) => {
+  connection.query("SELECT * from userupgrade", (error, result, feilds) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(result);
     }
-  );
+  });
+});
+
+councilRouter.post("/CoursePending", async (req, res) => {
+  const sql =
+    "SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Pending'";
+
+  connection.query(sql, (error, result, feilds) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(result);
+    }
+  });
 });
 
 councilRouter.post("/CourseApproved", async (req, res) => {
-
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Approved' order by approvedDate DESC";
-  connection.query(sql  
-    ,
-    (error, result, feilds) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(result);
-      }
+  const sql =
+    "SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Approved' order by approvedDate DESC";
+  connection.query(sql, (error, result, feilds) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(result);
     }
-  );
+  });
 });
 councilRouter.post("/CoursesRejected", async (req, res) => {
-
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Rejected'";
-  connection.query(sql  
-    ,
-    (error, result, feilds) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(result);
-      }
+  const sql =
+    "SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Rejected'";
+  connection.query(sql, (error, result, feilds) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(result);
     }
-  );
+  });
 });
 
 // councilRouter.post("/CoursesRejected", async (req, res) => {
 //   const sql="SELECT * FROM `csslcourse` WHERE `status` = 'Rejected'";
 
 //   connection.query(sql,
-    
+
 //     (error, result, feilds) => {
 //       if (error) {
 //         res.send(error);
@@ -84,10 +87,11 @@ councilRouter.post("/CoursesRejected", async (req, res) => {
 // });
 
 councilRouter.post("/CourseDeleted", async (req, res) => {
+  const sql =
+    "SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Deleted'";
+  connection.query(
+    sql,
 
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId ,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Deleted'";
-  connection.query(sql,
-    
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -105,8 +109,8 @@ councilRouter.post("/approve", async (req, res) => {
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "2018cs071@stu.ucsc.cmb.ac.lk",
-      pass: "Chamika@97",
+      user: "cssl.system.info@gmail.com",
+      pass: "cssl@123",
 
       //cssl.system.info@gmail.com
     },
@@ -127,7 +131,7 @@ councilRouter.post("/approve", async (req, res) => {
             } else {
               const tomail = row[0].email;
               var mailOptions = {
-                from: "2018cs071@stu.ucsc.cmb.ac.lk",
+                from: "cssl.system.info@gmail.com",
                 to: tomail,
                 subject: "CSSL Registration Approved",
                 html: `
@@ -146,6 +150,82 @@ councilRouter.post("/approve", async (req, res) => {
                 }
               });
               res.send(result);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+councilRouter.post("/approveReq", async (req, res) => {
+  const userID = req.body.userID;
+  const secID = req.body.councilId;
+  const requsest = req.body.requsest;
+  console.log(userID + "- - - " + secID);
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "cssl.system.info@gmail.com",
+      pass: "cssl@123",
+
+      //cssl.system.info@gmail.com
+    },
+  });
+  connection.query(
+    "SELECT * FROM `user` WHERE `id` = ? ;",
+    [userID],
+    (error, row) => {
+      if (error) {
+        res.send(error);
+      } else {
+        connection.query(
+          "UPDATE `member` SET `memberType` = ? WHERE `id` = ? ;",
+          [requsest, userID],
+          (error, result, feilds) => {
+            if (error) {
+              res.send(error);
+            } else {
+              connection.query(
+                "UPDATE `user` SET `userType` = ? WHERE `id` = ? ;",
+                [requsest.toLowerCase(), userID],
+                (error, result, feilds) => {
+                  if (error) {
+                    res.send(error);
+                  } else {
+                    connection.query(
+                      "UPDATE `userupgrade` SET `activity` = ? WHERE `id` = ? ;",
+                      [1, userID],
+                      (error, result, feilds) => {
+                        if (error) {
+                          res.send(error);
+                        } else {
+                          const tomail = row[0].email;
+                          var mailOptions = {
+                            from: "cssl.system.info@gmail.com",
+                            to: tomail,
+                            subject: "CSSL User Upgrade Approved",
+                            html: `
+                            <b>Hi ${row[0].firstName}, Your request have been approved by the CSSL.</b><p>Now You Are a  ${requsest} Member Of the CSSL"</p>`,
+                          };
+                          transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                              res.json({
+                                msg: "fail",
+                              });
+                            } else {
+                              res.json({
+                                msg: "success",
+                              });
+                            }
+                          });
+                          res.send(result);
+                        }
+                      }
+                    );
+                  }
+                }
+              );
             }
           }
         );
@@ -213,7 +293,7 @@ councilRouter.post("/reject", async (req, res) => {
 councilRouter.post("/approveContent", (req, res) => {
   const cid = req.body.cId;
   const cntid = req.body.cntId;
-  const status = 'Approved';
+  const status = "Approved";
   connection.query(
     "UPDATE coursecontent SET status = ? WHERE courseId = ? AND contentId = ?;",
     [status, cid, cntid],
@@ -230,7 +310,7 @@ councilRouter.post("/approveContent", (req, res) => {
 councilRouter.post("/rejectContent", (req, res) => {
   const cid = req.body.cId;
   const cntid = req.body.cntId;
-  const status = 'Rejected';
+  const status = "Rejected";
   connection.query(
     "UPDATE coursecontent SET status = ? WHERE courseId = ? AND contentId = ?;",
     [status, cid, cntid],
@@ -249,7 +329,7 @@ councilRouter.post("/approveCourse", (req, res) => {
   const cid = req.body.cId;
   const credit = req.body.credit;
   const appDate = req.body.appDate;
-  const status = 'Approved';
+  const status = "Approved";
   connection.query(
     "UPDATE csslcourse SET status = ?, credit = ?, approvedBy = ?, approvedDate = ? WHERE courseId = ?;",
     [status, credit, mid, appDate, cid],
@@ -267,7 +347,7 @@ councilRouter.post("/rejectCourse", (req, res) => {
   const mid = req.body.mId;
   const cid = req.body.cId;
   const appDate = req.body.appDate;
-  const status = 'Rejected';
+  const status = "Rejected";
   connection.query(
     "UPDATE csslcourse SET status = ?, approvedBy = ?, approvedDate = ? WHERE courseId = ?;",
     [status, mid, appDate, cid],
