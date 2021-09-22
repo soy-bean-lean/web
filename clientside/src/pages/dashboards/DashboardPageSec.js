@@ -461,6 +461,9 @@ function DashboardPage() {
                 y = response.data[0].users;
                 var x = res.data[0].paid;
                 setPaidCount((x / y) * 100);
+                var percerntage =Math.round(((x / y) * 100));
+
+                setPaidCount(percerntage);
               }
             });
         }
