@@ -47,12 +47,12 @@ const navItemsProffesional = [
     Icon: FaIcons.FaBloggerB,
   },
     
-  {
-    to: '/forum',
-    name: 'Forum',
-    exact: false,
-    Icon: AiIcons.AiFillFileText,
-  },
+  // {
+  //   to: '/forum',
+  //   name: 'Forum',
+  //   exact: false,
+  //   Icon: AiIcons.AiFillFileText,
+  // },
   {
     to: '/jobadvertisements',
     name: 'Jobs',
