@@ -173,16 +173,8 @@ const Registration = props => {
       if (response.data.error) {
         setError(response.data.error);
       } else if (response.data.err) {
-        setErr(response.data.error);
+        setErr(response.data.err);
       } else {
-        // setResult('done');
-        // setTimeout(
-        //   function () {
-        //     history.push('./');
-        //   },
-
-        //   2000,
-        // );
         toggle();
       }
     });
