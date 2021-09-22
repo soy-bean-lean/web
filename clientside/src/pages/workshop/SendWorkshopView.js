@@ -135,7 +135,7 @@ function SendWorkshopView() {
   }, []);
 
   return (
-    <Page>
+    <Page title="Pending Workshop">
       <Link to="/workshop">
         <Button color="primary">Workshop List</Button>
       </Link>

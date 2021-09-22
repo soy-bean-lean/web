@@ -27,51 +27,152 @@ const ViewCPD = () => {
 
   const { id } = useParams();
 
-  const [firstName, setFirstName] = useState('');
-  const [secondName, setSecondName] = useState('');
-  const [NIC, setNIC] = useState('');
-  const [address, setAddress] = useState('');
-  const [contact, setContact] = useState('');
-  const [dob, setDOB] = useState('');
-  const [email, setEmail] = useState('');
-  const [proPic, setProfileImage] = useState('');
-  const [title, setUserTitle] = useState('');
-  const [type, setUserType] = useState('');
-  const [cpdData, setData] = useState(null);
+  const [reId, setRecId] = useState('');
+  const [courseName, setCourseName] = useState('');
+  const [recordType, setRecordType] = useState('');
+  const [actType, setActType] = useState('');
+  const [credit, setCredit] = useState('');
+  const [recordDate, setRecordDate] = useState('');
+  const [recordTitle, setRecordTitle] = useState('');
+  const [note, setNote] = useState('');
+  const [proof, setProof] = useState();
+  const [memberId, setMemberId] = useState('');
+
+  const [cpdData, setCpdData] = useState(null);
 
   const [result, setResultBasic] = useState();
 
   const [imgFile, setImgFile] = useState();
 
   const [recordData, setRecordData] = useState(null);
-  const [activityData, setActivityData] = useState(null);  
+  const [activityData, setActivityData] = useState(null);
 
-  const reject = () => {
-    const formData2 = {
-      userID: id,
-      secID: authState.id,
+  let history = useHistory();
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
+
+  useEffect(() => {
+    const data = {
+      cpdId: id,
     };
 
     axios
-      .post('http://localhost:3001/cpd/rejectRecord', formData2)
+      .post('http://localhost:3001/cpd/getcpdData', data)
+
       .then(response => {
         if (response.data.error) {
-          setResultBasic('err');
+          console.log(response.data.error);
         } else {
-          setResultBasic('done');
-          setTimeout(
-            function () {
-              history.push('/cpdapproval/cpdrecords');
-            },
+          setRecordData(response.data);
+          setRecId(response.data[0].recordId);
+          setCourseName(response.data[0].name);
+          setRecordTitle(response.data[0].recTitle);
+          setRecordType(response.data[0].recordType);
+          setCredit(response.data[0].credit);
+          setProof(response.data[0].proof);
+          setActType(response.data[0].type);
+          setNote(response.data[0].note);
+          setRecordDate(response.data[0].recordDate);
+          setMemberId(response.data[0].memberId);
 
-            2000,
-          );
+          console.log(recordData);
+          /*getActivityInfo(
+            response.data[0].refId,
+            response.data[0].recType,
+            response.data[0].type,
+          );*/
         }
       })
       .catch(error => {
-        setResultBasic('err');
+        console.log(error);
       });
-  };
+  }, []);
+
+  const cpdRecordRender =
+    recordData &&
+    recordData.map((li, i) => {
+      if (actType == 'CSSLcourse') {
+        return (
+          <>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Member Id
+              </Label>
+              <Col sm={9}>
+                <Input readOnly value={memberId} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Record Title
+              </Label>
+              <Col sm={9}>
+                <Input readOnly value={recordTitle} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Record Date
+              </Label>
+              <Col sm={9}>
+                <Input readOnly value={recordDate} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Record Type
+              </Label>
+              <Col sm={9}>
+                <Input readOnly value="CSSL COURSE" />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Course Name
+              </Label>
+              <Col sm={9}>
+                <Input readOnly value={courseName} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Credit Value
+              </Label>
+              <Col sm={9}>
+                <Input readOnly value={credit} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Note
+              </Label>
+              <Col sm={9}>
+                <p>{note}</p>
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={3}>
+                Uploaded Files
+              </Label>
+              <Col sm={9}>
+                <p style={{ border: 'solid', width: 150 }}>
+                  <a
+                    href={'http://localhost:3001/uploads/cpdRecords/' + proof}
+                    download
+                  >
+                    Click Here to Download
+                  </a>
+                </p>
+              </Col>
+            </FormGroup>
+          </>
+        );
+      }
+    });
 
   const back = () => {
     history.push('/cpdapproval/cpdrecords');
@@ -92,14 +193,44 @@ const ViewCPD = () => {
       );
     }
   }
-  const verify = () => {
-    const formData2 = {
-      userID: id,
-      secID: authState.id,
+
+  const approveRecord = () => {
+    const formData = {
+      cpdId: id,
+      appId: authState.memberId,
+      appDate: today,
     };
 
     axios
-      .post('http://localhost:3001/cpd/approveRecord', formData2)
+      .post('http://localhost:3001/cpd/approveRecord', formData)
+      .then(response => {
+        if (response.data.error) {
+          setResultBasic('err');
+        } else {
+          setResultBasic('done');
+          setTimeout(
+            function () {
+              history.push('/cpdapproval/cpdrecords');
+            },
+            2000,
+          );
+        }
+      })
+      .catch(error => {
+        setResultBasic('err');
+      });
+  };
+
+
+  const rejectRecord = () => {
+    const formData = {
+      cpdId: id,
+      appId: authState.memberId,
+      appDate: today,
+    };
+
+    axios
+      .post('http://localhost:3001/cpd/rejectRecord', formData)
       .then(response => {
         if (response.data.error) {
           setResultBasic('err');
@@ -118,35 +249,8 @@ const ViewCPD = () => {
         setResultBasic('err');
       });
   };
-  let history = useHistory();
 
-  useEffect(() => {
-    const data = {
-      cpdId: id,
-    };
-
-    axios
-      .post('http://localhost:3001/cpd/getcpdData', data)
-
-      .then(response => {
-        if (response.data.error) {
-          console.log(response.data.error);
-        } else {
-          setRecordData(response.data[0]);
-          console.log(response.data);
-          /*getActivityInfo(
-            response.data[0].refId,
-            response.data[0].recType,
-            response.data[0].type,
-          );*/
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
-  const getActivityInfo = (recId, recType, actType) => {
+  /*const getActivityInfo = (recId, recType, actType) => {
     const actData = {
       cpdId: recId,
       recType: recType,
@@ -167,24 +271,20 @@ const ViewCPD = () => {
       .catch(error => {
         console.log(error);
       });
-  };
+  };*/
 
   return (
     <Page title="CPD Approvals">
       <Row>
-        <Col sm="5" md={{ size: 6, offset: 3 }}>
+        <Col sm="10" md={{ size: 8, offset: 2 }}>
           <br></br>
-          <Card className="profileInfo">
+          <Card>
             <CardBody>
               <center>
                 {msg()}
                 <br />
                 <br />
-                {/* <h4>{recordData.recTitle}</h4>
-                <p>{recordData.memberId}</p>
-                <p>{recordData.recType} - {recordData.type == 'CSSLcourse' &&( "CSSL")}</p>
-                <p>{recordData.note}</p>
-                <p>{recordData.recordDate}</p> */}
+                {cpdRecordRender}
               </center>
               <CardBody>
                 <FormGroup check row>
@@ -193,10 +293,10 @@ const ViewCPD = () => {
                       <Button onClick={back} color="primary">
                         Back
                       </Button>{' '}
-                      <Button onClick={reject} color="danger">
+                      <Button onClick={rejectRecord} color="danger">
                         Reject
                       </Button>{' '}
-                      <Button onClick={verify} color="success">
+                      <Button onClick={approveRecord} color="success">
                         Approve
                       </Button>
                     </Col>

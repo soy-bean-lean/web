@@ -83,7 +83,7 @@ const ViewCPD = props => {
         return (
           <>
             <tr key={i}>
-              <td>{record.type}</td>
+              <td>{record.type.toUpperCase()}</td>
               <td>{record.recTitle}</td>
               <td>
                 <center>
@@ -102,7 +102,7 @@ const ViewCPD = props => {
         return (
           <>
             <tr key={i}>
-              <td>{record.type}</td>
+              <td>{record.type.toUpperCase()}</td>
               <td>{record.recTitle}</td>
               <td>
                 <center>
@@ -121,7 +121,7 @@ const ViewCPD = props => {
         return (
           <>
             <tr key={i}>
-              <td>{record.type}</td>
+              <td>{record.type.toUpperCase()}</td>
               <td>{record.recTitle}</td>
               <td>
                 <center>
@@ -146,7 +146,7 @@ const ViewCPD = props => {
         return (
           <>
             <tr key={i}>
-              <td>{record.type}</td>
+              <td>{record.type.toUpperCase()}</td>
               <td>{record.recTitle}</td>
               <td>
                 <center>
@@ -170,7 +170,7 @@ const ViewCPD = props => {
         return (
           <>
             <tr key={i}>
-              <td>{record.type}</td>
+              <td>{record.type.toUpperCase()}</td>
               <td>{record.recTitle}</td>
               <td>
                 <center>
@@ -200,7 +200,7 @@ const ViewCPD = props => {
         return (
           <>
             <tr key={i}>
-              <td>{record.type}</td>
+              <td>{record.type.toUpperCase()}</td>
               <td>{record.recTitle}</td>
               <td>
                 <center>
