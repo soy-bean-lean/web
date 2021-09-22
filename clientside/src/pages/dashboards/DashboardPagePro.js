@@ -287,6 +287,9 @@ function DashboardPage() {
         } else {
           setretrieveLine(response.data);
           setcreditEarnedLength(response.data.length);
+          if(response.data.length==0){
+            setnoDataLine('No data available');
+          }
         }
       })
       .catch(error => {
@@ -300,6 +303,10 @@ function DashboardPage() {
           console.log(response.data.error);
         } else {
           setretrieveDonut(response.data);
+          console.log(response.data.length);
+          if(response.data.length==0){
+            setnoDataActivityType('No data available');
+          }
         }
       })
       .catch(error => {
@@ -313,6 +320,9 @@ function DashboardPage() {
           console.log(response.data.error);
         } else {
           setretrievePie(response.data);
+          if(response.data.length==0){
+            setnoDataType('No data available');
+          }
         }
       })
       .catch(error => {
