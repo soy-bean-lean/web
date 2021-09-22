@@ -48,7 +48,7 @@ const ManageWorkshop = props => {
    
     
     axios
-      .post('http://localhost:3001/blog/getBlogs', data)
+      .post('http://localhost:3001/blog/getPendingBlog', data)
 
       .then(response => {
         if (response.data.error) {
