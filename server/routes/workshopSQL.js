@@ -125,7 +125,7 @@ Workshop.post("/getApprovedWorkshop", (req, res) => {
   const wid = req.body.id;
 
   connection.query(
-    "SELECT   csslworkshop.* ,user.title AS T,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id) WHERE csslworkshop.verifiedBy IS NOT NULL AND csslworkshop.wId= ?;",
+    "SELECT   csslworkshop.*,workshopconduct.date as conductData ,user.title AS T,user.firstName,user.lastName,user.email FROM (((csslworkshop INNER JOIN workshopconduct ON workshopconduct.wId=csslworkshop.wId ) INNER JOIN member ON member.memberId=workshopconduct.memberId) INNER JOIN user ON user.id=member.id) WHERE csslworkshop.verifiedBy IS NOT NULL AND csslworkshop.wId= ?;",
     [wid],
     (error, result, feilds) => {
       if (error) console.log(error);
