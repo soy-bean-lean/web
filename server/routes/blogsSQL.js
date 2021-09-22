@@ -271,11 +271,15 @@ Blog.route("/approve").post((req, res, err) => {
 
 Blog.post("/deleteItem", (req, res) => {
   const tableName = req.body.tableName;
-  const bid = req.body.bid;
+  const bid = req.body.qid;
   const coloum = req.body.coloum;
   console.log(bid);
   const sqlSelect =
     "delete from " + tableName + " where " + coloum + "  =" + bid;
+
+console.log("______________________________________________________________");
+console.log(sqlSelect);
+console.log("______________________________________________________________");
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);

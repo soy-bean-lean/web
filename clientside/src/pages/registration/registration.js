@@ -246,7 +246,7 @@ const Registration = props => {
                 className="input"
                 id="course-img"
                 name="course-img"
-                accept="file/pdf"
+                accept=".zip,.rar"
                 onChange={e => setFileName(e.target.files[0])}
               />
             </ModalBody>

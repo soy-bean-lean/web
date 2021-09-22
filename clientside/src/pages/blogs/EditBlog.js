@@ -69,7 +69,6 @@ function EditBlog() {
       tableName: 'blog',
       coloum: 'blogId',
     };
-    console.log(id);
     axios.post('http://localhost:3001/blog/deleteItem', data).then(response => {
       if (response.data.error) {
         setResult('err');
