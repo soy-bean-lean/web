@@ -118,6 +118,7 @@ const CSSLWorkshops = React.lazy(() => import('pages/workshop/CSSLWorkshops'));
 //blogs
 const Blogs = React.lazy(() => import('pages/blogs/Blogs'));
 const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
+const reviewblogs = React.lazy(() => import('pages/blogs/reviewblogs'));
 const BlogView = React.lazy(() => import('pages/blogs/BlogView'));
 const EditView = React.lazy(() => import('pages/blogs/EditBlog'));
 
@@ -456,7 +457,7 @@ function App(props) {
                     />{' '}
                     {/* need to change component */}
                     {/*Blog Related Routes*/}
-                    <Route path="/reviewblogs" component={Login} />{' '}
+                    <Route path="/reviewblogs" component={reviewblogs} />{' '}
                     {/* need to change component */}
                     <Route
                       path="/reviewblogs/blog00:id"
