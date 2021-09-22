@@ -58,8 +58,9 @@ const today = new Date();
 const lastWeek = new Date(
   today.getFullYear(),
   today.getMonth(),
-  today.getDate() - 7,
+  today.getDate() + 5,
 );
+const a = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 15);
 
 // componentDidMount() {
 //     // this is needed, because InfiniteCalendar forces window scroll
@@ -134,10 +135,10 @@ function DashboardPage() {
   const [upcomingDate, setupcomingDate] = useState(null);
   const [upcomingDateLength, setupcomingDateLength] = useState(null);
 
-  const [creditsEarned, setcreditsEarned] = useState("");
-  const [remainingCredits, setremainingCredits] = useState("");
-  const [remainingCreditsPercentage, setremainingCreditsPercentage] = useState("");
-
+  const [creditsEarned, setcreditsEarned] = useState('');
+  const [remainingCredits, setremainingCredits] = useState('');
+  const [remainingCreditsPercentage, setremainingCreditsPercentage] =
+    useState('');
 
   //this year credits earned
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -175,7 +176,7 @@ function DashboardPage() {
   retrievePie &&
     retrievePie.map(
       retrievePie => (
-        category.push(retrievePie.recordCategory),
+        category.push(retrievePie.type),
         countType.push(retrievePie.credits)
       ),
     );
@@ -246,6 +247,7 @@ function DashboardPage() {
     ],
   };
 
+  console.log(authState);
   //Announcements
   useEffect(() => {
     axios
@@ -263,7 +265,7 @@ function DashboardPage() {
 
     //Recent Activities
     const data = {
-      id: authState.id,
+      id: authState.memberId,
     };
     axios
       .post('http://localhost:3001/Dash/recent', data)
@@ -346,7 +348,7 @@ function DashboardPage() {
         alert(error);
       });
 
-      axios
+    axios
       .post('http://localhost:3001/Dash/earned', data)
       .then(response => {
         if (response.data.error) {
@@ -359,7 +361,7 @@ function DashboardPage() {
         alert(error);
       });
 
-      axios
+    axios
       .post('http://localhost:3001/Dash/remaining', data)
       .then(response => {
         if (response.data.error) {
@@ -372,7 +374,7 @@ function DashboardPage() {
         alert(error);
       });
 
-      axios
+    axios
       .post('http://localhost:3001/Dash/remainingPercentage', data)
       .then(response => {
         if (response.data.error) {
@@ -384,21 +386,16 @@ function DashboardPage() {
       .catch(error => {
         alert(error);
       });
-
   }, []);
 
   return (
     <>
-      <Page
-        className="DashboardPage"
-        title="Dashboard"
-        breadcrumbs={[{ name: 'Dashboard', active: true }]}
-      >
+      <Page className="DashboardPage" title="Dashboard">
         <Badge color="warning" pill className="mr-1">
-        Chartered  Member
-                </Badge>
-        
-         <hr/>
+          Professional Member
+        </Badge>
+
+        <hr />
         <Row>
           <Col xs="8">
             <Card className="shadow">
@@ -467,14 +464,13 @@ function DashboardPage() {
           <Col xs="4">
             <Card className="shadow">
               <CardHeader className="mt-0 mb-0">Upcoming activities</CardHeader>
-              <CardBody className="mt-0 mb-0">
+              <CardBody>
                 <Calendar
                   //onChange={onChange}
-                  value={value}
+                  value={(a, lastWeek)}
                   className="calender"
                   onChange={changeDate}
                   tileClassName={tileClassName}
-                  //tileClassName={tileContent}
                 />
               </CardBody>
             </Card>
@@ -502,13 +498,13 @@ function DashboardPage() {
 
                 <Col xs="6">
                   <CardHeader>
-                    Type of the category{' '}
+                    Type of the Activity{' '}
                     <small className="text-muted text-capitalize">
                       Credits Earned
                     </small>
                   </CardHeader>
                   <CardBody>
-                    <Pie data={state3} options={chartjs.doughnut.options} />
+                    <Bar data={state3} options={chartjs.bar.options} />
                   </CardBody>
                 </Col>
               </Row>

@@ -26,6 +26,43 @@ import Alert from 'reactstrap/lib/Alert';
 // let history = useHistory();
 
 const Registration = props => {
+  const [image, setFileName] = useState('');
+
+  const addDataFile = () => {
+    const formData = new FormData();
+    formData.append('image', image);
+
+    alert(image);
+    fetch('http://localhost:3001/auth/addUserProofs', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'multipart/form-data',
+      },
+      credentials: 'include',
+    })
+      .then(res => res.json())
+      .then(res => {
+        setTimeout(
+          function () {
+            history.push('/');
+            history.push('/');
+          },
+
+          2000,
+        );
+      })
+      .catch(error => {
+        setTimeout(
+          function () {
+            // history.push('/jobadvertisements');
+          },
+
+          2000,
+        );
+      });
+  };
+
   let history = useHistory();
   const initialValues = {
     category: '',
@@ -122,15 +159,21 @@ const Registration = props => {
   });
 
   const [error, setError] = useState('');
+  const [err, setErr] = useState('');
+
 
   const onSubmit = data => {
-    console.log("anuska");
+    console.log('anuska');
     axios.post('http://localhost:3001/auth', data).then(response => {
       if (response.data.error) {
         setError(response.data.error);
-      } else {
-        history.push('./');
+      } 
+      else if(response.data.err) {
+        setErr(response.data.error);
       }
+      else{
+      history.push('./');
+    }
     });
   };
 
@@ -405,6 +448,9 @@ const Registration = props => {
                             }
                             className="bg-light"
                           />
+                          <div className="text-md-left text-danger">
+                            <b>{err}</b>
+                          </div>
                           <ErrorMessage
                             name="nic"
                             render={msg => (
@@ -682,9 +728,7 @@ const Registration = props => {
                             name="file"
                             accept="application/*"
                             file
-                            onChange={e =>
-                              setFieldValue('file', e.target.files[0])
-                            }
+                            
                             className="bg-light"
                           />
                           <ErrorMessage
@@ -731,6 +775,36 @@ const Registration = props => {
         <br></br>
         <br></br>
         <br></br>
+
+        <CardBody>
+          <center>
+            <br></br>
+            <FormGroup row>
+              <Label for="exampleEmail" sm={5}>
+                Add Profile Image{' '}
+              </Label>
+              <Col sm={7}>
+                <Input
+                  type="file"
+                  className="input"
+                  id="course-img"
+                  name="course-img"
+                  accept="file/pdf"
+                  onChange={e => setFileName(e.target.files[0])}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup check row>
+              <center>
+                <Col sm={{ size: 15 }}>
+                  <Button onClick={addDataFile} color="success">
+                    Update Profile Picture
+                  </Button>
+                </Col>
+              </center>
+            </FormGroup>{' '}
+          </center>
+        </CardBody>
       </Page>
     </>
   );

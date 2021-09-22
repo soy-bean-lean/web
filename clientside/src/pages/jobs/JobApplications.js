@@ -75,7 +75,6 @@ const CardPage = props => {
         return (
           <>
             <tr>
-              <td hidden> {data.jvId}</td>
               <td>{data.date}</td>
               <td>{data.companyName}</td>
 
@@ -86,11 +85,9 @@ const CardPage = props => {
               </td>
 
               <td>
-                <center>
                   <Badge color="danger" pill className="mr-1">
                     {data.status.toUpperCase()}{' '}
                   </Badge>
-                </center>
               </td>
 
               <td>
@@ -128,11 +125,11 @@ const CardPage = props => {
               </td>
 
               <td>
-                <center>
+                
                   <Badge color="primary" pill className="mr-1">
                     {data.status.toUpperCase()}{' '}
                   </Badge>
-                </center>
+               
               </td>
 
               <td>
@@ -162,23 +159,20 @@ const CardPage = props => {
     applicents.map(data => (
       <>
         <tr>
-          <td hidden>{data.jvId}</td>
           <td>{data.companyName}</td>
           <td>
-            <center>
               <Badge color="warning" pill className="mr-1">
                 {data.numberOfApplicent} Applications
               </Badge>
-            </center>
           </td>
           <td>
-            <center>
+
               <Link to={'/sendcv/' + data.jvId}>
                 <Button color="success" size="sm">
                   View{' '}
                 </Button>
               </Link>
-            </center>
+
           </td>
         </tr>
       </>
@@ -224,6 +218,10 @@ const CardPage = props => {
                           <Col>
                             <Card body>
                               <Table {...{ ['striped']: true }}>
+                              <th>Applied Date</th>
+                              <th>Applications</th>
+                              <th>Quiz Marks</th>
+                              <th>Status</th>
                                 <tbody>{jobview}</tbody>
                               </Table>
                             </Card>
@@ -249,6 +247,8 @@ const CardPage = props => {
                           <Col>
                             <Card body>
                               <Table {...{ ['striped']: true }}>
+                              <th>Company Name</th>
+                              <th>Applications</th>
                                 <tbody>{jobApplicents}</tbody>
                               </Table>
                             </Card>

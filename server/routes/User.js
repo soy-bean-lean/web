@@ -136,7 +136,7 @@ userRouter.post("/", async (req, res) => {
             ],
             (err, row) => {
               if (err) {
-                res.json({ error });
+                res.json({ err: "NIC should be unique" });
               } else {
                 connection.query(
                   `INSERT INTO employmentdetails (userID, designation, companyName, businessAddress) VALUES (?,?,?,?)`,
@@ -223,12 +223,15 @@ userRouter.post("/login", async (req, res) => {
             res.json({ errorPass: "Incorrect password" });
           } else {
             const id = result[0].id;
+            
             connection.query(
               //temporary sql query for testing
               "SELECT * FROM member WHERE id=?",
               [id],
               (err, row) => {
+                console.log(row);
                 if (row.length > 0) {
+                  console.log("done");
                   const accessToken = sign(
                     {
                       firstName: result[0].firstName,
@@ -253,6 +256,7 @@ userRouter.post("/login", async (req, res) => {
                     memberId: row[0].memberId,
                   });
                 } else {
+                  console.log("none");
                   const accessToken = sign(
                     {
                       firstName: result[0].firstName,
@@ -594,23 +598,22 @@ userRouter.post("/payment", (req, res) => {
           if (error) {
             res.send(error);
           } else {
-            connection.query(
-              `INSERT INTO payment (year, amount, type, memberId) VALUES (?,?,?,?)`,
-              [year, amount, role, userID],
-              (err, result) => {
-                if (err) {
-                  res.json({ error });
-                } else {
-                  connection.query(`SELECT * FROM member;`, (err, result) => {
+            connection.query(`SELECT * FROM member;`, (err, result) => {
+              if (err) {
+                res.json({ error });
+              } else {
+                const rows = result.length + 1;
+                const memberID = "CSSL00" + rows;
+                connection.query(
+                  `INSERT INTO member (id, memberId, memberType) VALUES (?,?,?)`,
+                  [userID, memberID, role],
+                  (err, result) => {
                     if (err) {
                       res.json({ error });
                     } else {
-                      const rows = result.length + 1;
-                      const memberID = "CSSL00" + rows;
-                      console.log(memberID);
                       connection.query(
-                        `INSERT INTO member (id, memberId, memberType) VALUES (?,?,?)`,
-                        [userID, memberID, role],
+                        `INSERT INTO payment (year, amount, type, memberId) VALUES (?,?,?,?)`,
+                        [year, amount, role, memberID],
                         (err, result) => {
                           if (err) {
                             res.json({ error });
@@ -657,10 +660,10 @@ userRouter.post("/payment", (req, res) => {
                         }
                       );
                     }
-                  });
-                }
+                  }
+                );
               }
-            );
+            });
           }
         }
       );
@@ -683,8 +686,86 @@ userRouter.post("/payment", (req, res) => {
   // });
 });
 
+//payment verification profile page
+userRouter.post("/paymentVerfication", (req, res) => {
+  //const memberID = req.body.id;
+  const memberID = "CSSL001";
+
+  connection.query(   
+    "SELECT * FROM `payment` WHERE `memberId` = ? AND year=YEAR(CURDATE());",
+    [memberID],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        
+        res.json(result);
+      }
+    }
+  );
+});
+
+
 userRouter.get("/auth", validateToken, (req, res) => {
   res.json(req.user);
 });
+
+const storageRegistrationData = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/memberRegistraion");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const uploadReg = multer({
+  storage: storageRegistrationData,
+});
+
+
+
+userRouter
+  .route("/addUserProofs")
+  .post(uploadReg.single("image"), (req, res, err) => {
+    if (
+      !req.file.originalname.match(
+        /\.(jpg|zip|war|WAR|ZIP|JPG|jpeg|JPEG|png|PNG)$/
+      )
+    ) {
+      res.send({ msg: "Not an Image File." });
+    } else {
+      const sss = req.file.filename;
+      //   const id = req.body.memberId;
+      const sqlSelect =
+        "SELECT user.id FROM `user` ORDER BY `user`.`id` DESC limit 1; ";
+
+      connection.query(sqlSelect, (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result[0].id);
+          connection.query(
+            " UPDATE user SET userProof =" +
+              " '" +
+              sss +
+              "'" +
+              "  WHERE id = " +
+              result[0].id +
+              ";",
+
+            (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.json("success");
+              }
+            }
+          );
+        }
+      });
+    }
+  });
 
 export default userRouter;

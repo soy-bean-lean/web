@@ -61,6 +61,7 @@ Record.post("/addRecord", (req, res) => {
 //get courses
 Record.post("/getCourse", (req, res) => {
   const mid = req.body.mId;
+  const type = "CSSLcourse";
   //const mode = req.body.mode;
   const courseType = req.body.type;
   const statusCssl = "Completed";
@@ -75,8 +76,9 @@ Record.post("/getCourse", (req, res) => {
 
   if (courseType == "CSSLcourse") {
     connection.query(
-      "SELECT csslcourse.* FROM csslcourse INNER JOIN courseenroll ON csslcourse.courseId = courseenroll.courseId WHERE courseenroll.memberId = ? and courseenroll.status = ?;",
-      [mid, statusCssl],
+      //"SELECT csslcourse.* FROM csslcourse INNER JOIN courseenroll ON csslcourse.courseId = courseenroll.courseId WHERE courseenroll.memberId = ? AND courseenroll.status = ?;",
+      "SELECT csslcourse.* FROM csslcourse INNER JOIN courseenroll ON csslcourse.courseId = courseenroll.courseId WHERE csslcourse.courseId NOT IN (SELECT cpdrecords.refId FROM cpdrecords WHERE cpdrecords.memberId = ? AND cpdrecords.type = ?) AND courseenroll.memberId = ? AND courseenroll.status = ?;",
+      [mid, type, mid, statusCssl],
       (error, result) => {
         if (error) console.log(error);
         else {
@@ -186,8 +188,8 @@ Record.post("/getGuestLecture", (req, res) => {
   );
 });
 
-//insert course details (basicCourseDetails.js)
-Record.route("/submitCsslCourse").post(
+//insert cssl course cpdrecord (addCPD.js)
+Record.route("/submitCsslCourseCpd").post(
   upload.single("proof"),
   (req, res, err) => {
     const mId = req.body.mId;
@@ -214,6 +216,86 @@ Record.route("/submitCsslCourse").post(
         recDate,
         status,
         refId,
+      ],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          //console.log(res);
+          res.send({
+            data: result,
+            msg: "Successfully Saved.",
+          });
+        }
+      }
+    );
+  }
+);
+
+//insert other course cpdrecord (addCPD.js)
+Record.route("/submitOtherCourseCpd").post(
+  upload.single("proof"),
+  (req, res, err) => {
+    const mId = req.body.mId;
+    const recTitle = req.body.recTitle;
+    const recordType = req.body.recordType;
+    const type = req.body.type;
+    const note = req.body.note;
+    const credit = req.body.credit;
+    const refId = req.body.refId;
+    const proof = req.file.filename;
+    const recDate = req.body.recDate;
+    const status = "Pending";
+    //console.log(mId);
+    connection.query(
+      "INSERT INTO cpdrecords (memberId, recTitle, recordType, type, proof, note, credit, recordDate, status, refId) VALUES (?,?,?,?,?,?,?,?,?,?);",
+      [
+        mId,
+        recTitle,
+        recordType,
+        type,
+        proof,
+        note,
+        credit,
+        recDate,
+        status,
+        refId,
+      ],
+      (error, result, feilds) => {
+        if (error) console.log(error);
+        else {
+          //console.log(res);
+          res.send({
+            data: result,
+            msg: "Successfully Saved.",
+          });
+        }
+      }
+    );
+  }
+);
+
+//insert other course details (addCPD.js)
+Record.post("/addNewOtherCourse", (req, res, err) => {
+    const courseName = req.body.courseName;
+    const mode = req.body.recormodedType;
+    const platform = req.body.platform;
+    const skillLevel = req.body.skillLevel;
+    const duration = req.body.duration;
+    const durationType = req.body.durationType;
+    const partner = req.body.partner;
+    const status = "Pending";
+    //console.log(mId);
+    connection.query(
+      "INSERT INTO othercourse (name, platform, skillLevel, mode, durationValue, durationType, partner, status) VALUES (?,?,?,?,?,?,?,?);",
+      [
+        courseName,
+        platform,
+        skillLevel,
+        mode,
+        duration,
+        durationType,
+        partner,
+        status,
       ],
       (error, result, feilds) => {
         if (error) console.log(error);

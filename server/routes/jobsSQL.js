@@ -69,6 +69,8 @@ Job.route("/").post(upload.single("image"), (req, res, err) => {
           console.log(err);
           res.send(result);
         } else {
+         
+         
           res.json("success");
         }
       }
@@ -328,7 +330,11 @@ Job.route("/addJobApplicaation").post(
       !req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|pdf|PDF|png|PNG)$/)
     ) {
       res.send({ msg: "Not an Image File." });
-    } else {
+    }
+    
+    else {
+
+      
       const Currentdate = req.body.Currentdate;
       const memberId = req.body.memberId;
       const jobId = req.body.jobId;
@@ -354,8 +360,30 @@ Job.route("/addJobApplicaation").post(
           if (err) {
             res.send(result);
           } else {
-            res.json("success");
-          }
+
+            const sqlSelect =
+            "SELECT jobvacancy.companyName , designation FROM `jobvacancy` where jvId  = " + jobId + "; ";
+  
+          connection.query(sqlSelect, (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              //const memberId = mid;
+  
+              console.log(result[0].companyName);
+              const recentUpdates =
+                "insert into recentactivities  ( memberId,title,description) values ('cssl00" +   memberId +    "','Apply To a Job','Apply a Job From  "+result[0].companyName+" for "+result[0].designation+"  on "+Currentdate+"')";
+                console.log(recentUpdates);
+              connection.query(recentUpdates, (err, result) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.json("success");
+                }
+              });
+            }
+          });
+            }
         }
       );
     }
@@ -389,7 +417,9 @@ Job.post("/getJobs", (req, res) => {
   const name = req.body.companyName;
   const location = req.body.location;
   const role = req.body.jobRole;
-
+  console.log(name)
+  console.log(location)
+  console.log(role)
   const sqlSelect =
     "SELECT jvId , companyName , location ,designation,questionType from jobvacancy where companyName like '" +
     name +
