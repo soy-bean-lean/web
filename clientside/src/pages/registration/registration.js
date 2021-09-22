@@ -862,7 +862,7 @@ const Registration = props => {
                   className="input"
                   id="course-img"
                   name="course-img"
-                  accept="file/pdf"
+                  accept="zip"
                   onChange={e => setFileName(e.target.files[0])}
                 />
               </Col>

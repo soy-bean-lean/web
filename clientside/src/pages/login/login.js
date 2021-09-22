@@ -176,10 +176,10 @@ const Login = () => {
               <CardBody>
                 <Form>
                   <FormGroup row>
-                    <Label for="exampleEmail" sm={5}>
+                    <Label for="exampleEmail" sm={4}>
                       User Name
                     </Label>
-                    <Col sm={6}>
+                    <Col sm={8}>
                       <Input
                         type="text"
                         onChange={event => {
@@ -192,10 +192,10 @@ const Login = () => {
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Label for="exampleEmail" sm={5}>
+                    <Label for="exampleEmail" sm={4}>
                       Password
                     </Label>
-                    <Col sm={6}>
+                    <Col sm={8}>
                       <Input
                         type="password"
                         onChange={event => {
@@ -233,7 +233,6 @@ const Login = () => {
                       >
                         Login
                       </Button>
-                      
                     </Col>
                   </FormGroup>
                 </Form>

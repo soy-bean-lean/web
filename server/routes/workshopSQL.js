@@ -161,6 +161,8 @@ console.log(subject)
   );
 });
 
+
+//display approved workshop
 Workshop.post("/getWorkshop", (req, res) => {
   console.log("get all workshop line 700");
 
@@ -204,7 +206,6 @@ Workshop.post("/deleteItem", (req, res) => {
 });
 
 //to update show workshop details
-
 Workshop.post("/getWorkshopView", (req, res) => {
   const wid = req.body.id;
   console.log(wid);

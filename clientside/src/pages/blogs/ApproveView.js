@@ -217,14 +217,7 @@ function ApproveView() {
         console.log(error);
       });
   }, []);
-  //   return (
-  //     <Page title="Assign Credit/Deny Request">
-  //        <Link to="/manageworksops">
-  //         <Button color="primary">Back</Button>
-  //       </Link>
-
-  //     </Page>
-  //   );
+  
   const back = () => {
     history.push('/reviewblogs');
   };
@@ -235,7 +228,7 @@ function ApproveView() {
   };
 
   return (
-    <Page title="Review Blog">
+    <Page title="Review Blog here">
       <hr />
       {title}
 

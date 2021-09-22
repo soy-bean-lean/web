@@ -283,4 +283,37 @@ Blog.post("/deleteItem", (req, res) => {
 });
 
 
+//get pending  blogs
+Blog.post("/getPendingBlog", (req, res) => {
+  console.log("get all pending blog");
+
+  connection.query(
+    "SELECT * FROM blog WHERE reviewBy IS NULL ORDER BY `blog`.`blogId` ASC;",
+
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+
+//get approve blog
+Blog.post("/getApproveBlog", (req, res) => {
+  console.log("get all approve blog");
+
+  connection.query(
+    "SELECT * FROM blog WHERE reviewBy IS NOT NULL ORDER BY `blog`.`blogId` ASC;",
+
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 export default Blog;

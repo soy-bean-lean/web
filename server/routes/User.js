@@ -554,10 +554,20 @@ userRouter.post("/updatePassword", async (req, res) => {
     }
   );
 });
+
 userRouter.post("/getProfileData", (req, res) => {
   const memberId = req.body.memberId;
 
   const sqlSelect = "select  * from user where id = " + memberId + ";";
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+userRouter.post("/userupgrade", (req, res) => {
+  const memberId = req.body.memberId;
+
+  const sqlSelect = "select user.* ,userupgrade.date,userupgrade.proof, userupgrade.requestedStatus from user inner join userupgrade on user.id=userupgrade.id where user.id = " + memberId + ";";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);

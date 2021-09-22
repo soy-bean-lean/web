@@ -162,7 +162,7 @@ const ManageWorkshop = props => {
               {'   '}
               <Link
                 to={
-                  '/addCredit/cssl00' +
+                  '/approveworkshopview/cssl00' +
                   sendWorkshop.wId +
                   '/' +
                   sendWorkshop.title
