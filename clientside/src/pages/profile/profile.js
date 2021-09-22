@@ -428,7 +428,7 @@ const Profile = props => {
         setResult('done');
         setTimeout(
           function () {
-            history.push('/profile');
+            toggle();
           },
 
           2000,
