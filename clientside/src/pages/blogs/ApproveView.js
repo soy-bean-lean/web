@@ -217,7 +217,7 @@ function ApproveView() {
         console.log(error);
       });
   }, []);
-  
+
   const back = () => {
     history.push('/reviewblogs');
   };
@@ -230,7 +230,9 @@ function ApproveView() {
   return (
     <Page title="Review Blog here">
       <hr />
-      {title}
+      <b>
+        <h3> {title}</h3>
+      </b>
 
       <hr />
       <Row>
@@ -285,30 +287,29 @@ function ApproveView() {
           <Card>
             <CardBody>
               <h6>{blogData.description}</h6>
-
               <CardBody
                 className="preview"
                 dangerouslySetInnerHTML={createMarkup(blogData.content)}
               ></CardBody>
+              <hr />
+              <FormGroup check row>
+                <center>
+                  <Col sm={{ size: 15 }}>
+                    <Button onClick={back} color="primary">
+                      Back
+                    </Button>{' '}
+                    <Button onClick={submit} color="danger">
+                      Reject
+                    </Button>{' '}
+                    <Button onClick={approve} color="success">
+                      Approve
+                    </Button>
+                  </Col>
+                </center>
+              </FormGroup>{' '}
             </CardBody>
           </Card>
         </Col>
-        <hr />
-        <FormGroup check row>
-          <center>
-            <Col sm={{ size: 15 }}>
-              <Button onClick={back} color="primary">
-                Back
-              </Button>{' '}
-              <Button onClick={submit} color="danger">
-                Reject
-              </Button>{' '}
-              <Button onClick={approve} color="success">
-                Approve
-              </Button>
-            </Col>
-          </center>
-        </FormGroup>{' '}
       </Row>
     </Page>
   );

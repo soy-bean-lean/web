@@ -109,10 +109,10 @@ dashBoardSQL.post("/recent", (req, res) => {
 //Professional dashboard line chart-credits earned this year
 dashBoardSQL.post("/creditsearned", (req, res) => {
   const id = req.body.id;
-  
+  const status="Approved";
   connection.query(
-    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE()) group by month ",
-    [id],
+    "select extract(MONTH from recordDate) as month,sum(credit) as credits from cpdrecords where memberId = ? AND status=? AND extract(YEAR from recordDate)=YEAR(CURDATE()) group by month ",
+    [id,status],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -126,9 +126,11 @@ dashBoardSQL.post("/creditsearned", (req, res) => {
 //Professional dashboard donut chart-activity type this year
 dashBoardSQL.post("/activityType", (req, res) => {
   const id = req.body.id;
+  const status="Approved";
+
   connection.query(
-    "select recordType,sum(credit) as count from cpdrecords where memberId = ? group by recordType;",
-    [id],
+    "select recordType,sum(credit) as count from cpdrecords where memberId = ? AND status=? group by recordType;",
+    [id,status],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -142,9 +144,11 @@ dashBoardSQL.post("/activityType", (req, res) => {
 //Professional dashboard pie chart-credits earned according to type this year
 dashBoardSQL.post("/activityTypeCredits", (req, res) => {
   const id = req.body.id;
+  const status="Approved";
+  
   connection.query(
-    "select type,sum(credit) as credits from cpdrecords where memberId = ? group by type;",
-    [id],
+    "select type,sum(credit) as credits from cpdrecords where memberId = ? AND status=? group by type;",
+    [id,status],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -158,9 +162,10 @@ dashBoardSQL.post("/activityTypeCredits", (req, res) => {
 //Professional dashboard cpd progress percentage
 dashBoardSQL.post("/progressPercentage", (req, res) => {
   const id = req.body.id;
+  const status = "Approved";
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
-    [id],
+    "select sum(credit) as credits from cpdrecords where memberId = ? AND status=? AND extract(YEAR from recordDate)=YEAR(CURDATE()) ;",
+    [id,status],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -196,9 +201,10 @@ dashBoardSQL.post("/upcoming", (req, res) => {
 //credits earned 
 dashBoardSQL.post("/earned", (req, res) => {
   const id = req.body.id;
+  const status = "Approved";
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
-    [id],
+    "select sum(credit) as credits from cpdrecords where memberId = ? AND status=? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+    [id,status],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -212,9 +218,10 @@ dashBoardSQL.post("/earned", (req, res) => {
 //credits remaining 
 dashBoardSQL.post("/remaining", (req, res) => {
   const id = req.body.id;
+  const status = "Approved";  
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
-    [id],
+    "select sum(credit) as credits from cpdrecords where memberId = ? AND status=? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+    [id,status],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
@@ -230,9 +237,11 @@ dashBoardSQL.post("/remaining", (req, res) => {
 //credits remaining percentage
 dashBoardSQL.post("/remainingPercentage", (req, res) => {
   const id = req.body.id;
+  const status = "Approved";  
+
   connection.query(
-    "select sum(credit) as credits from cpdrecords where memberId = ? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
-    [id],
+    "select sum(credit) as credits from cpdrecords where memberId = ? AND status=? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+    [id,status],
     (error, result, feilds) => {
       if (error) {
         res.send(error);
