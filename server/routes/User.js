@@ -146,8 +146,8 @@ userRouter.post("/", async (req, res) => {
                       res.json({ err });
                     } else {
                       connection.query(
-                        `INSERT INTO logininfo (un, pw) VALUES (?,?)`,
-                        [email, hash],
+                        `INSERT INTO logininfo (id,un, pw) VALUES (?,?,?)`,
+                        [row.insertId,email, hash],
                         (err, result) => {
                           if (err) {
                             res.json({ error });
@@ -223,7 +223,7 @@ userRouter.post("/login", async (req, res) => {
             res.json({ errorPass: "Incorrect password" });
           } else {
             const id = result[0].id;
-
+            console.log(id);
             connection.query(
               //temporary sql query for testing
               "SELECT * FROM member WHERE id=?",
@@ -255,7 +255,8 @@ userRouter.post("/login", async (req, res) => {
                     email: username,
                     memberId: row[0].memberId,
                   });
-                } else {
+                } 
+                else {
                   console.log("none");
                   const accessToken = sign(
                     {

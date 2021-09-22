@@ -138,7 +138,6 @@ const Payment = ({ orderId, name }) => {
   // Called when user completed the payment. It can be a successful payment or failure
   window.payhere.onCompleted = function onCompleted(id) {
     setPaid(1);
-    window.location.reload(false);
     history.push('/');    
     //Note: validate the payment and show success or failure page to the customer
   };

@@ -249,13 +249,13 @@ const Registration = props => {
                 accept="file/pdf"
                 onChange={e => setFileName(e.target.files[0])}
               />
-            {message()}
             </ModalBody>
             <ModalFooter>
               <Button color="success" onClick={addDataFile}>
                 Upload
               </Button>{' '}
             </ModalFooter>
+            {message()}
           </Modal>
 
           <center>

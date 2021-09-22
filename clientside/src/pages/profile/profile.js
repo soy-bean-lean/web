@@ -128,7 +128,8 @@ const Profile = () => {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-          setPaymentStatus(response.data[0].paymentID);        
+          setPaymentStatus(response.data[0].paymentID);  
+          console.log(response.data);      
         }
       })
       .catch(error => {
@@ -173,7 +174,8 @@ const Profile = () => {
   //Called when user completed the payment. It can be a successful payment or failure
   window.payhere.onCompleted = function onCompleted() {
     setPaid(1);
-    history.push('./profile');    
+    window.location.reload(false);
+       
     //Note: validate the payment and show success or failure page to the customer
   };
 
@@ -600,7 +602,7 @@ const Profile = () => {
           <center>{msgPasswords()}</center>          
           <>
             <div>
-              
+           {   console.log(paymentStatus)}
               {!paymentStatus == 0 ? (
                
                 <Card>
