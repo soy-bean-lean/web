@@ -108,7 +108,7 @@ const BlogView = () => {
         setResult('err');
         setTimeout(
           function () {
-            reload();
+           // reload();
           },
 
           2000,
