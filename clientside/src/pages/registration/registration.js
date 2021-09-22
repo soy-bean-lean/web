@@ -79,8 +79,6 @@ const Registration = props => {
     email: '',
     password: '',
     confirmPassword: '',
-    file: '',
-    profilePic: '',
   };
 
   const phoneRegExp =
@@ -149,13 +147,7 @@ const Registration = props => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Password must match')
       .required('Confirm password is required'),
-    // file: Yup.mixed()
-    //   .required('A file is required')
-    //   .test(
-    //     'fileFormat',
-    //     'Unsupported Format',
-    //     value => value && SUPPORTED_FORMATS.includes(value.type),
-    //   ),
+   
   });
 
   const [error, setError] = useState('');
@@ -702,45 +694,6 @@ const Registration = props => {
                           />
                         </Col>
                       </FormGroup>
-
-                      <FormGroup row className="mb-0 ml-2">
-                        <Label
-                          for="exampleEmail"
-                          sm={9}
-                          className="text-md-left mb-1"
-                        >
-                          <b>
-                            Attach necessary documents needed to prove you an
-                            employee <span className="text-danger">*</span>
-                          </b>
-                          <div className="text-danger">
-                            only pdf, zip, rar file formats accepted
-                          </div>
-                        </Label>
-                      </FormGroup>
-                      <FormGroup row className="mb-5 ml-2">
-                        <Col sm={5} className="text-box">
-                          <Input
-                            type="file"
-                            className="input"
-                            id="file"
-                            name="file"
-                            accept="application/*"
-                            file
-                            
-                            className="bg-light"
-                          />
-                          <ErrorMessage
-                            name="file"
-                            render={msg => (
-                              <div className="text-md-left text-danger">
-                                <b>{msg}</b> *
-                              </div>
-                            )}
-                          />
-                        </Col>
-                      </FormGroup>
-
                       <FormGroup check row>
                         <Col sm={{ size: 15 }}>
                           <Button color="success" type="submit">
