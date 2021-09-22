@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
+import { FaCrown } from 'react-icons/fa';
 import Typography from 'components/Typography';
 import {
   Button,
@@ -18,10 +19,14 @@ import {
   Alert,
   CardHeader,
   Row,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from 'reactstrap';
 import { AuthContext } from '../../helpers/AuthContext';
 
-const Profile = () => {
+const Profile = props => {
   const { authState, setAuthState } = useContext(AuthContext);
   const [ProfileData, setProfileData] = useState();
   const memberId = authState.id;
@@ -34,6 +39,8 @@ const Profile = () => {
   const [dob, setDOB] = useState('');
   const [email, setEmail] = useState('');
   const [proPic, setProfileImage] = useState('');
+  const [image, setFileName] = useState('');
+  const [requestRole, setrequestRole] = useState('');
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -42,6 +49,11 @@ const Profile = () => {
   const [resultBasic, setResultBasic] = useState();
   const [paymentStatus, setPaymentStatus] = useState(0);
   const [paymentPrice, setpaymentPrice] = useState(0);
+  const { buttonLabel, className } = props;
+  const [modal, setModal] = useState(false);
+  const [eligibility, setEligibility] = useState(0);
+
+  const toggle = () => setModal(!modal);
 
   const [imgFile, setImgFile] = useState();
   const setEditabledJobApp = () => {
@@ -93,15 +105,15 @@ const Profile = () => {
   };
   let history = useHistory();
 
-  const [paid,setPaid] = useState(0);
+  const [paid, setPaid] = useState(0);
   useEffect(() => {
     const data = {
-        id: authState.memberId,
-        amount: paymentPrice,
-        role: authState.role,
-        email:authState.email,
-        fName:authState.fName,
-        paid: paid,
+      id: authState.memberId,
+      amount: paymentPrice,
+      role: authState.role,
+      email: authState.email,
+      fName: authState.fName,
+      paid: paid,
     };
     axios
       .post('http://localhost:3001/auth/memberpayment', data)
@@ -109,13 +121,35 @@ const Profile = () => {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-            console.log("succesful");
+          console.log('succesful');
         }
       })
       .catch(error => {
         //alert(error);
       });
-    }, [paid]);
+  }, [paid]);
+
+  //credits
+  useEffect(() => {
+    const data = {
+      id: authState.memberId,      
+    };
+    axios
+      .post('http://localhost:3001/auth/charteredReq', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+          const credits = response.data;
+          if(credits>500){
+            setEligibility(1);
+          }
+        }
+      })
+      .catch(error => {
+        //alert(error);
+      });
+  }, []);
 
   //paid or not
   useEffect(() => {
@@ -128,8 +162,7 @@ const Profile = () => {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-          setPaymentStatus(response.data[0].paymentID);  
-          console.log(response.data);      
+          setPaymentStatus(response.data[0].paymentID);
         }
       })
       .catch(error => {
@@ -139,7 +172,7 @@ const Profile = () => {
           setpaymentPrice(1000);
         } else if (authState.role == 'professional') {
           setpaymentPrice(1500);
-          console.log("anushka");
+          console.log('anushka');
         } else if (authState.role == 'chartered') {
           setpaymentPrice(2000);
         }
@@ -175,7 +208,7 @@ const Profile = () => {
   window.payhere.onCompleted = function onCompleted() {
     setPaid(1);
     window.location.reload(false);
-       
+
     //Note: validate the payment and show success or failure page to the customer
   };
 
@@ -191,7 +224,6 @@ const Profile = () => {
     // Note: show an error page
     console.log('Error:' + error);
   };
-  
 
   function pay() {
     window.payhere.startPayment(payhere);
@@ -364,13 +396,127 @@ const Profile = () => {
       });
   }, []);
 
-  
+  const addDataFile = () => {
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('id', authState.id);
+    formData.append('memberID', authState.memberId);
+    formData.append('role', authState.role);
+    formData.append('fname', authState.fname);
+    formData.append('lname', authState.lname);
+    formData.append('email', authState.email);
+    if(authState.role == "professional" && eligibility==1){
+      const role = "chartered"
+      formData.append('requestRole', role);
+    }
+    else{
+      formData.append('requestRole', requestRole);
+    }
+
+    // alert(image);
+    fetch('http://localhost:3001/auth/upgrade', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'multipart/form-data',
+      },
+      credentials: 'include',
+    })
+    .then(res => res.json())
+      .then(res => {
+        console.log("anushka");
+        setResult('done');
+        setTimeout(
+          function () {
+            toggle();
+          },
+
+          2000,
+        );
+      })
+      .catch(error => {
+        setTimeout(
+          function () {
+            history.push('/jobadvertisements');
+          },
+
+          2000,
+        );
+      });
+  };
+  function message() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Succesfully Requested</Alert>
+        </>
+      );
+    }
+  }
+
   return (
     <Page title="Profile">
       <Row>
         <Col lg={7} md={8} sm={8} xs={12}>
           <br></br>
           <center>{msg()}</center>
+          <Modal isOpen={modal} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>
+              <b>Upgrade Membership</b>
+            </ModalHeader>
+            {message()}
+            <ModalBody>
+              Dear {authState.fName} {authState.lname}, we kindly request you to
+              submit the necessary documents needed to upgrade your membership
+              status. Such as offer letters, company letters. It will be
+              reviewed by CSSL council officers and let you know about your
+              status.
+              <br />
+              <br />
+              <Input
+                type="file"
+                className="input"
+                id="course-img"
+                name="course-img"
+                accept="file/pdf"
+                onChange={e => setFileName(e.target.files[0])}
+              />
+              <p>
+                <small className="text-danger">
+                  Only attach zip, rar files
+                </small>
+              </p>
+              {authState.role != "professional" && eligibility==1 && (
+                <>
+              <p>
+                <b>Select the requesting position</b>
+              </p>
+              <Input
+                type="select"
+                name={requestRole}
+                onChange={e => setrequestRole(e.target.value)}
+                className="bg-light"
+              >
+                <option value="">Requesting Role</option>
+                <option value="associate">Associate</option>
+                <option value="professional">Professional</option>
+              </Input>
+              <br />
+              </>
+              )}
+            </ModalBody>
+            <ModalFooter>
+              <Button color="warning" onClick={addDataFile}>
+                Request
+              </Button>{' '}
+            </ModalFooter>
+          </Modal>
           <Card>
             <CardHeader>Profile Information</CardHeader>
 
@@ -596,20 +742,33 @@ const Profile = () => {
                 </h4>
                 <p>{email}</p>
               </center>
+              {authState.role != "chartered"&&(
+              <center>
+              {authState.role == "professional" && eligibility==1 ? (
+                <Button color="warning" className="text-dark" onClick={toggle}>
+                  <b> Request to be a chartered member </b> <FaCrown className="ml-1 mb-1" />
+                </Button>
+                ) : (
+                <Button color="warning" className="text-dark" onClick={toggle}>
+                  <b> Upgrade Membership </b> <FaCrown className="ml-1 mb-1" />
+                </Button>
+                )}
+              </center>
+              )}
             </CardBody>
           </Card>
           <br></br>
-          <center>{msgPasswords()}</center>          
+          <center>{msgPasswords()}</center>
           <>
             <div>
-           {   console.log(paymentStatus)}
               {!paymentStatus == 0 ? (
-               
                 <Card>
                   <center>
                     <br></br>
                     <Typography className="text-success">
-                      <h5><b>Membership Payment Successful</b></h5>
+                      <h5>
+                        <b>Membership Payment Successful</b>
+                      </h5>
                       <hr></hr>
                     </Typography>
                     <img
@@ -627,7 +786,9 @@ const Profile = () => {
                     <center>
                       <br></br>
                       <Typography className="text-danger">
-                        <h5><b>Membership Payment</b></h5>
+                        <h5>
+                          <b>Membership Payment</b>
+                        </h5>
                         <hr></hr>
                       </Typography>
                       <img
@@ -641,7 +802,13 @@ const Profile = () => {
                     <FormGroup check row>
                       <center>
                         <Col sm={{ size: 15 }}>
-                          <Button color="warning" onClick={pay} className="text-dark">Pay Now</Button>
+                          <Button
+                            color="warning"
+                            onClick={pay}
+                            className="text-dark"
+                          >
+                            Pay Now
+                          </Button>
                         </Col>
                       </center>
                     </FormGroup>{' '}

@@ -614,7 +614,7 @@ userRouter.post("/payment", (req, res) => {
                 res.json({ error });
               } else {
                 const rows = result.length + 1;
-                const memberID = "CSSL00" + rows;
+                const memberID = "cssl00" + userID;
                 connection.query(
                   `INSERT INTO member (id, memberId, memberType) VALUES (?,?,?)`,
                   [userID, memberID, role],
@@ -769,16 +769,17 @@ userRouter
   .post(uploadReg.single("image"), (req, res, err) => {
     if (
       !req.file.originalname.match(
-        /\.(jpg|zip|war|WAR|ZIP|JPG|jpeg|JPEG|png|PNG)$/
+        /\.(jpg|zip|rar|RAR|ZIP|JPG|jpeg|JPEG|png|PNG)$/
       )
     ) {
+     
       res.send({ msg: "Not an Image File." });
     } else {
       const sss = req.file.filename;
       //   const id = req.body.memberId;
       const sqlSelect =
         "SELECT user.id FROM `user` ORDER BY `user`.`id` DESC limit 1; ";
-
+      
       connection.query(sqlSelect, (err, result) => {
         if (err) {
           console.log(err);
@@ -804,6 +805,57 @@ userRouter
         }
       });
     }
+  });
+
+  userRouter
+  .route("/upgrade")
+  .post(uploadReg.single("image"), (req, res, err) => {
+    if (
+      !req.file.originalname.match(
+        /\.(jpg|zip|rar|RAR|ZIP|JPG|jpeg|JPEG|png|PNG)$/
+      )
+    ) {
+      res.send({ msg: "Not an Image File." });
+    } else {
+      const id = req.body.id;
+      const memberID = req.body.memberID;
+      const role = req.body.role;
+      const fname = req.body.fname;
+      const lname = req.body.lname;
+      const email = req.body.email;
+      const sss = req.file.filename;
+      const requestRole = req.body.requestRole;
+      
+      connection.query(
+        `INSERT INTO userupgrade (id, memberId, firstName, lastName, email, currentStatus,requestedStatus,proof) VALUES (?,?,?,?,?,?,?,?)`,
+        [id, memberID, fname, lname, email,role, requestRole, sss],
+        (err, result) => {
+          if (err) {
+            console.log("error");
+          } else {
+            console.log("successful");
+          }
+        }
+      );
+    }
+  });
+
+  //request to be a chartered
+  userRouter.post("/charteredReq", (req, res) => {
+    //const memberID = req.body.id;
+    const memberID = req.body.id;
+    const status="Approved";
+    connection.query(
+      "select sum(credit) as credits from cpdrecords where memberId = ? AND status=? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+      [memberID,status],
+      (error, result, feilds) => {
+        if (error) {
+          res.send(error);
+        } else {
+          res.json(result[0].credits);
+        }
+      }
+    );
   });
 
 export default userRouter;
