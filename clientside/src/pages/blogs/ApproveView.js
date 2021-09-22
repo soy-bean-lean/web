@@ -235,7 +235,7 @@ function ApproveView() {
   };
 
   return (
-    <Page title="Review Blog">
+    <Page title="Review Blog here">
       <hr />
       {title}
 
