@@ -29,9 +29,13 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
     const about = req.body.about;
 
     const image = req.file.filename;
-    console.log("***************************************************************************");
+    console.log(
+      "***************************************************************************"
+    );
     console.log(memberID);
-    console.log("***************************************************************************");
+    console.log(
+      "***************************************************************************"
+    );
 
     connection.query(
       `INSERT INTO blog (memberId,title,description,content,publishedDate,image) VALUES (?,?,?,?,?,?)`,
@@ -40,12 +44,15 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
         if (err) {
           console.log(err);
         } else {
-          
-         
-          
           const recentUpdates =
-            "insert into recentactivities  ( memberId,title,description) values ('" +   memberID +    "','Add  a Blog','New Blog about "+title+" for   on "+date+"')";
-            console.log(recentUpdates);
+            "insert into recentactivities  ( memberId,title,description) values ('" +
+            memberID +
+            "','Add  a Blog','New Blog about " +
+            title +
+            " for   on " +
+            date +
+            "')";
+          console.log(recentUpdates);
           connection.query(recentUpdates, (err, result) => {
             if (err) {
               console.log(err);
@@ -53,7 +60,6 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
               res.json("success");
             }
           });
-        
         }
       }
     );
@@ -89,11 +95,11 @@ Blog.post("/getAllBlogs", (req, res) => {
 });
 
 Blog.post("/getBlogs", (req, res) => {
-  
+  const sqlSelect = "select * from blog ORDER BY `blog`.`blogId`  DESC ";
 
-  const sqlSelect ="select * from blog ORDER BY `blog`.`blogId`  DESC ";
-
-  console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+  console.log(
+    "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+  );
   console.log(sqlSelect);
   //const sqlSelect = "SELECT blogId, title, image, publishedDate FROM blog";
   //"SELECT DISTINCT user.firstName,user.lastName FROM ((user INNER JOIN member ON user.id=member.id ) INNER JOIN blog ON member.memberId=blog.memberId )"
@@ -242,13 +248,10 @@ Blog.post("/getBlogView", (req, res) => {
   );
 });
 
-
 //approve blog  -council
 Blog.route("/approve").post((req, res, err) => {
   const bid = req.body.bid;
   const mid = req.body.reviewBy;
-
- // const credit = req.body.credit;
 
   console.log(bid);
   console.log(mid);
@@ -256,7 +259,7 @@ Blog.route("/approve").post((req, res, err) => {
 
   connection.query(
     "UPDATE blog SET  reviewBy = ?  WHERE blogId = ?;",
-    [ mid, bid],
+    [mid, bid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
@@ -271,17 +274,20 @@ Blog.route("/approve").post((req, res, err) => {
 
 Blog.post("/deleteItem", (req, res) => {
   const tableName = req.body.tableName;
-  const bid = req.body.bid;
+  const bid = req.body.qid;
   const coloum = req.body.coloum;
   console.log(bid);
   const sqlSelect =
     "delete from " + tableName + " where " + coloum + "  =" + bid;
 
+  console.log("______________________________________________________________");
+  console.log(sqlSelect);
+  console.log("______________________________________________________________");
+
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
 });
-
 
 //get pending  blogs
 Blog.post("/getPendingBlog", (req, res) => {
@@ -298,7 +304,6 @@ Blog.post("/getPendingBlog", (req, res) => {
     }
   );
 });
-
 
 //get approve blog
 Blog.post("/getApproveBlog", (req, res) => {

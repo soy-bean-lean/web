@@ -175,7 +175,7 @@ history.push('/workshop')
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Successfull</Alert>
+          <Alert color="success">Attempt Successfull</Alert>
         </>
       );
     }

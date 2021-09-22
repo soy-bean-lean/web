@@ -688,7 +688,7 @@ function App(props) {
                       component={EditView}
                     />
                     {/*Workshop Related Routes*/}
-                    {/* <Route exact path="/csslworkshops" component={Login} />{' '} */}
+
                     <Route
                       exact
                       path="/csslworkshops"
@@ -743,25 +743,26 @@ function App(props) {
               {/*Chartered Role Related Routes*/}
               {authState.role == 'chartered' && (
                 <MainLayoutChartered breakpoint={props.breakpoint}>
-                  <React.Suspense fallback={<PageSpinner />}>
-                    {/*Dashboard Related Route*/}
+                <React.Suspense fallback={<PageSpinner />}>
+                    {/*Dashboard Route*/}
                     <Route
                       exact
                       path="/dashboard"
                       component={DashboardPageCha}
                     />
+                    {/* <Route  path="/" component={DashboardPagePro} /> */}
                     {/*Course Related Routes*/}
                     <Route exact path="/lecCourse" component={lecCourseView} />
                     <Route exact path="/csslcourses" component={csslCourses} />
                     <Route
                       exact
-                      path="/csslcourses/courseview/cssl00:id/:title"
-                      component={courseView}
+                      path="/csslcourse/addnewcourse"
+                      component={AddCourse}
                     />
                     <Route
                       exact
-                      path="/csslcourse/addnewcourse"
-                      component={AddCourse}
+                      path="/courseView/cssl00:id/:title"
+                      component={lecturerCourseView}
                     />
                     <Route
                       exact
@@ -812,8 +813,17 @@ function App(props) {
                       path="/editview/cssl00:id/:title"
                       component={EditView}
                     />
+                    <Route
+                      exact
+                      path="/csslcourses/courseview/cssl00:id/:title"
+                      component={courseView}
+                    />
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                    <Route
+                      exact
+                      path="/csslworkshops"
+                      component={CSSLWorkshops}
+                    />{' '}
                     {/* need to change component */}
                     {/*Forum Related Routes*/}
                     <Route exact path="/forum" component={Login} />{' '}
@@ -844,6 +854,7 @@ function App(props) {
                       path="/buttongroups"
                       component={ButtonGroupPagePro}
                     />
+                    <Route path="/profile" component={Profile} />
                     <Route path="/login-modal" component={AuthModalPagePro} />
                     <Route path="/buttons" component={ButtonPagePro} />
                     <Route path="/cards" component={CardPagePro} />
@@ -902,7 +913,12 @@ function App(props) {
                       component={EditView}
                     />
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                   
+                    <Route
+                      exact
+                      path="/csslworkshops"
+                      component={CSSLWorkshops}
+                    />
                     {/* need to change component */}
                     {/*Forum Related Routes*/}
                     <Route exact path="/forum" component={Login} />{' '}

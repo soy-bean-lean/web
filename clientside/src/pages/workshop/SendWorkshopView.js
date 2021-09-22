@@ -50,7 +50,7 @@ function SendWorkshopView() {
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Attempt Successfull</Alert>
         </>
       );
     }

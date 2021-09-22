@@ -57,6 +57,10 @@ const CourseView = () => {
 
   const [status, setStatus] = useState('');
 
+  const [comment, setComments] = useState([]);
+  const [numberofComments, setCommentsCount] = useState();
+  const [newComment, setAddComment] = useState('');
+
   let history = useHistory();
 
   useEffect(() => {
@@ -245,6 +249,73 @@ const CourseView = () => {
     };
   };
 
+  var today = new Date(),
+    Currentdate =
+      today.getFullYear() +
+      '-' +
+      (today.getMonth() + 1) +
+      '-' +
+      today.getDate();
+
+  const addComment = () => {
+    const data = {
+      bId: id,
+      memberId: authState.memberId,
+      comment: newComment,
+      date: Currentdate,
+    };
+    axios.post('http://localhost:3001/blog/addComment', data).then(response => {
+      if (response.data.error) {
+        setTimeout(
+          function () {
+            reload();
+          },
+
+          2000,
+        );
+      } else {
+      }
+    });
+  };
+
+  const reload = () => {
+    const formData = {
+      bId: id,
+    };
+
+    axios
+      .post('http://localhost:3001/blog/getBlogComments', formData)
+      .then(res => {
+        setComments(res.data);
+        setCommentsCount(res.data.length);
+      })
+      .catch(error => {
+        // setResult('err');
+        setTimeout(
+          function () {
+            reload();
+          },
+
+          2000,
+        );
+      });
+  };
+
+  const comments =
+    comment &&
+    comment.map(data => (
+      <>
+        <Badge color="warning" pill className="mr-3">
+          {data.title}. {data.firstName} {data.lastName}
+        </Badge>
+        <br />
+        <Badge color="primary" className="mr-3">
+          {data.date}
+        </Badge>
+        <CardText className="comments">{data.description}</CardText>
+      </>
+    ));
+
   const content =
     contentData &&
     contentData.map((li, i) => {
@@ -399,7 +470,7 @@ const CourseView = () => {
               </Col>
             </Col>
             <Col sm="10" md={{ size: 7, offset: 3 }}>
-              {/* {comments} */}
+              {comments}
             </Col>
           </Card>
         </Col>
