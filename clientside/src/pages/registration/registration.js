@@ -163,7 +163,6 @@ const Registration = props => {
 
 
   const onSubmit = data => {
-    console.log('anuska');
     axios.post('http://localhost:3001/auth', data).then(response => {
       if (response.data.error) {
         setError(response.data.error);

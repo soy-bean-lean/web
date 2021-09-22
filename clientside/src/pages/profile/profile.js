@@ -93,6 +93,8 @@ const Profile = () => {
   let history = useHistory();
 
   useEffect(() => {
+    console.log(authState.memberId);
+    console.log(authState.id);
     const data = {
       id: authState.memberId,
     };

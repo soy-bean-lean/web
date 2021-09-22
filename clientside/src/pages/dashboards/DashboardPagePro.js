@@ -480,7 +480,7 @@ function DashboardPage() {
                     </small>
                   </CardHeader>
                   <CardBody>
-                    {noDataActivityType == '' ? (
+                    {noDataActivityType == 'No data available' ? (
                       <div className="mt-1 text-muted">
                         <center>No Data Available</center>
                       </div>
@@ -501,7 +501,7 @@ function DashboardPage() {
                     </small>
                   </CardHeader>
                   <CardBody>
-                    {noDataType == '' ? (
+                    {noDataType == 'No data available' ? (
                       <div className="mt-1 text-muted">
                         <center>No Data Available</center>
                       </div>
@@ -551,7 +551,7 @@ function DashboardPage() {
                 <small className="text-muted text-capitalize">This year</small>
               </CardHeader>
               <CardBody>
-                {noDataLine == '' ? (
+                {noDataLine == 'No data available' ? (
                   <div className="mt-1 text-muted">
                     <center>No Data Available</center>
                   </div>
