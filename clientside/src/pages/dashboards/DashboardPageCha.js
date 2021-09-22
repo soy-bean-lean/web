@@ -393,7 +393,7 @@ function DashboardPage() {
     <>
       <Page className="DashboardPage" title="Dashboard">
         <Badge color="warning" pill className="mr-1">
-          Professional Member
+          Chartered Member
         </Badge>
 
         <hr />
