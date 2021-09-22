@@ -43,7 +43,6 @@ const CPDApproval = props => {
           alert(response.data.error);
         } else {
           setAll(response.data);
-          console.log(all);
         }
       })
       .catch(error => {
