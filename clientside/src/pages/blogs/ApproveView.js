@@ -2,17 +2,14 @@ import { Link } from 'react-router-dom';
 import Page from 'components/Page';
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import { AuthContext } from '../../helpers/AuthContext';
-
+import DOMPurify from 'dompurify';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import '../../main.css';
 import { useParams } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
-
-import QRCode from 'react-qr-code';
 
 import {
   Badge,
@@ -34,20 +31,13 @@ import {
 function ApproveView() {
   const { id } = useParams();
   const add = '';
-  const [image, setImage] = useState('');
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
-  const [subject, setSubject] = useState('');
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  const [duration, setDuration] = useState('');
-  const [credit, setCredit] = useState('');
-  const [wId, setWid] = useState(0);
-
-  const { authState, setAuthState } = useContext(AuthContext);
+  const [bId, setWid] = useState(0);
+  const { title } = useParams();
   const [result, setResult] = useState();
-
-  //const [image, setBlogImage] = useState();
+  const { authState, setAuthState } = useContext(AuthContext);
+  const [blogImg, setBlogImg] = useState('');
+  const [profileImg, setProfileImg] = useState('');
+  const [blogData, setBlogData] = useState([]);
 
   // var today = new Date(),
   //   Currentdate =
@@ -76,70 +66,71 @@ function ApproveView() {
 
   const approve = () => {
     const data = {
-      wid: wId,
-      verifiedBy: authState.memberId,
-     
+      bid: id,
+      reviewBy: authState.memberId,
     };
     console.log(id);
-    axios
-      .post('http://localhost:3001/workshop/addCredit', data)
-      .then(response => {
-        if (response.data.error) {
-          setResult('err');
-          setTimeout(
-            function () {
-              history.push('/addCredit/cssl00' + data.wid + '/' + title);
-            },
+    axios.post('http://localhost:3001/blog/approve', data).then(response => {
+      if (response.data.error) {
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push(
+              '/approveworkshopview/cssl00' + data.bid + '/' + title,
+            );
+          },
 
-            2000,
-          );
-        } else {
-          setResult('done');
+          2000,
+        );
+      } else {
+        setResult('done');
 
-          setTimeout(
-            function () {
-              history.push('/sendEmail/cssl00' + data.wid + '/' + title);
-              //hri giyoth yana thena
-            },
+        setTimeout(
+          function () {
+            history.push('/reviewblogs');
+            //hri giyoth yana thena
+          },
 
-            2000,
-          );
-        }
-      });
+          2000,
+        );
+      }
+    });
   };
 
   const deleteItem = () => {
+    alert(id);
+    alert(bId);
     const data = {
-      wid: id,
-      tableName: 'csslworkshop',
-      coloum: 'wId',
+      bid: id,
+      tableName: 'blog',
+      coloum: 'blogId',
     };
-    console.log(id);
-    axios
-      .post('http://localhost:3001/workshop/deleteItem', data)
-      .then(response => {
-        if (response.data.error) {
-          setResult('err');
-          setTimeout(
-            function () {
-              history.push('/manageworksops');
-            },
+    //console.log(id);
+    axios.post('http://localhost:3001/blog/deleteItem', data).then(response => {
+      if (response.data.error) {
+        setResult('err');
+        setTimeout(
+          function () {
+            history.push(
+              '/approveworkshopview/cssl00' + data.bid + '/' + title,
+            );
+          },
 
-            2000,
-          );
-        } else {
-          setResult('done');
+          2000,
+        );
+      } else {
+        setResult('done');
 
-          setTimeout(
-            function () {
-              history.push('/manageworksops');
-              //hri giyoth yana thena
-            },
+        setTimeout(
+          function () {
+            history.push('/reviewblogs');
+            //hri giyoth yana thena
+          },
 
-            2000,
-          );
-        }
-      });
+          2000,
+        );
+      }
+    });
   };
 
   const submit = () => {
@@ -209,33 +200,23 @@ function ApproveView() {
   //   };
 
   useEffect(() => {
-    const sendData = {
-      id: id,
+    const formData = {
+      bId: id,
     };
     axios
-      .post('http://localhost:3001/workshop/getWorkshopView', sendData)
-
-      .then(response => {
-        if (response.data.error) {
-          //    alert(response.data.error);
-        } else {
-          console.log(response.data[0]);
-          setTitle(response.data[0].title);
-          setDesc(response.data[0].description);
-          setSubject(response.data[0].subject);
-          setFromDate(response.data[0].fromDate);
-          setToDate(response.data[0].toDate);
-          setDuration(response.data[0].duration);
-          setCredit(response.data[0].credit);
-          setImage(response.data[0].image);
-          setWid(response.data[0].wId);
-        }
+      .post('http://localhost:3001/blog/getBlog', formData)
+      .then(res => {
+        setBlogData(res.data[0]);
+        setBlogImg('http://localhost:3001/uploads/blog/' + res.data[0].image);
+        setProfileImg(
+          'http://localhost:3001/uploads/profileImages/' +
+            res.data[0].profileImage,
+        );
       })
       .catch(error => {
-        //   alert(error);
+        console.log(error);
       });
   }, []);
-
   //   return (
   //     <Page title="Assign Credit/Deny Request">
   //        <Link to="/manageworksops">
@@ -245,68 +226,96 @@ function ApproveView() {
   //     </Page>
   //   );
   const back = () => {
-    history.push('/manageworksops');
+    history.push('/reviewblogs');
+  };
+  const createMarkup = html => {
+    return {
+      __html: DOMPurify.sanitize(html),
+    };
   };
 
   return (
-    <Page title="Review Blog ">
-      <hr></hr>
+    <Page title="Review Blog">
+      <hr />
+      {title}
 
+      <hr />
       <Row>
-        <Col sm="5" md={{ size: 8, offset: 2 }}>
-          <br></br>
-          <center>
-            <Card className="profileInfo">
-              <CardBody>
-                <center>
-                  <h4>{title}</h4>
-                  <hr />
-                  {/* <br /> */}
-                  <img
-                    src={'http://localhost:3001/uploads/workshop/' + image}
-                    height="60%"
-                    width="60%"
-                    className="workshopImg"
-                  />
-                  <br />
-                 
-                 <hr/>
-                  <br />
-                  <p>{desc}</p>
-                  <p>{subject}</p>
-                  <p> {'From' + '  ' + fromDate + '  To ' + toDate}</p>
-                  <p>{duration + '  hours per Day'}</p>
-                </center>
-                <FormGroup row>
-                  <Col sm="10" md={{ size: 4, offset: 4 }}>
-                    <Input
-                      type="number"
-                      name="title"
-                      placeholder="Assign  Credit"
-                      onChange={e => setCredit(e.target.value)}
-                    />
-                  </Col>
-                </FormGroup>
-                <hr />
-                <FormGroup check row>
-                  <center>
-                    <Col sm={{ size: 15 }}>
-                      <Button onClick={back} color="primary">
-                        Back
-                      </Button>{' '}
-                      <Button onClick={submit} color="danger">
-                        Reject
-                      </Button>{' '}
-                      <Button onClick={approve} color="success">
-                        Approve
-                      </Button>
-                    </Col>
-                  </center>
-                </FormGroup>{' '}
-              </CardBody>
-            </Card>
-          </center>
+        <Col sm="10" md={{ size: 8, offset: 0 }}>
+          <Card>
+            <center>
+              {blogImg && (
+                <img
+                  src={blogImg}
+                  width="100%"
+                  height="400px"
+                  className="course-img"
+                ></img>
+              )}
+            </center>
+          </Card>
         </Col>
+        <Col sm="10" md={{ size: 4, offset: 0 }}>
+          <Card>
+            <CardBody>
+              <center>
+                <img
+                  src={profileImg}
+                  width="60px"
+                  height="60px"
+                  className="profileImg"
+                ></img>
+                <br />
+                <Badge color="warning" pill className="mr-3">
+                  {blogData.title}. {blogData.firstName} {blogData.lastName}
+                </Badge>
+                <br />
+                <Badge color="primary" pill className="mr-3">
+                  {blogData.email}
+                </Badge>
+                <hr />
+                {'  '}
+                <Badge color="success" pill className="mr-3">
+                  10 min Read
+                </Badge>
+
+                <br />
+                <Badge color="success" pill className="mr-3">
+                  Published on {blogData.publishedDate}
+                </Badge>
+              </center>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="10" md={{ size: 12, offset: 0 }}>
+          <br></br>
+          <Card>
+            <CardBody>
+              <h6>{blogData.description}</h6>
+
+              <CardBody
+                className="preview"
+                dangerouslySetInnerHTML={createMarkup(blogData.content)}
+              ></CardBody>
+            </CardBody>
+          </Card>
+        </Col>
+        <hr />
+        <FormGroup check row>
+          <center>
+            <Col sm={{ size: 15 }}>
+              <Button onClick={back} color="primary">
+                Back
+              </Button>{' '}
+              <Button onClick={submit} color="danger">
+                Reject
+              </Button>{' '}
+              <Button onClick={approve} color="success">
+                Approve
+              </Button>
+            </Col>
+          </center>
+        </FormGroup>{' '}
       </Row>
     </Page>
   );

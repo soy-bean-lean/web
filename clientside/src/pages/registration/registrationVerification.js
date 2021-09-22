@@ -107,6 +107,7 @@ const RegistrationVerification = props => {
         alert(error);
       });
   }, []);
+  
   const users =
     all &&
     all.map((data, i) => {

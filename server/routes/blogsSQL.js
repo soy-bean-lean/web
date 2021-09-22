@@ -162,18 +162,18 @@ Blog.post("/getBloggerBlogs", (req, res) => {
   );
 });
 
-Blog.post("/deleteItem", (req, res) => {
-  const tableName = req.body.tableName;
-  const qid = req.body.qid;
-  const coloum = req.body.coloum;
-  console.log(qid);
-  const sqlSelect =
-    "delete from " + tableName + " where " + coloum + "  =" + qid;
+// Blog.post("/deleteItem", (req, res) => {
+//   const tableName = req.body.tableName;
+//   const qid = req.body.qid;
+//   const coloum = req.body.coloum;
+//   console.log(qid);
+//   const sqlSelect =
+//     "delete from " + tableName + " where " + coloum + "  =" + qid;
 
-  connection.query(sqlSelect, (err, result) => {
-    res.send(result);
-  });
-});
+//   connection.query(sqlSelect, (err, result) => {
+//     res.send(result);
+//   });
+// });
 
 Blog.post("/addComment", (req, res) => {
   const memberId = req.body.memberId;
@@ -241,5 +241,46 @@ Blog.post("/getBlogView", (req, res) => {
     }
   );
 });
+
+
+//approve blog  -council
+Blog.route("/approve").post((req, res, err) => {
+  const bid = req.body.bid;
+  const mid = req.body.reviewBy;
+
+ // const credit = req.body.credit;
+
+  console.log(bid);
+  console.log(mid);
+  console.log("hello hello");
+
+  connection.query(
+    "UPDATE blog SET  reviewBy = ?  WHERE blogId = ?;",
+    [ mid, bid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send({
+          data: result,
+          msg: "Successfully Updated.",
+        });
+      }
+    }
+  );
+});
+
+Blog.post("/deleteItem", (req, res) => {
+  const tableName = req.body.tableName;
+  const bid = req.body.bid;
+  const coloum = req.body.coloum;
+  console.log(bid);
+  const sqlSelect =
+    "delete from " + tableName + " where " + coloum + "  =" + bid;
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
 
 export default Blog;
