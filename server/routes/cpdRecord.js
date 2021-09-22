@@ -22,7 +22,7 @@ const Record = Router();
 Record.post("/", (req, res) => {
   const mid = "cssl001";
   connection.query(
-    "SELECT recordId, recTitle, type, status FROM cpdrecords WHERE memberId = ? ORDER BY approvedDate DESC;",
+    "SELECT recordId, recTitle, type, status FROM cpdrecords WHERE memberId = ? ORDER BY recordDate DESC;",
     [mid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -359,7 +359,7 @@ Record.post("/getcpdData", async (req, res) => {
 
       if (result[0].type == "CSSLcourse") {
         const slqQ =
-          "select csslcourse.*, cpdrecords.* from cpdrecords inner join csslcourse on cpdrecords.refId=csslcourse.courseId where cpdrecords.recordId =" +
+          "select csslcourse.*, cpdrecords.recordId, cpdrecords.recTitle, cpdrecords.recordType, cpdrecords.recordDate, cpdrecords.proof, cpdrecords.note, cpdrecords.credit, cpdrecords.type, cpdrecords.memberId from cpdrecords inner join csslcourse on cpdrecords.refId=csslcourse.courseId where cpdrecords.recordId =" +
           result[0].recordId +
           ";";
 
@@ -472,4 +472,53 @@ Record.post("/getActivityDetails", (req, res) => {
     }
   );
 });
+
+Record.post("/approveRecord", (req, res) => {
+  const recId = req.body.cpdId;
+  const appId = req.body.appId;
+  const appDate = req.body.appDate;
+  const status = "Approved";
+  connection.query(
+    "UPDATE cpdrecords SET status = ?, approvedBy = ?, approvedDate = ? WHERE recordId = ?;",
+    [status, appId, appDate, recId],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+Record.post("/rejectRecord", (req, res) => {
+  const recId = req.body.cpdId;
+  const appId = req.body.appId;
+  const appDate = req.body.appDate;
+  const status = "Rejected";
+  connection.query(
+    "UPDATE cpdrecords SET status = ?, approvedBy = ?, approvedDate = ? WHERE recordId = ?;",
+    [status, appId, appDate, recId],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+/*Record.post("/updateCredit", (req, res) => {
+  const mid = req.body.mid;
+  const credit = req.body.credit;
+  connection.query(
+    "UPDATE cpdrecords SET status = ?, approvedBy = ?, approvedDate = ? WHERE recordId = ?;",
+    [status, appId, appDate, recId],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});*/
 export default Record;

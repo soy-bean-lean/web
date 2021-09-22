@@ -79,6 +79,8 @@ const AddCpd = () => {
     today = yyyy + '-' + mm + '-' + dd;
     const mId = authState.memberId;
     const formData = new FormData();
+    const newCourseData = new FormData();
+
     if (recordName != '' && recType != '') {
       if (recType == 'Course') {
         console.log('Inside if 1');
@@ -105,6 +107,7 @@ const AddCpd = () => {
           formData.append('refId', courseName);
           formData.append('recDate', today);
           console.log(mId);
+
           fetch('http://localhost:3001/cpd/submitCsslCourseCpd', {
             method: 'POST',
             body: formData,
@@ -129,11 +132,10 @@ const AddCpd = () => {
         } else if (
           courseType == 'others' &&
           courseName != '' &&
-          credit != '' &&
           proofFile != null &&
           proofFile != ''
         ) {
-          const newCourseData = new FormData();
+          console.log('Inside if 2 others');
           if (platform == 'Other') {
             newCourseData.append('platform', platformOther);
           } else {
@@ -173,6 +175,7 @@ const AddCpd = () => {
                 setResult('err');
                 console.log(error);
               });
+
           } else {
             formData.append('refId', courseName);
           }
@@ -184,7 +187,7 @@ const AddCpd = () => {
           formData.append('proof', proofFile);
           formData.append('note', note);
           formData.append('credit', credit);
-          formData.append('refId', courseName);
+          //formData.append('refId', courseName);
           formData.append('recDate', today);
 
           fetch('http://localhost:3001/cpd/submitOtherCourseCpd', {
@@ -487,7 +490,7 @@ const AddCpd = () => {
       setCourseName(outCourseList[i].courseId);
     } else {
       setCredit('');
-      setCourseName('');
+      setCourseName('Other');
     }
   };
 
@@ -498,7 +501,7 @@ const AddCpd = () => {
       setCourseName(inCourseList[i].courseId);
     } else {
       setCredit('');
-      setCourseName('');
+      setCourseName('Other');
     }
   };
 
@@ -861,7 +864,7 @@ const AddCpd = () => {
             type="text"
             name="select"
             placeholder="Type Platform"
-            onChange={e => setPlatformOther(e.target.value)}
+            onChange={e => {setPlatformOther(e.target.value); setCourseName('Other');}}
             value={platformOther}
           ></Input>
         </>
@@ -876,8 +879,8 @@ const AddCpd = () => {
           <Input
             type="text"
             name="select"
-            placeholder="Type Platform"
-            onChange={e => setPartnerOther(e.target.value)}
+            placeholder="Type Partner"
+            onChange={e => {setPartnerOther(e.target.value); setCourseName('Other');}}
             value={partnerOther}
           ></Input>
         </>
@@ -923,7 +926,7 @@ const AddCpd = () => {
             <Col sm={9}>
               <Input
                 type="text"
-                onChange={e => setTypeCourseName(e.target.value)}
+                onChange={e => {setTypeCourseName(e.target.value); setCourseName('Other');}}
                 placeholder="Type Course Name"
               ></Input>
             </Col>
@@ -965,7 +968,7 @@ const AddCpd = () => {
             type="text"
             name="select"
             placeholder="Type Course Name"
-            onChange={e => setTypeCourseName(e.target.value)}
+            onChange={e => {setTypeCourseName(e.target.value); setCourseName('Other');}}
             value={typeCourseName}
           ></Input>
         </>

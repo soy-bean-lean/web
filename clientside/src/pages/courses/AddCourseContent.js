@@ -51,13 +51,13 @@ const AddCourseContent = () => {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Again</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Attempt Succesfull</Alert>
+          <Alert color="success">Attempt Successfull</Alert>
         </>
       );
     }

@@ -46,13 +46,13 @@ function WorkshopView() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Greate Attempt is Successfull</Alert>
         </>
       );
     }

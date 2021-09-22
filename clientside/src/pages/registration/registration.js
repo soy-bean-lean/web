@@ -200,13 +200,13 @@ const Registration = props => {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Againg</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Succesfully Registered</Alert>
+          <Alert color="success">Successfully Registered</Alert>
         </>
       );
     }
@@ -246,7 +246,7 @@ const Registration = props => {
                 className="input"
                 id="course-img"
                 name="course-img"
-                accept="file/pdf"
+                accept=".zip,.rar"
                 onChange={e => setFileName(e.target.files[0])}
               />
             </ModalBody>

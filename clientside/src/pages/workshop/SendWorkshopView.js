@@ -44,7 +44,7 @@ function SendWorkshopView() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
@@ -135,7 +135,7 @@ function SendWorkshopView() {
   }, []);
 
   return (
-    <Page>
+    <Page title="Pending Workshop">
       <Link to="/workshop">
         <Button color="primary">Workshop List</Button>
       </Link>

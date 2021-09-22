@@ -51,13 +51,13 @@ function AddBlogs() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Greate Attempt is Successfull</Alert>
         </>
       );
     }
@@ -70,7 +70,7 @@ function AddBlogs() {
     formData.append('desc', desc);
     formData.append('about', about);
 
-    formData.append('memberId', "cssl00"+authState.id);
+    formData.append('memberId', 'cssl00' + authState.id);
     formData.append('date', Currentdate);
     console.log(authState.memberId);
     fetch('http://localhost:3001/blog/addBlog', {
@@ -108,7 +108,13 @@ function AddBlogs() {
 
   return (
     <Page title="Add Blog">
-      <hr></hr>
+      <hr />
+      <Link to={'/blogs'}>
+        <Button color="primary">Blogs List</Button>
+      </Link>
+
+      <hr />
+
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
           {msg()}
@@ -120,7 +126,7 @@ function AddBlogs() {
                   <Label for="exampleEmail" sm={12}>
                     Import Your Blog Image From the Chooser
                   </Label>
-                  <Col sm="12" md={{ size:12, offset: 0 }}>
+                  <Col sm="12" md={{ size: 12, offset: 0 }}>
                     <center>
                       {image && (
                         <img
@@ -163,8 +169,6 @@ function AddBlogs() {
                     <Input
                       type="textarea"
                       name="title"
-                     
-                       
                       placeholder="Add Short Description About Your Blog . . . . ."
                       onChange={e => setAbout(e.target.value)}
                     />
