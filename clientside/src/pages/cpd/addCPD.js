@@ -25,7 +25,6 @@ import FileUpload from '../../components/FileUpload/FileUploader';
 // let history = useHistory();
 
 const AddCpd = () => {
-
   let history = useHistory();
 
   const { authState, setAuthState } = useContext(AuthContext);
@@ -45,6 +44,8 @@ const AddCpd = () => {
   const [level, setLevel] = useState('');
   const [platform, setPlatform] = useState('');
   const [partner, setPartner] = useState('');
+  const [duration, setDuration] = useState('');
+  const [durationType, setDurationType] = useState('');
 
   const [typeCourseName, setTypeCourseName] = useState('');
   const [platformOther, setPlatformOther] = useState('');
@@ -67,7 +68,7 @@ const AddCpd = () => {
   const [outWorkshopList, setOutWorkshopList] = useState(null);
   const [guestLectureList, setGuestLectureList] = useState(null);
 
-  const[result, setResult] = useState('');
+  const [result, setResult] = useState('');
 
   //SUBMIT CPD RECORD
   const submitRecord = () => {
@@ -78,12 +79,22 @@ const AddCpd = () => {
     today = yyyy + '-' + mm + '-' + dd;
     const mId = authState.memberId;
     const formData = new FormData();
-    if (
-      recordName != '' &&
-      recType != ''
-    ) {
-      if (recType == 'course') {
-        if (courseType == 'CSSLcourse' && courseName != '' && credit != '') {
+    if (recordName != '' && recType != '') {
+      if (recType == 'Course') {
+        console.log('Inside if 1');
+        if(proofFile == null &&
+          proofFile == ''){
+            setResult('validate');
+            scrollToTop();
+          }
+        if (
+          courseType == 'CSSLcourse' &&
+          courseName != '' &&
+          credit != '' &&
+          proofFile != null &&
+          proofFile != ''
+        ) {
+          console.log('Inside if 2');
           formData.append('mId', authState.memberId);
           formData.append('recTitle', recordName);
           formData.append('recordType', recType);
@@ -94,7 +105,7 @@ const AddCpd = () => {
           formData.append('refId', courseName);
           formData.append('recDate', today);
           console.log(mId);
-          fetch('http://localhost:3001/cpd/submitCsslCourse', {
+          fetch('http://localhost:3001/cpd/submitCsslCourseCpd', {
             method: 'POST',
             body: formData,
             headers: {
@@ -105,16 +116,92 @@ const AddCpd = () => {
             .then(res => res.json())
             .then(res => {
               console.log(res.data);
-              alert(res.data.insertId);
               setResult('done');
-              setTimeout(
-                function () {
-                  history.push(
-                    '/csslmember/cpdrecords'
-                  );
-                },
-                2000,
-              );
+              scrollToTop();
+              setTimeout(function () {
+                history.push('/csslmember/cpdrecords');
+              }, 2000);
+            })
+            .catch(error => {
+              setResult('err');
+              console.log(error);
+            });
+        } else if (
+          courseType == 'others' &&
+          courseName != '' &&
+          credit != '' &&
+          proofFile != null &&
+          proofFile != ''
+        ) {
+          const newCourseData = new FormData();
+          if (platform == 'Other') {
+            newCourseData.append('platform', platformOther);
+          } else {
+            newCourseData.append('platform', platform);
+          }
+          if (partner == 'Other') {
+            newCourseData.append('partner', partnerOther);
+          } else {
+            newCourseData.append('partner', partner);
+          }
+          if (
+            courseName == 'Other' ||
+            partner == 'Other' ||
+            platform == 'Other'
+          ) {
+            newCourseData.append('courseName', typeCourseName);
+            newCourseData.append('mode', mode);
+            newCourseData.append('skillLevel', level);
+            newCourseData.append('duration', duration);
+            newCourseData.append('durationType', durationType);
+
+            axios
+              .post(
+                'http://localhost:3001/cpd/addNewOtherCourse',
+                newCourseData,
+              )
+
+              .then(response => {
+                if (response.data.error) {
+                  alert(response.data.error);
+                } else {
+                  console.log(response.data);
+                  formData.append('refId', response.data.insertId);
+                }
+              })
+              .catch(error => {
+                setResult('err');
+                console.log(error);
+              });
+          } else {
+            formData.append('refId', courseName);
+          }
+
+          formData.append('mId', authState.memberId);
+          formData.append('recTitle', recordName);
+          formData.append('recordType', recType);
+          formData.append('type', courseType);
+          formData.append('proof', proofFile);
+          formData.append('note', note);
+          formData.append('credit', credit);
+          formData.append('refId', courseName);
+          formData.append('recDate', today);
+
+          fetch('http://localhost:3001/cpd/submitOtherCourseCpd', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              Accept: 'multipart/form-data',
+            },
+            credentials: 'include',
+          })
+            .then(res => res.json())
+            .then(res => {
+              console.log(res.data);
+              setResult('done');
+              setTimeout(function () {
+                history.push('/csslmember/cpdrecords');
+              }, 2000);
             })
             .catch(error => {
               setResult('err');
@@ -123,8 +210,41 @@ const AddCpd = () => {
         }
         console.log();
       }
+    } else {
+      setResult('validate');
     }
   };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  function msg() {
+    if (result == 'err') {
+      return (
+        <>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
+        </>
+      );
+    } else if (result == 'done') {
+      return (
+        <>
+          <Alert color="success">Attempt Successfull</Alert>
+        </>
+      );
+    } else if (result == 'validate') {
+      return (
+        <>
+          <Alert color="danger">
+            Need to Complete Required Fields Correctly and Provide Necessary Documents Before Submit!
+          </Alert>
+        </>
+      );
+    }
+  }
 
   //retireve course details from database (cssl courses and other courses - depending on the selection)
   const getCourses = event => {
@@ -204,7 +324,7 @@ const AddCpd = () => {
     setWorkshopType(event.target.value);
 
     const submitWorkshopData = {
-      mId: 'cssl001',
+      mId: authState.memberId,
       type: event.target.value,
     };
 
@@ -234,7 +354,7 @@ const AddCpd = () => {
     setGLDate(event.target.value);
 
     const submitGLData = {
-      mId: 'cssl001',
+      mId: authState.memberId,
       gDate: event.target.value,
     };
     axios
@@ -361,22 +481,24 @@ const AddCpd = () => {
     }, this);
 
   const getOtherCourseCreditValue = event => {
-    setCourseName(event.target.value);
     const i = event.target.value;
     if (i != 'Other' && i != '') {
       setCredit(outCourseList[i].credit);
+      setCourseName(outCourseList[i].courseId);
     } else {
       setCredit('');
+      setCourseName('');
     }
   };
 
   const getInCourseCreditValue = event => {
-    setCourseName(event.target.value);
     const i = event.target.value;
     if (i != 'type' && i != '') {
       setCredit(inCourseList[i].credit);
+      setCourseName(inCourseList[i].courseId);
     } else {
       setCredit('');
+      setCourseName('');
     }
   };
 
@@ -385,6 +507,7 @@ const AddCpd = () => {
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
+          {msg()}
           <Card>
             <CardHeader>New CPD Record</CardHeader>
             <CardBody>
@@ -416,10 +539,10 @@ const AddCpd = () => {
                       }}
                     >
                       <option value="type"></option>
-                      <option value="course">Courses</option>
-                      <option value="workshops">Workshops</option>
-                      <option value="guestLec">Guest Lectures</option>
-                      <option value="others">Others</option>
+                      <option value="Course">Courses</option>
+                      <option value="Workshops">Workshops</option>
+                      <option value="Guest Lecture">Guest Lectures</option>
+                      <option value="Others">Others</option>
                     </Input>
                   </Col>
                 </FormGroup>
@@ -454,7 +577,7 @@ const AddCpd = () => {
                     Import Your Proof File(Images, PDF and Zip Files Accepted)
                   </Label>
                   <Col sm="12" md={{ size: 6, offset: 3 }}>
-                   <Input
+                    <Input
                       color="primary"
                       type="file"
                       className="input"
@@ -463,7 +586,7 @@ const AddCpd = () => {
                       accept="image/*, application/pdf"
                       onChange={e => setProofFile(e.target.files[0])}
                     />
-                     {/* <FileUpload onUploadFile={getFileData} /> */}
+                    {/* <FileUpload onUploadFile={getFileData} /> */}
                   </Col>
                 </FormGroup>
 
@@ -487,7 +610,7 @@ const AddCpd = () => {
   function renderDetails(r_type) {
     if (r_type == 'type') {
       return <FormGroup row></FormGroup>;
-    } else if (r_type == 'course') {
+    } else if (r_type == 'Course') {
       return (
         <>
           <FormGroup row>
@@ -505,7 +628,7 @@ const AddCpd = () => {
           {renderCourseDetails(courseType)}
         </>
       );
-    } else if (r_type == 'workshops') {
+    } else if (r_type == 'Workshops') {
       return (
         <>
           <FormGroup row>
@@ -535,7 +658,7 @@ const AddCpd = () => {
           {renderWorkshopDetails(workshopType, workshopDate)}
         </>
       );
-    } else if (r_type == 'guestLec') {
+    } else if (r_type == 'Guest Lecture') {
       return (
         <>
           <FormGroup row>
@@ -553,7 +676,7 @@ const AddCpd = () => {
           {renderGuestLectureList(glDate)}
         </>
       );
-    } else if (r_type == 'others') {
+    } else if (r_type == 'Others') {
       return (
         <FormGroup row>
           <Label for="exampleEmail" sm={3}>
@@ -594,7 +717,7 @@ const AddCpd = () => {
               name="select"
               onChange={getInCourseCreditValue}
             >
-              <option value="type"></option>
+              <option value="type" data-value="type"></option>
               {allInCourses}
             </Input>
           </Col>
@@ -770,12 +893,37 @@ const AddCpd = () => {
         <>
           <FormGroup row>
             <Label for="exampleEmail" sm={3}>
+              Course Duration
+            </Label>
+            <Col sm={3}>
+              <Input
+                className="input"
+                type="number"
+                onChange={e => setDuration(e.target.value)}
+              />
+            </Col>
+            <Col sm={6}>
+              <Input
+                type="select"
+                name="select"
+                onChange={e => setDurationType(e.target.value)}
+              >
+                <option value="type"></option>
+                <option value="Hours">Hours</option>
+                <option value="Days">Days</option>
+                <option value="Weeks">Weeks</option>
+                <option value="Months">Months</option>
+              </Input>
+            </Col>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={3}>
               Course
             </Label>
             <Col sm={9}>
               <Input
                 type="text"
-                onChange={e => setCourseName(e.target.value)}
+                onChange={e => setTypeCourseName(e.target.value)}
                 placeholder="Type Course Name"
               ></Input>
             </Col>
@@ -803,6 +951,7 @@ const AddCpd = () => {
             <Label for="exampleEmail" sm={3}></Label>
             <Col sm={9}>{renderTypeCourseFields(courseName)}</Col>
           </FormGroup>
+          {renderDurationFields(courseName)}
         </>
       );
     }
@@ -824,12 +973,69 @@ const AddCpd = () => {
     }
   }
 
+  function renderDurationFields(course) {
+    if (course == 'Other') {
+      return (
+        <FormGroup row>
+          <Label for="exampleEmail" sm={3}>
+            Course Duration
+          </Label>
+          <Col sm={3}>
+            <Input
+              className="input"
+              type="number"
+              onChange={e => setDuration(e.target.value)}
+            />
+          </Col>
+          <Col sm={6}>
+            <Input
+              type="select"
+              name="select"
+              onChange={e => setDurationType(e.target.value)}
+            >
+              <option value="type"></option>
+              <option value="Hours">Hours</option>
+              <option value="Days">Days</option>
+              <option value="Weeks">Weeks</option>
+              <option value="Months">Months</option>
+            </Input>
+          </Col>
+        </FormGroup>
+      );
+    }
+  }
+
   function renderOfflineOtherCourseList(partner) {
     if (partner == '') {
       return <FormGroup row></FormGroup>;
     } else if (partner == 'Other') {
       return (
         <>
+          <FormGroup row>
+            <Label for="exampleEmail" sm={3}>
+              Course Duration
+            </Label>
+            <Col sm={3}>
+              <Input
+                className="input"
+                type="number"
+                onChange={e => setDuration(e.target.value)}
+              />
+            </Col>
+            <Col sm={6}>
+              <Input
+                type="select"
+                name="select"
+                onChange={e => setDurationType(e.target.value)}
+              >
+                <option value="type"></option>
+                <option value="Hours">Hours</option>
+                <option value="Days">Days</option>
+                <option value="Weeks">Weeks</option>
+                <option value="Months">Months</option>
+              </Input>
+            </Col>
+          </FormGroup>
           <FormGroup row>
             <Label for="exampleEmail" sm={3}>
               Course
@@ -865,6 +1071,7 @@ const AddCpd = () => {
             <Label for="exampleEmail" sm={3}></Label>
             <Col sm={9}>{renderTypeCourseFields(courseName)}</Col>
           </FormGroup>
+          {renderDurationFields(courseName)}
         </>
       );
     }

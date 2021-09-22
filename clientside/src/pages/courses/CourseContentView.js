@@ -12,6 +12,8 @@ import {
   Button,
   Card,
   CardBody,
+  FormGroup,
+  Input,
   Badge,
   Nav,
   NavItem,
@@ -46,7 +48,7 @@ const CourseView = () => {
   const [contentTitle, setContentTitle] = useState('');
   const [contentNote, setContentNote] = useState('');
   const [fileContent, setFileContent] = useState('');
-  
+
   const [accessInfo, setAccessInfo] = useState(null);
 
   const [cntAccessStatus, setCntAccessStatus] = useState('');
@@ -90,7 +92,7 @@ const CourseView = () => {
       });
   }, []);
 
-  const updateAccessInfo = (info) =>{
+  const updateAccessInfo = info => {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -103,8 +105,11 @@ const CourseView = () => {
     var stDate = yyyy + '-' + mm + '-' + dd;
     var lastAcc = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mn + ':' + ss;
 
-
-    if(info.startDate == null || info.startDate == '' || info.status == 'Start'){
+    if (
+      info.startDate == null ||
+      info.startDate == '' ||
+      info.status == 'Start'
+    ) {
       setCntStDate(today);
       setcCntLastAccess(lastAcc);
       setCntAccessStatus('Ongoing');
@@ -115,24 +120,25 @@ const CourseView = () => {
         stDate: stDate,
         lastAccess: lastAcc,
         status: 'Ongoing',
-        type: 'Initial'
+        type: 'Initial',
       };
       axios
-      .post('http://localhost:3001/csslcourse/updateContentAccessInfo', submitData)
+        .post(
+          'http://localhost:3001/csslcourse/updateContentAccessInfo',
+          submitData,
+        )
 
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          console.log(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
-
-    }
-    else{
+        .then(response => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            console.log(response.data);
+          }
+        })
+        .catch(error => {
+          alert(error);
+        });
+    } else {
       setcCntLastAccess(lastAcc);
       const submitData = {
         cId: id,
@@ -141,23 +147,26 @@ const CourseView = () => {
         stDate: info.startDate,
         lastAccess: lastAcc,
         status: info.status,
-        type: 'Other'
+        type: 'Other',
       };
       axios
-      .post('http://localhost:3001/csslcourse/updateContentAccessInfo', submitData)
+        .post(
+          'http://localhost:3001/csslcourse/updateContentAccessInfo',
+          submitData,
+        )
 
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          console.log(response.data);
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
+        .then(response => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            console.log(response.data);
+          }
+        })
+        .catch(error => {
+          alert(error);
+        });
     }
-  }
+  };
 
   const setData = val => {
     setContentTitle(val.title);
@@ -291,6 +300,34 @@ const CourseView = () => {
                 {'  '}
               </center>
             </CardBody>
+            <Col sm="10" md={{ size: 10, offset: 1 }}>
+              <br></br>
+              <Col sm="10" md={{ size: 12, offset: 0 }}>
+                <FormGroup row>
+                  <Col>
+                    <center>
+                      <Input
+                        type="textarea"
+                        name="title"
+                        rows="5"
+                        placeholder="Any Comments"
+                        //onChange={e => setAddComment(e.target.value)}
+                      />
+                    </center>
+                  </Col>
+                </FormGroup>
+                <FormGroup check row>
+                  <Col sm={{ size: 15 }}>
+                    <Button /*onClick={addComment}*/ color="success">
+                      Add My Comment
+                    </Button>
+                  </Col>
+                </FormGroup>
+              </Col>
+            </Col>
+            <Col sm="10" md={{ size: 7, offset: 3 }}>
+              {/* {comments} */}
+            </Col>
           </Card>
         </Col>
       </Row>
