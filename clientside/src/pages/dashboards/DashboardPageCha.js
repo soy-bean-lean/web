@@ -140,6 +140,10 @@ function DashboardPage() {
   const [remainingCreditsPercentage, setremainingCreditsPercentage] =
     useState('');
 
+  const [noDataActivityType, setnoDataActivityType] = useState('');
+  const [noDataType, setnoDataType] = useState('');
+  const [noDataLine, setnoDataLine] = useState('');
+
   //this year credits earned
   var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   for (var i = 0; i < creditEarnedLength; i++) {
@@ -176,8 +180,7 @@ function DashboardPage() {
   retrievePie &&
     retrievePie.map(
       retrievePie => (
-        category.push(retrievePie.type),
-        countType.push(retrievePie.credits)
+        category.push(retrievePie.type), countType.push(retrievePie.credits)
       ),
     );
 
@@ -247,7 +250,6 @@ function DashboardPage() {
     ],
   };
 
-  console.log(authState);
   //Announcements
   useEffect(() => {
     axios
@@ -259,14 +261,13 @@ function DashboardPage() {
           setdataAnnouncement(response.data);
         }
       })
-      .catch(error => {
-        alert(error);
-      });
+      .catch(error => {});
 
     //Recent Activities
     const data = {
       id: authState.memberId,
     };
+    console.log(data);
     axios
       .post('http://localhost:3001/Dash/recent', data)
       .then(response => {
@@ -276,9 +277,7 @@ function DashboardPage() {
           setrecentActivities(response.data);
         }
       })
-      .catch(error => {
-        alert(error);
-      });
+      .catch(error => {});
 
     axios
       .post('http://localhost:3001/Dash/creditsearned', data)
@@ -291,7 +290,7 @@ function DashboardPage() {
         }
       })
       .catch(error => {
-        alert(error);
+        setnoDataLine('No data available');
       });
 
     axios
@@ -304,7 +303,7 @@ function DashboardPage() {
         }
       })
       .catch(error => {
-        alert(error);
+        setnoDataActivityType('No data available');
       });
 
     axios
@@ -317,7 +316,7 @@ function DashboardPage() {
         }
       })
       .catch(error => {
-        alert(error);
+        setnoDataType('No data available');
       });
 
     axios
@@ -329,9 +328,7 @@ function DashboardPage() {
           setprogressPercentage(response.data);
         }
       })
-      .catch(error => {
-        alert(error);
-      });
+      .catch(error => {});
 
     axios
       .post('http://localhost:3001/Dash/upcoming', data)
@@ -344,9 +341,7 @@ function DashboardPage() {
           setupcomingDateLength(response.data.length);
         }
       })
-      .catch(error => {
-        alert(error);
-      });
+      .catch(error => {});
 
     axios
       .post('http://localhost:3001/Dash/earned', data)
@@ -358,7 +353,7 @@ function DashboardPage() {
         }
       })
       .catch(error => {
-        alert(error);
+      //  alert(error);
       });
 
     axios
@@ -370,9 +365,7 @@ function DashboardPage() {
           setremainingCredits(response.data);
         }
       })
-      .catch(error => {
-        alert(error);
-      });
+      .catch(error => {});
 
     axios
       .post('http://localhost:3001/Dash/remainingPercentage', data)
@@ -383,9 +376,7 @@ function DashboardPage() {
           setremainingCreditsPercentage(response.data);
         }
       })
-      .catch(error => {
-        alert(error);
-      });
+      .catch(error => {});
   }, []);
 
   return (
@@ -489,10 +480,16 @@ function DashboardPage() {
                     </small>
                   </CardHeader>
                   <CardBody>
-                    <Doughnut
-                      data={state2}
-                      options={chartjs.doughnut.options}
-                    />
+                    {noDataActivityType == 'No data available' ? (
+                      <div className="mt-1 text-muted">
+                        <center>No Data Available</center>
+                      </div>
+                    ) : (
+                      <Doughnut
+                        data={state2}
+                        options={chartjs.doughnut.options}
+                      />
+                    )}
                   </CardBody>
                 </Col>
 
@@ -504,7 +501,13 @@ function DashboardPage() {
                     </small>
                   </CardHeader>
                   <CardBody>
-                    <Bar data={state3} options={chartjs.bar.options} />
+                    {noDataType == 'No data available' ? (
+                      <div className="mt-1 text-muted">
+                        <center>No Data Available</center>
+                      </div>
+                    ) : (
+                      <Bar data={state3} options={chartjs.bar.options} />
+                    )}
                   </CardBody>
                 </Col>
               </Row>
@@ -548,7 +551,13 @@ function DashboardPage() {
                 <small className="text-muted text-capitalize">This year</small>
               </CardHeader>
               <CardBody>
-                <Line data={state} options={chartjs.line.options} />
+                {noDataLine == 'No data available' ? (
+                  <div className="mt-1 text-muted">
+                    <center>No Data Available</center>
+                  </div>
+                ) : (
+                  <Line data={state} options={chartjs.line.options} />
+                )}
               </CardBody>
             </Card>
           </Col>

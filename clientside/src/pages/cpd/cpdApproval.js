@@ -3,9 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Page from 'components/Page';
 import classnames from 'classnames';
-import Typography from 'components/Typography';
 
-import { Line } from 'react-chartjs-2';
 import {
   Button,
   Card,
@@ -21,15 +19,16 @@ import {
   Row,
 } from 'reactstrap';
 const tableTypes = ['striped'];
+
 const CPDApproval = props => {
   const [activeTab, setActiveTab] = useState('1');
 
   const [data, setData] = useState([]);
   //const [user, setUser] = useState(userDetails);
-  const [noApprovedUsers, setnoApprovedUsers] = useState(null);
-  const [noRejectedUsers, setnoRejecteddUsers] = useState(null);
-  const [noPendingUsers, setnoPendingUsers] = useState(null);
-  const [count, setnoPendingUserCount] = useState(null);
+  // const [noApprovedUsers, setnoApprovedUsers] = useState(null);
+  // const [noRejectedUsers, setnoRejecteddUsers] = useState(null);
+  // const [noPendingUsers, setnoPendingUsers] = useState(null);
+  // const [count, setnoPendingUserCount] = useState(null);
   const [all, setAll] = useState(null);
   const toggle = tab => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -61,7 +60,7 @@ const CPDApproval = props => {
             <tr>
               <td hidden>{data.recordId} </td>
               <td>
-                {data.title} {data.firstName} {data.lastName}
+                {data.title}. {data.firstName} {data.lastName}
               </td>
               <td>{data.recTitle}</td>
 
@@ -96,7 +95,7 @@ const CPDApproval = props => {
             <tr>
               <td hidden>{data.recordId} </td>
               <td>
-                {data.title} {data.firstName} {data.lastName}
+                {data.title}. {data.firstName} {data.lastName}
               </td>
               <td>{data.recTitle}</td>
 
@@ -130,7 +129,7 @@ const CPDApproval = props => {
             <tr>
               <td hidden>{data.recordId} </td>
               <td>
-                {data.title} {data.firstName} {data.lastName}
+                {data.title}. {data.firstName} {data.lastName}
               </td>
               <td>{data.recTitle}</td>
 
@@ -170,7 +169,7 @@ const CPDApproval = props => {
             <tr>
               <td hidden>{data.recordId} </td>
               <td>
-                {data.title} {data.firstName} {data.lastName}
+                {data.title}. {data.firstName} {data.lastName}
               </td>
               <td>{data.recTitle}</td>
 
@@ -210,7 +209,7 @@ const CPDApproval = props => {
             <tr>
               <td hidden>{data.recordId} </td>
               <td>
-                {data.title} {data.firstName} {data.lastName}
+                {data.title}. {data.firstName} {data.lastName}
               </td>
               <td>{data.recTitle}</td>
 
@@ -249,7 +248,7 @@ const CPDApproval = props => {
             <tr>
               <td hidden>{data.recordId} </td>
               <td>
-                {data.title} {data.firstName} {data.lastName}
+                {data.title}. {data.firstName} {data.lastName}
               </td>
               <td>{data.recTitle}</td>
 
@@ -270,12 +269,11 @@ const CPDApproval = props => {
                 </center>
               </td>
               <td>
-                <Link to={'/cpdView/' + data.recordId}>
+                <Link /*to={'/cpdView/' + data.recordId}*/ to={'/cpdapproval/cpdrecords/record00' + data.recordId + '/' + data.recTitle}>
                   <Button
                     pill
                     color="success"
                     size="sm"
-                    to={'/cpdView/' + data.id}
                   >
                     View{' '}
                   </Button>
@@ -289,7 +287,7 @@ const CPDApproval = props => {
     });
 
   return (
-    <Page title="CPD Approval">
+    <Page title="Review CPD Records">
       <hr></hr>
 
       <Nav tabs>

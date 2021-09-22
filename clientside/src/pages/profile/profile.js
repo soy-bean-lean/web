@@ -41,6 +41,7 @@ const Profile = () => {
   const [result, setResult] = useState();
   const [resultBasic, setResultBasic] = useState();
   const [payment, setPayment] = useState(0);
+  const [paymentPrice, setpaymentPrice] = useState(0);
 
   const [imgFile, setImgFile] = useState();
   const setEditabledJobApp = () => {
@@ -102,11 +103,20 @@ const Profile = () => {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-          setPayment(response.data[0].paymentID);
+          setPayment(response.data[0].paymentID);          
         }
       })
       .catch(error => {
-        alert(error);
+        if (authState.role == 'student') {
+          setpaymentPrice(500);
+        } else if (authState.role == 'assocaite') {
+          setpaymentPrice(1000);
+        } else if (authState.role == 'professional') {
+          setpaymentPrice(1500);
+          console.log("anushka");
+        } else if (authState.role == 'chartered') {
+          setpaymentPrice(2000);
+        }
       });
   }, []);
 
@@ -276,6 +286,10 @@ const Profile = () => {
         //   alert(error);
       });
   }, []);
+
+
+  //payment
+  
 
   return (
     <Page title="Profile">
@@ -511,7 +525,57 @@ const Profile = () => {
             </CardBody>
           </Card>
           <br></br>
-          <center>{msgPasswords()}</center>
+          <center>{msgPasswords()}</center>          
+          <>
+            <div>
+              {!payment == 0 ? (
+                <Card>
+                  <center>
+                    <br></br>
+                    <Typography className="text-success">
+                      <h5><b>Membership Payment Successful</b></h5>
+                      <hr></hr>
+                    </Typography>
+                    <img
+                      src={'http://localhost:3001/uploads/paymentDone.gif'}
+                      width="260px"
+                      height="200px"
+                      className="succesfull"
+                    />
+                  </center>
+                  <br></br>
+                </Card>
+              ) : (
+                <>
+                  <Card>
+                    <center>
+                      <br></br>
+                      <Typography className="text-danger">
+                        <h5><b>Membership Payment</b></h5>
+                        <hr></hr>
+                      </Typography>
+                      <img
+                        src={'http://localhost:3001/uploads/pay.gif'}
+                        width="260px"
+                        height="200px"
+                        className="succesfull"
+                      />
+                    </center>
+                    <br></br>
+                    <FormGroup check row>
+                      <center>
+                        <Col sm={{ size: 15 }}>
+                          <Button color="primary">Pay Rs. {paymentPrice} For CSSL</Button>
+                        </Col>
+                      </center>
+                    </FormGroup>{' '}
+                    <br></br>
+                  </Card>
+                </>
+              )}
+            </div>
+          </>
+          <br></br>
           <Card>
             <CardHeader>Update Login Details</CardHeader>
             <CardBody>
@@ -566,58 +630,6 @@ const Profile = () => {
               </FormGroup>{' '}
             </CardBody>
           </Card>
-          <br></br>
-          <>
-            <div>
-              {!payment == 0 ? (
-                <Card>
-                  <center>
-                    <br></br>
-                    <Typography className="text-success">
-                      <h5>Payment Successful</h5>
-                      <hr></hr>
-                    </Typography>
-                    <img
-                      src={'http://localhost:3001/uploads/paymentDone.gif'}
-                      width="260px"
-                      height="200px"
-                      className="succesfull"
-                    />
-                  </center>
-                  <br></br>
-                </Card>
-              ) : (
-                <>
-                  <br></br>
-                  <Card>
-                    <center>
-                      <br></br>
-                      <Typography className="text-danger">
-                        <h5>Incomplete Payment</h5>
-                        <hr></hr>
-                      </Typography>
-                      <img
-                        src={'http://localhost:3001/uploads/pay.gif'}
-                        width="260px"
-                        height="200px"
-                        className="succesfull"
-                      />
-                    </center>
-                    <br></br>
-                    <FormGroup check row>
-                      <center>
-                        <Col sm={{ size: 15 }}>
-                          <Button color="primary">Pay 20$ For CSSL</Button>
-                        </Col>
-                      </center>
-                    </FormGroup>{' '}
-                    <br></br>
-                  </Card>
-                </>
-              )}
-            </div>
-          </>
-          <br></br>
         </Col>
       </Row>
     </Page>

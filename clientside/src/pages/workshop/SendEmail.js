@@ -103,15 +103,7 @@ function SendEmail() {
       });
   }, []);
 
-  //   return (
-  //     <Page title="Assign Credit/Deny Request">
-  //        <Link to="/manageworksops">
-  //         <Button color="primary">Back</Button>
-  //       </Link>
-
-  //     </Page>
-  //   );
-
+  
   const conductors =
     conduct &&
     conduct.map((conduct, i) => (
@@ -121,21 +113,15 @@ function SendEmail() {
             {' '}
             {conduct.T} . {conduct.firstName} {conduct.lastName}
           </td>
-          <td>
-            <center>
-              {/* <Badge color="warning" pill className="mr-1">
-                {sendWorkshop.fromDate}
-              </Badge> */}
-            </center>
-          </td>
+
           <td>
             <center>
               <Badge color="warning" pill className="mr-1">
-                {conduct.date}
+                {conduct.conductData}
               </Badge>
             </center>
           </td>
-          <td>{conduct.email}</td>
+          <td hidden>{conduct.email}</td>
 
           <td>
             <center>
@@ -155,7 +141,7 @@ function SendEmail() {
       </Link>
       <hr></hr>
       <Row>
-        <Col sm="5" md={{ size: 8, offset: 2 }}>
+        <Col sm="5" md={{ size: 10, offset: 1 }}>
           <br></br>
           <Card className="profileInfo">
             <CardBody>
@@ -186,7 +172,7 @@ function SendEmail() {
                 </FormGroup>
               </center>
 
-              <h3>conduct By</h3>
+              <h3>Conduct By</h3>
               <Row>
                 <Col sm="12">
                   {tableTypes.map((tableType, index) => (
@@ -200,8 +186,7 @@ function SendEmail() {
                                   <Table {...{ ['striped']: true }}>
                                     <tbody>
                                       <th>Conductor Name</th>
-                                      <th>Available Date</th>
-                                      <th>Email</th>
+                                      <th>Assigned Date</th>
                                       <th></th>
                                       {conductors}
                                     </tbody>
