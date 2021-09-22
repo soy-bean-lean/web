@@ -688,7 +688,7 @@ function App(props) {
                       component={EditView}
                     />
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} />{' '}
+
                     <Route
                       exact
                       path="/csslworkshops"
@@ -748,7 +748,7 @@ function App(props) {
                     <Route
                       exact
                       path="/dashboard"
-                      component={DashboardPagePro}
+                      component={DashboardPageCha}
                     />
                     {/* <Route  path="/" component={DashboardPagePro} /> */}
                     {/*Course Related Routes*/}
