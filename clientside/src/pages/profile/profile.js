@@ -424,7 +424,6 @@ const Profile = props => {
     })
     .then(res => res.json())
       .then(res => {
-        console.log("anushka");
         setResult('done');
         setTimeout(
           function () {
