@@ -125,6 +125,7 @@ const AddBlogs = React.lazy(() => import('pages/blogs/AddBlogs'));
 const reviewblogs = React.lazy(() => import('pages/blogs/reviewblogs'));
 const BlogView = React.lazy(() => import('pages/blogs/BlogView'));
 const EditView = React.lazy(() => import('pages/blogs/EditBlog'));
+const ApproveView = React.lazy(() => import('pages/blogs/ApproveView'));
 
 //forum
 
@@ -495,6 +496,12 @@ function App(props) {
                       path="/approveworkshopview/cssl00:id/:title"
                       component={ApproveWorkshopView}
                     />
+                     <Route
+                      exact
+                      path="/approveblogview/cssl00:id/:title"
+                      component={ApproveView}
+                    />
+
                     <Route
                       exact
                       path="/sendEmail/cssl00:id/:title"
