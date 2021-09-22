@@ -33,6 +33,12 @@ const navItemsCouncil = [
     Icon: HiIcons.HiUser,
   },
   {
+    to: '/memberUpgration',
+    name: 'Manage Upgrations',
+    exact: false,
+    Icon: HiIcons.HiUser,
+  },
+  {
     to: '/cpdapproval/cpdrecords',
     name: 'Manage CPD',
     exact: false,

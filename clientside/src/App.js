@@ -157,6 +157,12 @@ const MemberVerification = React.lazy(() =>
 const MemberApproval = React.lazy(() =>
   import('pages/registration/registrationApproval'),
 );
+const memberUpgration = React.lazy(() =>
+  import('pages/registration/memberUpgration'),
+);
+const upgradeView = React.lazy(() =>
+  import('pages/registration/upgradeView'),
+);
 
 //profile
 
@@ -421,6 +427,14 @@ function App(props) {
                     <Route
                       path="/managemembers"
                       component={MemberApproval}
+                    />{' '}
+                    <Route
+                      path="/memberUpgration"
+                      component={memberUpgration}
+                    />{' '}
+                    <Route
+                      path="/upgradeView/:id"
+                      component={upgradeView}
                     />{' '}
                     <Route
                       path="/memberView/:id"
