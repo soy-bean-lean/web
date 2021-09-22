@@ -243,7 +243,7 @@ const Login = () => {
               </CardBody>
             </Card>
 
-            <FormGroup>
+            {/* <FormGroup>
               <Col sm={9}>
                 <Input
                   type="select"
@@ -260,7 +260,7 @@ const Login = () => {
                   <option value="anushka.darshana01@gmail.com">std</option>
                 </Input>
               </Col>
-            </FormGroup>
+            </FormGroup> */}
           </center>
         </Col>
       </Row>

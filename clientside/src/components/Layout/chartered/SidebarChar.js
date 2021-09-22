@@ -52,6 +52,12 @@ const navItemsChartered = [
     Icon: FaIcons.FaGraduationCap,
   },
   { 
+    to: '/csslworkshops', 
+    name: 'Workshops', 
+    exact: false, 
+    Icon: GIIcons.GiTeacher 
+  },
+  { 
     to: '/blogs', 
     name: 'Blogs', 
     exact: false, 
@@ -63,18 +69,8 @@ const navItemsChartered = [
     exact: false, 
     Icon: FaIcons.FaUserAlt 
   },
-  { 
-    to: '/csslworkshops', 
-    name: 'Workshops', 
-    exact: false, 
-    Icon: GIIcons.GiTeacher 
-  },
-  { 
-    to: '/forum', 
-    name: 'Forum', 
-    exact: false, 
-    Icon: AiIcons.AiFillFileText 
-  },
+
+
 
   /*{ to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
   { to: '/charts', name: 'reports', exact: false, Icon: MdReport },*/
