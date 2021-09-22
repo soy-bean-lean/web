@@ -105,7 +105,7 @@ const Login = () => {
       return (
         <>
           <Alert className="loginAlert" color="danger">
-            Login Unsuccefull,Try Againg
+            Login Unsuccessfull,Try Againg
           </Alert>
         </>
       );
@@ -113,7 +113,7 @@ const Login = () => {
       return (
         <>
           <Alert className="loginAlert" color="success">
-            Login Succefull
+            Login Successfull
           </Alert>
         </>
       );

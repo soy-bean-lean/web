@@ -200,13 +200,13 @@ const Registration = props => {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Againg</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Succesfully Registered</Alert>
+          <Alert color="success">Successfully Registered</Alert>
         </>
       );
     }
