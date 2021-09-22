@@ -109,7 +109,7 @@ function AddWorkshop() {
             history.push('/AddWorkshopConducter/' + res.data.insertId);
           },
 
-          2000,
+          500,
         );
       })
       .catch(error => {
@@ -210,7 +210,6 @@ function AddWorkshop() {
                     <Input
                       className="input"
                       required
-                      
                       type="date"
                       min={today}
                       onChange={e => setFromDate(e.target.value)}
@@ -242,13 +241,14 @@ function AddWorkshop() {
                     <Input
                       className="input"
                       required
+                      max="24"
                       min="0"
                       type="number"
                       onChange={e => setDuration(e.target.value)}
                     />
                   </Col>
                   <Col sm="12" md={{ size: 4, offset: 0 }}>
-                    <Label for="exampleEmail">Hours  Per Day</Label>
+                    <Label for="exampleEmail">Hours Per Day</Label>
                   </Col>
                 </FormGroup>
 
