@@ -689,6 +689,7 @@ userRouter.post("/payment", (req, res) => {
 //payment verification profile page
 userRouter.post("/paymentVerfication", (req, res) => {
   //const memberID = req.body.id;
+  console.log(req.body.id);
   const memberID = "CSSL001";
 
   connection.query(   
