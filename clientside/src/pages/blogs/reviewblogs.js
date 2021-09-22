@@ -34,8 +34,9 @@ import {
 const tableTypes = ['striped'];
 
 const ManageWorkshop = props => {
-  const [workshop, setWorkshop] = useState(null);
-  const [blogs, setAllBlogs] = useState(null);
+  const [approveBlog, setApprove] = useState(null);
+ 
+  const [blogs, setPending] = useState(null);
   //const[approveWorkshop]
 
   const { authState, setAuthState } = useContext(AuthContext);
@@ -54,12 +55,30 @@ const ManageWorkshop = props => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setAllBlogs(response.data);
+          setPending(response.data);
         }
       })
       .catch(error => {
         alert(error);
       });
+
+      
+    axios
+    .post('http://localhost:3001/blog/getApproveBlog', data)
+
+    .then(response => {
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        setApprove(response.data);
+      }
+    })
+    .catch(error => {
+      alert(error);
+    });
+
+
+
   }, []);
 
   const [activeTab, setActiveTab] = useState('1');
@@ -68,7 +87,7 @@ const ManageWorkshop = props => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  const approveWorkshops =
+  const pendingBlogs =
     blogs &&
     blogs.map((workshop, i) => (
       <>
@@ -103,9 +122,9 @@ const ManageWorkshop = props => {
       </>
     ));
 
-  const sendWorkshops =
-    blogs &&
-    blogs.map((sendWorkshop, i) => (
+  const approveBlogs =
+  approveBlog &&
+  approveBlog.map((sendWorkshop, i) => (
       <>
         <tr>
           <td>{sendWorkshop.title}</td>
@@ -158,7 +177,7 @@ const ManageWorkshop = props => {
               toggle('2');
             }}
           >
-           All Blogs
+           Approve Blogs
           </NavLink>
         </NavItem>
       </Nav>
@@ -178,7 +197,7 @@ const ManageWorkshop = props => {
                                 <tbody>
                                 <th>Title</th>
                                   <th>Published Date</th>
-                                  {approveWorkshops}
+                                  {pendingBlogs}
                                 </tbody>
                               </Table>
                             </Card>
@@ -209,7 +228,7 @@ const ManageWorkshop = props => {
                                   <th>Title</th>
                                   <th>Published Date</th>
                                   
-                                  {sendWorkshops}
+                                  {approveBlogs}
                                 </tbody>
                               </Table>
                             </Card>
