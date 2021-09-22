@@ -63,13 +63,13 @@ function AddWorkshop() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Greate Attempt is Successfull</Alert>
         </>
       );
     }
@@ -109,7 +109,7 @@ function AddWorkshop() {
             history.push('/AddWorkshopConducter/' + res.data.insertId);
           },
 
-          2000,
+          500,
         );
       })
       .catch(error => {
@@ -241,12 +241,14 @@ function AddWorkshop() {
                     <Input
                       className="input"
                       required
+                      max="24"
+                      min="0"
                       type="number"
                       onChange={e => setDuration(e.target.value)}
                     />
                   </Col>
                   <Col sm="12" md={{ size: 4, offset: 0 }}>
-                    <Label for="exampleEmail">Hours  Per Day</Label>
+                    <Label for="exampleEmail">Hours Per Day</Label>
                   </Col>
                 </FormGroup>
 

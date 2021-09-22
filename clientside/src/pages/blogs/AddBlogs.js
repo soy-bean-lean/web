@@ -51,13 +51,13 @@ function AddBlogs() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
       return (
         <>
-          <Alert color="success">Greate Attempt is Succesfull</Alert>
+          <Alert color="success">Greate Attempt is Successfull</Alert>
         </>
       );
     }
@@ -108,7 +108,13 @@ function AddBlogs() {
 
   return (
     <Page title="Add Blog">
-      <hr></hr>
+       <hr />
+      <Link to={'/blogs'}>
+        <Button color="primary">Blogs List</Button>
+      </Link>
+
+      <hr />
+     
       <Col sm="10" md={{ size: 8, offset: 2 }}>
         <center>
           {msg()}

@@ -40,7 +40,7 @@ const Profile = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [result, setResult] = useState();
   const [resultBasic, setResultBasic] = useState();
-  const [payment, setPayment] = useState(0);
+  const [paymentStatus, setPaymentStatus] = useState(0);
   const [paymentPrice, setpaymentPrice] = useState(0);
 
   const [imgFile, setImgFile] = useState();
@@ -93,6 +93,31 @@ const Profile = () => {
   };
   let history = useHistory();
 
+  const [paid,setPaid] = useState(0);
+  useEffect(() => {
+    const data = {
+        id: authState.memberId,
+        amount: paymentPrice,
+        role: authState.role,
+        email:authState.email,
+        fName:authState.fName,
+        paid: paid,
+    };
+    axios
+      .post('http://localhost:3001/auth/memberpayment', data)
+      .then(response => {
+        if (response.data.error) {
+          console.log(response.data.error);
+        } else {
+            console.log("succesful");
+        }
+      })
+      .catch(error => {
+        //alert(error);
+      });
+    }, [paid]);
+
+  //paid or not
   useEffect(() => {
     const data = {
       id: authState.memberId,
@@ -103,7 +128,8 @@ const Profile = () => {
         if (response.data.error) {
           console.log(response.data.error);
         } else {
-          setPayment(response.data[0].paymentID);          
+          setPaymentStatus(response.data[0].paymentID);  
+          console.log(response.data);      
         }
       })
       .catch(error => {
@@ -119,6 +145,57 @@ const Profile = () => {
         }
       });
   }, []);
+
+  // Put the payment variables here
+  var payhere = {
+    sandbox: true, // if the account is sandbox or real
+    merchant_id: '1218666', // Replace your Merchant ID
+    return_url: './profile',
+    cancel_url: './profile',
+    notify_url: 'http://localhost:3001/auth/memberpayment',
+    order_id: authState.id,
+    items: 'Membership Payment',
+    amount: paymentPrice,
+    currency: 'LKR',
+    first_name: authState.fname,
+    last_name: authState.lname,
+    email: authState.email,
+    phone: '',
+    address: '',
+    city: '',
+    country: '',
+    delivery_address: '', // optional field
+    delivery_city: '', // optional field
+    delivery_country: '', // optional field
+    custom_1: '', // optional field
+    custom_2: '', // optional field
+  };
+
+  //Called when user completed the payment. It can be a successful payment or failure
+  window.payhere.onCompleted = function onCompleted() {
+    setPaid(1);
+    window.location.reload(false);
+       
+    //Note: validate the payment and show success or failure page to the customer
+  };
+
+  // Called when user closes the payment without completing
+  window.payhere.onDismissed = function onDismissed() {
+    history.push('./profile');
+    //Note: Prompt user to pay again or show an error page
+    console.log('Payment dismissed');
+  };
+
+  // Called when error happens when initializing payment such as invalid parameters
+  window.payhere.onError = function onError(error) {
+    // Note: show an error page
+    console.log('Error:' + error);
+  };
+  
+
+  function pay() {
+    window.payhere.startPayment(payhere);
+  }
 
   function msg() {
     if (resultBasic == 'eee') {
@@ -140,7 +217,7 @@ const Profile = () => {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccefull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Againg</Alert>
         </>
       );
     } else if (result == 'done') {
@@ -287,10 +364,7 @@ const Profile = () => {
       });
   }, []);
 
-
-  //payment
   
-
   return (
     <Page title="Profile">
       <Row>
@@ -528,7 +602,9 @@ const Profile = () => {
           <center>{msgPasswords()}</center>          
           <>
             <div>
-              {!payment == 0 ? (
+           {   console.log(paymentStatus)}
+              {!paymentStatus == 0 ? (
+               
                 <Card>
                   <center>
                     <br></br>
@@ -565,7 +641,7 @@ const Profile = () => {
                     <FormGroup check row>
                       <center>
                         <Col sm={{ size: 15 }}>
-                          <Button color="primary">Pay Rs. {paymentPrice} For CSSL</Button>
+                          <Button color="warning" onClick={pay} className="text-dark">Pay Now</Button>
                         </Col>
                       </center>
                     </FormGroup>{' '}

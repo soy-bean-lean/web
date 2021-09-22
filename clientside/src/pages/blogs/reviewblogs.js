@@ -141,8 +141,8 @@ const ManageWorkshop = props => {
               {'   '}
               <Link
                 to={
-                  '/addCredit/cssl00' +
-                  sendWorkshop.wId +
+                  '/blogview/cssl00' +
+                  sendWorkshop.blogId +
                   '/' +
                   sendWorkshop.title
                 }

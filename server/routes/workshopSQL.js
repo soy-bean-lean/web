@@ -84,7 +84,7 @@ Workshop.post("/getConductors", (req, res) => {
   const memberId = req.body.memberId;
   //console.log(mid);
   const sql =
-    "select id,title,firstName,lastName,email from user where id != " +
+    "select id,title,firstName,lastName,email from user where userType!='student' and id != " +
     memberId;
   console.log(sql);
 

@@ -126,6 +126,7 @@ const reviewblogs = React.lazy(() => import('pages/blogs/reviewblogs'));
 const BlogView = React.lazy(() => import('pages/blogs/BlogView'));
 const EditView = React.lazy(() => import('pages/blogs/EditBlog'));
 const ApproveView = React.lazy(() => import('pages/blogs/ApproveView'));
+const ApproveBlogView = React.lazy(() => import('pages/blogs/ApproveBlogView'));
 
 //forum
 
@@ -156,6 +157,12 @@ const MemberVerification = React.lazy(() =>
 );
 const MemberApproval = React.lazy(() =>
   import('pages/registration/registrationApproval'),
+);
+const memberUpgration = React.lazy(() =>
+  import('pages/registration/memberUpgration'),
+);
+const upgradeView = React.lazy(() =>
+  import('pages/registration/upgradeView'),
 );
 
 //profile
@@ -423,6 +430,14 @@ function App(props) {
                       component={MemberApproval}
                     />{' '}
                     <Route
+                      path="/memberUpgration"
+                      component={memberUpgration}
+                    />{' '}
+                    <Route
+                      path="/upgradeView/:id"
+                      component={upgradeView}
+                    />{' '}
+                    <Route
                       path="/memberView/:id"
                       component={approveMemberView}
                     />{' '}
@@ -506,6 +521,12 @@ function App(props) {
                       exact
                       path="/sendEmail/cssl00:id/:title"
                       component={SendEmail}
+                    />
+
+                    <Route
+                      exact
+                      path="/blogview/cssl00:id/:title"
+                      component={ApproveBlogView}
                     />
                     <Route path="/jobAddvertisment/:id" component={JobView} />
                     <Route path="/badges" component={BadgePagePro} />
@@ -667,7 +688,12 @@ function App(props) {
                       component={EditView}
                     />
                     {/*Workshop Related Routes*/}
-                    <Route exact path="/csslworkshops" component={Login} />{' '}
+                    {/* <Route exact path="/csslworkshops" component={Login} />{' '} */}
+                    <Route
+                      exact
+                      path="/csslworkshops"
+                      component={CSSLWorkshops}
+                    />
                     {/* need to change component */}
                     {/*Forum Related Routes*/}
                     <Route exact path="/forum" component={Login} />{' '}

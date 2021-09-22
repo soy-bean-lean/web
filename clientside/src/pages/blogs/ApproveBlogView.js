@@ -21,7 +21,7 @@ import {
 } from 'reactstrap';
 
 
-const BlogView = () => {
+const ApproveBlogView = () => {
   const { id } = useParams();
   const { title } = useParams();
   const [result, setResult] = useState();
@@ -186,7 +186,7 @@ const BlogView = () => {
   return (
     <Page title={title}>
       <hr />
-      <Link to={'/blogs'}>
+      <Link to={'/reviewblogs'}>
         <Button color="primary">Back</Button>
       </Link>
 
@@ -292,4 +292,4 @@ const BlogView = () => {
   );
 };
 
-export default BlogView;
+export default ApproveBlogView;

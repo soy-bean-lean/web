@@ -69,12 +69,12 @@ const navItemsProffesional = [
   },
 
 
-  { 
-    to: '/forum', 
-    name: 'Forum', 
-    exact: false, 
-    Icon: AiIcons.AiFillFileText 
-  },
+  // { 
+  //   to: '/forum', 
+  //   name: 'Forum', 
+  //   exact: false, 
+  //   Icon: AiIcons.AiFillFileText 
+  // },
   
   { 
     to: '/jobadvertisements', 

@@ -52,7 +52,7 @@ function ApproveView() {
     if (result == 'err') {
       return (
         <>
-          <Alert color="danger">Unsuccessfull Attempt,Try Againg</Alert>
+          <Alert color="danger">Unsuccessfull Attempt,Try Again</Alert>
         </>
       );
     } else if (result == 'done') {
@@ -217,14 +217,7 @@ function ApproveView() {
         console.log(error);
       });
   }, []);
-  //   return (
-  //     <Page title="Assign Credit/Deny Request">
-  //        <Link to="/manageworksops">
-  //         <Button color="primary">Back</Button>
-  //       </Link>
-
-  //     </Page>
-  //   );
+  
   const back = () => {
     history.push('/reviewblogs');
   };

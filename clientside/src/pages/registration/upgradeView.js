@@ -38,7 +38,10 @@ const Profile = () => {
   const [proPic, setProfileImage] = useState('');
   const [title, setUserTitle] = useState('');
   const [type, setUserType] = useState('');
+  const [requsest, setRequestType] = useState('');
+  const [date, setRequestDate] = useState('');
   const [file, setFileName] = useState('');
+  const [proof, setProof] = useState('');
 
   const [result, setResultBasic] = useState();
 
@@ -57,7 +60,7 @@ const Profile = () => {
           setResultBasic('err');
           setTimeout(
             function () {
-               history.push('/managemembers');
+              history.push('/managemembers');
             },
 
             2000,
@@ -96,13 +99,15 @@ const Profile = () => {
     }
   }
   const approve = () => {
+
     const formData2 = {
       userID: id,
       councilId: authState.id,
+      requsest:requsest,
     };
 
     axios
-      .post('http://localhost:3001/secretary/approve', formData2)
+      .post('http://localhost:3001/council/approveReq', formData2)
       .then(response => {
         if (response.data.error) {
           setResultBasic('err');
@@ -134,7 +139,7 @@ const Profile = () => {
     };
 
     axios
-      .post('http://localhost:3001/auth/getProfileData', data)
+      .post('http://localhost:3001/auth/userupgrade', data)
 
       .then(response => {
         if (response.data.error) {
@@ -144,14 +149,18 @@ const Profile = () => {
           setSecondName(response.data[0].lastName);
           setAddress(response.data[0].residentialAddress);
           setEmail(response.data[0].email);
+
           setUserType(response.data[0].userType);
+          setRequestType(response.data[0].requestedStatus);
+          setRequestDate(response.data[0].date);
+
           setUserTitle(response.data[0].title);
           setContact(response.data[0].contactNumber);
           setNIC(response.data[0].nic);
           setDOB(response.data[0].birthDate);
           setProfileImage(response.data[0].profileImage);
           setFileName(response.data[0].userProof);
-
+          setProof(response.data[0].proof);
         }
       })
       .catch(error => {
@@ -167,11 +176,7 @@ const Profile = () => {
           <Card className="profileInfo">
             <CardBody>
               <center>
-                {msg()}{' '}
-                <Badge pill color="primary" className="mr-1">
-                  VERIFIED
-                </Badge>
-                <br />
+                {msg()} <br />
                 <br />
                 <img
                   src={'http://localhost:3001/uploads/profileImages/' + proPic}
@@ -187,17 +192,25 @@ const Profile = () => {
                 <Badge pill color="warning" className="mr-1">
                   {type.toUpperCase()}
                 </Badge>
+                <Badge color="warning" pill className="mr-1">
+                  {'-->'}
+                </Badge>
+                <Badge pill color="warning" className="mr-1">
+                  {requsest.toUpperCase()}
+                </Badge>
                 <br />
+                <Badge color="warning" pill className="mr-1">
+                Requested On  {date}
+                </Badge>
                 <br />
                 <p>{email}</p>
                 <p>{contact}</p>
-                <p>{dob}</p>
                 <p>{address}</p>
                 <p>{NIC}</p>
                 <a
                   download
                   href={
-                    'http://localhost:3001/uploads/memberRegistraion/' + file
+                    'http://localhost:3001/uploads/memberRegistraion/' + proof
                   }
                 >
                   Download Attachments
