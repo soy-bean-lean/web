@@ -116,7 +116,7 @@ const CourseApproval = props => {
         <>
           <tr>
             <td>{data.name}</td>
-            <td>{data.title} .{data.firstName} {data.lastName}</td>
+            <td>{data.title}. {data.firstName} {data.lastName}</td>
             <td>
               <center>
                 <Badge color="warning" pill className="mr-1">
@@ -148,7 +148,7 @@ const CourseApproval = props => {
       <>
       <tr>
         <td>{data.name}</td>
-        <td>{data.title} .{data.firstName} {data.lastName}</td>
+        <td>{data.title}. {data.firstName} {data.lastName}</td>
         <td>
           <center>
             <Badge color="warning" pill className="mr-1">
@@ -171,7 +171,7 @@ const CourseApproval = props => {
       <>
       <tr>
         <td>{data.name}</td>
-        <td>{data.title} .{data.firstName} {data.lastName}</td>
+        <td>{data.title}. {data.firstName} {data.lastName}</td>
         <td>
           <center>
             <Badge color="warning" pill className="mr-1">
@@ -195,7 +195,7 @@ const CourseApproval = props => {
       <>
       <tr>
         <td>{data.name}</td>
-        <td>{data.title} .{data.firstName} {data.lastName}</td>
+        <td>{data.title}. {data.firstName} {data.lastName}</td>
         <td>
           <center>
             <Badge color="warning" pill className="mr-1">

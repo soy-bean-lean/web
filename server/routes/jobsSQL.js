@@ -360,8 +360,30 @@ Job.route("/addJobApplicaation").post(
           if (err) {
             res.send(result);
           } else {
-            res.json("success");
-          }
+
+            const sqlSelect =
+            "SELECT jobvacancy.companyName , designation FROM `jobvacancy` where jvId  = " + jobId + "; ";
+  
+          connection.query(sqlSelect, (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              //const memberId = mid;
+  
+              console.log(result[0].companyName);
+              const recentUpdates =
+                "insert into recentactivities  ( memberId,title,description) values ('cssl00" +   memberId +    "','Apply To a Job','Apply a Job From  "+result[0].companyName+" for "+result[0].designation+"  on "+Currentdate+"')";
+                console.log(recentUpdates);
+              connection.query(recentUpdates, (err, result) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.json("success");
+                }
+              });
+            }
+          });
+            }
         }
       );
     }

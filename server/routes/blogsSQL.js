@@ -40,7 +40,20 @@ Blog.route("/addBlog").post(upload.single("image"), (req, res, err) => {
         if (err) {
           console.log(err);
         } else {
-          res.json("success");
+          
+         
+          
+          const recentUpdates =
+            "insert into recentactivities  ( memberId,title,description) values ('" +   memberID +    "','Add  a Blog','New Blog about "+title+" for   on "+date+"')";
+            console.log(recentUpdates);
+          connection.query(recentUpdates, (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.json("success");
+            }
+          });
+        
         }
       }
     );
@@ -67,7 +80,21 @@ Blog.post("/getAllBlogs", (req, res) => {
     "%' and blog.title like '" +
     title +
     "%'  and blog.reviewBy IS NOT NULL ORDER BY `blog`.`blogId`  DESC ";
-console.log
+
+  //const sqlSelect = "SELECT blogId, title, image, publishedDate FROM blog";
+  //"SELECT DISTINCT user.firstName,user.lastName FROM ((user INNER JOIN member ON user.id=member.id ) INNER JOIN blog ON member.memberId=blog.memberId )"
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+
+Blog.post("/getBlogs", (req, res) => {
+  
+
+  const sqlSelect ="select * from blog ORDER BY `blog`.`blogId`  DESC ";
+
+  console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+  console.log(sqlSelect);
   //const sqlSelect = "SELECT blogId, title, image, publishedDate FROM blog";
   //"SELECT DISTINCT user.firstName,user.lastName FROM ((user INNER JOIN member ON user.id=member.id ) INNER JOIN blog ON member.memberId=blog.memberId )"
   connection.query(sqlSelect, (err, result) => {
@@ -76,7 +103,6 @@ console.log
 });
 
 Blog.post("/getMyBlogs", (req, res) => {
-  console.log("get all blogs line -700");
   const mid = req.body.mId;
   console.log(mid);
   connection.query(

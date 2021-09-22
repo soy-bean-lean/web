@@ -24,7 +24,9 @@ import {
   Input,
   Label,
   Row,
+  Table,
 } from 'reactstrap';
+const tableTypes = ['striped'];
 
 function SendEmail() {
   const { id } = useParams();
@@ -79,20 +81,18 @@ function SendEmail() {
 
       .then(response => {
         if (response.data.error) {
-         
         } else {
-          
-          // setData(response.data[0]);
+          setData(response.data[0]);
 
-          // setTitle(response.data[0].title);
-          // setDesc(response.data[0].description);
-          // setSubject(response.data[0].subject);
-          // setFromDate(response.data[0].fromDate);
-          // setToDate(response.data[0].toDate);
-          // setDuration(response.data[0].duration);
-          // setCredit(response.data[0].credit);
-          // setImage(response.data[0].image);
-          // console.log(response.data[0]);
+          setTitle(response.data[0].title);
+          setDesc(response.data[0].description);
+          setSubject(response.data[0].subject);
+          setFromDate(response.data[0].fromDate);
+          setToDate(response.data[0].toDate);
+          setDuration(response.data[0].duration);
+          setCredit(response.data[0].credit);
+          setImage(response.data[0].image);
+          console.log(response.data[0]);
           setConductData(response.data);
           console.log(response.data);
           console.log(conduct);
@@ -112,6 +112,42 @@ function SendEmail() {
   //     </Page>
   //   );
 
+  const conductors =
+    conduct &&
+    conduct.map((conduct, i) => (
+      <>
+        <tr>
+          <td>
+            {' '}
+            {conduct.T} . {conduct.firstName} {conduct.lastName}
+          </td>
+          <td>
+            <center>
+              {/* <Badge color="warning" pill className="mr-1">
+                {sendWorkshop.fromDate}
+              </Badge> */}
+            </center>
+          </td>
+          <td>
+            <center>
+              <Badge color="warning" pill className="mr-1">
+                {conduct.date}
+              </Badge>
+            </center>
+          </td>
+          <td>{conduct.email}</td>
+
+          <td>
+            <center>
+              <Button color="primary" size="sm">
+                Send Email{' '}
+              </Button>
+            </center>
+          </td>
+        </tr>
+      </>
+    ));
+
   return (
     <Page title="Send Mail to Conductors">
       <Link to="/workshop">
@@ -125,12 +161,14 @@ function SendEmail() {
             <CardBody>
               <center>
                 {msg()} <br></br>
+                <p>{title}</p>
+                {/* <br></br>
                 <Badge color="warning" pill className="mr-1">
                   {subject}
                 </Badge>
                 <br></br>
                 <br></br>
-                {data.T}. {data.firstName} {data.lastName}
+                
                 <Badge color="primary" pill className="mr-1">
                   {'From' + '  ' + fromDate + '  To ' + toDate}{' '}
                 </Badge>
@@ -139,7 +177,7 @@ function SendEmail() {
                 <Badge color="primary" pill className="mr-1">
                   {duration + '  hours per Day'}
                 </Badge>
-                <br />
+                <br /> */}
                 <hr />
                 <FormGroup row>
                   <Col>
@@ -148,7 +186,36 @@ function SendEmail() {
                 </FormGroup>
               </center>
 
-              <p>conduct By</p>
+              <h3>conduct By</h3>
+              <Row>
+                <Col sm="12">
+                  {tableTypes.map((tableType, index) => (
+                    <Row>
+                      <Col>
+                        <Card className="mb-3">
+                          <CardBody>
+                            <Row>
+                              <Col>
+                                <Card body>
+                                  <Table {...{ ['striped']: true }}>
+                                    <tbody>
+                                      <th>Conductor Name</th>
+                                      <th>Available Date</th>
+                                      <th>Email</th>
+                                      <th></th>
+                                      {conductors}
+                                    </tbody>
+                                  </Table>
+                                </Card>
+                              </Col>
+                            </Row>
+                          </CardBody>
+                        </Card>
+                      </Col>
+                    </Row>
+                  ))}
+                </Col>
+              </Row>
             </CardBody>
           </Card>
         </Col>

@@ -1,34 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import * as AiIcons from 'react-icons/ai';
 import { AuthContext } from '../../helpers/AuthContext';
 import { useParams, useHistory } from 'react-router-dom';
 import Page from 'components/Page';
 import { Link } from 'react-router-dom';
-import Typography from 'components/Typography';
 import {
   Button,
   Card,
   CardBody,
   Badge,
   Alert,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane,
-  CardImg,
-  CardImgOverlay,
-  CardLink,
   CardText,
-  CardTitle,
   Col,
-  ListGroup,
-  CardHeader,
-  Table,
-  ListGroupItem,
   Row,
-  CardGroup,
+  Input,
 } from 'reactstrap';
 
 const CourseApprovalView = () => {
@@ -36,6 +21,7 @@ const CourseApprovalView = () => {
   const { title } = useParams();
 
   const [courseImg, setCourseImg] = useState('');
+  const [credit, setCredit] = useState('');
   const [profileImg, setProfileImg] = useState('');
   const [courseData, setCourseData] = useState([]);
   const [content, setContent] = useState(null);
@@ -58,6 +44,7 @@ const CourseApprovalView = () => {
       .post('http://localhost:3001/csslcourse/getCourse', formData)
       .then(res => {
         setCourseData(res.data[0]);
+        setCredit(res.data[0].credit);
         setCourseImg(
           'http://localhost:3001/uploads/csslCourses/' + res.data[0].image,
         );
@@ -114,25 +101,30 @@ const CourseApprovalView = () => {
     ));
 
   const approveCourse = () => {
-    const formData = {
-      mId: authState.memberId,
-      cId: id,
-      appDate: today,
-    };
-    axios
-      .post('http://localhost:3001/council/approveCourse', formData)
+    if (credit != '' && credit != null) {
+      const formData = {
+        mId: authState.memberId,
+        cId: id,
+        appDate: today,
+        credit: credit,
+      };
+      axios
+        .post('http://localhost:3001/council/approveCourse', formData)
 
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          var st = 'Approved'
-          statusChangeAllContent(st);
-        }
-      })
-      .catch(error => {
-        setResult('done');
-      });
+        .then(response => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            var st = 'Approved';
+            statusChangeAllContent(st);
+          }
+        })
+        .catch(error => {
+          setResult('done');
+        });
+    } else {
+      setResult('validate');
+    }
   };
 
   const rejectCourse = () => {
@@ -148,7 +140,7 @@ const CourseApprovalView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          var st = 'Rejected'
+          var st = 'Rejected';
           statusChangeAllContent(st);
         }
       })
@@ -169,10 +161,9 @@ const CourseApprovalView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          if(st == 'Approved'){
+          if (st == 'Approved') {
             setResult('approve');
-          }
-          else{
+          } else {
             setResult('reject');
           }
           setTimeout(function () {
@@ -202,6 +193,14 @@ const CourseApprovalView = () => {
       return (
         <>
           <Alert color="success">Course Rejected Successfully</Alert>
+        </>
+      );
+    } else if (result == 'validate') {
+      return (
+        <>
+          <Alert color="warning">
+            Need to Assign Credit Value to the Course
+          </Alert>
         </>
       );
     }
@@ -250,6 +249,14 @@ const CourseApprovalView = () => {
             <CardBody>
               <br />
               <center>
+                <Input
+                  value={credit}
+                  className="input"
+                  type="number"
+                  placeholder="Credit Value"
+                  onChange={e => setCredit(e.target.value)}
+                />
+                <br/>
                 {courseData.status != 'Approved' && (
                   <Link onClick={approveCourse}>
                     <Button color="success">Approve Course</Button>

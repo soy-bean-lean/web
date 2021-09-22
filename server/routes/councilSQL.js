@@ -41,7 +41,7 @@ councilRouter.post("/CoursePending", async (req, res) => {
 
 councilRouter.post("/CourseApproved", async (req, res) => {
 
-  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Approved'";
+  const sql="SELECT user.title,user.firstName,user.lastName,csslcourse.status,csslcourse.courseId,csslcourse.name,csslcourse.skillLevel,csslcourse.duration,csslcourse.durationType FROM `csslcourse`  inner join member on member.memberId =csslcourse.conductedBy inner join user on user.id = member.id WHERE csslcourse.status = 'Approved' order by approvedDate DESC";
   connection.query(sql  
     ,
     (error, result, feilds) => {
@@ -247,11 +247,12 @@ councilRouter.post("/rejectContent", (req, res) => {
 councilRouter.post("/approveCourse", (req, res) => {
   const mid = req.body.mId;
   const cid = req.body.cId;
+  const credit = req.body.credit;
   const appDate = req.body.appDate;
   const status = 'Approved';
   connection.query(
-    "UPDATE csslcourse SET status = ?, approvedBy = ?, approvedDate = ? WHERE courseId = ?;",
-    [status, mid, appDate, cid],
+    "UPDATE csslcourse SET status = ?, credit = ?, approvedBy = ?, approvedDate = ? WHERE courseId = ?;",
+    [status, credit, mid, appDate, cid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {

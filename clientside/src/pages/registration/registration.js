@@ -728,9 +728,7 @@ const Registration = props => {
                             name="file"
                             accept="application/*"
                             file
-                            onChange={e =>
-                              setFieldValue('file', e.target.files[0])
-                            }
+                            
                             className="bg-light"
                           />
                           <ErrorMessage
