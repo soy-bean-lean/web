@@ -160,15 +160,41 @@ const EditCourseContent = () => {
       .then(res => res.json())
       .then(res => {
         setUploadStatus(res.msg);
-        setResult('done');
-
+        updateCourseStatus();
+      })
+      .catch(error => {
+        setResult('err');
         setTimeout(
-          function () {
-            redirectCourse();
-          },
+          function () {},
 
           2000,
         );
+      });
+  };
+
+  const updateCourseStatus = () => {
+    const sendData = {
+      //id: props.cid,
+      cId: id,
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/updateCourseStatus', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log(response.data);
+          setResult('done');
+
+          setTimeout(
+            function () {
+              redirectCourse();
+            },
+
+            2000,
+          );
+        }
       })
       .catch(error => {
         setResult('err');

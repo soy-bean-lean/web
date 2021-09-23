@@ -924,4 +924,21 @@ Course.post("/updateCourseData", (req, res) => {
   );
 });
 
+//update course status to pending (EditCourseContent.js)
+Course.post("/updateCourseStatus", (req, res) => {
+  const cid = req.body.cId;
+  const status = "OnGoing";
+
+  connection.query(
+    "UPDATE csslcourse SET status = ? WHERE courseId = ?;",
+    [status, cid],
+    (error, result, feilds) => {
+      if (error) console.log(error);
+      else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 export default Course;
