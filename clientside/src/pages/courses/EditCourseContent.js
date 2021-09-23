@@ -106,27 +106,31 @@ const EditCourseContent = () => {
     }, this);
 
   const UpdateContentOrder = () => {
-    const sendData = {
-      //id: props.cid,
-      courseId: id,
-      order: contentOrder,
-      current: currentOrder,
-    };
+    if (contentOrder != currentOrder) {
+      const sendData = {
+        //id: props.cid,
+        courseId: id,
+        order: contentOrder,
+        current: currentOrder,
+      };
 
-    axios
-      .post('http://localhost:3001/csslcourse/updateContentOrder', sendData)
+      axios
+        .post('http://localhost:3001/csslcourse/updateContentOrder', sendData)
 
-      .then(response => {
-        if (response.data.error) {
-          alert(response.data.error);
-        } else {
-          //insert course content if update order is success
-          updateCourseContent();
-        }
-      })
-      .catch(error => {
-        alert(error);
-      });
+        .then(response => {
+          if (response.data.error) {
+            alert(response.data.error);
+          } else {
+            //update course content if update order is success
+            updateCourseContent();
+          }
+        })
+        .catch(error => {
+          alert(error);
+        });
+    } else {
+      updateCourseContent();
+    }
   };
 
   const updateCourseContent = () => {
@@ -164,17 +168,16 @@ const EditCourseContent = () => {
           },
 
           2000,
-        );    
+        );
       })
       .catch(error => {
         setResult('err');
         setTimeout(
-          function () {
-
-          },
+          function () {},
 
           2000,
-        );      });
+        );
+      });
   };
 
   const redirectCourse = () => {
@@ -211,104 +214,104 @@ const EditCourseContent = () => {
       </CardBody>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
-      <center>
-        {msg()}
-        <Card>
-          <CardHeader>
-            <center>Edit Content</center>
-          </CardHeader>
-          <CardBody>
-            <Form>
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Title{' '}
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    className="input"
-                    value={contentTitle}
-                    placeholder="Add Title"
-                    onChange={e => setContentTitle(e.target.value)}
-                  />
-                </Col>
-              </FormGroup>
+        <center>
+          {msg()}
+          <Card>
+            <CardHeader>
+              <center>Edit Content</center>
+            </CardHeader>
+            <CardBody>
+              <Form>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Title{' '}
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      className="input"
+                      value={contentTitle}
+                      placeholder="Add Title"
+                      onChange={e => setContentTitle(e.target.value)}
+                    />
+                  </Col>
+                </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Description{' '}
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="textarea"
-                    value={contentDes}
-                    onChange={e => setContentDes(e.target.value)}
-                  />
-                </Col>
-              </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Description{' '}
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="textarea"
+                      value={contentDes}
+                      onChange={e => setContentDes(e.target.value)}
+                    />
+                  </Col>
+                </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Content Order{' '}
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="select"
-                    value={contentOrder}
-                    onChange={e => setContentOrder(e.target.value)}
-                  >
-                    <option value="0"></option>
-                    <option value="1">First Content</option>
-                    {orderList}
-                  </Input>
-                </Col>
-              </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Content Order{' '}
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      value={contentOrder}
+                      onChange={e => setContentOrder(e.target.value)}
+                    >
+                      <option value="0"></option>
+                      <option value="1">First Content</option>
+                      {orderList}
+                    </Input>
+                  </Col>
+                </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Note
-                </Label>
-                <Col sm={9}>
-                  {/* <Input
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Note
+                  </Label>
+                  <Col sm={9}>
+                    {/* <Input
                   type="textarea"
                   className="note"
                   placeholder="Description"
                   onChange={e => setNote(e.target.value)}
                 /> */}
-                  <TextEditor onValueChange={setEditorValue} />
-                </Col>
-              </FormGroup>
+                    <TextEditor onValueChange={setEditorValue} />
+                  </Col>
+                </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Course Type
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="select"
-                    name="select"
-                    value={contentType}
-                    id="content-type"
-                    onChange={e => setContentType(e.target.value)}
-                  >
-                    <option value="">--Select Content Type--</option>
-                    <option value="File">File</option>
-                    <option value="Video">Video</option>
-                  </Input>
-                </Col>
-              </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Course Type
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      name="select"
+                      value={contentType}
+                      id="content-type"
+                      onChange={e => setContentType(e.target.value)}
+                    >
+                      <option value="">--Select Content Type--</option>
+                      <option value="File">File</option>
+                      <option value="Video">Video</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
 
-              {renderContentAdd(contentType)}
+                {renderContentAdd(contentType)}
 
-              <FormGroup check row>
-                <center>
-                  <Button color="success" onClick={UpdateContentOrder}>
-                    Update
-                  </Button>
-                </center>
-              </FormGroup>
-            </Form>
-          </CardBody>
-        </Card>
+                <FormGroup check row>
+                  <center>
+                    <Button color="success" onClick={UpdateContentOrder}>
+                      Update
+                    </Button>
+                  </center>
+                </FormGroup>
+              </Form>
+            </CardBody>
+          </Card>
         </center>
       </Col>
       <hr></hr>
