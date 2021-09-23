@@ -98,7 +98,7 @@ function AddCredit() {
 
           setTimeout(
             function () {
-              history.push('/sendEmail/cssl00' + data.wid + '/' + title);
+              history.push('/manageworksops');
               //hri giyoth yana thena
             },
 
@@ -299,7 +299,7 @@ function AddCredit() {
                         Reject
                       </Button>{' '}
                       <Button onClick={approve} color="success">
-                        Approve
+                        Approve And Send Email
                       </Button>
                     </Col>
                   </center>
