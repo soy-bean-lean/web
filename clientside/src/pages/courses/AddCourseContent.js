@@ -21,9 +21,8 @@ import {
 } from 'reactstrap';
 
 const AddCourseContent = () => {
-
   const { authState, setAuthState } = useContext(AuthContext);
-  
+
   const [contentTitle, setContentTitle] = useState('');
   const [contentDes, setContentDes] = useState('');
   const [contentType, setContentType] = useState('');
@@ -35,7 +34,6 @@ const AddCourseContent = () => {
   const [contentOrder, setContentOrder] = useState(0);
   const [contentOrderList, setContentOrderList] = useState(null);
 
-
   const [result, setResult] = useState();
 
   //const cId = props.cid;
@@ -45,8 +43,6 @@ const AddCourseContent = () => {
 
   let history = useHistory();
 
-
-  
   function msg() {
     if (result == 'err') {
       return (
@@ -186,27 +182,16 @@ const AddCourseContent = () => {
       .then(res => res.json())
       .then(res => {
         setUploadStatus(res.msg);
-        setResult('done');
-
-        setTimeout(
-          function () {
-            redirectCourse();
-            redirectContentAdd();
-          },
-
-          2000,
-        );        
-    
+        updateCourseStatus();
       })
       .catch(error => {
         setResult('err');
         setTimeout(
-          function () {
-
-          },
+          function () {},
 
           2000,
-        );      });
+        );
+      });
   };
 
   const InsertCourseContentFinish = () => {
@@ -240,26 +225,50 @@ const AddCourseContent = () => {
       .then(res => res.json())
       .then(res => {
         setUploadStatus(res.msg);
-        setResult('done');
-
-        setTimeout(
-          function () {
-            redirectCourse();
-
-          },
-
-          2000,
-        );
+        updateCourseStatus();
       })
       .catch(error => {
         setResult('err');
         setTimeout(
-          function () {
-
-          },
+          function () {},
 
           2000,
-        );      });
+        );
+      });
+  };
+
+  const updateCourseStatus = () => {
+    const sendData = {
+      //id: props.cid,
+      cId: id,
+    };
+    axios
+      .post('http://localhost:3001/csslcourse/updateCourseStatus', sendData)
+
+      .then(response => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          console.log(response.data);
+          setResult('done');
+
+          setTimeout(
+            function () {
+              redirectCourse();
+            },
+
+            2000,
+          );
+        }
+      })
+      .catch(error => {
+        setResult('err');
+        setTimeout(
+          function () {},
+
+          2000,
+        );
+      });
   };
 
   const redirectContentAdd = () => {
@@ -303,108 +312,107 @@ const AddCourseContent = () => {
       </CardBody>
       <hr></hr>
       <Col sm="10" md={{ size: 8, offset: 2 }}>
-      <center>
-        {msg()}
-        <Card>
-    
-          <CardHeader>
-            <center>Add Content</center>
-          </CardHeader>
-          <CardBody>
-            <Form>
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Title{' '}
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    className="input"
-                    value={contentTitle}
-                    placeholder="Add Title"
-                    onChange={e => setContentTitle(e.target.value)}
-                  />
-                </Col>
-              </FormGroup>
+        <center>
+          {msg()}
+          <Card>
+            <CardHeader>
+              <center>Add Content</center>
+            </CardHeader>
+            <CardBody>
+              <Form>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Title{' '}
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      className="input"
+                      value={contentTitle}
+                      placeholder="Add Title"
+                      onChange={e => setContentTitle(e.target.value)}
+                    />
+                  </Col>
+                </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Description{' '}
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="textarea"
-                    value={contentDes}
-                    onChange={e => setContentDes(e.target.value)}
-                  />
-                </Col>
-              </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Description{' '}
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="textarea"
+                      value={contentDes}
+                      onChange={e => setContentDes(e.target.value)}
+                    />
+                  </Col>
+                </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Content Order{' '}
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="select"
-                    value={contentOrder}
-                    onChange={e => setContentOrder(e.target.value)}
-                  >
-                    <option value="0"></option>
-                    <option value="1">First Content</option>
-                    {orderList}
-                  </Input>
-                </Col>
-              </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Content Order{' '}
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      value={contentOrder}
+                      onChange={e => setContentOrder(e.target.value)}
+                    >
+                      <option value="0"></option>
+                      <option value="1">First Content</option>
+                      {orderList}
+                    </Input>
+                  </Col>
+                </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Note
-                </Label>
-                <Col sm={9}>
-                  {/* <Input
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Note
+                  </Label>
+                  <Col sm={9}>
+                    {/* <Input
                     type="textarea"
                     className="note"
                     placeholder="Description"
                     onChange={e => setContentDes(e.target.value)}
                   /> */}
-                  <TextEditor onValueChange={setEditorValue} />
-                </Col>
-              </FormGroup>
+                    <TextEditor onValueChange={setEditorValue} />
+                  </Col>
+                </FormGroup>
 
-              <FormGroup row>
-                <Label for="exampleEmail" sm={3}>
-                  Content Type
-                </Label>
-                <Col sm={9}>
-                  <Input
-                    type="select"
-                    name="select"
-                    value={contentType}
-                    id="content-type"
-                    onChange={e => setContentType(e.target.value)}
-                  >
-                    <option value="">--Select Content Type--</option>
-                    <option value="File">File</option>
-                    <option value="Video">Video</option>
-                  </Input>
-                </Col>
-              </FormGroup>
+                <FormGroup row>
+                  <Label for="exampleEmail" sm={3}>
+                    Content Type
+                  </Label>
+                  <Col sm={9}>
+                    <Input
+                      type="select"
+                      name="select"
+                      value={contentType}
+                      id="content-type"
+                      onChange={e => setContentType(e.target.value)}
+                    >
+                      <option value="">--Select Content Type--</option>
+                      <option value="File">File</option>
+                      <option value="Video">Video</option>
+                    </Input>
+                  </Col>
+                </FormGroup>
 
-              {renderContentAdd(contentType)}
+                {renderContentAdd(contentType)}
 
-              <FormGroup check row>
-                <center>
-                  <Button color="primary" onClick={UpdateContentOrderFinish}>
-                    Save & Finish
-                  </Button>{' '}
-                  <Button color="success" onClick={UpdateContentOrderNext}>
-                    Save & Next Content
-                  </Button>
-                </center>
-              </FormGroup>
-            </Form>
-          </CardBody>
-        </Card>
+                <FormGroup check row>
+                  <center>
+                    <Button color="primary" onClick={UpdateContentOrderFinish}>
+                      Save & Finish
+                    </Button>{' '}
+                    <Button color="success" onClick={UpdateContentOrderNext}>
+                      Save & Next Content
+                    </Button>
+                  </center>
+                </FormGroup>
+              </Form>
+            </CardBody>
+          </Card>
         </center>
       </Col>
       <hr></hr>
