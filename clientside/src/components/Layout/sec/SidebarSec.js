@@ -49,12 +49,7 @@ const navItemsProffesional = [
     exact: false,
     Icon: FaIcons.FaUserAlt,
   },
-  {
-    to: '/csslmember/managepayements',
-    name: 'Memeber Payments',
-    exact: false,
-    Icon: AiIcons.AiFillDollarCircle,
-  },
+
   // { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
 
   { to: '/reports', name: 'Reports', exact: false, Icon: HiIcons.HiOutlineDocumentReport },

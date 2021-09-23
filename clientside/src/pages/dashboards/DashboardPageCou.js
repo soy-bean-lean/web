@@ -559,7 +559,7 @@ function DashboardPage() {
         </Col>
       </Row>
       <Row>
-        <Col sm="5" md={{ size: 6, offset: 0 }}>
+        <Col sm="5" md={{ size: 12, offset: 0 }}>
           <Card className="shadow">
             <center>
               {' '}
@@ -581,17 +581,17 @@ function DashboardPage() {
             </CardBody>
           </Card>
         </Col>
-        <Col sm="5" md={{ size: 6, offset: 0 }}>
+        {/* <Col sm="5" md={{ size: 6, offset: 0 }}>
           <Card className="shadow">
             <center>
               {' '}
               <CardHeader>CPD Reports </CardHeader>{' '}
             </center>
             <CardBody>
-              <Line data={barGraphData} options={chartjs.line.options} />
+              <Bar data={barGraphData} options={chartjs.line.options} />
             </CardBody>
           </Card>
-        </Col>
+        </Col> */}
       </Row>
     </Page>
   );

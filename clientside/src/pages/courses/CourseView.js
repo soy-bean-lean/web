@@ -154,6 +154,7 @@ const CourseView = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
+          
           setEnContentList(response.data);
           setEnrollCourseContents(response.data);
         }

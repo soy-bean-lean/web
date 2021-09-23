@@ -704,28 +704,7 @@ Course.post("/enrollCourse", (req, res) => {
       if (error) console.log(error);
       // recent Activity
       else {
-        /*const sqlSelect =
-          "SELECT csslcourse.name FROM `csslcourse` where courseId = " + cid + "; ";
-
-        connection.query(sqlSelect, (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            const memberId = mid;
-
-            console.log(result[0].name);
-            const recentUpdates =
-              "insert into recentactivities  ( memberId,title,description) values ('" +   memberId +    "','Course Enrollment','Enrolled To "+result[0].name+"  on "+stDate+"')";
-              console.log(recentUpdates);
-            connection.query(recentUpdates, (err, result) => {
-              if (err) {
-                console.log(err);
-              } else {
-                res.json("success");
-              }
-            });
-          }
-        });*/
+        console.log(result);
 
         res.send(result);
       }
@@ -743,6 +722,7 @@ Course.post("/getEnCourseContent", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
+        console.log(result);
         res.send(result);
       }
     }
@@ -761,6 +741,8 @@ Course.post("/insertEnCourseContent", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
+        console.log(result);
+
         res.send(result);
       }
     }
@@ -778,6 +760,7 @@ Course.post("/getEnrolledContentList", (req, res) => {
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
+        console.log(result);
         res.send(result);
       }
     }

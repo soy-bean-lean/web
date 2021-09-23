@@ -288,6 +288,12 @@ function AddCredit() {
                     />
                   </Col>
                 </FormGroup>
+                <FormGroup row>
+                  <Col>
+                    <QRCode value={id} />
+                  </Col>
+                </FormGroup>
+
                 <hr />
                 <FormGroup check row>
                   <center>

@@ -40,8 +40,9 @@ dashBoardSQL.post("/getCPDDataYear", (req, res) => {
   const memberId = req.body.memberId;
   const sqlSelect =
     // "select extract(Year from AdDate) as Year,sum(Credits) aS Credits, type from TEST group by Year,type; "
-    "select extract(Year from recordDate) as Year,sum(credit) aS Credits, recordType as types from cpdrecords where memberId = 'cssl001' group by Year,types ";
-
+    "select extract(Year from recordDate) as Year,sum(credit) aS Credits, recordType as types from cpdrecords where memberId = '"+memberId+"' group by Year,types ";
+console.log("_______________________________________________________________")
+console.log(sqlSelect)
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
