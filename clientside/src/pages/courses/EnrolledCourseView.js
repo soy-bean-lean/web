@@ -100,23 +100,23 @@ const CourseView = () => {
       .catch(error => {
         alert(error);
       });
+/*
+    axios
+      .post('http://localhost:3001/csslcourse/completeEnrollCourse', submitData)
 
-    // axios
-    //   .post('http://localhost:3001/csslcourse/completeEnrollCourse', submitData)
-
-    //   .then(response => {
-    //     if (response.data.error) {
-    //       //alert(response.data.error);
-    //       console.log(response.data.error);
-    //     } else {
-    //       console.log(response.data);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     alert(error);
-    //     console.log(error);
-    //   });
-
+      .then(response => {
+        if (response.data.error) {
+          //alert(response.data.error);
+          console.log(response.data.error);
+        } else {
+          console.log(response.data);
+        }
+      })
+      .catch(error => {
+        alert(error);
+        console.log(error);
+      });
+*/
     axios
       .post('http://localhost:3001/csslcourse/enrollCourseData', submitData)
 
