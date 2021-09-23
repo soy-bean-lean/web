@@ -167,7 +167,7 @@ const AddCV = () => {
                       className="input"
                       id="course-img"
                       name="course-img"
-                      accept="file/pdf"
+                      accept=".pdf"
                       onChange={e => setCVFile(e.target.files[0])}
                     />
                   </Col>

@@ -483,7 +483,7 @@ const Profile = props => {
                 className="input"
                 id="course-img"
                 name="course-img"
-                accept="file/pdf"
+                accept="zip/war/pdf"
                 onChange={e => setFileName(e.target.files[0])}
               />
               <p>
@@ -687,7 +687,7 @@ const Profile = props => {
                       />
                     </Col>
                   </FormGroup>
-                  <FormGroup row>
+                  {/* <FormGroup  row>
                     <Label for="exampleEmail" sm={3}>
                       Email
                     </Label>
@@ -705,7 +705,7 @@ const Profile = props => {
                         }}
                       />
                     </Col>
-                  </FormGroup>
+                  </FormGroup> */}
                   <FormGroup check row>
                     <center>
                       <Col sm={{ size: 15 }}>

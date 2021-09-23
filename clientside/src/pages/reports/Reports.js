@@ -225,16 +225,8 @@ const TablePage = () => {
             Payments
           </NavLink>
         </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '2' })}
-            onClick={() => {
-              toggle('2');
-            }}
-          >
-            Courses
-          </NavLink>
-        </NavItem>
+       
+       
       </Nav>
 
       <TabContent activeTab={activeTab}>

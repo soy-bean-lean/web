@@ -168,6 +168,7 @@ userRouter.post("/", async (req, res) => {
                               from: frommail,
                               to: tomail,
                               subject: "Account Verfication",
+
                               html: `
                 <p>Hi ${firstName}, You details has been sent for the verification</p>               
                 `,
@@ -402,7 +403,7 @@ userRouter.post("/reset", async (req, res) => {
                     "DELETE FROM `token` WHERE `userID` = ?",
                     [userID],
                     (err, row) => {
-                      const frommail = "cssl.system.info@gmail.com";
+                      const frommail = "close.system.info@gmail.com";
                       const tomail = emailResult[0].email;
                       const web = "http://localhost:3000/";
                       let smtpTransport = createTransport({

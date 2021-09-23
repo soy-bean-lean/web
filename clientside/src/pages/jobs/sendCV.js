@@ -178,6 +178,7 @@ function JobView() {
                       />{' '}
                       <Input
                         type="number"
+                        min="1"
                         className="note"
                         placeholder="Number Of Applications"
                         onChange={event => {
@@ -238,6 +239,7 @@ function JobView() {
         </tr>
       </>
     ));
+
   return (
     <>
       <Page title="Job Applications">
