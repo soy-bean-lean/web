@@ -60,7 +60,7 @@ const lastWeek = new Date(
   today.getMonth(),
   today.getDate() + 5,
 );
-const a = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 15);
+const a = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5);
 
 // componentDidMount() {
 //     // this is needed, because InfiniteCalendar forces window scroll
@@ -468,7 +468,7 @@ function DashboardPage() {
               <CardBody>
                 <Calendar
                   //onChange={onChange}
-                  value={(a, lastWeek)}
+                  value={(a)}
                   className="calender"
                   onChange={changeDate}
                   tileClassName={tileClassName}
