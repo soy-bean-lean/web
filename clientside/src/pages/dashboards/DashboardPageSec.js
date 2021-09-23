@@ -24,11 +24,7 @@ import CardText from 'reactstrap/lib/CardText';
 
 const today = new Date();
 
-const lastWeek = new Date(
-  today.getFullYear(),
-  today.getMonth(),
-  today.getDate() - 7,
-);
+
 
 const date2 = new Date(
   today.getFullYear(),
@@ -516,7 +512,6 @@ function DashboardPage() {
           <Card className="shadow">
             <Calendar
               //onChange={onChange}
-              value={lastWeek}
               className="calender"
               onChange={changeDate}
               //tileClassName={tileContent}
