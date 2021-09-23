@@ -100,7 +100,7 @@ const CourseView = () => {
       .catch(error => {
         alert(error);
       });
-
+/*
     axios
       .post('http://localhost:3001/csslcourse/completeEnrollCourse', submitData)
 
@@ -116,7 +116,7 @@ const CourseView = () => {
         alert(error);
         console.log(error);
       });
-
+*/
     axios
       .post('http://localhost:3001/csslcourse/enrollCourseData', submitData)
 

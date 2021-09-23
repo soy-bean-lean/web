@@ -769,9 +769,10 @@ Course.post("/insertEnCourseContent", (req, res) => {
 //retrieve enrolled content list (EnrolledCourseView.js)
 Course.post("/getEnrolledContentList", (req, res) => {
   const cid = req.body.cId;
-  const mid = req.body.mId;
+  const mid = req.body.mid;
+
   connection.query(
-    "SELECT coursecontent.contentId, coursecontent.title, coursecontent.description, contentaccess.status FROM coursecontent INNER JOIN contentaccess ON coursecontent.courseId = contentaccess.courseId AND coursecontent.contentId = contentaccess.contentId WHERE coursecontent.courseId = ?;",
+    "SELECT coursecontent.contentId, coursecontent.title, coursecontent.description, contentaccess.status FROM coursecontent INNER JOIN contentaccess ON coursecontent.courseId = contentaccess.courseId AND coursecontent.contentId = contentaccess.contentId WHERE contentaccess.courseId = ? AND contentaccess.memberId = ?;",
     [cid, mid],
     (error, result, feilds) => {
       if (error) console.log(error);
@@ -870,6 +871,7 @@ Course.post("/completeEnrollCourse", (req, res) => {
   //const certifiedDate = req.body.certifiedDate;
   const lastAcc = req.body.lastAcc;
   const mid = req.body.mid;
+  const xdate = null;
   const cntstatus1 = 'Ongoing';
   const cntstatus2 = 'Start';
   const cntstatus3 = 'Enroll';
@@ -879,7 +881,7 @@ Course.post("/completeEnrollCourse", (req, res) => {
   console.log(lastAcc);
   connection.query(
     "UPDATE courseenroll SET courseenroll.lastAccess = ?, courseenroll.status = ? WHERE NOT EXISTS (SELECT contentaccess.contentId FROM contentaccess WHERE contentaccess.courseId = ? AND contentaccess.memberId = ? AND (contentaccess.status = ? OR contentaccess.status = ? OR contentaccess.status = ?)) AND courseenroll.courseId = ? AND courseenroll.memberId = ?;",
-    [lastAcc, status, cid, mid, cntstatus1, cntstatus2, cntstatus3, cid, mid],
+    [lastAcc, status, cid, mid, cntstatus1, cntstatus2, cntstatus3, xdate, xdate, cid, mid],
     (error, result, feilds) => {
       if (error) console.log(error);
       else {
