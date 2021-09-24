@@ -227,7 +227,7 @@ function AddWorkshop() {
                       type="date"
                       name="select"
                       required
-                      min={today}
+                      min={fromDate}
                       onChange={e => setToDate(e.target.value)}
                     />
                   </Col>
