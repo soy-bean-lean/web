@@ -14,13 +14,13 @@ export const SidebarDataPro = [
       cName: 'nav-text'
     },{
       title: 'CPD Records',
-      path: '/cpdP',
+      path: '/csslmember/cpdrecords',
       icon: <HiIcons.HiDocumentReport />,
       cName: 'nav-text'
     },
     {
       title: 'Course',
-      path: '/courseP',
+      path: '/csslcourses',
       icon: <FaIcons.FaGraduationCap />,
       cName: 'nav-text'
     },{

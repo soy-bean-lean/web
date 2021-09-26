@@ -4,7 +4,10 @@ import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import validateToken from "../middlewares/AuthMiddleware.js";
 import multer from "multer";
+import pg from "rand-token";
+import { createTransport } from "nodemailer";
 
+const { suid } = pg;
 const { sign } = pkg;
 
 const userRouter = Router();
@@ -89,7 +92,6 @@ userRouter.post("/updateBasicDetails", async (req, res) => {
       }
     }
   );
-
 });
 
 //Register
@@ -99,6 +101,7 @@ userRouter.post("/", async (req, res) => {
   const title = req.body.title;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
+  const nic = req.body.nic;
   const residentialAddress = req.body.residentialAddress;
   const contactNumber = req.body.contactNumber;
   const birthDate = req.body.birthDate;
@@ -110,7 +113,7 @@ userRouter.post("/", async (req, res) => {
   const designation = req.body.designation;
   const companyName = req.body.companyName;
   const businessAddress = req.body.businessAddress;
-
+  
   connection.query(
     "SELECT * FROM user WHERE email = ?",
     [email],
@@ -118,11 +121,12 @@ userRouter.post("/", async (req, res) => {
       if (result.length <= 0) {
         bcrypt.hash(password, 10).then((hash) => {
           connection.query(
-            `INSERT INTO user (title,firstName,lastName,residentialAddress,contactNumber,birthDate,email,password,userType) VALUES (?,?,?,?,?,?,?,?,?)`,
+            `INSERT INTO user (title,firstName,lastName,nic,residentialAddress,contactNumber,birthDate,email,password,userType) VALUES (?,?,?,?,?,?,?,?,?,?)`,
             [
               title,
               firstName,
               lastName,
+              nic,
               residentialAddress,
               contactNumber,
               birthDate,
@@ -132,16 +136,63 @@ userRouter.post("/", async (req, res) => {
             ],
             (err, row) => {
               if (err) {
-                res.json({ error });
+                res.json({ err: "NIC should be unique" });                
               } else {
                 connection.query(
-                  `INSERT INTO employmentdetails (memberID, designation, companyName, businessAddress) VALUES (?,?,?,?)`,
+                  `INSERT INTO employmentdetails (userID, designation, companyName, businessAddress) VALUES (?,?,?,?)`,
                   [row.insertId, designation, companyName, businessAddress],
                   (err, result) => {
                     if (err) {
-                      res.json({ error });
+                      res.json({ err });
                     } else {
-                      res.json("successfully added to database");
+                      connection.query(
+                        `INSERT INTO logininfo (id,un, pw) VALUES (?,?,?)`,
+                        [row.insertId,email, hash],
+                        (err, result) => {
+                          if (err) {
+                            res.json({ error });
+                          } else {
+                            const frommail = "cssl.system.info@gmail.com";
+                            const tomail = email;
+                            let smtpTransport = createTransport({
+                              service: "Gmail",
+                              port: 465,
+
+                              auth: {
+                                user: "cssl.system.info@gmail.com",
+                                pass: "cssl@123",
+                              },
+                            });
+
+                            var mailOptions = {
+                              from: frommail,
+                              to: tomail,
+                              subject: "Account Verfication",
+
+                              html: `
+                <p>Hi ${firstName}, You details has been sent for the verification</p>               
+                `,
+                            };
+
+                            smtpTransport.sendMail(
+                              mailOptions,
+                              (error, info) => {
+                                if (error) {
+                                  res.json({
+                                    msg: "fail",
+                                  });
+                                } else {
+                                  res.json({
+                                    msg: "success",
+                                  });
+                                }
+                              }
+                            );
+
+                            smtpTransport.close();
+                          }
+                        }
+                      );
                     }
                   }
                 );
@@ -161,10 +212,9 @@ userRouter.post("/", async (req, res) => {
 userRouter.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
   connection.query(
     //temporary sql query for testing
-    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = ?",
+    "SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE user.paymentStatus=1 AND logininfo.un = ?",
 
     [username],
     (err, result) => {
@@ -173,25 +223,68 @@ userRouter.post("/login", async (req, res) => {
           if (!match) {
             res.json({ errorPass: "Incorrect password" });
           } else {
-            const accessToken = sign(
-              {
-                firstName: result[0].firstName,
-                lastName: result[0].lastName,
-                id: result[0].id,
-                role: result[0].userType,
-                profileImage: result[0].profileImage,
-              },
-              "importantsecret"
+            const id = result[0].id;
+            console.log(id);
+            connection.query(
+              //temporary sql query for testing
+              "SELECT * FROM member WHERE id=?",
+              [id],
+              (err, row) => {
+                console.log(row);
+                if (row.length > 0) {
+                  console.log("done");
+                  const accessToken = sign(
+                    {
+                      firstName: result[0].firstName,
+                      lastName: result[0].lastName,
+                      id: result[0].id,
+                      role: result[0].userType,
+                      profileImage: result[0].profileImage,
+                      email: username,
+                      memberId: row[0].memberId,
+                    },
+                    "importantsecret"
+                  );
+                  console.log("_____" + result[0].profileImage);
+                  res.json({
+                    token: accessToken,
+                    firstName: result[0].firstName,
+                    lastName: result[0].lastName,
+                    id: result[0].id,
+                    role: result[0].userType,
+                    profileImage: result[0].profileImage,
+                    email: username,
+                    memberId: row[0].memberId,
+                  });
+                } 
+                else {
+                  console.log("none");
+                  const accessToken = sign(
+                    {
+                      firstName: result[0].firstName,
+                      lastName: result[0].lastName,
+                      id: result[0].id,
+                      role: result[0].userType,
+                      profileImage: result[0].profileImage,
+                      email: username,
+                      memberId: "",
+                    },
+                    "importantsecret"
+                  );
+                  console.log("_____" + result[0].profileImage);
+                  res.json({
+                    token: accessToken,
+                    firstName: result[0].firstName,
+                    lastName: result[0].lastName,
+                    id: result[0].id,
+                    role: result[0].userType,
+                    profileImage: result[0].profileImage,
+                    email: username,
+                    memberId: "",
+                  });
+                }
+              }
             );
-            console.log("_____" + result[0].profileImage);
-            res.json({
-              token: accessToken,
-              firstName: result[0].firstName,
-              lastName: result[0].lastName,
-              id: result[0].id,
-              role: result[0].userType,
-              profileImage: result[0].profileImage,
-            });
           }
         });
       } else {
@@ -199,6 +292,222 @@ userRouter.post("/login", async (req, res) => {
       }
     }
   );
+
+  // console.log("SELECT user.*, logininfo.* FROM user INNER JOIN logininfo ON user.email = logininfo.un WHERE logininfo.un = "+username);
+});
+
+//forgotPassword
+userRouter.post("/forgot", async (req, res) => {
+  const username = req.body.username;
+  const token = suid(16);
+
+  connection.query(
+    //temporary sql query for testing
+    "SELECT * FROM user WHERE email = ?",
+
+    [username],
+    (err, row) => {
+      if (row.length > 0) {
+        const id = row[0].id;
+        connection.query(
+          `INSERT INTO token (userID, token) VALUES (?,?)`,
+          [id, token],
+          (err, result) => {
+            if (err) {
+              res.json({ error });
+            } else {
+              const frommail = "cssl.system.info@gmail.com";
+              const tomail = row[0].email;
+              const web = `http://localhost:3000/reset/${token}`;
+              let smtpTransport = createTransport({
+                service: "Gmail",
+                port: 465,
+
+                auth: {
+                  user: "cssl.system.info@gmail.com",
+                  pass: "cssl@123",
+                },
+              });
+
+              var mailOptions = {
+                from: frommail,
+                to: tomail,
+                subject: "Reset Password",
+                html: `
+                <p>Hi ${row[0].firstName}, You can reset your account by clicking the link below</p>
+                ${web}                
+                `,
+              };
+
+              smtpTransport.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  res.json({
+                    msg: "fail",
+                  });
+                } else {
+                  res.json({
+                    msg: "success",
+                  });
+                }
+              });
+
+              smtpTransport.close();
+              res.json({
+                id: id,
+              });
+            }
+          }
+        );
+      } else {
+        res.json({ errorUser: "Username doesn't exists" });
+      }
+    }
+  );
+});
+
+//resetPassword
+userRouter.post("/reset", async (req, res) => {
+  const password = req.body.password;
+  const token = req.body.token;
+
+  connection.query(
+    "SELECT userID FROM `token` WHERE `token` = ?",
+    [token],
+    (err, row) => {
+      const userID = row[0].userID;
+      bcrypt.hash(password, 10).then((hash) => {
+        connection.query(
+          "UPDATE `user` SET `password` = ? WHERE `id` = ? ;",
+          [hash, userID],
+          (error, result, feilds) => {
+            if (error) {
+              res.send(error);
+            } else {
+              connection.query(
+                "SELECT * FROM `user` WHERE `id` = ?",
+                [userID],
+                (err, emailResult) => {
+                  connection.query(
+                    "UPDATE `logininfo` SET `pw` = ? WHERE `un` = ? ;",
+                    [hash, emailResult[0].email],
+                    (error, result, feilds) => {
+                      if (err) {
+                        res.json({ error });
+                      } else {
+                        res.json("successfully updated database");
+                      }
+                    }
+                  );
+
+                  connection.query(
+                    "DELETE FROM `token` WHERE `userID` = ?",
+                    [userID],
+                    (err, row) => {
+                      const frommail = "close.system.info@gmail.com";
+                      const tomail = emailResult[0].email;
+                      const web = "http://localhost:3000/";
+                      let smtpTransport = createTransport({
+                        service: "Gmail",
+                        port: 465,
+
+                        auth: {
+                          user: "cssl.system.info@gmail.com",
+                          pass: "cssl@123",
+                        },
+                      });
+
+                      var mailOptions = {
+                        from: frommail,
+                        to: tomail,
+                        subject: "Password Reseted",
+                        html: `
+                      <p>Hi ${emailResult[0].firstName}, Your password have been reseted. You can login from the link below</p>
+                      ${web}                
+                      `,
+                      };
+
+                      smtpTransport.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                          res.json({
+                            msg: "fail",
+                          });
+                        } else {
+                          res.json({
+                            msg: "success",
+                          });
+                        }
+                      });
+
+                      smtpTransport.close();
+                      res.send(result);
+                    }
+                  );
+                }
+              );
+            }
+          }
+        );
+      });
+    }
+  );
+
+  //     if (row.length > 0) {
+  //       const id = row[0].id;
+
+  //       connection.query(
+  //         `INSERT INTO token (userID, token) VALUES (?,?)`,
+  //         [id, token],
+  //         (err, result) => {
+  //           if (err) {
+  //             res.json({ error });
+  //           } else {
+  //             const frommail = "vegemartucsc@gmail.com";
+  //             const tomail = row[0].email;
+  //             const web = `http://localhost:3000/reset/${token}`;
+  //             let smtpTransport = createTransport({
+  //               service: "Gmail",
+  //               port: 465,
+
+  //               auth: {
+  //                 user: "vegemartucsc@gmail.com",
+  //                 pass: "vegemart 123",
+  //               },
+  //             });
+
+  //             var mailOptions = {
+  //               from: frommail,
+  //               to: tomail,
+  //               subject: "Reset Password",
+  //               html: `
+  //               <p>Hi ${row[0].firstName}, You can reset your account by clicking the link below</p>
+  //               ${web}
+  //               `,
+  //             };
+
+  //             smtpTransport.sendMail(mailOptions, (error, info) => {
+  //               if (error) {
+  //                 res.json({
+  //                   msg: "fail",
+  //                 });
+  //               } else {
+  //                 res.json({
+  //                   msg: "success",
+  //                 });
+  //               }
+  //             });
+
+  //             smtpTransport.close();
+  //             res.json({
+  //               id: id
+  //             });
+  //           }
+  //         }
+  //       );
+  //     } else {
+  //       res.json({ errorUser: "Username doesn't exists" });
+  //     }
+  //   }
+  // );
 });
 
 userRouter.post("/updatePassword", async (req, res) => {
@@ -247,21 +556,307 @@ userRouter.post("/updatePassword", async (req, res) => {
     }
   );
 });
+
 userRouter.post("/getProfileData", (req, res) => {
   const memberId = req.body.memberId;
 
-  const sqlSelect =
-    "select firstName ,lastName ,residentialAddress ,email,nic,contactNumber, birthDate from user where id = " +
-    memberId +
-    ";";
+  const sqlSelect = "select  * from user where id = " + memberId + ";";
+
+  connection.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
+userRouter.post("/userupgrade", (req, res) => {
+  const memberId = req.body.memberId;
+
+  const sqlSelect = "select user.* ,userupgrade.date,userupgrade.proof, userupgrade.requestedStatus from user inner join userupgrade on user.id=userupgrade.id where user.id = " + memberId + ";";
 
   connection.query(sqlSelect, (err, result) => {
     res.send(result);
   });
 });
 
+//payment
+userRouter.post("/payment", (req, res) => {
+  const userID = req.body.id;
+
+  connection.query(
+    "SELECT * FROM `user` WHERE `id` = ?;",
+    [userID],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+
+  //paid
+  userRouter.post("/paid", (req, res) => {
+    const userID = req.body.id;
+    const role = req.body.role;
+    const amount = req.body.amount;
+    const email = req.body.email;
+    const fName = req.body.fName;
+    const today = new Date();
+    const year = today.getFullYear();
+
+    if (req.body.amount != 0) {
+      connection.query(
+        "UPDATE `user` SET `paymentStatus` = ? WHERE `id` = ? ;",
+        [1, userID],
+        (error, result, feilds) => {
+          if (error) {
+            res.send(error);
+          } else {
+            connection.query(`SELECT * FROM member;`, (err, result) => {
+              if (err) {
+                res.json({ error });
+              } else {
+                const rows = result.length + 1;
+                const memberID = "cssl00" + userID;
+                connection.query(
+                  `INSERT INTO member (id, memberId, memberType) VALUES (?,?,?)`,
+                  [userID, memberID, role],
+                  (err, result) => {
+                    if (err) {
+                      res.json({ error });
+                    } else {
+                      connection.query(
+                        `INSERT INTO payment (year, amount, type, memberId) VALUES (?,?,?,?)`,
+                        [year, amount, role, memberID],
+                        (err, result) => {
+                          if (err) {
+                            res.json({ error });
+                          } else {
+                            const frommail = "cssl.system.info@gmail.com";
+                            const tomail = email;
+                            const web = `http://localhost:3000`;
+                            let smtpTransport = createTransport({
+                              service: "Gmail",
+                              port: 465,
+
+                              auth: {
+                                user: "cssl.system.info@gmail.com",
+                                pass: "cssl@123",
+                              },
+                            });
+
+                            var mailOptions = {
+                              from: frommail,
+                              to: email,
+                              subject: "CSSL account has been created",
+                              html: `
+                <p>Hi ${fName}, Now you can log into the system</p>
+                ${web}                
+                `,
+                            };
+
+                            smtpTransport.sendMail(
+                              mailOptions,
+                              (error, info) => {
+                                if (error) {
+                                  res.json({
+                                    msg: "fail",
+                                  });
+                                } else {
+                                  res.json({
+                                    msg: "success",
+                                  });
+                                }
+                              }
+                            );
+                            smtpTransport.close();
+                          }
+                        }
+                      );
+                    }
+                  }
+                );
+              }
+            });
+          }
+        }
+      );
+    } else {
+    }
+    // connection.query(
+    //   "SELECT * FROM `user` WHERE `id` = ?;",
+    //   [userID],
+    //   (error, result, feilds) => {
+    //     if (error) {
+    //       res.send(error);
+    //     } else {
+    //       res.json(result);
+    //     }
+  });
+  // const sqlSelect = "select  * from user where id = " + memberId + ";";
+
+  // connection.query(sqlSelect, (err, result) => {
+  //   res.send(result);
+  // });
+});
+
+//payment verification profile page
+userRouter.post("/paymentVerfication", (req, res) => {
+  //const memberID = req.body.id;
+  const memberID = req.body.id;
+
+  connection.query(
+    "SELECT * FROM `payment` WHERE `memberId` = ? AND year=YEAR(CURDATE());",
+    [memberID],
+    (error, result, feilds) => {
+      if (error) {
+        res.send(error);
+        console.log("error");
+      } else {
+        console.log("done");
+        res.json(result);
+      }
+    }
+  );
+});
+
+//membership payment
+userRouter.post("/memberpayment", (req, res) => {
+  //const memberID = req.body.id;
+  const memberID = req.body.id;
+  const amount = req.body.amount;
+  const role = req.body.role;
+  const today = new Date();
+  const year = today.getFullYear();
+  const paid = req.body.paid;
+  
+  if(paid==1){
+
+    connection.query(
+      `INSERT INTO payment (year, amount, type, memberId) VALUES (?,?,?,?)`,
+      [year, amount, role, memberID],
+      (err, result) => {
+        if (err) {
+          console.log("error");
+        } else {
+          console.log("successful");
+        }
+      }
+    );
+  }
+  else{
+    console.log("not yet paid");
+  }
+});
+
 userRouter.get("/auth", validateToken, (req, res) => {
   res.json(req.user);
 });
+
+const storageRegistrationData = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/memberRegistraion");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const uploadReg = multer({
+  storage: storageRegistrationData,
+});
+
+userRouter
+  .route("/addUserProofs")
+  .post(uploadReg.single("image"), (req, res, err) => {
+    if (
+      !req.file.originalname.match(
+        /\.(jpg|zip|rar|RAR|ZIP|JPG|jpeg|JPEG|png|PNG)$/
+      )
+    ) {
+     
+      res.send({ msg: "Not an Image File." });
+    } else {
+      const sss = req.file.filename;
+      //   const id = req.body.memberId;
+      const sqlSelect =
+        "SELECT user.id FROM `user` ORDER BY `user`.`id` DESC limit 1; ";
+      
+      connection.query(sqlSelect, (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result[0].id);
+          connection.query(
+            " UPDATE user SET userProof =" +
+              " '" +
+              sss +
+              "'" +
+              "  WHERE id = " +
+              result[0].id +
+              ";",
+
+            (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.json("success");
+              }
+            }
+          );
+        }
+      });
+    }
+  });
+
+  userRouter
+  .route("/upgrade")
+  .post(uploadReg.single("image"), (req, res, err) => {
+    if (
+      !req.file.originalname.match(
+        /\.(jpg|zip|rar|RAR|ZIP|JPG|jpeg|JPEG|png|PNG)$/
+      )
+    ) {
+      res.send({ msg: "Not an Image File." });
+    } else {
+      const id = req.body.id;
+      const memberID = req.body.memberID;
+      const role = req.body.role;
+      const fname = req.body.fname;
+      const lname = req.body.lname;
+      const email = req.body.email;
+      const sss = req.file.filename;
+      const requestRole = req.body.requestRole;
+      
+      connection.query(
+        `INSERT INTO userupgrade (id, memberId, firstName, lastName, email, currentStatus,requestedStatus,proof) VALUES (?,?,?,?,?,?,?,?)`,
+        [id, memberID, fname, lname, email,role, requestRole, sss],
+        (err, result) => {
+          if (err) {
+            console.log("error");
+          } else {
+            console.log("successful");
+          }
+        }
+      );
+    }
+  });
+
+  //request to be a chartered
+  userRouter.post("/charteredReq", (req, res) => {
+    //const memberID = req.body.id;
+    const memberID = req.body.id;
+    const status="Approved";
+    connection.query(
+      "select sum(credit) as credits from cpdrecords where memberId = ? AND status=? AND extract(YEAR from recordDate)=YEAR(CURDATE());",
+      [memberID,status],
+      (error, result, feilds) => {
+        if (error) {
+          res.send(error);
+        } else {
+          res.json(result[0].credits);
+        }
+      }
+    );
+  });
 
 export default userRouter;

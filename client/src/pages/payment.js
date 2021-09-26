@@ -56,9 +56,15 @@ function payment() {
 
     return (
         <>
-        <div>
+        <div className="main">
+      
+
+    <div className="OnGoing">
+    <div className="ONG" >student member</div>
             <button onClick={pay}>Pay with Payhere</button>;
-        </div>
+
+    </div>
+    </div>
         </>
     )
 }

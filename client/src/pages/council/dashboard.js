@@ -120,6 +120,7 @@ function Home() {
       },
     ],
   };
+  
   useEffect(() => {
     const data = {
       memberId:authState.id,

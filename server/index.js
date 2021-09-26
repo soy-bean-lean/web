@@ -3,7 +3,9 @@ import cors from "cors";
 import path from "path";
 import userRouter from "./routes/User.js";
 import secretaryRouter from "./routes/secretary.js";
+import councilRouter from "./routes/councilSQL.js";
 import blogs from "./routes/blogsSQL.js";
+import workshop from "./routes/workshopSQL.js";
 import Job from "./routes/jobsSQL.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -12,6 +14,7 @@ import Record from "./routes/cpdRecord.js";
 import dashBoardSQL from "./routes/dashBoardSQL.js";
 import reportSQL from "./routes/reportsSQL.js";
 import Course from "./routes/csslCourse.js";
+import Reports from "./routes/reportsSQL.js";
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -20,7 +23,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-console.log("1111111111111")
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -57,6 +59,7 @@ app.use(
 app.use("/auth", userRouter);
 app.use("/job", Job);
 app.use("/blog", blogs);
+app.use("/workshop", workshop);
 app.use("/Dash", dashBoardSQL);
 app.use("/cpdP", Record);
 app.use("/reports", reportSQL);
@@ -65,6 +68,8 @@ app.use("/cpd", Record);
 app.use("/csslcourse", Course);
 
 app.use("/secretary", secretaryRouter);
+app.use("/council", councilRouter);
+app.use("/reports", Reports);
 
 app.use('/uploads', express.static(path.resolve(__dirname, './uploads')));
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-// import React from "react";
+//import React from "react";
 import "./style/addBlog.css";
 import { AuthContext } from "../../helpers/AuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TextEditor from "../../components/RichTextEditor";
 
 import { useHistory } from "react-router-dom";
 
@@ -22,7 +23,7 @@ function AddBlog() {
       "-" +
       today.getDate();
   let history = useHistory();
-  
+
   const addBlog = () => {
     const formData = new FormData();
     formData.append("image", image);
@@ -30,7 +31,7 @@ function AddBlog() {
     formData.append("desc", desc);
     formData.append("memberId", authState.id);
     formData.append("date", Currentdate);
-alert(image)
+    alert(image);
     fetch("http://localhost:3001/blog/addBlog", {
       method: "POST",
       body: formData,
@@ -56,15 +57,18 @@ alert(image)
 
         console.log(error);
       });
-  }
+  };
+
+  const display = (val) => {
+    console.log(val);
+  };
 
   return (
     <div className="write">
-       {image && (
-          <img className="writeImg" src={URL.createObjectURL(image)} alt="" />
-        )} 
+      {image && (
+        <img className="writeImg" src={URL.createObjectURL(image)} alt="" />
+      )}
 
-    
       <form className="writeForm">
         <div className="writeFormGroup">
           <label htmlFor="fileInput">
@@ -85,6 +89,8 @@ alert(image)
           />
         </div>
         <div className="writeFormGroup">
+          <TextEditor onValueChange={display} />
+
           <textarea
             placeholder="Tell your story..."
             type="text"

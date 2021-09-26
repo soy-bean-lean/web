@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+
 import "./style/job.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 

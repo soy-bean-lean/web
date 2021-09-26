@@ -50,7 +50,6 @@ function EditCourseInfo() {
     formData.append("language", language);
     formData.append("level", level);
     formData.append("mode", mode);
-    formData.append("lecturer", mId);
     formData.append("image", imgFile);
 
     fetch("http://localhost:3001/csslcourse/editCourseInfo", {

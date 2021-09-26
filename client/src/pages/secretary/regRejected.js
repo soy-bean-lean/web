@@ -1,6 +1,6 @@
 import React from "react";
 import "./style/regApprove.css";
-import data from "./data";
+//import data from "./data";
 import Card from "@material-ui/core/Card";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";

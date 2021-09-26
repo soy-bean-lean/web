@@ -21,7 +21,7 @@ export const SidebarData = [
   },
   {
     title: 'Course',
-    path: '/course',
+    path: '/csslcourses',
     icon: <FaIcons.FaGraduationCap />,
     cName: 'nav-text'
   },

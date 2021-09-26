@@ -17,8 +17,8 @@ function AddCourseContent(props) {
   const [uploadStatus, setUploadStatus] = useState("");
 
   //const cId = props.cid;
-  const {id} = useParams();
-  const {title} = useParams();
+  const { id } = useParams();
+  const { title } = useParams();
   //setCourseTitle(props.location.state);
 
   let history = useHistory();
@@ -48,8 +48,7 @@ function AddCourseContent(props) {
       });
   }, []);
 
-  const InsertCourseContent = () => {
-
+  const InsertCourseContentNext = () => {
     const mId = "cssl001";
     const contentId = "cssl00" + id + "-0" + contentNum;
     console.log("ID:", contentId);
@@ -61,12 +60,12 @@ function AddCourseContent(props) {
     formData.append("title", contentTitle);
     formData.append("description", contentDes);
     formData.append("type", contentType);
+    formData.append("note", note);
 
-    if(contentType == "File"){
-        formData.append("cfile", contentFile);
-    }
-    else{
-        formData.append("vlink", videoLink);
+    if (contentType == "File") {
+      formData.append("cfile", contentFile);
+    } else {
+      formData.append("vlink", videoLink);
     }
 
     fetch("http://localhost:3001/csslcourse/courseContent", {
@@ -80,12 +79,57 @@ function AddCourseContent(props) {
       .then((res) => res.json())
       .then((res) => {
         setUploadStatus(res.msg);
-        alert("Successfully Saved Details");
-        resetComponents();
+        alert("Successfully Saved Details and Next Content");
+        redirectCourse();
+        redirectContentAdd();
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const InsertCourseContentFinish = () => {
+    const mId = "cssl001";
+    const contentId = "cssl00" + id + "-0" + contentNum;
+    console.log("ID:", contentId);
+
+    const formData = new FormData();
+    formData.append("courseId", id);
+    formData.append("contentNo", contentNum);
+    formData.append("contentId", contentId);
+    formData.append("title", contentTitle);
+    formData.append("description", contentDes);
+    formData.append("type", contentType);
+    formData.append("note", note);
+
+    if (contentType == "File") {
+      formData.append("cfile", contentFile);
+    } else {
+      formData.append("vlink", videoLink);
+    }
+
+    fetch("http://localhost:3001/csslcourse/courseContent", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "multipart/form-data",
+      },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setUploadStatus(res.msg);
+        alert("Successfully Saved Details and Finish");
+        redirectCourse();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const redirectContentAdd = () => {
+    let path = "/addCourseContent/cssl00" + id + "/" + title;
+    history.push(path);
   };
 
   const redirectCourseList = () => {
@@ -94,7 +138,7 @@ function AddCourseContent(props) {
   };
 
   const redirectCourse = () => {
-    let path = "/courseView/cssl00"+ id + "/" + title;
+    let path = "/courseView/cssl00" + id + "/" + title;
     history.push(path);
   };
 
@@ -104,11 +148,12 @@ function AddCourseContent(props) {
     setContentType("");
     setContentFile();
     setVideoLink("");
+    setNote("");
+  };
+  const setEditorValue = (val) => {
+    setNote(val);
   };
 
-  const display = (val) =>{
-    console.log(val);
-  }
   return (
     <div className="content-basic-info-main">
       <div className="content-basic-info">
@@ -138,6 +183,8 @@ function AddCourseContent(props) {
                 onChange={(e) => setContentTitle(e.target.value)}
               ></input>
             </div>
+
+
             <div className="content-field-block">
               <h4 className="content-info-title">Description</h4>
               <textarea
@@ -145,12 +192,15 @@ function AddCourseContent(props) {
                 onChange={(e) => setContentDes(e.target.value)}
               ></textarea>
             </div>
+
+
             <div className="content-field-block">
               <h4 className="content-info-title">Note</h4>
-              <TextEditor onValueChange={display}/>
+              <TextEditor onValueChange={setEditorValue} />
             </div>
+
             <div className="content-field-block">
-              <h4 className="content-info-title">Content Type</h4>
+              <h4 className="content-info-title">Cotnent Type</h4>
               <select
                 name="select"
                 value={contentType}
@@ -162,20 +212,22 @@ function AddCourseContent(props) {
                 <option value="Video">Video</option>
               </select>
             </div>
+
             {renderContentAdd(contentType)}
           </div>
+
           <div className="content-btn-block">
             <input
               type="submit"
               className="content-btn-submit"
               value="Save & Finish"
-              onClick={InsertCourseContent}
+              onClick={InsertCourseContentFinish}
             />
             <input
               type="submit"
               className="content-btn-submit"
               value="Save & Next Content"
-              onClick={InsertCourseContent}
+              onClick={InsertCourseContentNext}
             />
           </div>
         </div>

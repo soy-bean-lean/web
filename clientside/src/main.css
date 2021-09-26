@@ -1,0 +1,202 @@
+.cr-sidebar::after {
+  z-index: 1;
+  background: linear-gradient(to bottom, #4f62c0, #40476b);
+  opacity: 0;
+}
+.react-confirm-alert-overlay {
+  background: rgb(88 88 88 / 90%);
+}
+.react-confirm-alert-button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.mainCard{
+  height: 500px !important;
+  overflow-y: hidden !important;
+}
+.nav-item .nav-link.active {
+  color: black;
+}
+.workShopCard{
+  height: 400px !important;
+  overflow-y: hidden !important;
+}
+.workShopCardDes{
+  height: 250px !important;
+overflow-y: scroll;
+}
+.userCards{
+  height: 190px !important;
+}
+.react-calendar__navigation {
+  height: 38px;
+  background:#1d7e61 !important;
+}
+.workshopImg{
+  border-radius: 30px;
+}
+.react-calendar button {
+  margin: 0;
+  border: 0;
+  border-radius: 150px  !important;
+  outline: none;
+}
+
+.react-calendar{
+  width: 100%;
+  max-width: 100%;
+  background: rgb(255, 255, 255) !important;
+  border: 2px solid #ffffff !important;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 0.85em;
+}
+.profileImg {
+  border-radius: 100px;
+}
+.succesfull {
+  border-radius: 50px;
+}
+.profileImgN {
+  border-radius: 100px;
+}
+a:not([href]):not([tabindex]):hover {
+  color: #000000;
+  cursor: pointer;
+}
+.ancorTag{
+  color: white;
+}
+.ancorTag :hover{
+  color: white;
+}
+.cr-sidebar__content {
+  position: relative;
+}
+
+.loginForm {
+  margin-top: 10%;
+}
+.text-muted{
+  font-size: 13px;
+}
+.buttonDIV {
+  margin-top: 1%;
+  margin: 1%;
+}
+.loginAlert {
+  position: relative;
+  padding: 0.15rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+.cr-sidebar--open {
+  background: #884747;
+}
+
+.DashboardPage {
+  height: auto;
+}
+
+.collaps {
+  padding: 2%;
+  color: #004a99;
+  border-color: 1px #004a99;
+}
+.cr-sidebar .nav .nav-item:hover {
+  padding-left: 4px;
+  transition: 0.3s;
+}
+.forget{
+  margin-bottom: 0;
+}
+
+.cr-sidebar .nav .nav-item {
+  margin-left: -2px;
+  margin-right: 2px;
+  margin-top: 10px;
+  padding-top: 0px;
+}
+.nav-item .nav-link.active {
+  /* //  background: linear-gradient(to right, #ffffff, #717279); */
+}
+.collaps :hover {
+  color: #007bff;
+  border-color: #323436;
+}
+.img-small {
+  border-radius: 50px;
+}
+.bg-gradient-theme {
+  background: linear-gradient(to bottom, #6a82fb, #40476b);
+}
+
+.link-tag {
+  color: black;
+  text-decoration: none;
+}
+.shadow{
+  border-radius: 15px !important;
+}
+.link-tag:hover {
+  color: black;
+  text-decoration: none;
+}
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  border-bottom: 3px solid #4f62c0;
+}
+.tinyString{
+  font-size: 15px!important;
+}
+.profileImageSmall{
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+  margin-left: 0px;
+  
+  border-radius: 50px;
+}
+.comments{ 
+  border-top-right-radius: 50px !important;
+  border-bottom-right-radius: 50px !important;
+  padding-top:10px !important;
+  padding-bottom:10px !important;
+  padding-left:40px !important;
+  width: 80% !important;
+  border-bottom: #000000 !important;
+}
+
+.newUsers{
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+  margin: 10px;
+  margin-top: 5px;
+  border-radius: 50px;
+}
+.commentDate{
+  font-size: 15px !important;
+}
+.react-pdf__Page {
+  margin-top: 10px;
+}
+.react-pdf__Page__textContent {
+  border: 1px solid darkgrey;
+  box-shadow: 5px 5px 5px 1px #ccc;
+  border-radius: 5px;
+  width: fit-content !important;
+  height: 0% !important;
+}
+
+.react-pdf__Page__annotations.annotationLayer {
+  padding: 20px;
+}
+
+.react-pdf__Page__canvas {
+  margin: 0 auto;
+  height: fit-content!important;
+  width: 100%!important;
+  overflow-y: scroll;
+}
